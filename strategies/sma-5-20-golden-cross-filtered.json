@@ -1,0 +1,85 @@
+{
+  "name": "SMA 5/20 Golden Cross Filtered",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "1d",
+  "stop_loss": 5,
+  "take_profit": 15,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ma_short",
+      "params": { "type": "SMA", "period": 5 }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ma_long",
+      "params": { "type": "SMA", "period": 20 }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": { "period": 14 }
+    },
+    {
+      "type": "rsi",
+      "ref": "rsi14",
+      "params": { "period": 14, "signal_period": 9, "signal_type": "EMA" }
+    },
+    {
+      "type": "macd",
+      "ref": "macd",
+      "params": { "fast": 12, "slow": 26, "signal_period": 9 }
+    },
+    {
+      "type": "obv",
+      "ref": "obv",
+      "params": { "signal_period": 10, "signal_type": "SMA" }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "ma_short.value" },
+        "op": "cross_above",
+        "right": { "type": "indicator", "ref": "ma_long.value" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "adx14.adx" },
+        "op": "gt",
+        "right": { "type": "literal", "value": 25 }
+      },
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "lt",
+        "right": { "type": "literal", "value": 70 }
+      },
+      {
+        "left": { "type": "indicator", "ref": "macd.macd" },
+        "op": "gt",
+        "right": { "type": "indicator", "ref": "macd.macd_signal" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "obv.obv" },
+        "op": "gt",
+        "right": { "type": "indicator", "ref": "obv.obv_signal" }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "ma_short.value" },
+        "op": "cross_below",
+        "right": { "type": "indicator", "ref": "ma_long.value" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "gt",
+        "right": { "type": "literal", "value": 70 }
+      }
+    ]
+  }
+}
