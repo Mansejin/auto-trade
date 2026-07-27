@@ -193,23 +193,24 @@
     "adx": 25.87,
     "pdi": 16.26,
     "mdi": 24.04,
-    "policy": "C_v7_sw4",
+    "policy": "C_v6_audit_gated",
     "selected": {
-      "slug": "krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7",
-      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
-      "reason": "overnight sweep ~4.4k BTs; fixes shallow-bear b1 (-10.1->+1.3), early OOS (-9.0->+6.8); policyC 204.9 vs old 176.7"
+      "slug": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6",
+      "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "reason": "Audit Team REJECTED overnight v7 (G1 primary trades=7<8). v6 passed LIVE_OK_WITH_HUMAN vs v3."
     }
   },
   "strategies": {
     "bull": "strategies/regime-bull-trend-4h.json",
-    "bear": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+    "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
     "sideways": "strategies/regime-sideways-mr-4h-v4.json",
     "transition": "strategies/regime-bull-trend-4h.json",
     "bear_v6_alt": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
     "bear_v6b_alt": "strategies/krw-btc-1h-ema-adx23-rsi60-di-obv-m5-v6b.json",
     "bear_v3_prev": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
     "sideways_v4b_alt": "strategies/regime-sideways-mr-4h-v4b.json",
-    "sideways_v3_prev": "strategies/regime-sideways-mr-4h-v3.json"
+    "sideways_v3_prev": "strategies/regime-sideways-mr-4h-v3.json",
+    "bear_v7_rejected": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json"
   },
   "policyC_map": {
     "bull": "bull",
@@ -480,25 +481,40 @@
   "live_note": "upbit-strategy-toolkit is backtest-only. Bot deploy is separate JSON mount.",
   "next": [
     {
-      "id": "RD1",
-      "goal": "recover some w6 trade density without reopening b1 hole"
+      "id": "AE1",
+      "goal": "monthly automation with audit gate",
+      "chg": "Use docs/monthly-automation-prompt.md in Cursor Automations"
     },
     {
-      "id": "RD2",
-      "goal": "walk-forward / purged CV on v7 to check overfit"
+      "id": "AE2",
+      "goal": "keep holdout frozen",
+      "chg": "Do not tune on audit windows.holdout"
     },
     {
-      "id": "RD3",
-      "goal": "auto switch STRATEGY_PATH on regime flip"
+      "id": "AE3",
+      "goal": "auto switch on regime flip still human-gated",
+      "chg": "PR only"
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-27T19:07:16Z",
+  "updated_at": "2026-07-27T19:29:17Z",
   "improve": {
     "sweep_jobs": "~4470 backtests (selected grid + densify + policy path)",
     "bear": "m5-v7 ADX25 RSI52 SL3 TP4.5",
     "sideways": "mr-4h-v4 RSI30/60 ADX<30 BB2.2 SL2.5 TP4",
     "policyC_compound": 204.91,
-    "updated_at": "2026-07-27T19:07:16Z"
+    "updated_at": "2026-07-27T19:29:17Z",
+    "audit_team": "enabled",
+    "active_after_audit": "m5-v6"
+  },
+  "audit": {
+    "policy": "reports/review-state/audit-policy.json",
+    "latest": {
+      "v7_vs_v3": "REJECT (G1 sparsity)",
+      "v6_vs_v3": "LIVE_OK_WITH_HUMAN",
+      "v6b_vs_v3": "HOLD (G5 complexity tax)",
+      "v6c_vs_v3": "HOLD (G5 complexity tax)"
+    },
+    "updated_at": "2026-07-27T19:29:17Z"
   }
 }
