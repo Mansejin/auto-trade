@@ -91,20 +91,21 @@
     "close": 94460000.0,
     "policy": "B_evidence",
     "selected": {
-      "slug": "krw-btc-1h-ema-adx23-obv-m5-v2",
-      "file": "strategies/krw-btc-1h-ema-adx23-obv-m5-v2.json",
-      "reason": "policyB: bear -> h1v2 (best on recent bear windows)"
+      "slug": "krw-btc-1h-ema-adx23-m5-v3",
+      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
+      "reason": "v3=v2 drop OBV; bear_compound +22.9 / w6 +22.8 vs v2 +21.8/+19.7"
     }
   },
   "strategies": {
     "bull": "strategies/regime-bull-trend-1d.json",
     "bear": "strategies/regime-bear-bounce-1d.json",
     "sideways": "strategies/regime-sideways-mr-1d.json",
-    "h1v2": "strategies/krw-btc-1h-ema-adx23-obv-m5-v2.json"
+    "h1v2": "strategies/krw-btc-1h-ema-adx23-obv-m5-v2.json",
+    "h1v3": "strategies/krw-btc-1h-ema-adx23-m5-v3.json"
   },
   "policyB_map": {
     "bull": "bull",
-    "bear": "h1v2",
+    "bear": "h1v3",
     "sideways": "h1v2",
     "transition": "h1v2"
   },
@@ -289,5 +290,10 @@
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-27T17:19:30Z"
+  "updated_at": "2026-07-27T17:34:03Z",
+  "improve": {
+    "bull_best": "EMA10/20 DC-only SL10 TP40; bull-seg compound +41.5 (was -12)",
+    "h1_best": "drop OBV; keep ADX>23 EMA5/20 TP3.5",
+    "updated_at": "2026-07-27T17:34:03Z"
+  }
 }

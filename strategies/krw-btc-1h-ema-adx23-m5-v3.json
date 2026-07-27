@@ -1,15 +1,15 @@
 {
-  "name": "Regime Bull Trend Loose EMA10/20",
+  "name": "KRW-BTC 1h EMA ADX23 m5-v3",
   "market": "KRW-BTC",
   "exchange": "kr",
-  "timeframe": "1d",
-  "stop_loss": 10,
-  "take_profit": 40,
+  "timeframe": "1h",
+  "stop_loss": 2.5,
+  "take_profit": 3.5,
   "indicators": [
     {
       "type": "moving_average",
       "ref": "ma_short",
-      "params": { "type": "EMA", "period": 10 }
+      "params": { "type": "EMA", "period": 5 }
     },
     {
       "type": "moving_average",
@@ -34,16 +34,31 @@
         "left": { "type": "indicator", "ref": "ma_short.value" },
         "op": "cross_above",
         "right": { "type": "indicator", "ref": "ma_long.value" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "adx14.adx" },
+        "op": "gt",
+        "right": { "type": "literal", "value": 23 }
+      },
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "lt",
+        "right": { "type": "literal", "value": 70 }
       }
     ]
   },
   "sell": {
-    "operator": "AND",
+    "operator": "OR",
     "conditions": [
       {
         "left": { "type": "indicator", "ref": "ma_short.value" },
         "op": "cross_below",
         "right": { "type": "indicator", "ref": "ma_long.value" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "gt",
+        "right": { "type": "literal", "value": 70 }
       }
     ]
   }
