@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "backtest": {
+      "source": "upbit-official/upbit-strategy-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/backtest/SKILL.md",
+      "computedHash": "548a63c96d108a2a278f6217f8697649b107767b53ffcc1389cad0a818199f28"
+    },
+    "create-strategy": {
+      "source": "upbit-official/upbit-strategy-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/create-strategy/SKILL.md",
+      "computedHash": "b72a15a62ef66b9815ab84a8a4cfbeb5f9c70b8466cb4ccf1fd9578e9b16c995"
+    },
+    "setup": {
+      "source": "upbit-official/upbit-strategy-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/setup/SKILL.md",
+      "computedHash": "45df224a5c2f918af230b06286feab0fb1fe7b39940615db01fd20b515c5be91"
+    }
+  }
+}

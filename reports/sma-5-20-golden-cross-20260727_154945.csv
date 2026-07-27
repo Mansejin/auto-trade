@@ -1,0 +1,67 @@
+# section: strategy
+name,SMA 5/20 Golden Cross
+market,KRW-BTC
+timeframe,1d
+stop_loss_pct,5.0
+take_profit_pct,15.0
+indicators,"ma_short(moving_average, type=SMA, period=5), ma_long(moving_average, type=SMA, period=20)"
+
+# section: disclaimer
+notice,Backtesting results are based on historical data and do not guarantee that the same or similar investment performance will be achieved in the future or in actual trading.
+
+# section: performance
+metric,value
+period,2025-07-26 ~ 2026-07-26 (UTC)
+initial_capital,1000000 KRW
+trading_bars,366
+warmup_bars,20
+benchmark_pct,-40.9149
+total_return_pct,-17.1006
+cagr_pct,-17.1006
+mdd_pct,-21.4030
+sharpe_portfolio,-0.9983
+sharpe_trade,-2.3462
+trades,10
+win_rate_before_fees_pct,20.00
+profit_factor_before_fees,0.261746
+sl_count,4
+tp_count,0
+sell_count,5
+final_bar_count,1
+total_fee,8966.5335
+
+# section: trades
+entry_dt,entry_price,exit_dt,exit_price,qty,pnl_pct,pnl_abs,exit_reason
+2025-08-11 00:00:00 UTC,163860000.00000000,2025-08-21 00:00:00 UTC,159237000.00000000,0.00609972,-2.8213,-29184.4062,sell
+2025-09-11 00:00:00 UTC,158562000.00000000,2025-09-27 00:00:00 UTC,158129000.00000000,0.00611956,-0.2731,-3618.7743,sell
+2025-10-02 00:00:00 UTC,168424000.00000000,2025-10-17 00:00:00 UTC,160003000.00000000,0.00573976,-4.9999,-49277.0650,SL
+2025-10-30 00:00:00 UTC,164597000.00000000,2025-11-01 00:00:00 UTC,164275000.00000000,0.00557398,-0.1956,-2711.3845,sell
+2025-12-05 00:00:00 UTC,137447000.00000000,2025-12-15 00:00:00 UTC,130575000.00000000,0.00665529,-4.9997,-46627.0349,SL
+2026-01-05 00:00:00 UTC,132386000.00000000,2026-01-23 00:00:00 UTC,132864000.00000000,0.00655769,+0.3611,2264.8622,sell
+2026-03-05 00:00:00 UTC,105374000.00000000,2026-03-07 00:00:00 UTC,100105000.00000000,0.00826020,-5.0003,-44371.6426,SL
+2026-04-08 00:00:00 UTC,107295000.00000000,2026-05-19 00:00:00 UTC,114350000.00000000,0.00769897,+6.5753,53463.0142,sell
+2026-06-18 00:00:00 UTC,97277000.00000000,2026-06-24 00:00:00 UTC,92413000.00000000,0.00904116,-5.0002,-44833.7111,SL
+2026-07-06 00:00:00 UTC,95673000.00000000,2026-07-26 00:00:00 UTC,95068000.00000000,0.00872436,-0.6324,-6110.2844,final_bar
+
+# section: signals
+timestamp,type
+2025-08-03 00:00:00 UTC,sell
+2025-08-11 00:00:00 UTC,buy
+2025-08-21 00:00:00 UTC,sell
+2025-09-11 00:00:00 UTC,buy
+2025-09-27 00:00:00 UTC,sell
+2025-10-02 00:00:00 UTC,buy
+2025-10-17 00:00:00 UTC,sell
+2025-10-30 00:00:00 UTC,buy
+2025-11-01 00:00:00 UTC,sell
+2025-12-05 00:00:00 UTC,buy
+2025-12-15 00:00:00 UTC,sell
+2026-01-05 00:00:00 UTC,buy
+2026-01-23 00:00:00 UTC,sell
+2026-03-05 00:00:00 UTC,buy
+2026-03-29 00:00:00 UTC,sell
+2026-04-08 00:00:00 UTC,buy
+2026-05-19 00:00:00 UTC,sell
+2026-06-18 00:00:00 UTC,buy
+2026-06-25 00:00:00 UTC,sell
+2026-07-06 00:00:00 UTC,buy
