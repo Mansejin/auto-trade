@@ -1,9 +1,9 @@
 {
-  "policy": "C_regime_v2",
+  "policy": "C_v7_sw4",
   "map": {
     "bull": "strategies/regime-bull-trend-4h.json",
-    "bear": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-    "sideways": "strategies/regime-sideways-mr-4h-v3.json",
+    "bear": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+    "sideways": "strategies/regime-sideways-mr-4h-v4.json",
     "transition": "strategies/regime-bull-trend-4h.json"
   },
   "path": [
@@ -24,10 +24,10 @@
       "regime": "sideways",
       "days": 39,
       "ret_pct": 9.67,
-      "file": "strategies/regime-sideways-mr-4h-v3.json",
-      "ret": -3.71,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 0.0,
       "bench": 11.97,
-      "n": 4
+      "n": 0
     },
     {
       "start": "2024-02-12",
@@ -90,10 +90,10 @@
       "regime": "bear",
       "days": 56,
       "ret_pct": -3.62,
-      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-      "ret": -10.08,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 1.31,
       "bench": -4.32,
-      "n": 14
+      "n": 4
     },
     {
       "start": "2024-10-04",
@@ -101,8 +101,8 @@
       "regime": "sideways",
       "days": 14,
       "ret_pct": 9.45,
-      "file": "strategies/regime-sideways-mr-4h-v3.json",
-      "ret": 2.13,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 3.9,
       "bench": 11.21,
       "n": 1
     },
@@ -145,10 +145,10 @@
       "regime": "sideways",
       "days": 30,
       "ret_pct": 4.6,
-      "file": "strategies/regime-sideways-mr-4h-v3.json",
-      "ret": 5.19,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 3.9,
       "bench": 2.95,
-      "n": 2
+      "n": 1
     },
     {
       "start": "2025-02-06",
@@ -189,10 +189,10 @@
       "regime": "bear",
       "days": 38,
       "ret_pct": -4.28,
-      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-      "ret": 3.3,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 4.4,
       "bench": -3.43,
-      "n": 10
+      "n": 1
     },
     {
       "start": "2026-01-04",
@@ -211,10 +211,10 @@
       "regime": "bear",
       "days": 63,
       "ret_pct": -20.18,
-      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-      "ret": 11.55,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 4.44,
       "bench": -25.85,
-      "n": 16
+      "n": 3
     },
     {
       "start": "2026-03-24",
@@ -222,8 +222,8 @@
       "regime": "sideways",
       "days": 29,
       "ret_pct": 7.51,
-      "file": "strategies/regime-sideways-mr-4h-v3.json",
-      "ret": 0.4,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 1.19,
       "bench": 6.5,
       "n": 1
     },
@@ -244,12 +244,12 @@
       "regime": "bear",
       "days": 63,
       "ret_pct": -15.95,
-      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-      "ret": 4.73,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 2.93,
       "bench": -17.16,
-      "n": 12
+      "n": 2
     }
   ],
-  "compound_pct": 176.69,
+  "compound_pct": 204.91,
   "bh_compound_pct": 73.3
 }

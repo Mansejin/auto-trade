@@ -16,8 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 # Policy C — evidence-weighted map on regime-v2 segments
 POLICY_C = {
     "bull": "strategies/regime-bull-trend-4h.json",
-    "bear": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-    "sideways": "strategies/regime-sideways-mr-4h-v3.json",
+    "bear": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+    "sideways": "strategies/regime-sideways-mr-4h-v4.json",
     "transition": "strategies/regime-bull-trend-4h.json",
 }
 

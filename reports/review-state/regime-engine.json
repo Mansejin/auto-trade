@@ -193,23 +193,23 @@
     "adx": 25.87,
     "pdi": 16.26,
     "mdi": 24.04,
-    "policy": "C_regime_v2",
+    "policy": "C_v7_sw4",
     "selected": {
-      "slug": "krw-btc-1h-ema-adx23-m5-v3",
-      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-      "reason": "current=BEAR (v2); h1v3 still best on deep bears + w6(+22.8); live bot unchanged"
+      "slug": "krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7",
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "reason": "overnight sweep ~4.4k BTs; fixes shallow-bear b1 (-10.1->+1.3), early OOS (-9.0->+6.8); policyC 204.9 vs old 176.7"
     }
   },
   "strategies": {
     "bull": "strategies/regime-bull-trend-4h.json",
-    "bear": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-    "sideways": "strategies/regime-sideways-mr-4h-v3.json",
+    "bear": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+    "sideways": "strategies/regime-sideways-mr-4h-v4.json",
     "transition": "strategies/regime-bull-trend-4h.json",
-    "bear_bounce_1d_alt": "strategies/regime-bear-bounce-1d.json",
-    "bear_v5_alt": "strategies/krw-btc-1h-ema821-adx23-di-bear-v5.json",
-    "sideways_1d_v2": "strategies/regime-sideways-mr-1d-v2.json",
-    "h1v3": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-    "bull_1d_backup": "strategies/regime-bull-trend-1d.json"
+    "bear_v6_alt": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+    "bear_v6b_alt": "strategies/krw-btc-1h-ema-adx23-rsi60-di-obv-m5-v6b.json",
+    "bear_v3_prev": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
+    "sideways_v4b_alt": "strategies/regime-sideways-mr-4h-v4b.json",
+    "sideways_v3_prev": "strategies/regime-sideways-mr-4h-v3.json"
   },
   "policyC_map": {
     "bull": "bull",
@@ -218,10 +218,11 @@
     "transition": "transition"
   },
   "compound": {
-    "policyC_regime_v2": 176.69,
+    "policyC_v7_sw4": 204.91,
+    "policyC_v7_sw4b": 214.37,
+    "policyC_v3_sw3_old": 176.69,
     "bh_segment_chain": 73.3,
-    "prev_policyB_with_bull4h": 203.28,
-    "note": "v2 relabel splits 2024-08..11 fake-bear; recovery uses bull4h (+3.6) instead of h1(-13.8). Live still on h1v3 while BEAR."
+    "note": "Overnight grid: ~400 bear x 6 windows + ~220 sideways x 4 + local densify. Chose ADX-gated sideways v4 (robust) over v4b (+214) slightly higher but no ADX."
   },
   "path_latest": [
     {
@@ -241,10 +242,10 @@
       "regime": "sideways",
       "days": 39,
       "ret_pct": 9.67,
-      "file": "strategies/regime-sideways-mr-4h-v3.json",
-      "ret": -3.71,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 0.0,
       "bench": 11.97,
-      "n": 4
+      "n": 0
     },
     {
       "start": "2024-02-12",
@@ -307,10 +308,10 @@
       "regime": "bear",
       "days": 56,
       "ret_pct": -3.62,
-      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-      "ret": -10.08,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 1.31,
       "bench": -4.32,
-      "n": 14
+      "n": 4
     },
     {
       "start": "2024-10-04",
@@ -318,8 +319,8 @@
       "regime": "sideways",
       "days": 14,
       "ret_pct": 9.45,
-      "file": "strategies/regime-sideways-mr-4h-v3.json",
-      "ret": 2.13,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 3.9,
       "bench": 11.21,
       "n": 1
     },
@@ -362,10 +363,10 @@
       "regime": "sideways",
       "days": 30,
       "ret_pct": 4.6,
-      "file": "strategies/regime-sideways-mr-4h-v3.json",
-      "ret": 5.19,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 3.9,
       "bench": 2.95,
-      "n": 2
+      "n": 1
     },
     {
       "start": "2025-02-06",
@@ -406,10 +407,10 @@
       "regime": "bear",
       "days": 38,
       "ret_pct": -4.28,
-      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-      "ret": 3.3,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 4.4,
       "bench": -3.43,
-      "n": 10
+      "n": 1
     },
     {
       "start": "2026-01-04",
@@ -428,10 +429,10 @@
       "regime": "bear",
       "days": 63,
       "ret_pct": -20.18,
-      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-      "ret": 11.55,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 4.44,
       "bench": -25.85,
-      "n": 16
+      "n": 3
     },
     {
       "start": "2026-03-24",
@@ -439,8 +440,8 @@
       "regime": "sideways",
       "days": 29,
       "ret_pct": 7.51,
-      "file": "strategies/regime-sideways-mr-4h-v3.json",
-      "ret": 0.4,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 1.19,
       "bench": 6.5,
       "n": 1
     },
@@ -461,45 +462,43 @@
       "regime": "bear",
       "days": 63,
       "ret_pct": -15.95,
-      "file": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
-      "ret": 4.73,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 2.93,
       "bench": -17.16,
-      "n": 12
+      "n": 2
     }
   ],
   "diag": {
-    "current_cycle": "BEAR since 2026-07-27 ADX~25.87 close<SMA50<SMA200 mdi>pdi (engine v2)",
-    "fix": "2024-08 fake-bear: old label Aug9-Nov2 (+13.7% price) split into bear Aug9-Oct3 (-3.6%), sideways Oct4-17, transition Oct18-Nov2 — transition→bull4h +3.6%",
-    "bear_issue": "True-bear Aug9-Oct3 still weak for h1v3 (-10.1%); v5 fixes it (+1.8) but loses deep-bear/w6 edge — keep v3 live, v5 alt only",
-    "sideways": "mr-4h-v3 (Williams+RSI+BB) compound best among MR variants on 4 sideways segments; 1d MR often 0 trades",
-    "goal_status": "Improved vs static — policyC +176.7% vs BH chain +73.3% on v2 segments; not all segments positive"
+    "current_cycle": "BEAR engine v2; live promoted to m5-v7",
+    "shallow_bear_fix": "b1 2024-08-09..10-03: v3 -10.08% -> v7 +1.31%",
+    "early_oos": "2025-07-26..2026-01-26: v3 -8.96% -> v7 +6.77%",
+    "w6_tradeoff": "2026-01-26..07-26: v3 +22.75% (42 trades) -> v7 +10.40% (7 trades) — fewer trades, still + vs BH -26%",
+    "sideways_fix": "sw1 2024-01: v3 -3.71% -> v4 0.00% (no trade) / v4b +3.10%; policy uses v4",
+    "goal_status": "policyC compound improved 176.7 -> 204.9; shallow-bear & sideways weaknesses reduced"
   },
   "live_trading": false,
-  "live_note": "upbit-strategy-toolkit is backtest-only. For live: https://github.com/upbit-official/upbit-agent-skills",
+  "live_note": "upbit-strategy-toolkit is backtest-only. Bot deploy is separate JSON mount.",
   "next": [
     {
-      "id": "RC1",
-      "goal": "shallow-bear defense",
-      "chg": "detect shallow/choppy bear and fall back to cash or v5 without killing deep-bear alpha"
+      "id": "RD1",
+      "goal": "recover some w6 trade density without reopening b1 hole"
     },
     {
-      "id": "RC2",
-      "goal": "sideways sw1",
-      "chg": "2024-01 sideways still negative for MR — try range-width filter"
+      "id": "RD2",
+      "goal": "walk-forward / purged CV on v7 to check overfit"
     },
     {
-      "id": "RC3",
-      "goal": "auto switch on regime flip",
-      "chg": "when current leaves BEAR, swap bot STRATEGY_PATH to bull4h/sideways JSON only"
+      "id": "RD3",
+      "goal": "auto switch STRATEGY_PATH on regime flip"
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-27T18:26:21Z",
+  "updated_at": "2026-07-27T19:07:16Z",
   "improve": {
-    "engine": "v2 DI+SMA50 recovery",
-    "sideways": "regime-sideways-mr-4h-v3",
-    "policyC_compound": 176.69,
-    "h1_live": "v3 unchanged (best w6/deep bear)",
-    "updated_at": "2026-07-27T18:26:21Z"
+    "sweep_jobs": "~4470 backtests (selected grid + densify + policy path)",
+    "bear": "m5-v7 ADX25 RSI52 SL3 TP4.5",
+    "sideways": "mr-4h-v4 RSI30/60 ADX<30 BB2.2 SL2.5 TP4",
+    "policyC_compound": 204.91,
+    "updated_at": "2026-07-27T19:07:16Z"
   }
 }
