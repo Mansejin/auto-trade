@@ -12,4 +12,6 @@
 | `next_candidates_precomputed` | 보고 후 바로 꺼낼 수정안 |
 | `revise_flow` | 보고→제안→v2→재측정 |
 
+활성 slug: `ACTIVE` 파일 참조 (현재 v2).
+
 트리거: 사용자 **보고** → 사실 보고 → `auto_propose_after_report`면 후보 자동 제안.
