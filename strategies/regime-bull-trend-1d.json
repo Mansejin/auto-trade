@@ -4,7 +4,7 @@
   "exchange": "kr",
   "timeframe": "1d",
   "stop_loss": 10,
-  "take_profit": 40,
+  "take_profit": 50,
   "indicators": [
     {
       "type": "moving_average",
@@ -15,16 +15,6 @@
       "type": "moving_average",
       "ref": "ma_long",
       "params": { "type": "EMA", "period": 20 }
-    },
-    {
-      "type": "adx",
-      "ref": "adx14",
-      "params": { "period": 14 }
-    },
-    {
-      "type": "rsi",
-      "ref": "rsi14",
-      "params": { "period": 14, "signal_period": 9, "signal_type": "EMA" }
     }
   ],
   "buy": {

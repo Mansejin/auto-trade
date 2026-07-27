@@ -290,10 +290,12 @@
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-27T17:34:03Z",
+  "updated_at": "2026-07-27T17:48:48Z",
   "improve": {
-    "bull_best": "EMA10/20 DC-only SL10 TP40; bull-seg compound +41.5 (was -12)",
-    "h1_best": "drop OBV; keep ADX>23 EMA5/20 TP3.5",
-    "updated_at": "2026-07-27T17:34:03Z"
+    "bull": "EMA10/20 DC-only SL10 TP50; bull-seg compound ~+51.8 (was -12, then +41.5)",
+    "h1_live": "v3 no-OBV remains best on bear+w6+early composite; no redeploy needed this round",
+    "sideways": "short samples (29d/34d) still 0 trades — need longer range history",
+    "note": "TP>55 mainly lifts first mega-bull segment only → avoid TP70 overfitting",
+    "updated_at": "2026-07-27T17:48:48Z"
   }
 }
