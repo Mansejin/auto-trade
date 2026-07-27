@@ -1,0 +1,97 @@
+{
+  "_": "AI cheatsheet — read THIS only for report/revise.",
+  "slug": "sma-5-20-golden-cross-filtered-v3",
+  "prev": "sma-5-20-golden-cross-filtered-v2",
+  "base": "sma-5-20-golden-cross",
+  "file": "strategies/sma-5-20-golden-cross-filtered-v3.json",
+  "csv": {
+    "v3": "reports/sma-5-20-golden-cross-filtered-v3-20260727_163119.csv",
+    "v2": "reports/sma-5-20-golden-cross-filtered-v2-20260727_162058.csv",
+    "v1": "reports/sma-5-20-golden-cross-filtered-20260727_161528.csv",
+    "b": "reports/sma-5-20-golden-cross-20260727_161536.csv"
+  },
+  "ctx": {
+    "mkt": "KRW-BTC", "tf": "1d", "ex": "kr",
+    "period": "2025-07-26..2026-07-26", "bars": 366,
+    "rev_from": "autonomous sweep D/E/F + PDI/noADX lineage",
+    "chg_vs_v1": ["ADX25→12", "add PDI>MDI", "drop MACD", "keep OBV", "RSI buy<80", "TP15→10"],
+    "hyp": "Direction filter (PDI>MDI) + soft ADX + OBV beats hard ADX/MACD stack on this sample",
+    "falsify": "ret≤v1 OR WR≤v1 OR MDD worse than v1 by large margin on same period"
+  },
+  "logic": {
+    "buy_AND": ["SMA5 cross↑ SMA20", "ADX>12", "PDI>MDI", "RSI<80", "OBV>signal"],
+    "sell_OR": ["SMA5 cross↓ SMA20", "RSI>70"],
+    "risk": {"SL": 5, "TP": 10},
+    "dropped": ["MACD>signal"],
+    "added_vs_v1": ["PDI>MDI", "ADX soft 12", "RSI buy cap 80"]
+  },
+  "scoreboard": {
+    "_cols": ["ret%", "bench%", "MDD%", "WR%", "n", "PF", "SL", "TP", "sell"],
+    "v3": [21.87, -40.91, -3.30, 80.0, 5, 81.09, 0, 1, 4],
+    "v2": [-8.97, -40.91, -13.15, 20.0, 5, 0.45, 3, 0, 1],
+    "v1": [-4.08, -40.91, -13.15, 25.0, 4, 0.67, 2, 0, 1],
+    "base": [-17.10, -40.91, -21.40, 20.0, 10, 0.26, 4, 0, 5],
+    "delta_v3_minus_v1": {"ret_pp": 25.95, "wr_pp": 55.0, "mdd_pp": 9.85, "trades": 1, "sl": -2, "tp": 1}
+  },
+  "trades_v3": [
+    {"in": "2025-08-11", "out": "2025-08-14", "pnl": 2.56, "why": "sell"},
+    {"in": "2025-09-11", "out": "2025-09-27", "pnl": -0.27, "why": "sell"},
+    {"in": "2025-10-02", "out": "2025-10-03", "pnl": 1.38, "why": "sell"},
+    {"in": "2026-01-05", "out": "2026-01-15", "pnl": 7.38, "why": "sell"},
+    {"in": "2026-04-08", "out": "2026-05-04", "pnl": 10.00, "why": "TP"}
+  ],
+  "gap": {
+    "apr08_recovered": true,
+    "sl_count": 0,
+    "note": "blocked hard-ADX losers; kept Apr08 win; n=5 still small"
+  },
+  "diag": {
+    "key_findings": [
+      "A+C(v2) falsified: ret/WR down",
+      "D(noMACD) did NOT unlock Apr08 — ADX hard gate was the blocker",
+      "noADX unlocks Apr08 (+5.01); PDI>MDI is the main quality gate",
+      "soft ADX12+PDI+OBV+RSI80+TP10 = best balanced + on this period"
+    ],
+    "hyp_status": "retained_on_this_period — v3 dominates v1/v2/base on ret/WR/MDD/SL",
+    "caveat": "n=5, 1y sample — overfitting risk; do not treat as live edge"
+  },
+  "sweep_top": [
+    {"tag": "v3=W_rsi80_TP10", "ret": 21.87, "wr": 80, "n": 5, "mdd": -3.30},
+    {"tag": "W_rsi80_TP8", "ret": 20.34, "wr": 80, "n": 5, "mdd": -3.30},
+    {"tag": "W_TP10", "ret": 20.33, "wr": 75, "n": 4, "mdd": -3.30},
+    {"tag": "ADX12_pdi_obv_TP7", "ret": 16.63, "wr": 75, "n": 4, "mdd": -2.73},
+    {"tag": "noADX_pdi", "ret": 15.97, "wr": 67, "n": 3, "mdd": -3.30},
+    {"tag": "v1", "ret": -4.08, "wr": 25, "n": 4, "mdd": -13.15},
+    {"tag": "v2_A+C", "ret": -8.97, "wr": 20, "n": 5, "mdd": -13.15}
+  ],
+  "levers": {
+    "_fmt": "key: cur | loosen→ | tighten→ | when",
+    "adx_gt": "12 | 10 | 14/20 | soft trend gate",
+    "pdi_gt_mdi": "ON | OFF | ON | primary quality filter",
+    "rsi_buy_lt": "80 | 85 | 70 |",
+    "rsi_sell_gt": "70 | 80 | 65 |",
+    "obv_gt_sig": "ON | OFF | ON | volume confirm",
+    "TP%": "10 | 12 | 8 | TP8 also strong (+20.34)",
+    "SL%": "5 | 7 | 3 |"
+  },
+  "next_candidates_precomputed": [
+    {"id": "V3b", "goal": "more TP hits", "chg": ["TP:10→8"], "why": "W_rsi80_TP8 ret+20.34 TP2 vs TP1", "risk": "caps Apr08 at +8 vs +10"},
+    {"id": "V3c", "goal": "tighter entry", "chg": ["rsi_buy_lt:80→70"], "why": "drop Oct02 small win; closer to ADX12_pdi_obv", "risk": "n↓"},
+    {"id": "OOS", "goal": "check overfitting", "chg": ["rerun different period / longer window"], "why": "n=5 one-year fit", "risk": "may falsify"}
+  ],
+  "revise_flow": [
+    "1 user: 보고 → this file",
+    "2 auto-propose V3b/V3c/OOS",
+    "3 approve → -v4 → validate → backtest",
+    "4 update THIS file"
+  ],
+  "constraints": {
+    "no_live": true,
+    "no_recommend_invest": true,
+    "catalog_only": true,
+    "next_slug": "sma-5-20-golden-cross-filtered-v4",
+    "sample_warning": "n=5"
+  },
+  "auto_propose_after_report": true,
+  "updated_at": "2026-07-27T16:32:00Z"
+}
