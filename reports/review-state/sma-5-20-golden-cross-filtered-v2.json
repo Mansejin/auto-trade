@@ -1,0 +1,223 @@
+{
+  "_": "AI cheatsheet — read THIS only for report/revise. Prefer over raw CSVs unless detail needed.",
+  "slug": "sma-5-20-golden-cross-filtered-v2",
+  "prev": "sma-5-20-golden-cross-filtered",
+  "base": "sma-5-20-golden-cross",
+  "file": "strategies/sma-5-20-golden-cross-filtered-v2.json",
+  "csv": {
+    "v2": "reports/sma-5-20-golden-cross-filtered-v2-20260727_162058.csv",
+    "v1": "reports/sma-5-20-golden-cross-filtered-20260727_161528.csv",
+    "b": "reports/sma-5-20-golden-cross-20260727_161536.csv"
+  },
+  "ctx": {
+    "mkt": "KRW-BTC",
+    "tf": "1d",
+    "ex": "kr",
+    "period": "2025-07-26..2026-07-26",
+    "bars": 366,
+    "rev_from": "A+C",
+    "chg": [
+      "adx_gt:25→20",
+      "drop OBV",
+      "TP:15→10"
+    ],
+    "hyp": "Loosen ADX+drop OBV recovers missed win; TP10 raises TP hits vs v1",
+    "falsify": "n↑ without WR/ret improve OR still TP=0 and more SL → A+C failed"
+  },
+  "logic": {
+    "buy_AND": [
+      "SMA5 cross↑ SMA20",
+      "ADX>20",
+      "RSI<70",
+      "MACD>signal"
+    ],
+    "sell_OR": [
+      "SMA5 cross↓ SMA20",
+      "RSI>70"
+    ],
+    "risk": {
+      "SL": 5,
+      "TP": 10
+    },
+    "dropped_vs_v1": [
+      "OBV>signal"
+    ]
+  },
+  "scoreboard": {
+    "_cols": [
+      "ret%",
+      "bench%",
+      "MDD%",
+      "WR%",
+      "n",
+      "PF",
+      "SL",
+      "TP",
+      "sell",
+      "fee"
+    ],
+    "v2": [
+      -8.97,
+      -40.91,
+      -13.15,
+      20.0,
+      5,
+      0.45,
+      3,
+      0,
+      1,
+      4806
+    ],
+    "v1": [
+      -4.08,
+      -40.91,
+      -13.15,
+      25.0,
+      4,
+      0.67,
+      2,
+      0,
+      1,
+      4037
+    ],
+    "base": [
+      -17.1,
+      -40.91,
+      -21.4,
+      20.0,
+      10,
+      0.26,
+      4,
+      0,
+      5,
+      8967
+    ],
+    "delta_v2_minus_v1": {
+      "ret_pp": -4.89,
+      "wr_pp": -5.0,
+      "trades": 1,
+      "sl": 1,
+      "tp": 0
+    }
+  },
+  "trades_v2": [
+    {
+      "in": "2025-12-05",
+      "out": "2025-12-15",
+      "pnl": -5.0,
+      "why": "SL"
+    },
+    {
+      "in": "2026-01-05",
+      "out": "2026-01-15",
+      "pnl": 7.38,
+      "why": "sell"
+    },
+    {
+      "in": "2026-03-05",
+      "out": "2026-03-07",
+      "pnl": -5.0,
+      "why": "SL"
+    },
+    {
+      "in": "2026-06-18",
+      "out": "2026-06-24",
+      "pnl": -5.0,
+      "why": "SL"
+    },
+    {
+      "in": "2026-07-06",
+      "out": "2026-07-26",
+      "pnl": -0.63,
+      "why": "final_bar"
+    }
+  ],
+  "gap_vs_base": {
+    "base_n": 10,
+    "v2_n": 5,
+    "blocked": 5,
+    "blocked_dates": [
+      "2025-08-11",
+      "2025-09-11",
+      "2025-10-02",
+      "2025-10-30",
+      "2026-04-08"
+    ],
+    "recovered_from_v1_block": [
+      "2025-12-05"
+    ],
+    "still_missing_win": {
+      "in": "2026-04-08",
+      "pnl": 6.58,
+      "status": "still_blocked"
+    },
+    "new_entry_vs_v1": [
+      {
+        "in": "2025-12-05",
+        "pnl": -5.0,
+        "why": "SL"
+      }
+    ]
+  },
+  "diag": {
+    "A_effect": "ADX20+noOBV added 2025-12-05 only (SL -5%); missed win 2026-04-08 still blocked (likely MACD/RSI)",
+    "C_effect": "TP10 still 0 hits — best trade sell@+7.38% < TP10",
+    "sample": "n=5 still small",
+    "vs_v1": "ret -4.08→-8.97, WR 25→20, SL 2→3 — A+C did not improve this sample",
+    "hyp_status": "falsified_for_this_period — A+C failed falsify test (ret/WR down, TP still 0, extra SL)"
+  },
+  "levers": {
+    "_fmt": "key: cur | loosen→ | tighten→ | when",
+    "adx_gt": "20 | 15 | 25 | reclaim more GC / re-tighten to v1",
+    "rsi_buy_lt": "70 | 80 | 60 |",
+    "rsi_sell_gt": "70 | 80 | 65 | early exits",
+    "macd_gt_sig": "ON | OFF | ON | 2026-04-08 still blocked → try drop MACD",
+    "SL%": "5 | 7 | 3 |",
+    "TP%": "10 | 15 | 7 | best +7.38 still <TP10 → try TP7 or keep sell exits"
+  },
+  "next_candidates_precomputed": [
+    {
+      "id": "D",
+      "goal": "recover 2026-04-08 specifically",
+      "chg": [
+        "drop MACD gate (keep ADX20, RSI<70)"
+      ],
+      "why": "A removed OBV but miss remains → next gate is MACD",
+      "risk": "more false entries"
+    },
+    {
+      "id": "E",
+      "goal": "revert quality (undo A)",
+      "chg": [
+        "adx_gt:20→25",
+        "restore OBV",
+        "keep TP10 or revert TP15"
+      ],
+      "why": "v1 beat v2 on ret/WR/SL in this period",
+      "risk": "n back to 4"
+    },
+    {
+      "id": "F",
+      "goal": "TP reachable vs +7.4% sells",
+      "chg": [
+        "TP:10→7"
+      ],
+      "why": "best sell +7.38 < TP10 still",
+      "risk": "caps winners further"
+    }
+  ],
+  "revise_flow": [
+    "1 user: 보고 → fact report from this file",
+    "2 auto-propose D/E/F after report",
+    "3 approve → create-strategy -v3 → validate → backtest same period",
+    "4 update THIS file"
+  ],
+  "constraints": {
+    "no_live": true,
+    "no_recommend_invest": true,
+    "catalog_only": true,
+    "next_slug": "sma-5-20-golden-cross-filtered-v3"
+  },
+  "auto_propose_after_report": true,
+  "updated_at": "2026-07-27T16:21:28Z"
+}
