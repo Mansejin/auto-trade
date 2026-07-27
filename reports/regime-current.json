@@ -1,0 +1,13 @@
+{
+  "date": "2026-07-27",
+  "regime": "bear",
+  "close": 94501000.0,
+  "sma50": 94647820.0,
+  "sma200": 106933730.0,
+  "adx": 25.87,
+  "pdi": 16.26,
+  "mdi": 24.04,
+  "selected_file": "strategies/krw-btc-1h-ema-adx23-obv-m5-v2.json",
+  "policy": "B_evidence",
+  "live_trading": false
+}

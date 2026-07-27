@@ -2,6 +2,11 @@
 
 **읽기 순서(저토큰):** `ACTIVE` → 그 JSON만. CSV는 거래 디테일 필요할 때만.
 
+## Regime engine
+- ACTIVE가 `regime-engine.json`이면 상승/하락/횡보 분류·구간 백테스트·현재 사이클 선택 규칙 요약.
+- 현재 레짐 재계산: `python3 scripts/regime_select.py` → `reports/regime-current.json`
+- **실전 주문 없음** (백테스트/선택만).
+
 ## 기간/타임스탬프 (필수)
 모든 비교 백테스트는 **동일 구간**:
 - **start:** `2025-07-26` (UTC 00:00)
