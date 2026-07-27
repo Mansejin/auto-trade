@@ -1,17 +1,25 @@
 # review-state (AI)
 
-**읽기 순서(저토큰):** `{slug}.json` 1개만. CSV는 거래 디테일 필요할 때만.
+**읽기 순서(저토큰):** `ACTIVE` → 그 JSON만. CSV는 거래 디테일 필요할 때만.
+
+## 기간/타임스탬프 (필수)
+모든 비교 백테스트는 **동일 구간**:
+- **start:** `2025-07-26` (UTC 00:00)
+- **end:** `2026-07-26` (UTC 00:00)
+- **timeframe:** `1d`
+- **선정:** `1d` 기본값 = 최근 1년, end = 실행일 기준 UTC yesterday
+
+CSV 파일명의 `YYYYMMDD_HHMMSS` = **실행 시각(UTC)**.  
+예: `...-20260727_163119.csv` → 2026-07-27 16:31:19 UTC 실행.
+
+상세는 각 slug JSON의 `WINDOW` / `RUNS` 키.
 
 | 키 | 용도 |
 |---|---|
-| `logic` | 현재 buy/sell/risk 규칙 |
-| `scoreboard` | filt vs base 한눈 비교 |
-| `trades_f` / `gap` | 체결·놓친 기회 |
-| `diag` | 로직 병목 진단 |
-| `levers` | 임계값 조정 맵 |
-| `next_candidates_precomputed` | 보고 후 바로 꺼낼 수정안 |
-| `revise_flow` | 보고→제안→v2→재측정 |
+| `WINDOW` | 백테스트 캔들 구간 (start/end/tz/bars) |
+| `RUNS` | 버전별 CSV + 실행 UTC/KST |
+| `logic` | 현재 buy/sell/risk |
+| `scoreboard` | 버전 비교 |
+| `diag` / `levers` / `next_candidates_*` | 수정용 |
 
-활성 slug: `ACTIVE` 파일 참조 (현재 v2).
-
-트리거: 사용자 **보고** → 사실 보고 → `auto_propose_after_report`면 후보 자동 제안.
+트리거: 사용자 **보고** → 사실 보고(기간 먼저) → 후보 자동 제안.
