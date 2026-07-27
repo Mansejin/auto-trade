@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Classify KRW-BTC daily regime and select a backtest strategy (no live trading)."""
+"""Classify KRW-BTC daily regime (v2) and select a backtest strategy (no live trading).
+
+v2 adds DI confirmation and SMA50 recovery filter so rising recoveries under a
+bearish MA structure map to transition (trend/participation) instead of bear.
+"""
 from __future__ import annotations
 
 import json
@@ -8,11 +12,13 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-POLICY_B = {
-    "bull": "strategies/regime-bull-trend-1d.json",
-    "bear": "strategies/krw-btc-1h-ema-adx23-obv-m5-v2.json",
-    "sideways": "strategies/krw-btc-1h-ema-adx23-obv-m5-v2.json",
-    "transition": "strategies/krw-btc-1h-ema-adx23-obv-m5-v2.json",
+
+# Policy C — evidence-weighted map on regime-v2 segments
+POLICY_C = {
+    "bull": "strategies/regime-bull-trend-4h.json",
+    "bear": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
+    "sideways": "strategies/regime-sideways-mr-4h-v3.json",
+    "transition": "strategies/regime-bull-trend-4h.json",
 }
 
 
@@ -24,7 +30,7 @@ def fetch_days(market: str = "KRW-BTC", want: int = 260) -> list[dict]:
         if to:
             url += f"&to={to}"
         req = urllib.request.Request(
-            url, headers={"Accept": "application/json", "User-Agent": "regime-select"}
+            url, headers={"Accept": "application/json", "User-Agent": "regime-select-v2"}
         )
         with urllib.request.urlopen(req, timeout=30) as resp:
             batch = json.loads(resp.read().decode())
@@ -96,13 +102,14 @@ def classify(candles: list[dict]) -> dict:
     s50 = sma(closes, 50, i)
     s200 = sma(closes, 200, i)
     pdi, mdi, adx = adx_last(highs, lows, closes)
-    if None in (s50, s200, adx):
-        raise RuntimeError("insufficient candles for SMA200/ADX")
+    if None in (s50, s200, adx, pdi, mdi):
+        raise RuntimeError("insufficient candles for SMA200/ADX/DI")
+    # Regime engine v2
     if adx < 20:
         regime = "sideways"
-    elif closes[i] > s200 and s50 > s200:
+    elif closes[i] > s200 and s50 > s200 and pdi >= mdi:
         regime = "bull"
-    elif closes[i] < s200 and s50 < s200:
+    elif closes[i] < s200 and s50 < s200 and closes[i] < s50 and mdi > pdi:
         regime = "bear"
     else:
         regime = "transition"
@@ -115,8 +122,9 @@ def classify(candles: list[dict]) -> dict:
         "adx": round(adx, 2),
         "pdi": round(pdi, 2),
         "mdi": round(mdi, 2),
-        "selected_file": POLICY_B[regime],
-        "policy": "B_evidence",
+        "selected_file": POLICY_C[regime],
+        "policy": "C_regime_v2",
+        "engine": "v2",
         "live_trading": False,
     }
 
