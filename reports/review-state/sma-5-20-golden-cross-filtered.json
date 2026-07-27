@@ -1,0 +1,222 @@
+{
+  "slug": "sma-5-20-golden-cross-filtered",
+  "baseline_slug": "sma-5-20-golden-cross",
+  "status": "ready_for_report",
+  "period": {
+    "start": "2025-07-26",
+    "end": "2026-07-26",
+    "timeframe": "1d",
+    "market": "KRW-BTC"
+  },
+  "hypothesis": "5일선이 20일선을 상향 돌파할 때 ADX/RSI/MACD/OBV 필터가 함께 충족되면 단순 골든크로스보다 단기 상승 지속 가능성이 높다",
+  "falsification_criterion": "필터를 넣었는데도 승률이 단순 골든크로스보다 크게 안 오르거나, 손절(-5%)에 자주 걸리면 기각",
+  "reports": {
+    "filtered": "/workspace/reports/sma-5-20-golden-cross-filtered-20260727_161528.csv",
+    "baseline": "/workspace/reports/sma-5-20-golden-cross-20260727_161536.csv"
+  },
+  "metrics": {
+    "filtered": {
+      "total_return_pct": -4.0846,
+      "benchmark_pct": -40.9149,
+      "cagr_pct": -4.0846,
+      "mdd_pct": -13.1488,
+      "sharpe_portfolio": -0.3429,
+      "sharpe_trade": -0.8625,
+      "trades": 4,
+      "win_rate_before_fees_pct": 25.0,
+      "profit_factor_before_fees": 0.667191,
+      "sl_count": 2,
+      "tp_count": 0,
+      "sell_count": 1,
+      "final_bar_count": 1,
+      "total_fee": 4036.6425
+    },
+    "baseline": {
+      "total_return_pct": -17.1006,
+      "benchmark_pct": -40.9149,
+      "cagr_pct": -17.1006,
+      "mdd_pct": -21.403,
+      "sharpe_portfolio": -0.9983,
+      "sharpe_trade": -2.3462,
+      "trades": 10,
+      "win_rate_before_fees_pct": 20.0,
+      "profit_factor_before_fees": 0.261746,
+      "sl_count": 4,
+      "tp_count": 0,
+      "sell_count": 5,
+      "final_bar_count": 1,
+      "total_fee": 8966.5335
+    }
+  },
+  "opportunity_gap": {
+    "baseline_entries": 10,
+    "filtered_entries": 4,
+    "filtered_out_count": 6,
+    "filtered_out_wins": 1,
+    "filtered_out_non_wins": 5,
+    "missed_profitable_trades": [
+      {
+        "entry_dt": "2026-04-08 00:00:00 UTC",
+        "exit_dt": "2026-05-19 00:00:00 UTC",
+        "pnl_pct": 6.5753,
+        "exit_reason": "sell"
+      }
+    ],
+    "filtered_out_trades": [
+      {
+        "entry_dt": "2025-08-11 00:00:00 UTC",
+        "exit_dt": "2025-08-21 00:00:00 UTC",
+        "pnl_pct": -2.8213,
+        "exit_reason": "sell"
+      },
+      {
+        "entry_dt": "2025-09-11 00:00:00 UTC",
+        "exit_dt": "2025-09-27 00:00:00 UTC",
+        "pnl_pct": -0.2731,
+        "exit_reason": "sell"
+      },
+      {
+        "entry_dt": "2025-10-02 00:00:00 UTC",
+        "exit_dt": "2025-10-17 00:00:00 UTC",
+        "pnl_pct": -4.9999,
+        "exit_reason": "SL"
+      },
+      {
+        "entry_dt": "2025-10-30 00:00:00 UTC",
+        "exit_dt": "2025-11-01 00:00:00 UTC",
+        "pnl_pct": -0.1956,
+        "exit_reason": "sell"
+      },
+      {
+        "entry_dt": "2025-12-05 00:00:00 UTC",
+        "exit_dt": "2025-12-15 00:00:00 UTC",
+        "pnl_pct": -4.9997,
+        "exit_reason": "SL"
+      },
+      {
+        "entry_dt": "2026-04-08 00:00:00 UTC",
+        "exit_dt": "2026-05-19 00:00:00 UTC",
+        "pnl_pct": 6.5753,
+        "exit_reason": "sell"
+      }
+    ],
+    "kept_trades": [
+      {
+        "entry_dt": "2026-01-05 00:00:00 UTC",
+        "exit_dt": "2026-01-23 00:00:00 UTC",
+        "pnl_pct": 0.3611,
+        "exit_reason": "sell"
+      },
+      {
+        "entry_dt": "2026-03-05 00:00:00 UTC",
+        "exit_dt": "2026-03-07 00:00:00 UTC",
+        "pnl_pct": -5.0003,
+        "exit_reason": "SL"
+      },
+      {
+        "entry_dt": "2026-06-18 00:00:00 UTC",
+        "exit_dt": "2026-06-24 00:00:00 UTC",
+        "pnl_pct": -5.0002,
+        "exit_reason": "SL"
+      },
+      {
+        "entry_dt": "2026-07-06 00:00:00 UTC",
+        "exit_dt": "2026-07-26 00:00:00 UTC",
+        "pnl_pct": -0.6324,
+        "exit_reason": "final_bar"
+      }
+    ]
+  },
+  "current_thresholds": {
+    "adx_gt": 25,
+    "rsi_buy_lt": 70,
+    "rsi_sell_gt": 70,
+    "macd_above_signal": true,
+    "obv_above_signal": true,
+    "stop_loss_pct": 5,
+    "take_profit_pct": 15
+  },
+  "tunables": [
+    {
+      "key": "adx_gt",
+      "current": 25,
+      "loosen": 20,
+      "tighten": 30,
+      "effect": "낮추면 거래↑/필터↓, 높이면 거래↓/필터↑"
+    },
+    {
+      "key": "rsi_buy_lt",
+      "current": 70,
+      "loosen": 80,
+      "tighten": 60,
+      "effect": "높이면 과열 진입 허용↑, 낮추면 과열 차단↑"
+    },
+    {
+      "key": "rsi_sell_gt",
+      "current": 70,
+      "loosen": 80,
+      "tighten": 65,
+      "effect": "낮추면 조기 청산↑, 높이면 보유 연장↑"
+    },
+    {
+      "key": "macd_above_signal",
+      "current": true,
+      "loosen": false,
+      "tighten": true,
+      "effect": "제거 시 진입↑, 유지 시 모멘텀 확인"
+    },
+    {
+      "key": "obv_above_signal",
+      "current": true,
+      "loosen": false,
+      "tighten": true,
+      "effect": "제거 시 진입↑, 유지 시 거래량 확인"
+    },
+    {
+      "key": "stop_loss_pct",
+      "current": 5,
+      "loosen": 7,
+      "tighten": 3,
+      "effect": "넓히면 SL 빈도↓·MDD 위험↑, 좁히면 반대"
+    },
+    {
+      "key": "take_profit_pct",
+      "current": 15,
+      "loosen": 20,
+      "tighten": 10,
+      "effect": "낮추면 TP 도달↑, 높이면 보유 연장"
+    }
+  ],
+  "revision_playbook": {
+    "trigger": "사용자가 '보고' 지시 후",
+    "steps": [
+      "reports/review-state/{slug}.json 및 최신 CSV로 사실 보고",
+      "승률·거래수·놓친 기회·SL/TP 분포를 기준으로 임계값 수정안 1~3개 제안",
+      "승인 시 create-strategy로 -v2 JSON 생성 → validate → backtest"
+    ],
+    "proposal_rules": [
+      {
+        "if": "거래수 과소(<=5) + 놓친 익절 존재",
+        "then": "필터 완화: adx_gt 25→20 또는 macd/obv 중 1개 제거"
+      },
+      {
+        "if": "승률 낮음 + SL 비중 높음",
+        "then": "필터 강화: adx_gt 25→30 또는 rsi_buy_lt 70→60"
+      },
+      {
+        "if": "TP 0회 + sell로 소익절",
+        "then": "take_profit_pct 15→10 검토"
+      },
+      {
+        "if": "MDD >> stop_loss",
+        "then": "진입 필터 강화 또는 stop_loss 유지+필터 강화"
+      },
+      {
+        "if": "표본 부족",
+        "then": "기간 확장 또는 필터 완화 후 재검증"
+      }
+    ]
+  },
+  "auto_propose_after_report": true,
+  "updated_at": "2026-07-27T16:16:57Z"
+}
