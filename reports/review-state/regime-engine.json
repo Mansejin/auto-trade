@@ -97,11 +97,12 @@
     }
   },
   "strategies": {
-    "bull": "strategies/regime-bull-trend-1d.json",
+    "bull": "strategies/regime-bull-trend-4h.json",
     "bear": "strategies/regime-bear-bounce-1d.json",
     "sideways": "strategies/regime-sideways-mr-1d.json",
     "h1v2": "strategies/krw-btc-1h-ema-adx23-obv-m5-v2.json",
-    "h1v3": "strategies/krw-btc-1h-ema-adx23-m5-v3.json"
+    "h1v3": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
+    "bull_1d_backup": "strategies/regime-bull-trend-1d.json"
   },
   "policyB_map": {
     "bull": "bull",
@@ -110,12 +111,10 @@
     "transition": "h1v2"
   },
   "compound": {
-    "policyA_1d": -11.3,
-    "policyB_evidence": -4.39,
-    "always_h1v2": -32.23,
-    "oracle_upper_bound": 48.52,
-    "bh_segment_chain": 101.12,
-    "note": "Compounds segment returns sequentially; not identical to one continuous backtest. Fees already inside each segment run."
+    "policyB_with_bull4h": 203.28,
+    "bh_segment_chain": 77.38,
+    "prev_policyB_evidence": -4.39,
+    "note": "Sequential segment compounds; live bot still on bear h1 v3"
   },
   "path": [
     {
@@ -290,12 +289,85 @@
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-27T17:48:48Z",
+  "updated_at": "2026-07-27T18:06:45Z",
   "improve": {
-    "bull": "EMA10/20 DC-only SL10 TP50; bull-seg compound ~+51.8 (was -12, then +41.5)",
-    "h1_live": "v3 no-OBV remains best on bear+w6+early composite; no redeploy needed this round",
-    "sideways": "short samples (29d/34d) still 0 trades — need longer range history",
-    "note": "TP>55 mainly lifts first mega-bull segment only → avoid TP70 overfitting",
-    "updated_at": "2026-07-27T17:48:48Z"
-  }
+    "bull4h": "EMA8/21 SL10 TP40 on 4h; bull-seg compound +192 vs BH +107",
+    "h1_live": "v3 unchanged (still best bear/w6/early composite)",
+    "policyB_compound": "203.28 (was -4.39)",
+    "updated_at": "2026-07-27T18:06:45Z"
+  },
+  "path_latest": [
+    {
+      "regime": "bull",
+      "start": "2023-10-31",
+      "end": "2024-08-08",
+      "ret": 106.35,
+      "bench": 72.85,
+      "n": 33,
+      "file": "/workspace/strategies/regime-bull-trend-4h.json"
+    },
+    {
+      "regime": "bear",
+      "start": "2024-08-09",
+      "end": "2024-11-02",
+      "ret": -13.77,
+      "bench": 13.62,
+      "n": 29,
+      "file": "/workspace/strategies/krw-btc-1h-ema-adx23-m5-v3.json"
+    },
+    {
+      "regime": "bull",
+      "start": "2024-11-03",
+      "end": "2025-04-24",
+      "ret": 34.17,
+      "bench": 38.2,
+      "n": 20,
+      "file": "/workspace/strategies/regime-bull-trend-4h.json"
+    },
+    {
+      "regime": "transition",
+      "start": "2025-04-25",
+      "end": "2025-05-28",
+      "ret": -2.25,
+      "bench": 12.34,
+      "n": 8,
+      "file": "/workspace/strategies/krw-btc-1h-ema-adx23-m5-v3.json"
+    },
+    {
+      "regime": "bull",
+      "start": "2025-05-29",
+      "end": "2025-11-26",
+      "ret": 5.58,
+      "bench": -13.42,
+      "n": 23,
+      "file": "/workspace/strategies/regime-bull-trend-4h.json"
+    },
+    {
+      "regime": "bear",
+      "start": "2025-11-27",
+      "end": "2026-03-23",
+      "ret": 16.18,
+      "bench": -24.85,
+      "n": 28,
+      "file": "/workspace/strategies/krw-btc-1h-ema-adx23-m5-v3.json"
+    },
+    {
+      "regime": "sideways",
+      "start": "2026-03-24",
+      "end": "2026-04-21",
+      "ret": 0.17,
+      "bench": 6.89,
+      "n": 3,
+      "file": "/workspace/strategies/krw-btc-1h-ema-adx23-m5-v3.json"
+    },
+    {
+      "regime": "bear",
+      "start": "2026-04-22",
+      "end": "2026-07-26",
+      "ret": 5.77,
+      "bench": -16.35,
+      "n": 23,
+      "file": "/workspace/strategies/krw-btc-1h-ema-adx23-m5-v3.json"
+    }
+  ]
 }
