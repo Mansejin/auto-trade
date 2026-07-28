@@ -15,6 +15,66 @@
 
 ---
 
+## 0. Friend scoreboard — CAGR / MDD / PF
+
+> Toolkit stdout only. Fees included. **No** slippage / order-book / partial fills.  
+> Past backtest ≠ future guarantee. Not investment advice.
+
+### Headline window (최근 ~6개월) `2026-01-26 ~ 2026-07-26` UTC · ACTIVE **m5-v6**
+
+| Metric | Value | vs Buy&Hold |
+|--------|------:|-------------|
+| **CAGR** | **+39.35%** | B&H total return **-26.37%** (same window) |
+| **MDD** | **-2.03%** | shallow drawdown vs big market drop |
+| **PF** (Profit Factor) | **4.18** | before fees label in toolkit: `(before fees)` on WR/PF lines; total return is after fees |
+| Total Return | +17.88% | |
+| Trades / Win Rate | 26 / 50% | |
+
+```text
+┌──────────────────────────────────────────────┐
+│  m5-v6 · 2026-01-26 → 2026-07-26 (UTC)       │
+│  CAGR  +39.35%                               │
+│  MDD    -2.03%                               │
+│  PF      4.18                                │
+│  Return +17.88%  |  B&H -26.37%  |  n=26     │
+└──────────────────────────────────────────────┘
+```
+
+### Longer look `2025-07-26 ~ 2026-07-26` (~1y)
+
+| Metric | m5-v6 |
+|--------|------:|
+| **CAGR** | **+13.98%** |
+| **MDD** | **-6.44%** |
+| **PF** | **2.15** |
+| Total Return | +13.98% |
+| Benchmark (B&H) | -40.97% |
+| Trades | 45 |
+
+### Honesty panel (감사팀이 강제하는 구간 — 낙관 금지)
+
+| Window | CAGR | MDD | PF | Total | B&H | Trades |
+|--------|-----:|----:|---:|------:|----:|-------:|
+| Early OOS `2025-07-26~2026-01-26` | -6.46% | -6.44% | 0.85 | -3.31% | -19.83% | 19 |
+| Holdout `2024-11-03~2025-04-24` | -3.16% | -11.84% | 1.04 | -1.50% | +37.95% | 21 |
+| Shallow bear stress `2024-08-09~2024-10-03` | -7.84% | -4.46% | 0.93 | -1.22% | -4.32% | 8 |
+
+**Read this like an auditor:** recent 6m looks strong (CAGR/MDD/PF), but early OOS PF&lt;1 and holdout underperforms a roaring B&H tape. That is why LIVE changes require `strategy_audit.py`, not vibes.
+
+### vs previous live candidate (same 6m window)
+
+| | **m5-v6 (ACTIVE)** | m5-v3 (prev) |
+|--|--:|--:|
+| CAGR | **+39.35%** | +51.19% |
+| MDD | **-2.03%** | -2.94% |
+| PF | **4.18** | 2.92 |
+| Total Return | +17.88% | +22.75% |
+| Trades | 26 | 42 |
+
+v3 has higher CAGR on this window; v6 was chosen after audit for better shallow-bear / OOS balance + higher PF, not max CAGR chase.
+
+---
+
 ## 1. System overview
 
 ```mermaid
@@ -269,7 +329,9 @@ docs/KRW-BTC-전략-공유요약.pdf
 ## 10. One-screen copy block
 
 ```text
-ACTIVE: m5-v6 | KRW-BTC 1h | BUY: EMA5xEMA20 + ADX>23 + RSI<55 | SELL: dead-cross OR RSI>70 | SL3/TP4.5
-Regime: bull/transition→4h trend | bear→m5-v6 | sideways→4h MR v4
-Gate: strategy_audit.py must pass before LIVE; automation = PR only
+ACTIVE m5-v6 | KRW-BTC 1h | EMA5x20 + ADX>23 + RSI<55 | SL3/TP4.5
+6m (26~07-26): CAGR +39.35% | MDD -2.03% | PF 4.18 | Ret +17.88% | B&H -26.37%
+1y (25-07~26-07): CAGR +13.98% | MDD -6.44% | PF 2.15 | B&H -40.97%
+Audit: early PF 0.85 / holdout lags B&H — not a free lunch
+Gate: strategy_audit.py before LIVE; automation = PR only
 ```
