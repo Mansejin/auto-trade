@@ -1,0 +1,51 @@
+{
+  "name": "Regime Bull MACD 4h SL10/TP40 v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 10,
+  "take_profit": 40,
+  "indicators": [
+    {
+      "type": "macd",
+      "ref": "macd",
+      "params": {
+        "fast": 12,
+        "slow": 26,
+        "signal_period": 9
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "macd.macd"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "macd.macd_signal"
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "macd.macd"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "macd.macd_signal"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+# section: strategy
+name,SMA 5/20 Golden Cross Filtered v2
+market,KRW-BTC
+timeframe,1d
+stop_loss_pct,5.0
+take_profit_pct,10.0
+indicators,"ma_short(moving_average, type=SMA, period=5), ma_long(moving_average, type=SMA, period=20), adx14(adx, period=14), rsi14(rsi, signal_period=9, signal_type=EMA, period=14), macd(macd, fast=12, slow=26, signal_period=9)"
+
+# section: disclaimer
+notice,Backtesting results are based on historical data and do not guarantee that the same or similar investment performance will be achieved in the future or in actual trading.
+
+# section: performance
+metric,value
+period,2025-07-26 ~ 2026-07-26 (UTC)
+initial_capital,1000000 KRW
+trading_bars,366
+warmup_bars,34
+benchmark_pct,-40.9149
+total_return_pct,-8.9712
+cagr_pct,-8.9712
+mdd_pct,-13.1488
+sharpe_portfolio,-0.7615
+sharpe_trade,-1.8868
+trades,5
+win_rate_before_fees_pct,20.00
+profit_factor_before_fees,0.452002
+sl_count,3
+tp_count,0
+sell_count,1
+final_bar_count,1
+total_fee,4805.5006
+
+# section: trades
+entry_dt,entry_price,exit_dt,exit_price,qty,pnl_pct,pnl_abs,exit_reason
+2025-12-05 00:00:00 UTC,137447000.00000000,2025-12-15 00:00:00 UTC,130575000.00000000,0.00727189,-4.9997,-50946.9413,SL
+2026-01-05 00:00:00 UTC,132386000.00000000,2026-01-15 00:00:00 UTC,142160000.00000000,0.00716524,+7.3830,69049.4618,sell
+2026-03-05 00:00:00 UTC,105374000.00000000,2026-03-07 00:00:00 UTC,100105000.00000000,0.00965697,-5.0003,-51874.7272,SL
+2026-06-18 00:00:00 UTC,97277000.00000000,2026-06-24 00:00:00 UTC,92413000.00000000,0.00992778,-5.0002,-49230.3222,SL
+2026-07-06 00:00:00 UTC,95673000.00000000,2026-07-26 00:00:00 UTC,95068000.00000000,0.00957991,-0.6324,-6709.4864,final_bar
+
+# section: signals
+timestamp,type
+2025-08-03 00:00:00 UTC,sell
+2025-08-14 00:00:00 UTC,sell
+2025-08-21 00:00:00 UTC,sell
+2025-09-27 00:00:00 UTC,sell
+2025-10-02 00:00:00 UTC,sell
+2025-10-03 00:00:00 UTC,sell
+2025-10-04 00:00:00 UTC,sell
+2025-10-05 00:00:00 UTC,sell
+2025-10-06 00:00:00 UTC,sell
+2025-10-07 00:00:00 UTC,sell
+2025-10-08 00:00:00 UTC,sell
+2025-10-09 00:00:00 UTC,sell
+2025-10-10 00:00:00 UTC,sell
+2025-10-17 00:00:00 UTC,sell
+2025-11-01 00:00:00 UTC,sell
+2025-12-05 00:00:00 UTC,buy
+2025-12-15 00:00:00 UTC,sell
+2026-01-05 00:00:00 UTC,buy
+2026-01-15 00:00:00 UTC,sell
+2026-01-23 00:00:00 UTC,sell
+2026-03-05 00:00:00 UTC,buy
+2026-03-29 00:00:00 UTC,sell
+2026-05-19 00:00:00 UTC,sell
+2026-06-18 00:00:00 UTC,buy
+2026-06-25 00:00:00 UTC,sell
+2026-07-06 00:00:00 UTC,buy

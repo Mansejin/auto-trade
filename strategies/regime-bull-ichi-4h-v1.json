@@ -1,0 +1,95 @@
+{
+  "name": "Regime Bull Ichimoku TK Cloud 4h SL10/TP40 v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 10,
+  "take_profit": 40,
+  "indicators": [
+    {
+      "type": "ichimoku_cloud",
+      "ref": "ichi",
+      "params": {
+        "conversion": 9,
+        "base": 26,
+        "leading_span2": 52
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ichi.Conversion"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Base"
+        }
+      },
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Leading1"
+        }
+      },
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Leading2"
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ichi.Conversion"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Base"
+        }
+      },
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "lt",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Leading1"
+        }
+      },
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "lt",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Leading2"
+        }
+      }
+    ]
+  }
+}

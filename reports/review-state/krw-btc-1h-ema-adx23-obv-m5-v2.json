@@ -1,0 +1,71 @@
+{
+  "_": "AI cheatsheet — read THIS only for report/revise.",
+  "slug": "krw-btc-1h-ema-adx23-obv-m5-v2",
+  "prev": "krw-btc-1h-gc-pdi-obv-m5",
+  "file": "strategies/krw-btc-1h-ema-adx23-obv-m5-v2.json",
+  "WINDOW": {
+    "candle_tf": "1h",
+    "tz": "UTC",
+    "start": "2026-01-26",
+    "end": "2026-07-26",
+    "label": "2026-01-26 00:00:00 UTC ~ 2026-07-26 00:00:00 UTC",
+    "how_chosen": "same 6mo window as m5-v1 for fair compare; multi-month sample for monthly+5% hyp",
+    "trading_bars": 4338,
+    "warmup_bars": 29
+  },
+  "RUNS": {
+    "v2": {
+      "csv": "reports/krw-btc-1h-ema-adx23-obv-m5-v2-20260727_165336.csv",
+      "run_utc": "2026-07-27T16:53:36Z",
+      "run_kst": "2026-07-28 01:53:36 KST"
+    },
+    "v1": {
+      "csv": "reports/krw-btc-1h-gc-pdi-obv-m5-20260727_163933.csv",
+      "run_utc": "2026-07-27T16:39:33Z",
+      "run_kst": "2026-07-28 01:39:33 KST"
+    }
+  },
+  "ctx": {
+    "mkt": "KRW-BTC",
+    "tf": "1h",
+    "ex": "kr",
+    "user_target": "monthly +5%",
+    "falsify_threshold_6mo_pct": 34.01,
+    "hyp": "After H1/H2/H3 sweep, EMA5/20 + ADX>23 + OBV (no PDI) + TP3.5 improves toward monthly+5% vs SMA+PDI baseline",
+    "falsify": "6mo total return < +34.01% OR trades/month < 5"
+  },
+  "logic": {
+    "buy_AND": ["EMA5 cross↑ EMA20", "ADX>23", "RSI<70", "OBV>signal"],
+    "sell_OR": ["EMA5 cross↓ EMA20", "RSI>70"],
+    "risk": {"SL": 2.5, "TP": 3.5},
+    "vs_v1": ["SMA→EMA", "add ADX>23", "drop PDI", "TP 4→3.5"]
+  },
+  "scoreboard": {
+    "_cols": ["ret%", "bench%", "CAGR%", "MDD%", "WR%", "n", "tpm", "PF", "SL", "TP", "sell"],
+    "v2": [19.74, -26.37, 43.80, -4.26, 50.0, 32, 5.3, 3.12, 0, 3, 28],
+    "v1": [-7.26, -26.37, -14.11, -9.37, 40.0, 81, 13.5, 1.02, 5, 2, 74],
+    "delta_v2_minus_v1": {"ret_pp": 27.0, "wr_pp": 10.0, "n": -49, "mdd_pp": 5.11, "sl": -5, "tp": 1}
+  },
+  "diag": {
+    "sweep": "H1(TP/sell) mild; H2(ADX) unlocked +ret; H3(RSI MR) weak/0 trades; noPDI+EMA peaked",
+    "best_path": "BASE -7.26 → H2_adx25 +4.76 → adx23_TP3 +11.49 → noPDI +17.14 → EMA+TP3.5 +19.74",
+    "m5_status": "still_falsified — +19.74 << +34.01 compounded 5%/mo over 6mo",
+    "bench": "beat B&H -26.37 by large margin on this window",
+    "caveat": "single 6mo window; n=32; sell still dominates exits; not evidence of live edge"
+  },
+  "sweep_top": [
+    {"tag": "v2=EMA_ADX23_TP3.5_noPDI", "ret": 19.74, "wr": 50, "n": 32, "mdd": -4.26},
+    {"tag": "NP_adx23_TP3_EMA", "ret": 18.92, "wr": 50, "n": 32, "mdd": -4.26},
+    {"tag": "NP_adx23_TP3_macd", "ret": 18.39, "wr": 59, "n": 37, "mdd": -4.44},
+    {"tag": "NP_adx23_TP3_noPDI", "ret": 17.14, "wr": 55, "n": 47, "mdd": -3.94},
+    {"tag": "H2b_adx23_TP3", "ret": 11.49, "wr": 57, "n": 28, "mdd": -3.27},
+    {"tag": "v1_BASE", "ret": -7.26, "wr": 40, "n": 81, "mdd": -9.37}
+  ],
+  "next_candidates_precomputed": [
+    {"id": "OOS", "goal": "check overfitting", "chg": ["different 6mo window or full 1y 1h"], "why": "+19.74 on one window only"},
+    {"id": "X1", "goal": "close gap to +34%", "chg": ["try 15m/30m higher frequency with ADX gate"], "why": "m5 still falsified"},
+    {"id": "X2", "goal": "more TP realization", "chg": ["TP 3.5→3 with ADX23 EMA"], "why": "sell 28 vs TP 3"}
+  ],
+  "auto_propose_after_report": true,
+  "updated_at": "2026-07-27T16:54:00Z"
+}

@@ -1,0 +1,14 @@
+{
+  "date": "2026-07-28",
+  "regime": "bear",
+  "close": 92497000.0,
+  "sma50": 94576080.0,
+  "sma200": 106722190.0,
+  "adx": 27.19,
+  "pdi": 14.02,
+  "mdi": 29.93,
+  "selected_file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+  "policy": "C_regime_v2",
+  "engine": "v2",
+  "live_trading": false
+}

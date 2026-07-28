@@ -1,0 +1,57 @@
+{
+  "updated_at": "2026-07-27T19:07:16Z",
+  "jobs_approx": 4470,
+  "baseline_v3": {
+    "b1": -10.08,
+    "bear_comp": 8.52,
+    "w6": 22.75,
+    "early": -8.96
+  },
+  "chosen_v7": {
+    "b1": 1.31,
+    "bear_comp": 13.7,
+    "w6": 10.4,
+    "early": 6.77,
+    "slug": "krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7"
+  },
+  "alt_v6": {
+    "b1": -1.22,
+    "bear_comp": 9.93,
+    "w6": 17.88,
+    "early": -3.31,
+    "slug": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6"
+  },
+  "sideways_v4": {
+    "sw1": 0.0,
+    "sw2": 3.9,
+    "sw3": 3.9,
+    "sw4": 1.19,
+    "comp": 9.24
+  },
+  "policy_compare": {
+    "C_v7_sw4": {
+      "compound": 204.91,
+      "bh": 73.3
+    },
+    "C_v6_sw4": {
+      "compound": 194.8,
+      "bh": 73.3
+    },
+    "C_v6b_sw4": {
+      "compound": 204.83,
+      "bh": 73.3
+    },
+    "C_v3_sw4": {
+      "compound": 191.01,
+      "bh": 73.3
+    },
+    "C_v7_sw4b": {
+      "compound": 214.37,
+      "bh": 73.3
+    },
+    "C_v3_sw3_old": {
+      "compound": 176.69,
+      "bh": 73.3
+    }
+  }
+}

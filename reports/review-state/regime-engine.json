@@ -1,0 +1,564 @@
+{
+  "_": "Regime engine cheatsheet — low token. Backtest-only; no live trading.",
+  "goal_hyp": "Regime-matched strategy selection produces more consistent gains across bull/bear/sideways than a single static strategy",
+  "falsify": "regime-switch compound <= always-one-strat compound on the labeled segments, or matched strats systematically lose to B&H in their home regime without improvement after revision",
+  "WINDOW": {
+    "data_from": "2023-04-15",
+    "data_to": "2026-07-27",
+    "bt_end_cap": "2026-07-26",
+    "tz": "UTC",
+    "regime_tf": "1d",
+    "engine": "v2"
+  },
+  "method": {
+    "version": "v2",
+    "tf": "1d",
+    "indicators": [
+      "ADX14",
+      "SMA50",
+      "SMA200",
+      "DI+/DI-"
+    ],
+    "rules": {
+      "sideways": "ADX<20",
+      "bull": "ADX>=20 & close>SMA200 & SMA50>SMA200 & +DI>=-DI",
+      "bear": "ADX>=20 & close<SMA200 & SMA50<SMA200 & close<SMA50 & -DI>+DI",
+      "transition": "else (includes recovery: close>SMA50 while structure still bearish)",
+      "min_run_days": 14
+    },
+    "note": "v2 splits fake-bear rising recoveries into transition/sideways"
+  },
+  "segments": [
+    {
+      "start": "2023-10-31",
+      "end": "2024-01-03",
+      "regime": "bull",
+      "days": 65,
+      "ret_pct": 24.56
+    },
+    {
+      "start": "2024-01-04",
+      "end": "2024-02-11",
+      "regime": "sideways",
+      "days": 39,
+      "ret_pct": 9.67
+    },
+    {
+      "start": "2024-02-12",
+      "end": "2024-04-16",
+      "regime": "bull",
+      "days": 65,
+      "ret_pct": 42.68
+    },
+    {
+      "start": "2024-04-17",
+      "end": "2024-05-14",
+      "regime": "transition",
+      "days": 28,
+      "ret_pct": -5.38
+    },
+    {
+      "start": "2024-05-15",
+      "end": "2024-06-18",
+      "regime": "bull",
+      "days": 35,
+      "ret_pct": -0.5
+    },
+    {
+      "start": "2024-06-19",
+      "end": "2024-07-14",
+      "regime": "transition",
+      "days": 26,
+      "ret_pct": -6.69
+    },
+    {
+      "start": "2024-07-15",
+      "end": "2024-08-08",
+      "regime": "bull",
+      "days": 25,
+      "ret_pct": -5.23
+    },
+    {
+      "start": "2024-08-09",
+      "end": "2024-10-03",
+      "regime": "bear",
+      "days": 56,
+      "ret_pct": -3.62
+    },
+    {
+      "start": "2024-10-04",
+      "end": "2024-10-17",
+      "regime": "sideways",
+      "days": 14,
+      "ret_pct": 9.45
+    },
+    {
+      "start": "2024-10-18",
+      "end": "2024-11-02",
+      "regime": "transition",
+      "days": 16,
+      "ret_pct": 4.15
+    },
+    {
+      "start": "2024-11-03",
+      "end": "2024-12-17",
+      "regime": "bull",
+      "days": 45,
+      "ret_pct": 61.89
+    },
+    {
+      "start": "2024-12-18",
+      "end": "2025-01-06",
+      "regime": "transition",
+      "days": 20,
+      "ret_pct": 1.7
+    },
+    {
+      "start": "2025-01-07",
+      "end": "2025-02-05",
+      "regime": "sideways",
+      "days": 30,
+      "ret_pct": 4.6
+    },
+    {
+      "start": "2025-02-06",
+      "end": "2025-07-11",
+      "regime": "transition",
+      "days": 156,
+      "ret_pct": 4.51
+    },
+    {
+      "start": "2025-07-12",
+      "end": "2025-11-03",
+      "regime": "bull",
+      "days": 115,
+      "ret_pct": -0.69
+    },
+    {
+      "start": "2025-11-04",
+      "end": "2025-11-26",
+      "regime": "transition",
+      "days": 23,
+      "ret_pct": -11.45
+    },
+    {
+      "start": "2025-11-27",
+      "end": "2026-01-03",
+      "regime": "bear",
+      "days": 38,
+      "ret_pct": -4.28
+    },
+    {
+      "start": "2026-01-04",
+      "end": "2026-01-19",
+      "regime": "transition",
+      "days": 16,
+      "ret_pct": 3.49
+    },
+    {
+      "start": "2026-01-20",
+      "end": "2026-03-23",
+      "regime": "bear",
+      "days": 63,
+      "ret_pct": -20.18
+    },
+    {
+      "start": "2026-03-24",
+      "end": "2026-04-21",
+      "regime": "sideways",
+      "days": 29,
+      "ret_pct": 7.51
+    },
+    {
+      "start": "2026-04-22",
+      "end": "2026-05-25",
+      "regime": "transition",
+      "days": 34,
+      "ret_pct": -0.87
+    },
+    {
+      "start": "2026-05-26",
+      "end": "2026-07-27",
+      "regime": "bear",
+      "days": 63,
+      "ret_pct": -15.95
+    }
+  ],
+  "current": {
+    "date": "2026-07-27",
+    "regime": "bear",
+    "close": 94494000.0,
+    "sma50": 94647680.0,
+    "sma200": 106933695.0,
+    "adx": 25.87,
+    "pdi": 16.26,
+    "mdi": 24.04,
+    "policy": "C_v6_audit_gated",
+    "selected": {
+      "slug": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6",
+      "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "reason": "Audit Team REJECTED overnight v7 (G1 primary trades=7<8). v6 passed LIVE_OK_WITH_HUMAN vs v3."
+    }
+  },
+  "strategies": {
+    "bull": "strategies/regime-bull-trend-4h-v2.json",
+    "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+    "sideways": "strategies/regime-sideways-mr-4h-v5.json",
+    "transition": "strategies/regime-bull-trend-4h-v2.json",
+    "bear_v6_alt": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+    "bear_v6b_alt": "strategies/krw-btc-1h-ema-adx23-rsi60-di-obv-m5-v6b.json",
+    "bear_v3_prev": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
+    "sideways_v4b_alt": "strategies/regime-sideways-mr-4h-v4b.json",
+    "sideways_v3_prev": "strategies/regime-sideways-mr-4h-v3.json",
+    "bear_v7_rejected": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+    "bull_v1_backup": "strategies/regime-bull-trend-4h.json",
+    "sideways_v4_prev": "strategies/regime-sideways-mr-4h-v4.json",
+    "bull_alt_ae4_archive": [
+      "strategies/regime-bull-macd-4h-v1.json",
+      "strategies/regime-bull-di-4h-v1.json",
+      "strategies/regime-bull-ichi-4h-v1.json",
+      "strategies/regime-bull-sma-4h-v1.json",
+      "strategies/regime-bull-sma1050-4h-v1.json",
+      "strategies/regime-bull-cci-4h-v1.json",
+      "strategies/regime-bull-stochrsi-4h-v1.json",
+      "strategies/regime-bull-obv-4h-v1.json"
+    ]
+  },
+  "policyC_map": {
+    "bull": "bull",
+    "bear": "bear",
+    "sideways": "sideways",
+    "transition": "transition"
+  },
+  "compound": {
+    "policyC_v7_sw4": 204.91,
+    "policyC_v7_sw4b": 214.37,
+    "policyC_v3_sw3_old": 176.69,
+    "bh_segment_chain": 73.3,
+    "note": "Overnight grid: ~400 bear x 6 windows + ~220 sideways x 4 + local densify. Chose ADX-gated sideways v4 (robust) over v4b (+214) slightly higher but no ADX.",
+    "policyC_5y_v2bull_v5sw": 425.85,
+    "policyC_5y_v2bull_v4sw": 415.41,
+    "bh_segment_chain_5y": 87.46
+  },
+  "path_latest": [
+    {
+      "start": "2023-10-31",
+      "end": "2024-01-03",
+      "regime": "bull",
+      "days": 65,
+      "ret_pct": 24.56,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": 15.07,
+      "bench": 29.88,
+      "n": 10
+    },
+    {
+      "start": "2024-01-04",
+      "end": "2024-02-11",
+      "regime": "sideways",
+      "days": 39,
+      "ret_pct": 9.67,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 0.0,
+      "bench": 11.97,
+      "n": 0
+    },
+    {
+      "start": "2024-02-12",
+      "end": "2024-04-16",
+      "regime": "bull",
+      "days": 65,
+      "ret_pct": 42.68,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": 38.17,
+      "bench": 46.09,
+      "n": 5
+    },
+    {
+      "start": "2024-04-17",
+      "end": "2024-05-14",
+      "regime": "transition",
+      "days": 28,
+      "ret_pct": -5.38,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": -3.65,
+      "bench": -8.41,
+      "n": 3
+    },
+    {
+      "start": "2024-05-15",
+      "end": "2024-06-18",
+      "regime": "bull",
+      "days": 35,
+      "ret_pct": -0.5,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": 0.22,
+      "bench": 6.22,
+      "n": 4
+    },
+    {
+      "start": "2024-06-19",
+      "end": "2024-07-14",
+      "regime": "transition",
+      "days": 26,
+      "ret_pct": -6.69,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": -0.69,
+      "bench": -9.67,
+      "n": 3
+    },
+    {
+      "start": "2024-07-15",
+      "end": "2024-08-08",
+      "regime": "bull",
+      "days": 25,
+      "ret_pct": -5.23,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": -0.73,
+      "bench": -8.83,
+      "n": 1
+    },
+    {
+      "start": "2024-08-09",
+      "end": "2024-10-03",
+      "regime": "bear",
+      "days": 56,
+      "ret_pct": -3.62,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 1.31,
+      "bench": -4.32,
+      "n": 4
+    },
+    {
+      "start": "2024-10-04",
+      "end": "2024-10-17",
+      "regime": "sideways",
+      "days": 14,
+      "ret_pct": 9.45,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 3.9,
+      "bench": 11.21,
+      "n": 1
+    },
+    {
+      "start": "2024-10-18",
+      "end": "2024-11-02",
+      "regime": "transition",
+      "days": 16,
+      "ret_pct": 4.15,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": 3.6,
+      "bench": 5.99,
+      "n": 1
+    },
+    {
+      "start": "2024-11-03",
+      "end": "2024-12-17",
+      "regime": "bull",
+      "days": 45,
+      "ret_pct": 61.89,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": 44.99,
+      "bench": 61.48,
+      "n": 4
+    },
+    {
+      "start": "2024-12-18",
+      "end": "2025-01-06",
+      "regime": "transition",
+      "days": 20,
+      "ret_pct": 1.7,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": 2.02,
+      "bench": -4.82,
+      "n": 2
+    },
+    {
+      "start": "2025-01-07",
+      "end": "2025-02-05",
+      "regime": "sideways",
+      "days": 30,
+      "ret_pct": 4.6,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 3.9,
+      "bench": 2.95,
+      "n": 1
+    },
+    {
+      "start": "2025-02-06",
+      "end": "2025-07-11",
+      "regime": "transition",
+      "days": 156,
+      "ret_pct": 4.51,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": 7.67,
+      "bench": 4.53,
+      "n": 19
+    },
+    {
+      "start": "2025-07-12",
+      "end": "2025-11-03",
+      "regime": "bull",
+      "days": 115,
+      "ret_pct": -0.69,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": 2.37,
+      "bench": 1.6,
+      "n": 16
+    },
+    {
+      "start": "2025-11-04",
+      "end": "2025-11-26",
+      "regime": "transition",
+      "days": 23,
+      "ret_pct": -11.45,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": -4.55,
+      "bench": -18.78,
+      "n": 3
+    },
+    {
+      "start": "2025-11-27",
+      "end": "2026-01-03",
+      "regime": "bear",
+      "days": 38,
+      "ret_pct": -4.28,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 4.4,
+      "bench": -3.43,
+      "n": 1
+    },
+    {
+      "start": "2026-01-04",
+      "end": "2026-01-19",
+      "regime": "transition",
+      "days": 16,
+      "ret_pct": 3.49,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": 3.06,
+      "bench": 4.32,
+      "n": 1
+    },
+    {
+      "start": "2026-01-20",
+      "end": "2026-03-23",
+      "regime": "bear",
+      "days": 63,
+      "ret_pct": -20.18,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 4.44,
+      "bench": -25.85,
+      "n": 3
+    },
+    {
+      "start": "2026-03-24",
+      "end": "2026-04-21",
+      "regime": "sideways",
+      "days": 29,
+      "ret_pct": 7.51,
+      "file": "strategies/regime-sideways-mr-4h-v4.json",
+      "ret": 1.19,
+      "bench": 6.5,
+      "n": 1
+    },
+    {
+      "start": "2026-04-22",
+      "end": "2026-05-25",
+      "regime": "transition",
+      "days": 34,
+      "ret_pct": -0.87,
+      "file": "strategies/regime-bull-trend-4h.json",
+      "ret": -2.38,
+      "bench": 0.36,
+      "n": 5
+    },
+    {
+      "start": "2026-05-26",
+      "end": "2026-07-27",
+      "regime": "bear",
+      "days": 63,
+      "ret_pct": -15.95,
+      "file": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+      "ret": 2.93,
+      "bench": -17.16,
+      "n": 2
+    }
+  ],
+  "diag": {
+    "current_cycle": "BEAR engine v2; live promoted to m5-v7",
+    "shallow_bear_fix": "b1 2024-08-09..10-03: v3 -10.08% -> v7 +1.31%",
+    "early_oos": "2025-07-26..2026-01-26: v3 -8.96% -> v7 +6.77%",
+    "w6_tradeoff": "2026-01-26..07-26: v3 +22.75% (42 trades) -> v7 +10.40% (7 trades) — fewer trades, still + vs BH -26%",
+    "sideways_fix": "sw1 2024-01: v3 -3.71% -> v4 0.00% (no trade) / v4b +3.10%; policy uses v4",
+    "goal_status": "policyC compound improved 176.7 -> 204.9; shallow-bear & sideways weaknesses reduced"
+  },
+  "live_trading": false,
+  "live_note": "upbit-strategy-toolkit is backtest-only. Bot deploy is separate JSON mount.",
+  "next": [
+    {
+      "id": "AE4",
+      "goal": "bull participation family beyond EMA",
+      "chg": "Researched; no promote — keep bull-v2 (see reports/improve/20260728-ae4-bull-family.md)",
+      "status": "done"
+    },
+    {
+      "id": "AE5",
+      "goal": "desk shows current regime",
+      "chg": "Desk ticker + logs/regime-current.json from switcher",
+      "status": "shipping"
+    }
+  ],
+  "auto_propose_after_report": true,
+  "updated_at": "2026-07-28T19:37:42Z",
+  "improve": {
+    "sweep_jobs": "~4470 backtests (selected grid + densify + policy path)",
+    "bear": "m5-v7 ADX25 RSI52 SL3 TP4.5",
+    "sideways": "mr-4h-v4 RSI30/60 ADX<30 BB2.2 SL2.5 TP4",
+    "policyC_compound": 204.91,
+    "updated_at": "2026-07-28T19:37:42Z",
+    "audit_team": "enabled",
+    "active_after_audit": "m5-v6",
+    "five_year_bull_v2": true,
+    "sideways_v5": true,
+    "live_risk_caps": true,
+    "ae4": "falsified_for_promotion_keep_bull_v2",
+    "ae5": "desk_regime_ticker",
+    "ae1": "user_reported_done"
+  },
+  "audit": {
+    "policy": "reports/review-state/audit-policy.json",
+    "latest": {
+      "v7_vs_v3": "REJECT (G1 sparsity)",
+      "v6_vs_v3": "LIVE_OK_WITH_HUMAN",
+      "v6b_vs_v3": "HOLD (G5 complexity tax)",
+      "v6c_vs_v3": "HOLD (G5 complexity tax)"
+    },
+    "updated_at": "2026-07-27T19:29:17Z"
+  },
+  "five_year": {
+    "window": "2021-07-27..2026-07-26",
+    "always_v6_full": {
+      "ret": -14.18,
+      "cagr": -3.01,
+      "mdd": -33.28,
+      "pf": 1.06,
+      "bh": 117.89
+    },
+    "policyC_v1_compound": 336.25,
+    "policyC_v2_compound": 415.41,
+    "bh_chain": 87.46,
+    "verdict": "always-v6 falsified; regime policy retained; LIVE stays v6 while BEAR",
+    "report": "reports/five-year/README.md",
+    "updated_at": "2026-07-28T18:00:35Z"
+  },
+  "live_risk": {
+    "MAX_ORDER_KRW": 15000,
+    "MAX_DAILY_LOSS_KRW": 5000,
+    "updated_at": "2026-07-28T18:34:26Z"
+  },
+  "regime_switch": {
+    "cron_utc": "20 15 * * *",
+    "script": "scripts/remote_regime_switch.py",
+    "status": "installed"
+  }
+}

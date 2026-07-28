@@ -1,0 +1,301 @@
+{
+  "map": {
+    "bull": "strategies/regime-bull-macd-4h-v1.json",
+    "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+    "sideways": "strategies/regime-sideways-mr-4h-v5.json",
+    "transition": "strategies/regime-bull-macd-4h-v1.json"
+  },
+  "compound_pct": 246.2,
+  "bh_chain_pct": 87.46,
+  "n_segs": 36,
+  "path": [
+    {
+      "start": "2021-07-27",
+      "end": "2021-09-30",
+      "regime": "transition",
+      "bh": 24.3,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -0.75
+    },
+    {
+      "start": "2021-10-01",
+      "end": "2021-12-03",
+      "regime": "bull",
+      "bh": 31.25,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 1.3
+    },
+    {
+      "start": "2021-12-04",
+      "end": "2022-01-17",
+      "regime": "transition",
+      "bh": -21.2,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -9.08
+    },
+    {
+      "start": "2022-01-18",
+      "end": "2022-03-08",
+      "regime": "bear",
+      "bh": -7.45,
+      "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "ret": -4.36
+    },
+    {
+      "start": "2022-03-09",
+      "end": "2022-05-08",
+      "regime": "sideways",
+      "bh": -11.19,
+      "file": "strategies/regime-sideways-mr-4h-v5.json",
+      "ret": 9.22
+    },
+    {
+      "start": "2022-05-09",
+      "end": "2022-09-29",
+      "regime": "bear",
+      "bh": -37.52,
+      "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "ret": 1.22
+    },
+    {
+      "start": "2022-09-30",
+      "end": "2022-11-07",
+      "regime": "sideways",
+      "bh": 5.54,
+      "file": "strategies/regime-sideways-mr-4h-v5.json",
+      "ret": 3.22
+    },
+    {
+      "start": "2022-11-08",
+      "end": "2023-01-10",
+      "regime": "bear",
+      "bh": -24.51,
+      "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "ret": -2.51
+    },
+    {
+      "start": "2023-01-11",
+      "end": "2023-02-17",
+      "regime": "transition",
+      "bh": 41.0,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 8.25
+    },
+    {
+      "start": "2023-02-18",
+      "end": "2023-05-03",
+      "regime": "bull",
+      "bh": 20.21,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 25.08
+    },
+    {
+      "start": "2023-05-04",
+      "end": "2023-06-19",
+      "regime": "sideways",
+      "bh": -10.62,
+      "file": "strategies/regime-sideways-mr-4h-v5.json",
+      "ret": 9.38
+    },
+    {
+      "start": "2023-06-20",
+      "end": "2023-07-26",
+      "regime": "bull",
+      "bh": 7.39,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -3.56
+    },
+    {
+      "start": "2023-07-27",
+      "end": "2023-10-02",
+      "regime": "sideways",
+      "bh": 0.27,
+      "file": "strategies/regime-sideways-mr-4h-v5.json",
+      "ret": 1.86
+    },
+    {
+      "start": "2023-10-03",
+      "end": "2023-10-26",
+      "regime": "transition",
+      "bh": 24.76,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 20.48
+    },
+    {
+      "start": "2023-10-27",
+      "end": "2024-01-03",
+      "regime": "bull",
+      "bh": 31.24,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 17.72
+    },
+    {
+      "start": "2024-01-04",
+      "end": "2024-02-11",
+      "regime": "sideways",
+      "bh": 11.97,
+      "file": "strategies/regime-sideways-mr-4h-v5.json",
+      "ret": 0.0
+    },
+    {
+      "start": "2024-02-12",
+      "end": "2024-04-16",
+      "regime": "bull",
+      "bh": 46.09,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 11.86
+    },
+    {
+      "start": "2024-04-17",
+      "end": "2024-05-14",
+      "regime": "transition",
+      "bh": -8.41,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -0.19
+    },
+    {
+      "start": "2024-05-15",
+      "end": "2024-06-18",
+      "regime": "bull",
+      "bh": 6.22,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -1.72
+    },
+    {
+      "start": "2024-06-19",
+      "end": "2024-07-14",
+      "regime": "transition",
+      "bh": -9.67,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -5.68
+    },
+    {
+      "start": "2024-07-15",
+      "end": "2024-08-08",
+      "regime": "bull",
+      "bh": -8.83,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -2.5
+    },
+    {
+      "start": "2024-08-09",
+      "end": "2024-10-03",
+      "regime": "bear",
+      "bh": -4.32,
+      "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "ret": -1.22
+    },
+    {
+      "start": "2024-10-04",
+      "end": "2024-10-17",
+      "regime": "sideways",
+      "bh": 11.21,
+      "file": "strategies/regime-sideways-mr-4h-v5.json",
+      "ret": 3.9
+    },
+    {
+      "start": "2024-10-18",
+      "end": "2024-11-02",
+      "regime": "transition",
+      "bh": 5.99,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 6.21
+    },
+    {
+      "start": "2024-11-03",
+      "end": "2024-12-17",
+      "regime": "bull",
+      "bh": 61.48,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 46.72
+    },
+    {
+      "start": "2024-12-18",
+      "end": "2025-01-06",
+      "regime": "transition",
+      "bh": -4.82,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -0.32
+    },
+    {
+      "start": "2025-01-07",
+      "end": "2025-02-05",
+      "regime": "sideways",
+      "bh": 2.95,
+      "file": "strategies/regime-sideways-mr-4h-v5.json",
+      "ret": 3.9
+    },
+    {
+      "start": "2025-02-06",
+      "end": "2025-07-11",
+      "regime": "transition",
+      "bh": 4.53,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -3.21
+    },
+    {
+      "start": "2025-07-12",
+      "end": "2025-11-03",
+      "regime": "bull",
+      "bh": 1.6,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -0.21
+    },
+    {
+      "start": "2025-11-04",
+      "end": "2025-11-26",
+      "regime": "transition",
+      "bh": -18.78,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": -10.19
+    },
+    {
+      "start": "2025-11-27",
+      "end": "2026-01-03",
+      "regime": "bear",
+      "bh": -3.43,
+      "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "ret": 1.07
+    },
+    {
+      "start": "2026-01-04",
+      "end": "2026-01-19",
+      "regime": "transition",
+      "bh": 4.32,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 5.29
+    },
+    {
+      "start": "2026-01-20",
+      "end": "2026-03-23",
+      "regime": "bear",
+      "bh": -25.85,
+      "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "ret": 6.56
+    },
+    {
+      "start": "2026-03-24",
+      "end": "2026-04-21",
+      "regime": "sideways",
+      "bh": 6.5,
+      "file": "strategies/regime-sideways-mr-4h-v5.json",
+      "ret": 1.19
+    },
+    {
+      "start": "2026-04-22",
+      "end": "2026-05-25",
+      "regime": "transition",
+      "bh": 0.36,
+      "file": "strategies/regime-bull-macd-4h-v1.json",
+      "ret": 0.35
+    },
+    {
+      "start": "2026-05-26",
+      "end": "2026-07-26",
+      "regime": "bear",
+      "bh": -17.16,
+      "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "ret": 3.33
+    }
+  ]
+}

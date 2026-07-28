@@ -1,0 +1,50 @@
+{
+  "name": "Regime Bull OBV Signal 4h SL10/TP40 v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 10,
+  "take_profit": 40,
+  "indicators": [
+    {
+      "type": "obv",
+      "ref": "obv",
+      "params": {
+        "signal_period": 20,
+        "signal_type": "EMA"
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "obv.obv"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "obv.obv_signal"
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "obv.obv"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "obv.obv_signal"
+        }
+      }
+    ]
+  }
+}

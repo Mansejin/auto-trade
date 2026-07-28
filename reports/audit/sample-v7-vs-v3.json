@@ -1,0 +1,190 @@
+{
+  "role": "audit_team",
+  "stance": "critical / falsification-first",
+  "generated_at": "2026-07-27T19:27:20Z",
+  "candidate": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+  "baseline": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
+  "n_trials": 4470,
+  "complexity": {
+    "buy_conditions": 3,
+    "indicators": 4,
+    "stop_loss": 3.0,
+    "take_profit": 4.5,
+    "timeframe": "1h"
+  },
+  "windows": {
+    "primary": {
+      "meta": {
+        "start": "2026-01-26",
+        "end": "2026-07-26",
+        "note": "Recent 6mo — operational relevance; NOT sacred"
+      },
+      "candidate": {
+        "total_return_pct": 10.4,
+        "benchmark_pct": -26.37,
+        "mdd_pct": -1.82,
+        "trades": 7,
+        "raw_ok": true
+      },
+      "baseline": {
+        "total_return_pct": 22.75,
+        "benchmark_pct": -26.37,
+        "mdd_pct": -2.94,
+        "trades": 42,
+        "raw_ok": true
+      }
+    },
+    "early_oos": {
+      "meta": {
+        "start": "2025-07-26",
+        "end": "2026-01-26",
+        "note": "Pre-primary OOS — falsify recent-fit"
+      },
+      "candidate": {
+        "total_return_pct": 6.77,
+        "benchmark_pct": -19.83,
+        "mdd_pct": -2.93,
+        "trades": 4,
+        "raw_ok": true
+      },
+      "baseline": {
+        "total_return_pct": -8.96,
+        "benchmark_pct": -19.83,
+        "mdd_pct": -15.36,
+        "trades": 42,
+        "raw_ok": true
+      }
+    },
+    "holdout": {
+      "meta": {
+        "start": "2024-11-03",
+        "end": "2025-04-24",
+        "note": "Frozen holdout — do not tune on this window"
+      },
+      "candidate": {
+        "total_return_pct": -5.11,
+        "benchmark_pct": 37.95,
+        "mdd_pct": -5.11,
+        "trades": 4,
+        "raw_ok": true
+      },
+      "baseline": {
+        "total_return_pct": -11.94,
+        "benchmark_pct": 37.95,
+        "mdd_pct": -16.5,
+        "trades": 45,
+        "raw_ok": true
+      }
+    },
+    "stress_shallow_bear": {
+      "meta": {
+        "start": "2024-08-09",
+        "end": "2024-10-03",
+        "note": "Known weak spot for aggressive 1h mean-reversion/bounce"
+      },
+      "candidate": {
+        "total_return_pct": 1.31,
+        "benchmark_pct": -4.32,
+        "mdd_pct": -3.46,
+        "trades": 4,
+        "raw_ok": true
+      },
+      "baseline": {
+        "total_return_pct": -10.08,
+        "benchmark_pct": -4.32,
+        "mdd_pct": -11.97,
+        "trades": 14,
+        "raw_ok": true
+      }
+    },
+    "stress_deep_bear": {
+      "meta": {
+        "start": "2026-01-20",
+        "end": "2026-03-23",
+        "note": "Deep decline stress"
+      },
+      "candidate": {
+        "total_return_pct": 4.44,
+        "benchmark_pct": -25.85,
+        "mdd_pct": -1.82,
+        "trades": 3,
+        "raw_ok": true
+      },
+      "baseline": {
+        "total_return_pct": 11.55,
+        "benchmark_pct": -25.85,
+        "mdd_pct": -2.94,
+        "trades": 16,
+        "raw_ok": true
+      }
+    }
+  },
+  "gates": [
+    {
+      "id": "G1",
+      "name": "min_trades_primary",
+      "pass": false,
+      "detail": "primary trades=7 min=8",
+      "severity": "Too few trades — result may be luck / untradeable sparsity"
+    },
+    {
+      "id": "G2",
+      "name": "holdout_not_collapse",
+      "pass": true,
+      "detail": "holdout cand=-5.11% base=-11.94% underperform=-6.83pp max=8.0",
+      "critique": null
+    },
+    {
+      "id": "G3",
+      "name": "early_oos",
+      "pass": true,
+      "detail": "early_oos cand=6.77% base=-8.96% underperform=-15.73pp max=6.0",
+      "critique": null
+    },
+    {
+      "id": "G4",
+      "name": "no_shallow_bear_regression",
+      "pass": true,
+      "detail": "stress_shallow_bear cand=1.31% base=-10.08%",
+      "critique": null
+    },
+    {
+      "id": "G5",
+      "name": "complexity_tax",
+      "pass": true,
+      "detail": "no complexity tax (buy=3 ind=4)",
+      "critique": null
+    },
+    {
+      "id": "G6",
+      "name": "mdd_guard",
+      "pass": true,
+      "detail": "primary |MDD| cand=1.82% base=2.94% worse=-1.12pp max=5.0",
+      "critique": null
+    },
+    {
+      "id": "G8",
+      "name": "multiple_testing_suspicion",
+      "pass": true,
+      "detail": "n_trials=4470>= 200; tight underperform max=3.0pp on holdout+early_oos; checks=[True, True]",
+      "critique": null
+    }
+  ],
+  "decision": {
+    "verdict": "REJECT",
+    "reason": "Hard reject gate failed (G1 and/or G4)"
+  },
+  "critiques": [],
+  "forbidden_claims": [
+    "guaranteed",
+    "consistent profits",
+    "will continue",
+    "safe"
+  ],
+  "human_required_for_live": true,
+  "disclaimer": [
+    "Audit uses historical backtests only; future results are not guaranteed.",
+    "Slippage / liquidity / partial fills are not modeled.",
+    "This is not investment advice and does not recommend live trading."
+  ]
+}
