@@ -1,0 +1,20 @@
+Installed 42 packages in 90ms
+Period      2021-07-27 ~ 2022-07-26 (UTC) (trading bars: 8726, warmup bars: 29)
+Benchmark   -35.28%
+Total Return -15.56%
+CAGR        -15.60%
+MDD         -20.97%
+Sharpe      -1.20  (Rf=0, portfolio / full equity curve)
+Sharpe      -3.50  (Rf=0, trades / position holding periods only)
+Trades      57  Win Rate 21% (before fees)
+Profit Factor  0.73 (before fees)
+SL 2 / TP 4 / sell 51 / final_bar 0
+Total Fees  52,901
+
+CSV → /workspace/reports/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6-20260728_065818.csv
+
+First Entry: 2021-07-29 UTC @ 46,111,000 → 2021-07-29 UTC (-0.14%) [sell]
+Best Trade: 2022-07-19 UTC @ 28,836,000 → 2022-07-19 UTC (+4.50%) [TP]
+Worst Trade: 2022-05-11 UTC @ 41,824,000 → 2022-05-11 UTC (-3.00%) [SL]
+
+Backtesting results are based on historical data and do not guarantee that the same or similar investment performance will be achieved in the future or in actual trading.

@@ -201,16 +201,17 @@
     }
   },
   "strategies": {
-    "bull": "strategies/regime-bull-trend-4h.json",
+    "bull": "strategies/regime-bull-trend-4h-v2.json",
     "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
     "sideways": "strategies/regime-sideways-mr-4h-v4.json",
-    "transition": "strategies/regime-bull-trend-4h.json",
+    "transition": "strategies/regime-bull-trend-4h-v2.json",
     "bear_v6_alt": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
     "bear_v6b_alt": "strategies/krw-btc-1h-ema-adx23-rsi60-di-obv-m5-v6b.json",
     "bear_v3_prev": "strategies/krw-btc-1h-ema-adx23-m5-v3.json",
     "sideways_v4b_alt": "strategies/regime-sideways-mr-4h-v4b.json",
     "sideways_v3_prev": "strategies/regime-sideways-mr-4h-v3.json",
-    "bear_v7_rejected": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json"
+    "bear_v7_rejected": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
+    "bull_v1_backup": "strategies/regime-bull-trend-4h.json"
   },
   "policyC_map": {
     "bull": "bull",
@@ -497,15 +498,16 @@
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-27T19:29:17Z",
+  "updated_at": "2026-07-28T18:00:35Z",
   "improve": {
     "sweep_jobs": "~4470 backtests (selected grid + densify + policy path)",
     "bear": "m5-v7 ADX25 RSI52 SL3 TP4.5",
     "sideways": "mr-4h-v4 RSI30/60 ADX<30 BB2.2 SL2.5 TP4",
     "policyC_compound": 204.91,
-    "updated_at": "2026-07-27T19:29:17Z",
+    "updated_at": "2026-07-28T18:00:35Z",
     "audit_team": "enabled",
-    "active_after_audit": "m5-v6"
+    "active_after_audit": "m5-v6",
+    "five_year_bull_v2": true
   },
   "audit": {
     "policy": "reports/review-state/audit-policy.json",
@@ -516,5 +518,21 @@
       "v6c_vs_v3": "HOLD (G5 complexity tax)"
     },
     "updated_at": "2026-07-27T19:29:17Z"
+  },
+  "five_year": {
+    "window": "2021-07-27..2026-07-26",
+    "always_v6_full": {
+      "ret": -14.18,
+      "cagr": -3.01,
+      "mdd": -33.28,
+      "pf": 1.06,
+      "bh": 117.89
+    },
+    "policyC_v1_compound": 336.25,
+    "policyC_v2_compound": 415.41,
+    "bh_chain": 87.46,
+    "verdict": "always-v6 falsified; regime policy retained; LIVE stays v6 while BEAR",
+    "report": "reports/five-year/README.md",
+    "updated_at": "2026-07-28T18:00:35Z"
   }
 }

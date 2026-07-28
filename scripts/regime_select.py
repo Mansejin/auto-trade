@@ -15,10 +15,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 # Policy C — evidence-weighted map on regime-v2 segments
 POLICY_C = {
-    "bull": "strategies/regime-bull-trend-4h.json",
+    "bull": "strategies/regime-bull-trend-4h-v2.json",
     "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
     "sideways": "strategies/regime-sideways-mr-4h-v4.json",
-    "transition": "strategies/regime-bull-trend-4h.json",
+    "transition": "strategies/regime-bull-trend-4h-v2.json",
 }
 
 
