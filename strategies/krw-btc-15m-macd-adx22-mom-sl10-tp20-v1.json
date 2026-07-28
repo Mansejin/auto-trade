@@ -1,0 +1,91 @@
+{
+  "name": "KRW-BTC 15m MACD ADX22 Momentum SL10 TP20 v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "15m",
+  "stop_loss": 1.0,
+  "take_profit": 2.0,
+  "indicators": [
+    {
+      "type": "macd",
+      "ref": "macd",
+      "params": {
+        "fast": 12,
+        "slow": 26,
+        "signal_period": 9
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "macd.macd"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "macd.macd_signal"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 22
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "macd.macd"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "macd.macd_signal"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        }
+      }
+    ]
+  }
+}

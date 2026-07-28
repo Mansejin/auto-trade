@@ -1,0 +1,98 @@
+{
+  "name": "KRW-BTC 5m EMA5/20 ADX20 Momentum SL06 TP12 v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "5m",
+  "stop_loss": 0.6,
+  "take_profit": 1.2,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ma_short",
+      "params": {
+        "type": "EMA",
+        "period": 5
+      }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ma_long",
+      "params": {
+        "type": "EMA",
+        "period": 20
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ma_short.value"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "ma_long.value"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 20
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ma_short.value"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "ma_long.value"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        }
+      }
+    ]
+  }
+}
