@@ -182,3 +182,15 @@ Success criteria:
 - 5y proof that always-v6 fails: `reports/five-year/README.md`
 - Policy / review state: `reports/review-state/regime-engine.json`
 - Audit gates (for redesign, not for daily switch): `docs/monthly-automation-prompt.md`
+
+
+## 9. Production install status (2026-07-28)
+
+Installed on bot server `ubuntu@129.225.205.185`:
+
+- Script: `~/auto-trade/scripts/remote_regime_switch.py`
+- Wrapper: `~/auto-trade/scripts/run-regime-switch.sh`
+- Cron (UTC): `20 15 * * *` → daily regime classify + STRATEGY_PATH switch if needed
+- Log: `~/auto-trade/logs/regime-switch.jsonl` and `logs/regime-switch.cron.log`
+- Current: regime **bear** → already on `m5-v6` (noop verified)
+
