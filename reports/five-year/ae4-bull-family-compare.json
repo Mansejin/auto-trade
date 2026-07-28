@@ -1,0 +1,60 @@
+{
+  "windows_spot": {
+    "w2021_2021-10-01_2021-12-03": {
+      "bull_v2": -3.48,
+      "sma520": 6.58,
+      "sma1050": 33.12,
+      "cci": 12.19,
+      "macd": 1.3,
+      "obv": 20.78,
+      "ichi": 2.17,
+      "di": 1.33,
+      "stochrsi": 6.82
+    },
+    "Y3": {
+      "bull_v2": 136.75,
+      "sma520": 82.88,
+      "sma1050": 119.24,
+      "cci": 77.29,
+      "macd": 66.12,
+      "obv": 119.24,
+      "ichi": 29.01,
+      "di": -27.76,
+      "stochrsi": 27.0
+    },
+    "Y4": {
+      "bull_v2": 71.79,
+      "sma520": 82.88,
+      "sma1050": 30.45,
+      "cci": 19.43,
+      "macd": 61.05,
+      "obv": 21.94,
+      "ichi": 35.02,
+      "di": 17.51,
+      "stochrsi": 23.8
+    }
+  },
+  "policyC_5y_compound": {
+    "bull_v2": {
+      "compound_pct": 425.85
+    },
+    "sma1050": {
+      "compound_pct": 264.26,
+      "n_segs": 36
+    },
+    "obv": {
+      "compound_pct": 179.78,
+      "n_segs": 36
+    },
+    "ichi": {
+      "compound_pct": 154.43,
+      "n_segs": 36
+    },
+    "stochrsi": {
+      "compound_pct": 139.26,
+      "n_segs": 36
+    }
+  },
+  "verdict": "No non-EMA full replacement beats bull-v2 on 5y Policy C compound (425.85). SMA10/50 lifts 2021-10 to +33 but Y4 lag cuts compound. Keep bull-v2; archive family experiments.",
+  "updated_at": "2026-07-28T19:30:00Z"
+}

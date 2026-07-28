@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DESK · 로그인</title>
+  <script>
+    (function () {
+      var p = location.pathname;
+      var base = "/";
+      if (p.indexOf("/autotrade") === 0) base = "/autotrade/";
+      window.__DESK_BASE__ = base;
+      document.write('<base href="' + base + '">');
+    })();
+  </script>
+  <link rel="stylesheet" href="static/desk.css" />
+</head>
+<body class="login-body">
+  <main class="login-shell">
+    <div class="login-card">
+      <div class="brand-block">
+        <span class="logo-mark">AT</span>
+        <div>
+          <p class="eyebrow">AUTO-TRADE</p>
+          <h1 class="brand">DESK</h1>
+        </div>
+      </div>
+      <p class="lede">봇 현황을 보려면 로그인하세요.</p>
+      <form class="login-form" method="post" action="login">
+        <label for="token">비밀번호</label>
+        <input id="token" name="token" type="password" autocomplete="current-password" required autofocus />
+        <button type="submit">로그인</button>
+      </form>
+      <p id="err" class="err hidden">비밀번호가 올바르지 않습니다.</p>
+    </div>
+  </main>
+  <script>
+    if (new URLSearchParams(location.search).get("e") === "1") {
+      document.getElementById("err").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>

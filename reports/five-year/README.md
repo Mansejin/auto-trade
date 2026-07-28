@@ -93,6 +93,12 @@ Sweep kept Y3/Y4 strength and lifted that window:
 
 ---
 
+## 4b) AE4 non-EMA bull family (2026-07-28)
+
+Tried MACD / DI / Ichimoku / SMA / CCI / StochRSI / OBV as full replacements for bull-v2.
+**None beat Policy C 5y compound +425.85%.** Local 2021-10 winners (SMA10/50 +33%, OBV +20%) lose on the chain.
+Keep bull-v2. Details: `reports/improve/20260728-ae4-bull-family.md`.
+
 ## 5) Agent file index
 
 ```text

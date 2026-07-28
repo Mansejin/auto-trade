@@ -274,16 +274,9 @@ python3 scripts/strategy_audit.py \
 
 ## 6. Backtest facts (toolkit stdout; historical only)
 
-> Do not treat as forecast. Fees modeled; slippage / book / partial fills **not** modeled.
+> Canonical friend metrics live in **§0**. Do not treat as forecast. Fees modeled; slippage / book / partial fills **not** modeled.
 
-| Window | m5-v6 | Notes |
-|--------|-------|-------|
-| Primary 2026-01-26..2026-07-26 | ~+17.88% / ~26 trades | Baseline v3 was ~+22.75% / 42 trades |
-| Early OOS 2025-07-26..2026-01-26 | ~-3.31% | Better than v3 ~-8.96% |
-| Shallow bear 2024-08-09..2024-10-03 | ~-1.22% | Better than v3 ~-10.08% |
-| Holdout 2024-11-03..2025-04-24 | ~-1.5% | Better than v3 ~-11.94% |
-
-Regime policy compound (segment chain, earlier run): improved after sideways/regime fixes; see `reports/sweeps/` and `reports/review-state/regime-engine.json`.
+Regime policy compound (segment chain, earlier run): see `reports/sweeps/` and `reports/review-state/regime-engine.json`.
 
 ---
 

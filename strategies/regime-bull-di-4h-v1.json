@@ -1,0 +1,60 @@
+{
+  "name": "Regime Bull DI Cross ADX20 4h SL10/TP40 v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 10,
+  "take_profit": 40,
+  "indicators": [
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 20
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        }
+      }
+    ]
+  }
+}

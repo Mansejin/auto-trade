@@ -1,32 +1,26 @@
-# Remaining Improvements Progress — 2026-07-28
+# Remaining Improvements Progress — 2026-07-28 (pass 2)
 
 ## Done this pass
 
 | Area | Action | Result |
 |------|--------|--------|
-| Regime auto-switch | Server cron + `remote_regime_switch.py` | **Already live** (daily 15:20 UTC) |
-| Bull participation | Extra sweep vs bull-v2 | **No better candidate** under stability constraints → keep `regime-bull-trend-4h-v2` |
-| Sideways stability | Segment compound sweep | Promoted **`regime-sideways-mr-4h-v5`** (comp ~+37.2 vs v4 ~+34.5 on sideways set) |
-| Bear balance | Audit-like re-sweep around v6 | **No superior alt** → keep LIVE `m5-v6` |
-| LIVE risk | Caps on remote `.env` | `MAX_ORDER_KRW=15000`, `MAX_DAILY_LOSS_KRW=5000` |
-| Walk-forward ops | `scripts/walk_forward_check.py` | Diagnostic tool added |
+| AE1 Monthly Automation | User confirmed enabled | **Done** |
+| AE4 Bull non-EMA family | MACD/DI/Ichi/SMA/CCI/StochRSI/OBV vs bull-v2 | **No promote** — 5y Policy C compound still highest with bull-v2 (+425.85%). 2021-10 can be patched locally (SMA10/50 +33%) but Y4/compound lag. |
+| AE5 Desk regime UX | `web/` in repo + ticker “레짐” + `logs/regime-current.json` | **Shipped** (server rebuild required) |
 
-## Policy C 5y compound (segment chain)
+## Policy C 5y compound (unchanged map)
 
 | Map | Compound | B&H chain |
 |-----|----------:|----------:|
-| bull-v2 + sideways-v4 + bear-v6 | +415.41% | +87.46% |
-| bull-v2 + **sideways-v5** + bear-v6 | **+425.85%** | +87.46% |
+| bull-v2 + sideways-v5 + bear-v6 | **+425.85%** | +87.46% |
 
-## Still open / next
-
-1. **Cursor Automations monthly job** — paste `docs/monthly-automation-prompt.md` in dashboard (human one-time setup).
-2. **Bull late-entry problem** — 2021-10 still lags B&H; needs different family (not just EMA tweaks) or accept participation gap.
-3. **Position / desk UX** — optional: surface current regime on desk UI (`upbit-desk`).
-4. Re-run `walk_forward_check.py` after each monthly candidate.
-
-## LIVE snapshot after changes
+## LIVE snapshot
 
 - Regime: bear → `m5-v6`
+- Desk shows regime from `logs/regime-current.json` (fallback: last `regime-switch.jsonl`)
 - Order cap: 15,000 KRW / daily loss brake: 5,000 KRW
-- Sideways file ready on server for next sideways flip: `regime-sideways-mr-4h-v5.json`
+
+## Open / later
+
+- Accept 2021-10 participation gap under bull-v2, or explore **sub-regime** routing (not a single-engine swap)
+- Monthly automation will re-check AE4-style candidates via `docs/monthly-automation-prompt.md`

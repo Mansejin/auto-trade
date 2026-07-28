@@ -13,6 +13,7 @@ ROOT = Path(os.environ.get("AUTO_TRADE_ROOT", str(Path.home() / "auto-trade")))
 STRAT_DIR = ROOT / "strategies"
 ENV_FILE = ROOT / ".env"
 LOG_FILE = ROOT / "logs" / "regime-switch.jsonl"
+REGIME_CURRENT = ROOT / "logs" / "regime-current.json"
 ACTIVE = STRAT_DIR / "ACTIVE_STRATEGY"
 
 POLICY = {
@@ -206,8 +207,34 @@ def main() -> None:
         print(f"switched {current} -> {target_path}")
 
     LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with LOG_FILE.open("a") as f:
-        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    # Desk-readable snapshot (mounted read-only into upbit-desk via ./logs)
+    snapshot = {
+        "updated_at": rec["ts_utc"],
+        "date": info["date"],
+        "regime": info["regime"],
+        "close": info["close"],
+        "sma50": info["sma50"],
+        "sma200": info["sma200"],
+        "adx": info["adx"],
+        "pdi": info["pdi"],
+        "mdi": info["mdi"],
+        "selected_file": target,
+        "strategy_path": target_path,
+        "action": rec.get("action"),
+        "engine": "v2",
+        "policy": "C",
+    }
+    try:
+        REGIME_CURRENT.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
+    except OSError as e:
+        print(f"warn: could not write {REGIME_CURRENT}: {e}")
+
+    try:
+        with LOG_FILE.open("a") as f:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    except OSError as e:
+        print(f"warn: could not append {LOG_FILE}: {e}")
 
 
 if __name__ == "__main__":

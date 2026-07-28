@@ -1,0 +1,92 @@
+{
+  "name": "Regime Bull StochRSI ADX20 4h SL10/TP40 v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 10,
+  "take_profit": 40,
+  "indicators": [
+    {
+      "type": "stochastic_rsi",
+      "ref": "srsi",
+      "params": {
+        "rsi_period": 14,
+        "stoch_period": 14,
+        "k_period": 3,
+        "d_period": 3
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "srsi.stoch_rsi_k"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "srsi.stoch_rsi_d"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 20
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "srsi.stoch_rsi_k"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "srsi.stoch_rsi_d"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,431 @@
+from __future__ import annotations
+
+import json
+import os
+import secrets
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+from fastapi import Cookie, Depends, FastAPI, Form, HTTPException, Request, Response
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+
+LOG_DIR = Path(os.getenv("LOG_DIR", "/app/logs"))
+STATE_PATH = Path(os.getenv("STATE_PATH", "/app/data/state.json"))
+RISK_PATH = Path(os.getenv("RISK_PATH", "/app/data/risk.json"))
+REGIME_PATH = Path(os.getenv("REGIME_PATH", str(LOG_DIR / "regime-current.json")))
+TOKEN = os.getenv("DASHBOARD_TOKEN", "").strip()
+BASE_PATH = os.getenv("BASE_PATH", "").strip().rstrip("/")
+COOKIE_NAME = "desk_token"
+COOKIE_MAX_AGE = 60 * 60 * 24 * 14
+
+REGIME_KO = {
+    "bull": "상승",
+    "bear": "하락",
+    "sideways": "횡보",
+    "transition": "전환",
+}
+
+STATIC = Path(__file__).resolve().parent / "static"
+app = FastAPI(title="Auto-Trade Desk", docs_url=None, redoc_url=None)
+
+_candle_cache: dict[str, tuple[float, list[dict[str, Any]]]] = {}
+_CANDLE_TTL = 45.0
+
+
+def _p(path: str) -> str:
+    if not path.startswith("/"):
+        path = "/" + path
+    return f"{BASE_PATH}{path}" if BASE_PATH else path
+
+
+def _load_json(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _authorized(token: str | None) -> bool:
+    if not TOKEN or not token:
+        return False
+    if len(token) != len(TOKEN):
+        return False
+    return secrets.compare_digest(token, TOKEN)
+
+
+def _set_auth_cookie(resp: Response, value: str) -> None:
+    resp.set_cookie(
+        COOKIE_NAME,
+        value,
+        httponly=True,
+        samesite="lax",
+        max_age=COOKIE_MAX_AGE,
+        path=BASE_PATH or "/",
+        secure=bool(BASE_PATH),
+    )
+
+
+def _clear_auth_cookie(resp: Response) -> None:
+    resp.delete_cookie(COOKIE_NAME, path=BASE_PATH or "/")
+
+
+def require_auth(
+    request: Request,
+    desk_token: str | None = Cookie(default=None, alias=COOKIE_NAME),
+) -> None:
+    header = request.headers.get("Authorization", "")
+    bearer = header[7:].strip() if header.lower().startswith("bearer ") else ""
+    q = request.query_params.get("token")
+    if not (_authorized(desk_token) or _authorized(bearer) or _authorized(q)):
+        raise HTTPException(status_code=401, detail="unauthorized")
+
+
+def _tf_to_tv(tf: str) -> str:
+    t = tf.strip().lower()
+    mapping = {
+        "1m": "1",
+        "3m": "3",
+        "5m": "5",
+        "15m": "15",
+        "30m": "30",
+        "60m": "60",
+        "1h": "60",
+        "4h": "240",
+        "1d": "D",
+        "d": "D",
+    }
+    return mapping.get(t, "60")
+
+
+def _tf_to_upbit(tf: str) -> tuple[str, int | None, int]:
+    """Return (kind, minute_unit, period_seconds)."""
+    t = tf.strip().lower()
+    minute_map = {
+        "1m": (1, 60),
+        "3m": (3, 180),
+        "5m": (5, 300),
+        "10m": (10, 600),
+        "15m": (15, 900),
+        "30m": (30, 1800),
+        "60m": (60, 3600),
+        "1h": (60, 3600),
+        "240m": (240, 14400),
+        "4h": (240, 14400),
+    }
+    if t in ("1d", "d", "day", "days"):
+        return ("days", None, 86400)
+    if t in minute_map:
+        unit, sec = minute_map[t]
+        return ("minutes", unit, sec)
+    return ("minutes", 60, 3600)
+
+
+def _parse_iso_ts(raw: str) -> int | None:
+    s = (raw or "").strip()
+    if not s:
+        return None
+    try:
+        if s.endswith("Z"):
+            s = s[:-1] + "+00:00"
+        if "T" in s and len(s) == 19:
+            s = s + "+00:00"
+        dt = datetime.fromisoformat(s)
+        return int(dt.timestamp())
+    except Exception:
+        return None
+
+
+def _fetch_upbit_candles(market: str, timeframe: str, count: int = 200) -> list[dict[str, Any]]:
+    kind, unit, _period = _tf_to_upbit(timeframe)
+    count = max(1, min(int(count), 200))
+    cache_key = f"{market}|{kind}|{unit}|{count}"
+    now = time.time()
+    hit = _candle_cache.get(cache_key)
+    if hit and now - hit[0] < _CANDLE_TTL:
+        return hit[1]
+
+    if kind == "days":
+        url = f"https://api.upbit.com/v1/candles/days?market={urllib.parse.quote(market)}&count={count}"
+    else:
+        url = (
+            f"https://api.upbit.com/v1/candles/minutes/{unit}"
+            f"?market={urllib.parse.quote(market)}&count={count}"
+        )
+    req = urllib.request.Request(
+        url, headers={"Accept": "application/json", "User-Agent": "auto-trade-desk"}
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            raw = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        raise HTTPException(status_code=502, detail=f"upbit candles http {e.code}") from e
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"upbit candles failed: {e}") from e
+
+    if not isinstance(raw, list):
+        raise HTTPException(status_code=502, detail="upbit candles bad payload")
+
+    out: list[dict[str, Any]] = []
+    for c in reversed(raw):
+        ts = _parse_iso_ts(str(c.get("candle_date_time_utc") or ""))
+        if ts is None:
+            continue
+        out.append(
+            {
+                "time": ts,
+                "open": float(c["opening_price"]),
+                "high": float(c["high_price"]),
+                "low": float(c["low_price"]),
+                "close": float(c["trade_price"]),
+            }
+        )
+    _candle_cache[cache_key] = (now, out)
+    return out
+
+
+def _trade_markers(
+    trades: list[dict[str, Any]],
+    candle_times: list[int],
+    period_seconds: int,
+) -> list[dict[str, Any]]:
+    if not trades or not candle_times:
+        return []
+    times_set = set(candle_times)
+    markers: list[dict[str, Any]] = []
+    for t in trades:
+        side = str(t.get("side") or "").lower()
+        if side not in ("buy", "sell"):
+            continue
+        ts = _parse_iso_ts(str(t.get("ts") or ""))
+        if ts is None:
+            continue
+        bucket = ts - (ts % period_seconds)
+        chosen = None
+        for ct in candle_times:
+            if ct <= ts:
+                chosen = ct
+            else:
+                break
+        if chosen is None:
+            continue
+        if bucket in times_set and bucket <= ts:
+            chosen = bucket
+        if side == "buy":
+            markers.append(
+                {
+                    "time": chosen,
+                    "position": "belowBar",
+                    "color": "#ef5350",
+                    "shape": "arrowUp",
+                    "text": "매수",
+                }
+            )
+        else:
+            markers.append(
+                {
+                    "time": chosen,
+                    "position": "aboveBar",
+                    "color": "#2962ff",
+                    "shape": "arrowDown",
+                    "text": "매도",
+                }
+            )
+    markers.sort(key=lambda m: (m["time"], 0 if m["text"] == "매수" else 1))
+    return markers
+
+
+def healthz() -> dict[str, str]:
+    return {"ok": "1", "base_path": BASE_PATH or "/"}
+
+
+def index(
+    request: Request,
+    desk_token: str | None = Cookie(default=None, alias=COOKIE_NAME),
+) -> Response:
+    if _authorized(desk_token) or _authorized(request.query_params.get("token")):
+        if request.query_params.get("token") and not desk_token:
+            resp = RedirectResponse(_p("/"), status_code=302)
+            _set_auth_cookie(resp, request.query_params.get("token") or "")
+            return resp
+        return FileResponse(STATIC / "index.html")
+    return FileResponse(STATIC / "login.html")
+
+
+def login(request: Request, token: str = Form(...)) -> Response:
+    if not _authorized(token.strip()):
+        return RedirectResponse(_p("/?e=1"), status_code=303)
+    resp = RedirectResponse(_p("/"), status_code=303)
+    xf = (request.headers.get("x-forwarded-proto") or "").split(",")[0].strip()
+    secure = request.url.scheme == "https" or xf == "https"
+    resp.set_cookie(
+        COOKIE_NAME,
+        token.strip(),
+        httponly=True,
+        samesite="lax",
+        max_age=COOKIE_MAX_AGE,
+        path=BASE_PATH or "/",
+        secure=secure,
+    )
+    return resp
+
+
+def logout() -> Response:
+    resp = RedirectResponse(_p("/"), status_code=303)
+    _clear_auth_cookie(resp)
+    return resp
+
+
+def _load_regime() -> dict[str, Any]:
+    """Prefer logs/regime-current.json; fall back to last regime-switch.jsonl line."""
+    regime = _load_json(REGIME_PATH)
+    if regime.get("regime"):
+        return regime
+    log_path = LOG_DIR / "regime-switch.jsonl"
+    if not log_path.exists():
+        return {}
+    try:
+        last = ""
+        with log_path.open("r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                if line.strip():
+                    last = line
+        if not last:
+            return {}
+        row = json.loads(last)
+        return {
+            "updated_at": row.get("ts_utc"),
+            "regime": row.get("regime"),
+            "adx": row.get("adx"),
+            "pdi": row.get("pdi"),
+            "mdi": row.get("mdi"),
+            "selected_file": Path(str(row.get("new") or "")).name or None,
+            "action": row.get("action"),
+            "engine": "v2",
+            "policy": "C",
+            "source": "regime-switch.jsonl",
+        }
+    except Exception:
+        return {}
+
+
+def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
+    status_path = LOG_DIR / "status.json"
+    status = _load_json(status_path)
+    state = _load_json(STATE_PATH)
+    risk = _load_json(RISK_PATH)
+    regime_raw = _load_regime()
+    text_path = LOG_DIR / "latest_status.txt"
+    latest_text = ""
+    stale = True
+    mtime = None
+    for p in (status_path, text_path):
+        if p.exists():
+            mt = p.stat().st_mtime
+            mtime = mt if mtime is None else max(mtime, mt)
+    if mtime is not None:
+        stale = (time.time() - mtime) > 900
+    if text_path.exists():
+        latest_text = text_path.read_text(encoding="utf-8", errors="ignore")
+
+    if not status:
+        status = {
+            "mode": state.get("mode"),
+            "strategy": state.get("strategy"),
+            "market": state.get("market"),
+            "krw": state.get("cash"),
+            "position": state.get("position"),
+            "signal": "unknown",
+        }
+    if risk:
+        status["risk"] = {**(status.get("risk") or {}), **risk}
+
+    trades = state.get("trades") or []
+    recent = trades[-8:] if isinstance(trades, list) else []
+
+    market = str(status.get("market") or state.get("market") or "KRW-BTC")
+    tv_symbol = "UPBIT:BTCKRW"
+    if market.startswith("KRW-"):
+        base = market.split("-", 1)[1]
+        tv_symbol = f"UPBIT:{base}KRW"
+
+    regime_code = str(regime_raw.get("regime") or "").lower() or None
+    regime = None
+    if regime_code:
+        regime = {
+            "code": regime_code,
+            "label": REGIME_KO.get(regime_code, regime_code),
+            "date": regime_raw.get("date"),
+            "updated_at": regime_raw.get("updated_at"),
+            "adx": regime_raw.get("adx"),
+            "pdi": regime_raw.get("pdi"),
+            "mdi": regime_raw.get("mdi"),
+            "selected_file": regime_raw.get("selected_file")
+            or Path(str(regime_raw.get("strategy_path") or "")).name
+            or None,
+            "engine": regime_raw.get("engine") or "v2",
+            "policy": regime_raw.get("policy") or "C",
+        }
+
+    return {
+        "ok": True,
+        "stale": stale,
+        "mtime": mtime,
+        "base_path": BASE_PATH or "",
+        "status": status,
+        "regime": regime,
+        "recent_trades": recent,
+        "latest_text": latest_text,
+        "tv_symbol": tv_symbol,
+        "tv_interval": _tf_to_tv(str(status.get("timeframe") or "60")),
+        "market": market,
+        "timeframe": str(status.get("timeframe") or "1h"),
+    }
+
+
+def api_candles(_: None = Depends(require_auth)) -> dict[str, Any]:
+    status = _load_json(LOG_DIR / "status.json")
+    state = _load_json(STATE_PATH)
+    market = str(status.get("market") or state.get("market") or "KRW-BTC")
+    timeframe = str(status.get("timeframe") or "1h")
+    _kind, _unit, period = _tf_to_upbit(timeframe)
+    candles = _fetch_upbit_candles(market, timeframe, count=200)
+    trades = state.get("trades") or []
+    if not isinstance(trades, list):
+        trades = []
+    markers = _trade_markers(trades[-80:], [int(c["time"]) for c in candles], period)
+    return {
+        "ok": True,
+        "market": market,
+        "timeframe": timeframe,
+        "period_seconds": period,
+        "candles": candles,
+        "markers": markers,
+    }
+
+
+app.add_api_route(_p("/healthz"), healthz, methods=["GET"])
+app.add_api_route(_p("/"), index, methods=["GET"], response_class=HTMLResponse)
+app.add_api_route(_p("/login"), login, methods=["POST"])
+app.add_api_route(_p("/logout"), logout, methods=["POST"])
+app.add_api_route(_p("/api/status"), api_status, methods=["GET"])
+app.add_api_route(_p("/api/candles"), api_candles, methods=["GET"])
+
+if BASE_PATH:
+    app.add_api_route("/healthz", healthz, methods=["GET"])
+    app.add_api_route("/", index, methods=["GET"], response_class=HTMLResponse)
+    app.add_api_route("/login", login, methods=["POST"])
+    app.add_api_route("/logout", logout, methods=["POST"])
+    app.add_api_route("/api/status", api_status, methods=["GET"])
+    app.add_api_route("/api/candles", api_candles, methods=["GET"])
+    app.mount(_p("/static"), StaticFiles(directory=str(STATIC)), name="static_base")
+    app.mount("/static", StaticFiles(directory=str(STATIC)), name="static_root")
+else:
+    app.mount("/static", StaticFiles(directory=str(STATIC)), name="static")

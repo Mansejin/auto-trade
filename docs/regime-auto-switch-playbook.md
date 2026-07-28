@@ -192,5 +192,6 @@ Installed on bot server `ubuntu@129.225.205.185`:
 - Wrapper: `~/auto-trade/scripts/run-regime-switch.sh`
 - Cron (UTC): `20 15 * * *` → daily regime classify + STRATEGY_PATH switch if needed
 - Log: `~/auto-trade/logs/regime-switch.jsonl` and `logs/regime-switch.cron.log`
+- Desk snapshot: `~/auto-trade/logs/regime-current.json` (read by `upbit-desk` ticker “레짐”)
 - Current: regime **bear** → already on `m5-v6` (noop verified)
 
