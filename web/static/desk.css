@@ -1,0 +1,452 @@
+@font-face {
+  font-family: "에이투지체";
+  src: url("fonts/a2z-regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "에이투지체";
+  src: url("fonts/a2z-medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "에이투지체";
+  src: url("fonts/a2z-semibold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "에이투지체";
+  src: url("fonts/a2z-bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "에이투지체";
+  src: url("fonts/a2z-extrabold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #0c0e15;
+  --bg-elev: #131722;
+  --bg-panel: #1e222d;
+  --bg-hover: #2a2e39;
+  --line: #2a2e39;
+  --line-soft: rgba(42, 46, 57, 0.85);
+  --text: #d1d4dc;
+  --text-soft: #9598a1;
+  --text-mute: #787b86;
+  --blue: #2962ff;
+  --blue-dim: rgba(41, 98, 255, 0.18);
+  --green: #26a69a;
+  --red: #ef5350;
+  --amber: #ff9800;
+  --font: "에이투지체", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* —— Login —— */
+.login-body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background:
+    radial-gradient(900px 420px at 15% -10%, rgba(41, 98, 255, 0.18), transparent 55%),
+    radial-gradient(700px 380px at 100% 0%, rgba(38, 166, 154, 0.08), transparent 50%),
+    var(--bg);
+}
+
+.login-shell {
+  width: min(400px, 100%);
+}
+
+.login-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1.75rem 1.5rem 1.5rem;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-mark {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: var(--text-mute);
+}
+
+.brand {
+  margin: 0.1rem 0 0;
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: #fff;
+}
+
+.lede {
+  margin: 1.15rem 0 1.25rem;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+}
+
+.login-form {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.login-form label {
+  font-size: 0.75rem;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+}
+
+.login-form input {
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  color: var(--text);
+  padding: 0.85rem 0.95rem;
+  font: inherit;
+  border-radius: 3px;
+  outline: none;
+}
+
+.login-form input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px var(--blue-dim);
+}
+
+.login-form button {
+  margin-top: 0.55rem;
+  border: 0;
+  background: var(--blue);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.9rem 1rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  filter: brightness(1.08);
+}
+
+.err {
+  margin: 0.85rem 0 0;
+  color: var(--red);
+  font-size: 0.9rem;
+}
+
+/* —— Desk —— */
+.desk {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: var(--bg);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.55rem 0.85rem;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar .brand {
+  font-size: 1.05rem;
+}
+
+.pill {
+  margin-left: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: var(--bg-panel);
+  color: var(--text-soft);
+  border: 1px solid var(--line);
+}
+
+.pill.live {
+  color: #fff;
+  background: var(--red);
+  border-color: transparent;
+}
+
+.ticker-strip {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  min-width: 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--bg);
+}
+
+.tick {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.4rem 0.85rem;
+  border-right: 1px solid var(--line);
+  white-space: nowrap;
+  min-width: 6.5rem;
+}
+
+.tick:last-child {
+  border-right: 0;
+}
+
+.tick .k {
+  font-size: 0.65rem;
+  color: var(--text-mute);
+  letter-spacing: 0.06em;
+}
+
+.tick .v {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tick .v.ok {
+  color: var(--green);
+}
+
+.tick .v.warn {
+  color: var(--amber);
+}
+
+.top-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-left: auto;
+}
+
+.freshness {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--text-mute);
+  max-width: 16rem;
+}
+
+#fresh-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ghost-btn {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-soft);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.4rem 0.7rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.ghost-btn:hover {
+  background: var(--bg-hover);
+  color: #fff;
+}
+
+.chart-plane {
+  min-height: 0;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(420px, 62vh, 780px);
+  background: #131722;
+}
+
+.chart-host {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.chart-error {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--text-soft);
+  background: rgba(19, 23, 34, 0.92);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.chart-error.hidden {
+  display: none;
+}
+
+.bottom {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 0;
+  background: var(--bg);
+}
+
+@media (max-width: 900px) {
+  .bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    align-items: stretch;
+  }
+
+  .ticker-strip {
+    order: 3;
+    width: 100%;
+    flex: 1 1 100%;
+  }
+}
+
+.panel {
+  padding: 0.85rem 1rem 1.1rem;
+  border-right: 1px solid var(--line);
+  background: var(--bg-elev);
+  min-height: 220px;
+}
+
+.panel:last-child {
+  border-right: 0;
+}
+
+.panel-head {
+  margin: 0 0 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+}
+
+.trades {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.trades li {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 0.88rem;
+}
+
+.trades .side-buy {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.trades .side-sell {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.muted,
+.empty {
+  color: var(--text-mute);
+  font-size: 0.85rem;
+}
+
+.status-pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--text-soft);
+  max-height: 260px;
+  overflow: auto;
+}
+
+.pulse {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--green);
+  display: inline-block;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.2);
+}
+
+.pulse.stale,
+.pulse:not(.ok).stale {
+  background: var(--amber);
+  box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+}

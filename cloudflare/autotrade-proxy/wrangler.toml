@@ -1,0 +1,13 @@
+name = "mansejin-autotrade-proxy"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+workers_dev = false
+account_id = "cc156e594c0477c9b58c738c74b49582"
+
+[[routes]]
+pattern = "mansejin.com/autotrade*"
+zone_name = "mansejin.com"
+
+[[routes]]
+pattern = "www.mansejin.com/autotrade*"
+zone_name = "mansejin.com"

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AUTO-TRADE DESK</title>
+  <script>
+    (function () {
+      var p = location.pathname;
+      var base = p.endsWith("/") ? p : p.replace(/\/[^/]*$/, "/");
+      if (p.indexOf("/autotrade") === 0) base = "/autotrade/";
+      window.__DESK_BASE__ = base;
+      document.write('<base href="' + base + '">');
+    })();
+  </script>
+  <link rel="stylesheet" href="static/desk.css" />
+  <script src="https://s3.tradingview.com/tv.js"></script>
+</head>
+<body>
+  <div class="desk">
+    <header class="topbar">
+      <div class="brand-block">
+        <span class="logo-mark">AT</span>
+        <div>
+          <p class="eyebrow">AUTO-TRADE</p>
+          <h1 class="brand">DESK</h1>
+        </div>
+        <span id="m-mode" class="pill">—</span>
+      </div>
+      <div class="ticker-strip" aria-label="봇 상태">
+        <div class="tick"><span class="k">시그널</span><span class="v" id="m-signal">—</span></div>
+        <div class="tick"><span class="k">원화</span><span class="v" id="m-krw">—</span></div>
+        <div class="tick"><span class="k">포지션</span><span class="v" id="m-pos">—</span></div>
+        <div class="tick"><span class="k">전략</span><span class="v" id="m-strategy">—</span></div>
+        <div class="tick"><span class="k">리스크</span><span class="v" id="m-risk">—</span></div>
+      </div>
+      <div class="top-meta">
+        <span id="freshness" class="freshness"><span class="pulse" id="pulse"></span><span id="fresh-text">갱신 대기</span></span>
+        <form method="post" action="logout">
+          <button class="ghost-btn" type="submit">로그아웃</button>
+        </form>
+      </div>
+    </header>
+
+    <section class="chart-plane" aria-label="차트">
+      <div class="chart-stage">
+        <div id="tv_chart" class="chart-host"></div>
+        <div id="chart-error" class="chart-error hidden"></div>
+      </div>
+    </section>
+
+    <section class="bottom">
+      <div class="panel">
+        <div class="panel-head">최근 체결</div>
+        <ul class="trades" id="trades"></ul>
+        <p class="muted empty" id="trades-empty">아직 기록된 체결이 없습니다.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-head">상태 요약</div>
+        <pre class="status-pre" id="latest-text">로딩…</pre>
+      </div>
+    </section>
+  </div>
+  <script src="static/desk.js"></script>
+</body>
+</html>
