@@ -4,12 +4,14 @@ import json
 import os
 import secrets
 import time
+from collections import defaultdict, deque
 from pathlib import Path
 from typing import Any
 
 from fastapi import Cookie, Depends, FastAPI, Form, HTTPException, Request, Response
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.base import BaseHTTPMiddleware
 
 LOG_DIR = Path(os.getenv("LOG_DIR", "/app/logs"))
 STATE_PATH = Path(os.getenv("STATE_PATH", "/app/data/state.json"))
@@ -18,15 +20,58 @@ TOKEN = os.getenv("DASHBOARD_TOKEN", "").strip()
 BASE_PATH = os.getenv("BASE_PATH", "").strip().rstrip("/")
 COOKIE_NAME = "desk_token"
 COOKIE_MAX_AGE = 60 * 60 * 24 * 14
+LOGIN_WINDOW_SEC = 300
+LOGIN_MAX_ATTEMPTS = 8
 
 STATIC = Path(__file__).resolve().parent / "static"
 app = FastAPI(title="Auto-Trade Desk", docs_url=None, redoc_url=None)
+
+_login_hits: dict[str, deque[float]] = defaultdict(deque)
+
+
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        resp = await call_next(request)
+        resp.headers.setdefault("X-Content-Type-Options", "nosniff")
+        resp.headers.setdefault("X-Frame-Options", "DENY")
+        resp.headers.setdefault("Referrer-Policy", "no-referrer")
+        resp.headers.setdefault(
+            "Permissions-Policy",
+            "camera=(), microphone=(), geolocation=()",
+        )
+        resp.headers.setdefault("Cache-Control", "no-store")
+        return resp
+
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 
 def _p(path: str) -> str:
     if not path.startswith("/"):
         path = "/" + path
     return f"{BASE_PATH}{path}" if BASE_PATH else path
+
+
+def _client_ip(request: Request) -> str:
+    # Prefer edge-provided client IP; fall back to direct peer.
+    xff = (request.headers.get("x-forwarded-for") or "").split(",")[0].strip()
+    if xff:
+        return xff[:64]
+    if request.client and request.client.host:
+        return request.client.host
+    return "unknown"
+
+
+def _login_allowed(ip: str) -> bool:
+    now = time.time()
+    q = _login_hits[ip]
+    while q and now - q[0] > LOGIN_WINDOW_SEC:
+        q.popleft()
+    return len(q) < LOGIN_MAX_ATTEMPTS
+
+
+def _login_mark(ip: str) -> None:
+    _login_hits[ip].append(time.time())
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -46,7 +91,12 @@ def _authorized(token: str | None) -> bool:
     return secrets.compare_digest(token, TOKEN)
 
 
-def _set_auth_cookie(resp: Response, value: str) -> None:
+def _cookie_secure(request: Request) -> bool:
+    xf = (request.headers.get("x-forwarded-proto") or "").split(",")[0].strip().lower()
+    return request.url.scheme == "https" or xf == "https" or bool(BASE_PATH)
+
+
+def _set_auth_cookie(resp: Response, value: str, *, secure: bool) -> None:
     resp.set_cookie(
         COOKIE_NAME,
         value,
@@ -54,7 +104,7 @@ def _set_auth_cookie(resp: Response, value: str) -> None:
         samesite="lax",
         max_age=COOKIE_MAX_AGE,
         path=BASE_PATH or "/",
-        secure=bool(BASE_PATH),
+        secure=secure,
     )
 
 
@@ -66,10 +116,10 @@ def require_auth(
     request: Request,
     desk_token: str | None = Cookie(default=None, alias=COOKIE_NAME),
 ) -> None:
+    # Do not accept ?token= — URLs leak via logs, history, and Referer.
     header = request.headers.get("Authorization", "")
     bearer = header[7:].strip() if header.lower().startswith("bearer ") else ""
-    q = request.query_params.get("token")
-    if not (_authorized(desk_token) or _authorized(bearer) or _authorized(q)):
+    if not (_authorized(desk_token) or _authorized(bearer)):
         raise HTTPException(status_code=401, detail="unauthorized")
 
 
@@ -98,30 +148,20 @@ def index(
     request: Request,
     desk_token: str | None = Cookie(default=None, alias=COOKIE_NAME),
 ) -> Response:
-    if _authorized(desk_token) or _authorized(request.query_params.get("token")):
-        if request.query_params.get("token") and not desk_token:
-            resp = RedirectResponse(_p("/"), status_code=302)
-            _set_auth_cookie(resp, request.query_params.get("token") or "")
-            return resp
+    if _authorized(desk_token):
         return FileResponse(STATIC / "index.html")
     return FileResponse(STATIC / "login.html")
 
 
 def login(request: Request, token: str = Form(...)) -> Response:
+    ip = _client_ip(request)
+    if not _login_allowed(ip):
+        return HTMLResponse("Too many login attempts. Try again later.", status_code=429)
     if not _authorized(token.strip()):
+        _login_mark(ip)
         return RedirectResponse(_p("/?e=1"), status_code=303)
     resp = RedirectResponse(_p("/"), status_code=303)
-    xf = (request.headers.get("x-forwarded-proto") or "").split(",")[0].strip()
-    secure = request.url.scheme == "https" or xf == "https"
-    resp.set_cookie(
-        COOKIE_NAME,
-        token.strip(),
-        httponly=True,
-        samesite="lax",
-        max_age=COOKIE_MAX_AGE,
-        path=BASE_PATH or "/",
-        secure=secure,
-    )
+    _set_auth_cookie(resp, token.strip(), secure=_cookie_secure(request))
     return resp
 
 
@@ -147,7 +187,8 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
     if mtime is not None:
         stale = (time.time() - mtime) > 900
     if text_path.exists():
-        latest_text = text_path.read_text(encoding="utf-8", errors="ignore")
+        # Cap size to avoid huge log dumps over the API.
+        latest_text = text_path.read_text(encoding="utf-8", errors="ignore")[:8000]
 
     if not status:
         status = {
@@ -159,7 +200,13 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
             "signal": "unknown",
         }
     if risk:
-        status["risk"] = {**(status.get("risk") or {}), **risk}
+        # Expose operational flags only — omit verbose internal halt text if huge.
+        status["risk"] = {
+            "trading_halted": bool(risk.get("trading_halted")),
+            "halt_buys_only": bool(risk.get("halt_buys_only")),
+            "halt_reason": str(risk.get("halt_reason") or "")[:200],
+            "consecutive_errors": risk.get("consecutive_errors"),
+        }
 
     trades = state.get("trades") or []
     recent = trades[-8:] if isinstance(trades, list) else []
@@ -185,19 +232,29 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
     }
 
 
-app.add_api_route(_p("/healthz"), healthz, methods=["GET"])
-app.add_api_route(_p("/"), index, methods=["GET"], response_class=HTMLResponse)
-app.add_api_route(_p("/login"), login, methods=["POST"])
-app.add_api_route(_p("/logout"), logout, methods=["POST"])
-app.add_api_route(_p("/api/status"), api_status, methods=["GET"])
+def _register(path: str, endpoint: Any, methods: list[str], **kwargs: Any) -> None:
+    app.add_api_route(_p(path), endpoint, methods=methods, **kwargs)
+    if BASE_PATH:
+        app.add_api_route(path if path.startswith("/") else f"/{path}", endpoint, methods=methods, **kwargs)
+
+
+_register("/healthz", healthz, ["GET"])
+_register("/", index, ["GET"], response_class=HTMLResponse)
+_register("/login", login, ["POST"])
+_register("/logout", logout, ["POST"])
+_register("/api/status", api_status, ["GET"])
 
 if BASE_PATH:
-    app.add_api_route("/healthz", healthz, methods=["GET"])
-    app.add_api_route("/", index, methods=["GET"], response_class=HTMLResponse)
-    app.add_api_route("/login", login, methods=["POST"])
-    app.add_api_route("/logout", logout, methods=["POST"])
-    app.add_api_route("/api/status", api_status, methods=["GET"])
     app.mount(_p("/static"), StaticFiles(directory=str(STATIC)), name="static_base")
     app.mount("/static", StaticFiles(directory=str(STATIC)), name="static_root")
 else:
     app.mount("/static", StaticFiles(directory=str(STATIC)), name="static")
+
+
+@app.on_event("startup")
+def _startup_checks() -> None:
+    if not TOKEN:
+        # Fail-closed: every page/API stays unauthorized.
+        return
+    if len(TOKEN) < 8:
+        raise RuntimeError("DASHBOARD_TOKEN must be at least 8 characters")
