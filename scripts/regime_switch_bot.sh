@@ -28,7 +28,7 @@ declare -A MAP=(
   [bull]="regime-bull-trend-4h-v2"
   [transition]="regime-bull-trend-4h-v2"
   [bear]="krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6"
-  [sideways]="regime-sideways-mr-4h-v4"
+  [sideways]="regime-sideways-mr-4h-v5"
 )
 
 echo "[regime-switch] classifying..."
@@ -76,7 +76,7 @@ echo "[regime-switch] syncing strategy files to $REMOTE_HOST"
 scp "${SCP_OPTS[@]}" \
   "$ROOT/strategies/regime-bull-trend-4h-v2.json" \
   "$ROOT/strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json" \
-  "$ROOT/strategies/regime-sideways-mr-4h-v4.json" \
+  "$ROOT/strategies/regime-sideways-mr-4h-v5.json" \
   "$ROOT/strategies/ACTIVE_STRATEGY" \
   "$REMOTE_HOST:${REMOTE_DIR}/strategies/"
 

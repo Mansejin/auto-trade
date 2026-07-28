@@ -24,7 +24,7 @@
 |--------|------------|----------------------------------|-----|
 | `bull` | `strategies/regime-bull-trend-4h-v2.json` | `regime-bull-trend-4h-v2` | 4h |
 | `bear` | `strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json` | `krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6` | 1h |
-| `sideways` | `strategies/regime-sideways-mr-4h-v4.json` | `regime-sideways-mr-4h-v4` | 4h |
+| `sideways` | `strategies/regime-sideways-mr-4h-v5.json` | `regime-sideways-mr-4h-v5` | 4h |
 | `transition` | `strategies/regime-bull-trend-4h-v2.json` | `regime-bull-trend-4h-v2` | 4h |
 
 Pointer file after switch: `strategies/ACTIVE_STRATEGY` = `<slug>` (one line).
@@ -71,7 +71,7 @@ Copy at least these four into `~/auto-trade/strategies/`:
 
 - `regime-bull-trend-4h-v2.json`
 - `krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json`
-- `regime-sideways-mr-4h-v4.json`
+- `regime-sideways-mr-4h-v5.json`
 - `ACTIVE_STRATEGY`
 
 ### 3.2 Apply switch
@@ -84,7 +84,7 @@ REGIME=$(python3 -c "import json;print(json.load(open('reports/regime-current.js
 case "$REGIME" in
   bull|transition) SLUG=regime-bull-trend-4h-v2 ;;
   bear)            SLUG=krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6 ;;
-  sideways)        SLUG=regime-sideways-mr-4h-v4 ;;
+  sideways)        SLUG=regime-sideways-mr-4h-v5 ;;
   *) echo "unknown regime $REGIME"; exit 1 ;;
 esac
 
@@ -161,7 +161,7 @@ Tasks:
 2) Ensure these JSONs exist on the bot server `~/auto-trade/strategies/`:
    - regime-bull-trend-4h-v2.json
    - krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json
-   - regime-sideways-mr-4h-v4.json
+   - regime-sideways-mr-4h-v5.json
 3) Set STRATEGY_PATH to the mapped slug for the current regime and restart `upbit-paper-bot`.
 4) Update strategies/ACTIVE_STRATEGY to that slug.
 5) Append a switch log line (timestamp, regime, old→new path).

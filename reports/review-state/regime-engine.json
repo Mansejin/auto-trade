@@ -203,7 +203,7 @@
   "strategies": {
     "bull": "strategies/regime-bull-trend-4h-v2.json",
     "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
-    "sideways": "strategies/regime-sideways-mr-4h-v4.json",
+    "sideways": "strategies/regime-sideways-mr-4h-v5.json",
     "transition": "strategies/regime-bull-trend-4h-v2.json",
     "bear_v6_alt": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
     "bear_v6b_alt": "strategies/krw-btc-1h-ema-adx23-rsi60-di-obv-m5-v6b.json",
@@ -211,7 +211,8 @@
     "sideways_v4b_alt": "strategies/regime-sideways-mr-4h-v4b.json",
     "sideways_v3_prev": "strategies/regime-sideways-mr-4h-v3.json",
     "bear_v7_rejected": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
-    "bull_v1_backup": "strategies/regime-bull-trend-4h.json"
+    "bull_v1_backup": "strategies/regime-bull-trend-4h.json",
+    "sideways_v4_prev": "strategies/regime-sideways-mr-4h-v4.json"
   },
   "policyC_map": {
     "bull": "bull",
@@ -224,7 +225,10 @@
     "policyC_v7_sw4b": 214.37,
     "policyC_v3_sw3_old": 176.69,
     "bh_segment_chain": 73.3,
-    "note": "Overnight grid: ~400 bear x 6 windows + ~220 sideways x 4 + local densify. Chose ADX-gated sideways v4 (robust) over v4b (+214) slightly higher but no ADX."
+    "note": "Overnight grid: ~400 bear x 6 windows + ~220 sideways x 4 + local densify. Chose ADX-gated sideways v4 (robust) over v4b (+214) slightly higher but no ADX.",
+    "policyC_5y_v2bull_v5sw": 425.85,
+    "policyC_5y_v2bull_v4sw": 415.41,
+    "bh_segment_chain_5y": 87.46
   },
   "path_latest": [
     {
@@ -483,31 +487,33 @@
   "next": [
     {
       "id": "AE1",
-      "goal": "monthly automation with audit gate",
-      "chg": "Use docs/monthly-automation-prompt.md in Cursor Automations"
+      "goal": "monthly Cursor Automation",
+      "chg": "Enable docs/monthly-automation-prompt.md in Automations dashboard"
     },
     {
-      "id": "AE2",
-      "goal": "keep holdout frozen",
-      "chg": "Do not tune on audit windows.holdout"
+      "id": "AE4",
+      "goal": "bull participation family beyond EMA",
+      "chg": "Research non-EMA bull engine; 2021-10 still lags B&H"
     },
     {
-      "id": "AE3",
-      "goal": "auto switch on regime flip still human-gated",
-      "chg": "PR only"
+      "id": "AE5",
+      "goal": "desk shows current regime",
+      "chg": "Optional UX on upbit-desk"
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-28T18:00:35Z",
+  "updated_at": "2026-07-28T18:34:26Z",
   "improve": {
     "sweep_jobs": "~4470 backtests (selected grid + densify + policy path)",
     "bear": "m5-v7 ADX25 RSI52 SL3 TP4.5",
     "sideways": "mr-4h-v4 RSI30/60 ADX<30 BB2.2 SL2.5 TP4",
     "policyC_compound": 204.91,
-    "updated_at": "2026-07-28T18:00:35Z",
+    "updated_at": "2026-07-28T18:34:26Z",
     "audit_team": "enabled",
     "active_after_audit": "m5-v6",
-    "five_year_bull_v2": true
+    "five_year_bull_v2": true,
+    "sideways_v5": true,
+    "live_risk_caps": true
   },
   "audit": {
     "policy": "reports/review-state/audit-policy.json",
@@ -534,5 +540,15 @@
     "verdict": "always-v6 falsified; regime policy retained; LIVE stays v6 while BEAR",
     "report": "reports/five-year/README.md",
     "updated_at": "2026-07-28T18:00:35Z"
+  },
+  "live_risk": {
+    "MAX_ORDER_KRW": 15000,
+    "MAX_DAILY_LOSS_KRW": 5000,
+    "updated_at": "2026-07-28T18:34:26Z"
+  },
+  "regime_switch": {
+    "cron_utc": "20 15 * * *",
+    "script": "scripts/remote_regime_switch.py",
+    "status": "installed"
   }
 }

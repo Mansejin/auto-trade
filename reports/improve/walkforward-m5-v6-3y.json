@@ -1,0 +1,47 @@
+{
+  "strategy": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+  "start": "2023-07-27",
+  "end": "2026-07-26",
+  "fold_months": 12,
+  "folds": [
+    {
+      "fold": "F1",
+      "start": "2023-07-27",
+      "end": "2024-07-27",
+      "bh": 149.62,
+      "ret": -7.11,
+      "cagr": -7.09,
+      "mdd": -10.24,
+      "n": 51,
+      "pf": 0.89,
+      "ok": true
+    },
+    {
+      "fold": "F2",
+      "start": "2024-07-28",
+      "end": "2025-07-28",
+      "bh": 71.4,
+      "ret": -0.57,
+      "cagr": -0.57,
+      "mdd": -11.84,
+      "n": 57,
+      "pf": 1.18,
+      "ok": true
+    },
+    {
+      "fold": "F3",
+      "start": "2025-07-29",
+      "end": "2026-07-26",
+      "bh": -41.89,
+      "ret": 13.98,
+      "cagr": 14.11,
+      "mdd": -6.44,
+      "n": 45,
+      "pf": 2.15,
+      "ok": true
+    }
+  ],
+  "positive_folds": 1,
+  "n_folds": 3,
+  "note": "Walk-forward diagnostic only. Not a LIVE promotion signal."
+}

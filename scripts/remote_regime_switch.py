@@ -19,7 +19,7 @@ POLICY = {
     "bull": "regime-bull-trend-4h-v2.json",
     "transition": "regime-bull-trend-4h-v2.json",
     "bear": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
-    "sideways": "regime-sideways-mr-4h-v4.json",
+    "sideways": "regime-sideways-mr-4h-v5.json",
 }
 
 
