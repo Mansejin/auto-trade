@@ -19,7 +19,7 @@
     if (q === "KRW") {
       return `${Math.round(n).toLocaleString("ko-KR")}원`;
     }
-    const digits = Math.abs(n) >= 100 ? 2 : 4;
+    const digits = 2;
     const body = n.toLocaleString("en-US", {
       minimumFractionDigits: 0,
       maximumFractionDigits: digits,
