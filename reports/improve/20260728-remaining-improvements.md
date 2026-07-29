@@ -33,3 +33,8 @@
 - **AE13**: Upbit internal premium — H_rich fade RETAINED; H_cheap FALSIFIED — `20260729-ae13-upbit-premium.md`
 - **Next open:** AE14 — re-run H2 after OB collect; do not mine funding/premium cuts; no LIVE promote without audit
 - Keep LIVE caps sized for lag worst-case; do not restart AE6–AE11 TA scrapes
+
+## Local handoff
+
+Cloud → local continuation brief + paste prompt: **`docs/handoff-alpha-local-agent.md`**
+
