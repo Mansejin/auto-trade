@@ -1,0 +1,15 @@
+{
+  "id": "AE12c",
+  "updated_at": "2026-07-29T05:54:41Z",
+  "verdict": "SURVIVES_PRIMARY_FEE",
+  "primary_rt_bps": 20,
+  "holdout_n": 45,
+  "holdout_net_mean_pct_at_20bps": 0.1886,
+  "baseline_mean_pct": -0.0633,
+  "survives_through_bps": 30,
+  "fails_at_bps": 50,
+  "promote": false,
+  "report": "reports/improve/20260729-ae12c-fee-stress.md",
+  "raw": "reports/improve/ae12c-fee-stress.json",
+  "note": "Paper micro-size only after human approve; no Policy C / LIVE change"
+}

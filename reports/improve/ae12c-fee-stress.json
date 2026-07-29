@@ -1,0 +1,78 @@
+{
+  "id": "AE12c",
+  "updated_at": "2026-07-29T05:54:41Z",
+  "threshold": -0.0002,
+  "source": "HTX BTC-USDT",
+  "events_total": 148,
+  "holdout_n": 45,
+  "holdout_gross": {
+    "n": 45,
+    "hit_rate": 0.6444,
+    "mean_pct": 0.3886,
+    "median_pct": 0.3562
+  },
+  "holdout_baseline": {
+    "n": 436,
+    "hit_rate": 0.4908,
+    "mean_pct": -0.0633,
+    "median_pct": -0.0273
+  },
+  "primary_rt_bps": 20,
+  "ladder": [
+    {
+      "rt_bps": 10,
+      "holdout_net": {
+        "n": 45,
+        "hit_rate": 0.5556,
+        "mean_pct": 0.2886,
+        "median_pct": 0.2562
+      },
+      "net_positive_hit": 0.5556,
+      "vs_baseline_mean": true,
+      "vs_baseline_dir_hit": true,
+      "survives": true
+    },
+    {
+      "rt_bps": 20,
+      "holdout_net": {
+        "n": 45,
+        "hit_rate": 0.5111,
+        "mean_pct": 0.1886,
+        "median_pct": 0.1562
+      },
+      "net_positive_hit": 0.5111,
+      "vs_baseline_mean": true,
+      "vs_baseline_dir_hit": true,
+      "survives": true
+    },
+    {
+      "rt_bps": 30,
+      "holdout_net": {
+        "n": 45,
+        "hit_rate": 0.5111,
+        "mean_pct": 0.0886,
+        "median_pct": 0.0562
+      },
+      "net_positive_hit": 0.5111,
+      "vs_baseline_mean": true,
+      "vs_baseline_dir_hit": true,
+      "survives": true
+    },
+    {
+      "rt_bps": 50,
+      "holdout_net": {
+        "n": 45,
+        "hit_rate": 0.4222,
+        "mean_pct": -0.1114,
+        "median_pct": -0.1438
+      },
+      "net_positive_hit": 0.4222,
+      "vs_baseline_mean": false,
+      "vs_baseline_dir_hit": true,
+      "survives": false
+    }
+  ],
+  "verdict": "SURVIVES_PRIMARY_FEE",
+  "promote": false,
+  "note": "Surviving fee stress ≠ LIVE promote. Paper micro-size only after human approve."
+}

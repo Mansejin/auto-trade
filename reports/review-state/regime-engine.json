@@ -568,14 +568,26 @@
       "status": "partial_H2_pending"
     },
     {
+      "id": "AE12c",
+      "goal": "fee/slip stress on frozen H1",
+      "chg": "SURVIVES primary 20bps RT (through 30; fails 50) — no promote — reports/improve/20260729-ae12c-fee-stress.md",
+      "status": "done_research_only"
+    },
+    {
       "id": "AE13",
-      "goal": "next alpha only after H2 settle or orthogonal non-funding idea",
-      "chg": "do not mine funding thresholds; keep Policy C; optional paper micro-size if H1 survives fee stress later",
+      "goal": "orthogonal Upbit internal BTC premium event study",
+      "chg": "H_rich fade RETAINED; H_cheap FALSIFIED — no promote — reports/improve/20260729-ae13-upbit-premium.md",
+      "status": "partial_retain_no_promote"
+    },
+    {
+      "id": "AE14",
+      "goal": "H2 when OB collect ready; else fee-stress H_rich or leave research shelf",
+      "chg": "do not mine funding/premium cuts; no Policy C map change without new AE id + audit",
       "status": "open"
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-29T05:42:00Z",
+  "updated_at": "2026-07-29T05:55:00Z",
   "improve": {
     "sweep_jobs": "~4470 backtests (selected grid + densify + policy path)",
     "bear": "m5-v7 ADX25 RSI52 SL3 TP4.5",
