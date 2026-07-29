@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-"""AE12 forward collector — OKX funding + Upbit orderbook snapshots.
+"""AE12/AE14 forward collector — OKX + Bitget funding + Upbit orderbook.
 
 Append-only JSONL. No strategy promotion. No threshold mining.
 Intended cron: every 10–60 minutes on the bot host.
+
+Venues are logged separately (okx-funding.jsonl vs bitget-funding.jsonl).
+Do not pool sources into one event study without a new AE id.
 
 Environment:
   AUTO_TRADE_ROOT  default: repo root (script parents[1])
@@ -19,7 +22,9 @@ from pathlib import Path
 ROOT = Path(os.environ.get("AUTO_TRADE_ROOT", Path(__file__).resolve().parents[1]))
 OUT_DIR = ROOT / "reports" / "ae12-collect"
 FUNDING_LOG = OUT_DIR / "okx-funding.jsonl"
+BITGET_FUNDING_LOG = OUT_DIR / "bitget-funding.jsonl"
 ORDERBOOK_LOG = OUT_DIR / "upbit-orderbook.jsonl"
+BITGET_API = "https://api.bitget.com"
 
 
 def utc_now() -> str:
@@ -49,6 +54,13 @@ def _f(x):
         return None
 
 
+def _bitget_payload(raw: object) -> object:
+    """Normalize Bitget REST: either bare payload or {code,data,...}."""
+    if isinstance(raw, dict) and "data" in raw and "code" in raw:
+        return raw.get("data")
+    return raw
+
+
 def collect_funding() -> dict:
     # OKX (Binance often geo-blocked). Spot + next period.
     data = get_json(
@@ -65,6 +77,50 @@ def collect_funding() -> dict:
         "nextFundingTime": row.get("nextFundingTime"),
     }
     append_jsonl(FUNDING_LOG, rec)
+    return rec
+
+
+def collect_bitget_funding(symbol: str = "BTCUSDT") -> dict:
+    """Bitget UTA v3 public current fund rate + ticker mark/index (AE14 forward)."""
+    fund_raw = get_json(f"{BITGET_API}/api/v3/market/current-fund-rate?symbol={symbol}")
+    fund = _bitget_payload(fund_raw)
+    if isinstance(fund, list):
+        row = fund[0] if fund else {}
+    elif isinstance(fund, dict):
+        row = fund
+    else:
+        row = {}
+
+    ticker_raw = get_json(
+        f"{BITGET_API}/api/v3/market/tickers?category=USDT-FUTURES&symbol={symbol}"
+    )
+    ticker = _bitget_payload(ticker_raw)
+    if isinstance(ticker, list):
+        trow = ticker[0] if ticker else {}
+    elif isinstance(ticker, dict):
+        trow = ticker
+    else:
+        trow = {}
+
+    mark = _f(trow.get("markPrice"))
+    index = _f(trow.get("indexPrice"))
+    basis = None
+    if mark is not None and index not in (None, 0):
+        basis = mark / index - 1.0
+    rec = {
+        "ts_utc": utc_now(),
+        "source": "bitget",
+        "symbol": symbol,
+        "fundingRate": _f(row.get("fundingRate")),
+        "fundingRateInterval": row.get("fundingRateInterval"),
+        "nextUpdate": row.get("nextUpdate"),
+        "markPrice": mark,
+        "indexPrice": index,
+        "basis_mark_index": round(basis, 8) if basis is not None else None,
+        "lastPrice": _f(trow.get("lastPrice")),
+        "openInterest": _f(trow.get("openInterest")),
+    }
+    append_jsonl(BITGET_FUNDING_LOG, rec)
     return rec
 
 
@@ -97,19 +153,20 @@ def collect_orderbook(market: str = "KRW-BTC") -> dict:
 def main() -> None:
     funding = collect_funding()
     time.sleep(0.05)
+    bitget = collect_bitget_funding()
+    time.sleep(0.05)
     book = collect_orderbook()
     summary = {
         "ts_utc": utc_now(),
-        "fundingRate": funding.get("fundingRate"),
+        "okx_fundingRate": funding.get("fundingRate"),
+        "bitget_fundingRate": bitget.get("fundingRate"),
+        "bitget_basis_mark_index": bitget.get("basis_mark_index"),
         "orderbook_imbalance": book.get("imbalance"),
         "funding_log": str(FUNDING_LOG),
+        "bitget_funding_log": str(BITGET_FUNDING_LOG),
         "orderbook_log": str(ORDERBOOK_LOG),
     }
     print(json.dumps(summary, ensure_ascii=False))
-    # TODO(AE12): after >= 60 calendar days of collection, run pre-registered
-    # event study in scripts/ae12_event_study.py (funding extreme / OB imbalance
-    # → next 1h/1d KRW-BTC return) with a frozen holdout — do not mine thresholds
-    # on the growing sample.
 
 
 if __name__ == "__main__":

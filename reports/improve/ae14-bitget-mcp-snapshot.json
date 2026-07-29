@@ -1,0 +1,40 @@
+{
+  "id": "AE14_bitget_mcp_snapshot",
+  "captured_at": "2026-07-29T06:18:30Z",
+  "via": "project-0-auto-trade-bitget MCP market verb",
+  "symbol": "BTCUSDT",
+  "category": "USDT-FUTURES",
+  "current_funding": {
+    "fundingRate": 0.000064,
+    "fundingRateInterval_h": 8,
+    "minFundingRate": -0.003,
+    "maxFundingRate": 0.003
+  },
+  "ticker": {
+    "lastPrice": 64090.9,
+    "markPrice": 64090.9,
+    "indexPrice": 64122.4755,
+    "basis_mark_index": -0.0004924,
+    "fundingRate": 0.000064,
+    "openInterest": 34441.2169,
+    "price24hPcnt": 0.01064
+  },
+  "funding_history_last_50": {
+    "n": 50,
+    "min": -0.000118,
+    "max": 0.0001,
+    "n_negative": 10,
+    "n_h1_cut_le_-0.0002": 0,
+    "n_le_-0.0001": 1,
+    "note": "H1 forward events sparse on Bitget in this window; do not retune cut"
+  },
+  "orderbook_top": {
+    "best_ask": [64092.8, 9.807],
+    "best_bid": [64092.7, 0.1953]
+  },
+  "implications": [
+    "Keep Bitget funding in separate JSONL from OKX/HTX",
+    "AE15 registered: mark-index basis rich-tail study (hyp frozen in paper-log spec)",
+    "No LIVE / Policy C change"
+  ]
+}

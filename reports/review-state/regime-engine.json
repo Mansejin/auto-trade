@@ -587,13 +587,19 @@
     },
     {
       "id": "AE14",
-      "goal": "H2 when OB collect >=336; else paper-log spec for shelf (H1+H_rich); no cut mining",
-      "chg": "H2 NOT_READY (upbit-orderbook.jsonl missing locally); AE13b fee-stress done; next=paper-log or AE15 orthogonal",
-      "status": "open_H2_pending"
+      "goal": "paper-log for H1+H_rich; H2 when OB>=336; Bitget forward source isolated",
+      "chg": "paper-log spec + Bitget funding collect + MCP snapshot; H2 still NOT_READY — reports/improve/20260729-ae14-paper-log-spec.md",
+      "status": "partial_paper_log_H2_pending"
+    },
+    {
+      "id": "AE15",
+      "goal": "Bitget mark-index basis rich-tail → KRW-BTC underperformance (orthogonal)",
+      "chg": "hyp+falsify registered in AE14 paper-log spec; not scored yet; do not mine funding cuts",
+      "status": "open_registered"
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-29T06:03:07Z",
+  "updated_at": "2026-07-29T06:24:32Z",
   "improve": {
     "sweep_jobs": "~4470 backtests (selected grid + densify + policy path)",
     "bear": "m5-v7 ADX25 RSI52 SL3 TP4.5",

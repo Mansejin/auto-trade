@@ -14,7 +14,7 @@
 | LIVE / Policy C | **변경 없음.** Bear → `m5-v6`. Map 그대로. |
 | TA scrapes AE6–AE11 | 전부 falsified / untestable. **재개 금지.** |
 | Research shelf | (1) funding H1 `≤ -0.0002` (2) Upbit rich-premium fade |
-| Open | **AE14** — H2 when OB ≥336; AE13b fee-stress done; next paper-log or AE15. 컷 재탐색 금지. |
+| Open | **AE14** paper-log done; H2 OB pending. **AE15** Bitget basis hyp registered (unscored). 컷 재탐색 금지. |
 | Branch | `cursor/alpha-ae6-flush-fade-d7d9` (base: `cursor/regime-ops-guards-d7d9`) |
 | PR | https://github.com/Mansejin/auto-trade/pull/9 |
 
@@ -84,7 +84,8 @@ Playbook: `docs/regime-auto-switch-playbook.md`
 | AE13 H_rich | Upbit premium ≥ train 90th → fade | **RETAINED_for_research** | `…ae13-upbit-premium.md` |
 | AE13 H_cheap | premium ≤ train 10th → bounce | **Falsified** | same |
 | AE13b | H_rich fade fee/slip ladder | **SURVIVES 20bps** (through 30; fails 50) | `…ae13b-fee-stress.md` |
-| AE14 | H2 OB re-score when collect ≥336 | **OPEN** (OB jsonl missing locally) | — |
+| AE14 | paper-log H1+H_rich + Bitget forward | **PARTIAL** (H2 still pending) | `…ae14-paper-log-spec.md` |
+| AE15 | Bitget mark−index basis rich-tail | **Registered** (not scored) | same spec §AE15 |
 
 Cheatsheet: `reports/review-state/regime-engine.json` → `next[]`  
 Per-id: `reports/review-state/alpha-ae*.json`

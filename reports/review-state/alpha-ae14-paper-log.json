@@ -1,0 +1,19 @@
+{
+  "id": "AE14",
+  "updated_at": "2026-07-29T06:25:00Z",
+  "status": "paper_log_spec_done_H2_pending",
+  "H2": "NOT_READY (upbit-orderbook.jsonl missing or <336 locally)",
+  "paper_log_spec": "reports/improve/20260729-ae14-paper-log-spec.md",
+  "bitget_mcp_snapshot": "reports/improve/ae14-bitget-mcp-snapshot.json",
+  "scripts": [
+    "scripts/ae12_forward_collect.py",
+    "scripts/ae14_paper_log.py"
+  ],
+  "frozen_cuts": {
+    "H1_funding": -0.0002,
+    "H_rich_premium": 0.004563296109377913
+  },
+  "bitget_note": "MCP current funding +6.4e-5; last-50 hist 0 H1 hits; basis mark/index ~-4.9e-4",
+  "promote": false,
+  "AE15_registered": "Bitget mark-index basis rich-tail → KRW-BTC underperformance (falsify criteria in paper-log spec); not scored yet"
+}
