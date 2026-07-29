@@ -58,9 +58,11 @@ class Settings:
     bitget_api_key: str
     bitget_secret_key: str
     bitget_passphrase: str
+    bitget_category: str
     bitget_product_type: str
     bitget_margin_mode: str
     bitget_margin_coin: str
+    bitget_paper_trading: bool
     live_confirm: str
     log_level: str
     telegram_bot_token: str
@@ -88,10 +90,7 @@ class Settings:
 
     @property
     def transfer_allowed(self) -> bool:
-        return (
-            self.transfer_enabled
-            and self.transfer_confirm == "I_UNDERSTAND_TRANSFER_RISK"
-        )
+        return self.transfer_enabled and self.transfer_confirm == "I_UNDERSTAND_TRANSFER_RISK"
 
     @property
     def telegram_enabled(self) -> bool:
@@ -121,6 +120,11 @@ def load_settings() -> Settings:
     exchange = os.getenv("EXCHANGE", "upbit").strip().lower()
     if exchange not in {"upbit", "bitget"}:
         raise ValueError("EXCHANGE must be 'upbit' or 'bitget'")
+    category = (
+        os.getenv("BITGET_CATEGORY")
+        or os.getenv("BITGET_PRODUCT_TYPE")
+        or "USDT-FUTURES"
+    ).strip()
     return Settings(
         paper=_env_bool("PAPER", True),
         exchange=exchange,
@@ -141,9 +145,11 @@ def load_settings() -> Settings:
         bitget_api_key=os.getenv("BITGET_API_KEY", "").strip(),
         bitget_secret_key=os.getenv("BITGET_SECRET_KEY", "").strip(),
         bitget_passphrase=os.getenv("BITGET_PASSPHRASE", "").strip(),
-        bitget_product_type=os.getenv("BITGET_PRODUCT_TYPE", "USDT-FUTURES").strip(),
+        bitget_category=category,
+        bitget_product_type=category,
         bitget_margin_mode=os.getenv("BITGET_MARGIN_MODE", "isolated").strip().lower(),
         bitget_margin_coin=os.getenv("BITGET_MARGIN_COIN", "USDT").strip().upper(),
+        bitget_paper_trading=_env_bool("BITGET_PAPER_TRADING", False),
         live_confirm=os.getenv("LIVE_CONFIRM", "").strip(),
         log_level=os.getenv("LOG_LEVEL", "INFO").upper(),
         telegram_bot_token=os.getenv("TELEGRAM_BOT_TOKEN", "").strip(),

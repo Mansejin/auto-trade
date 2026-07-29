@@ -13,6 +13,8 @@
 ## 1b. Bitget + 반자동 이체
 
 - [ ] Bitget 키는 **System-generated (HMAC)** + IP `129.225.205.185`
+- [ ] 봇/이체는 **UTA v3** (`/api/v3/...`) — Classic mix v2 아님
+- [ ] Cursor MCP(`@bitget-ai/bitget-agent-mcp`)는 기본 `--read-only`; 키는 `.cursor/mcp.json`에만 로컬 기입 (커밋 금지)
 - [ ] 평소 선물/현물 매매만 쓸 때는 **출금(Withdraw) OFF** 권장
 - [ ] 이체 기능을 쓸 때만 Withdraw ON, 사용 후 다시 OFF 검토
 - [ ] `TRANSFER_ENABLED=false` 기본 — 켤 때만:

@@ -276,6 +276,7 @@ def _execute(settings: Settings, req: TransferRequest) -> str:
             settings.bitget_api_key,
             settings.bitget_secret_key,
             settings.bitget_passphrase,
+            paper_trading=settings.bitget_paper_trading,
         )
         try:
             result = client.withdraw(

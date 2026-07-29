@@ -1,4 +1,9 @@
-"""Bitget REST v2 client (USDT-M futures + spot wallet for transfers)."""
+"""Bitget Unified Trading Account (UTA / API v3) client.
+
+Aligned with Bitget Agent Hub / UTA docs:
+https://www.bitget.com/api-doc/uta/intro
+https://github.com/Bitget-AI/agent_hub
+"""
 
 from __future__ import annotations
 
@@ -17,7 +22,8 @@ import httpx
 logger = logging.getLogger(__name__)
 
 BITGET_API = "https://api.bitget.com"
-PRODUCT_USDT_FUTURES = "USDT-FUTURES"
+CATEGORY_USDT_FUTURES = "USDT-FUTURES"
+CATEGORY_SPOT = "SPOT"
 
 
 def _ms() -> str:
@@ -33,8 +39,10 @@ class BitgetError(RuntimeError):
 
 
 class BitgetPublic:
-    def __init__(self, timeout: float = 20.0) -> None:
-        self._client = httpx.Client(base_url=BITGET_API, timeout=timeout)
+    """Public UTA v3 market data (no API key)."""
+
+    def __init__(self, timeout: float = 20.0, base_url: str = BITGET_API) -> None:
+        self._client = httpx.Client(base_url=base_url, timeout=timeout)
 
     def close(self) -> None:
         self._client.close()
@@ -44,28 +52,28 @@ class BitgetPublic:
         symbol: str,
         timeframe: str,
         *,
-        product_type: str = PRODUCT_USDT_FUTURES,
+        category: str = CATEGORY_USDT_FUTURES,
         limit: int = 200,
     ) -> list[list[str]]:
-        """Return oldest→newest candle rows: [ts, o, h, l, c, baseVol, quoteVol]."""
-        gran = self._granularity(timeframe)
+        """Oldest→newest rows: [ts, open, high, low, close, volume, turnover]."""
         params = {
+            "category": category,
             "symbol": symbol.upper(),
-            "productType": product_type,
-            "granularity": gran,
+            "interval": self._interval(timeframe),
             "limit": str(min(limit, 200)),
         }
-        data = self._get("/api/v2/mix/market/candles", params)
+        data = self._get("/api/v3/market/candles", params)
         rows = list(data or [])
-        rows.reverse()  # API is newest-first
+        # API returns newest-first
+        rows.reverse()
         return rows
 
     def ticker(
-        self, symbol: str, *, product_type: str = PRODUCT_USDT_FUTURES
+        self, symbol: str, *, category: str = CATEGORY_USDT_FUTURES
     ) -> dict[str, Any]:
         data = self._get(
-            "/api/v2/mix/market/ticker",
-            {"symbol": symbol.upper(), "productType": product_type},
+            "/api/v3/market/tickers",
+            {"category": category, "symbol": symbol.upper()},
         )
         if isinstance(data, list) and data:
             return data[0]
@@ -80,7 +88,8 @@ class BitgetPublic:
         return payload.get("data")
 
     @staticmethod
-    def _granularity(timeframe: str) -> str:
+    def _interval(timeframe: str) -> str:
+        """UTA candle intervals use mixed case (1m, 1H, 1D)."""
         tf = timeframe.strip().lower()
         mapping = {
             "1m": "1m",
@@ -101,17 +110,14 @@ class BitgetPublic:
         if tf in mapping:
             return mapping[tf]
         if tf.endswith("h") and tf[:-1].isdigit():
-            hours = int(tf[:-1])
-            key = f"{hours}h"
-            if key in mapping:
-                return mapping[key]
+            return mapping.get(tf, f"{int(tf[:-1])}H")
         if tf.endswith("m") and tf[:-1].isdigit():
-            return mapping.get(tf, tf)
-        raise ValueError(f"unsupported Bitget timeframe: {timeframe}")
+            return tf
+        raise ValueError(f"unsupported Bitget UTA timeframe: {timeframe}")
 
 
 class BitgetPrivate:
-    """Authenticated Bitget client for futures trading and spot wallet transfers."""
+    """Authenticated UTA v3 client (trade + account + wallet)."""
 
     def __init__(
         self,
@@ -119,11 +125,15 @@ class BitgetPrivate:
         secret_key: str,
         passphrase: str,
         timeout: float = 20.0,
+        base_url: str = BITGET_API,
+        *,
+        paper_trading: bool = False,
     ) -> None:
         self.api_key = api_key
         self.secret_key = secret_key
         self.passphrase = passphrase
-        self._client = httpx.Client(base_url=BITGET_API, timeout=timeout)
+        self.paper_trading = paper_trading
+        self._client = httpx.Client(base_url=base_url, timeout=timeout)
 
     def close(self) -> None:
         self._client.close()
@@ -142,7 +152,7 @@ class BitgetPrivate:
 
     def _headers(self, method: str, path: str, query: str, body: str) -> dict[str, str]:
         ts = _ms()
-        return {
+        headers = {
             "ACCESS-KEY": self.api_key,
             "ACCESS-SIGN": self._sign(ts, method, path, query, body),
             "ACCESS-TIMESTAMP": ts,
@@ -150,6 +160,10 @@ class BitgetPrivate:
             "Content-Type": "application/json",
             "locale": "en-US",
         }
+        # Demo / paper trading environment (same as agent-mcp --paper-trading)
+        if self.paper_trading:
+            headers["paptrading"] = "1"
+        return headers
 
     def _request(
         self,
@@ -170,29 +184,70 @@ class BitgetPrivate:
             raise BitgetError(str(payload.get("code")), str(payload.get("msg")), payload)
         return payload.get("data")
 
-    def futures_account(
-        self, symbol: str, *, product_type: str = PRODUCT_USDT_FUTURES, margin_coin: str = "USDT"
-    ) -> dict[str, Any]:
-        data = self._request(
-            "GET",
-            "/api/v2/mix/account/account",
-            params={
-                "symbol": symbol.upper(),
-                "productType": product_type,
-                "marginCoin": margin_coin,
-            },
-        )
+    # --- Account (UTA) ---
+
+    def account_assets(self) -> dict[str, Any]:
+        """GET /api/v3/account/assets — UTA equity + per-coin balances."""
+        data = self._request("GET", "/api/v3/account/assets")
         return data or {}
 
-    def available_usdt(self, symbol: str = "BTCUSDT") -> float:
-        acc = self.futures_account(symbol)
-        for key in ("available", "crossedMaxAvailable", "isolatedMaxAvailable", "usdtEquity"):
-            if acc.get(key) is not None:
-                try:
-                    return float(acc[key])
-                except (TypeError, ValueError):
-                    continue
+    def available_usdt(self, _symbol: str | None = None) -> float:
+        assets = self.account_assets()
+        for row in assets.get("assets") or []:
+            if str(row.get("coin", "")).upper() == "USDT":
+                return float(row.get("available") or 0.0)
+        try:
+            return float(assets.get("usdtEquity") or 0.0)
+        except (TypeError, ValueError):
+            return 0.0
+
+    def spot_available(self, coin: str) -> float:
+        """UTA unified balance for a coin (spot/futures share pool in UTA)."""
+        assets = self.account_assets()
+        for row in assets.get("assets") or []:
+            if str(row.get("coin", "")).upper() == coin.upper():
+                return float(row.get("available") or 0.0)
         return 0.0
+
+    # --- Trade (UTA place-order) ---
+
+    def place_order(
+        self,
+        *,
+        category: str,
+        symbol: str,
+        side: str,
+        order_type: str,
+        qty: str,
+        price: str | None = None,
+        pos_side: str | None = None,
+        reduce_only: str | None = None,
+        client_oid: str | None = None,
+        time_in_force: str | None = None,
+        margin_mode: str | None = None,
+    ) -> dict[str, Any]:
+        """POST /api/v3/trade/place-order."""
+        body: dict[str, Any] = {
+            "category": category,
+            "symbol": symbol.upper(),
+            "side": side.lower(),
+            "orderType": order_type.lower(),
+            "qty": str(qty),
+            "clientOid": client_oid or uuid.uuid4().hex[:32],
+        }
+        if price is not None:
+            body["price"] = str(price)
+        if pos_side:
+            body["posSide"] = pos_side.lower()
+        if reduce_only:
+            body["reduceOnly"] = reduce_only.lower()
+        if time_in_force:
+            body["timeInForce"] = time_in_force
+        if margin_mode:
+            mm = margin_mode.lower()
+            body["marginMode"] = "crossed" if mm in {"cross", "crossed"} else "isolated"
+        data = self._request("POST", "/api/v3/trade/place-order", body=body)
+        return data or {}
 
     def place_futures_market(
         self,
@@ -201,44 +256,45 @@ class BitgetPrivate:
         size: str,
         side: str,
         trade_side: str,
-        product_type: str = PRODUCT_USDT_FUTURES,
+        product_type: str = CATEGORY_USDT_FUTURES,
         margin_coin: str = "USDT",
         margin_mode: str = "isolated",
         client_oid: str | None = None,
     ) -> dict[str, Any]:
-        """side: buy|sell, trade_side: open|close."""
-        body = {
-            "symbol": symbol.upper(),
-            "productType": product_type,
-            "marginMode": margin_mode,
-            "marginCoin": margin_coin,
-            "size": str(size),
-            "side": side.lower(),
-            "tradeSide": trade_side.lower(),
-            "orderType": "market",
-            "clientOid": client_oid or uuid.uuid4().hex[:32],
-        }
-        data = self._request("POST", "/api/v2/mix/order/place-order", body=body)
-        return data or {}
+        """Compat wrapper used by bitget_runner (maps open/close → UTA place-order)."""
+        _ = margin_coin  # UTA size is base coin; margin coin is account-level
+        category = product_type or CATEGORY_USDT_FUTURES
+        ts = trade_side.lower()
+        # Hedge-mode open/close (UTA docs). reduceOnly is lowercase yes/no.
+        if ts == "open":
+            pos_side = "long" if side.lower() == "buy" else "short"
+            reduce_only = "no"
+        elif ts == "close":
+            # close long → sell; close short → buy
+            pos_side = "long" if side.lower() == "sell" else "short"
+            reduce_only = "yes"
+        else:
+            pos_side = "long"
+            reduce_only = "no"
+        return self.place_order(
+            category=category,
+            symbol=symbol,
+            side=side,
+            order_type="market",
+            qty=size,
+            pos_side=pos_side,
+            reduce_only=reduce_only,
+            client_oid=client_oid,
+            margin_mode=margin_mode,
+        )
 
-    def spot_assets(self, coin: str | None = None) -> list[dict[str, Any]]:
-        params = {"coin": coin.upper()} if coin else None
-        data = self._request("GET", "/api/v2/spot/account/assets", params=params)
-        if isinstance(data, list):
-            return data
-        return []
-
-    def spot_available(self, coin: str) -> float:
-        for row in self.spot_assets(coin):
-            if str(row.get("coin", "")).upper() == coin.upper():
-                return float(row.get("available") or 0.0)
-        return 0.0
+    # --- Wallet ---
 
     def deposit_address(self, coin: str, chain: str | None = None) -> dict[str, Any]:
         params: dict[str, Any] = {"coin": coin.upper()}
         if chain:
             params["chain"] = chain
-        data = self._request("GET", "/api/v2/spot/wallet/deposit-address", params=params)
+        data = self._request("GET", "/api/v3/account/deposit-address", params=params)
         return data or {}
 
     def withdraw(
@@ -251,6 +307,7 @@ class BitgetPrivate:
         tag: str | None = None,
         client_oid: str | None = None,
     ) -> dict[str, Any]:
+        """POST /api/v3/account/withdraw (on-chain)."""
         body: dict[str, Any] = {
             "coin": coin.upper(),
             "transferType": "on_chain",
@@ -261,5 +318,5 @@ class BitgetPrivate:
         }
         if tag:
             body["tag"] = tag
-        data = self._request("POST", "/api/v2/spot/wallet/withdrawal", body=body)
+        data = self._request("POST", "/api/v3/account/withdraw", body=body)
         return data or {}

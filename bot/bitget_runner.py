@@ -67,18 +67,19 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                 settings.bitget_api_key,
                 settings.bitget_secret_key,
                 settings.bitget_passphrase,
+                paper_trading=settings.bitget_paper_trading,
             )
 
         logger.info(
-            "Bitget 캔들 조회… symbol=%s tf=%s product=%s",
+            "Bitget UTA 캔들 조회… symbol=%s tf=%s category=%s",
             symbol,
             strategy.timeframe,
-            settings.bitget_product_type,
+            settings.bitget_category,
         )
         rows = public.candles(
             symbol,
             strategy.timeframe,
-            product_type=settings.bitget_product_type,
+            category=settings.bitget_category,
             limit=200,
         )
         if len(rows) < 30:
@@ -287,7 +288,7 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                 size=size,
                 side="buy",
                 trade_side="open",
-                product_type=settings.bitget_product_type,
+                product_type=settings.bitget_category,
                 margin_coin=settings.bitget_margin_coin,
                 margin_mode=settings.bitget_margin_mode,
                 client_oid=oid,
@@ -336,7 +337,7 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                 size=size,
                 side="sell",
                 trade_side="close",
-                product_type=settings.bitget_product_type,
+                product_type=settings.bitget_category,
                 margin_coin=settings.bitget_margin_coin,
                 margin_mode=settings.bitget_margin_mode,
                 client_oid=oid,

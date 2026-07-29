@@ -49,3 +49,17 @@ below cover only the non-obvious caveats for running things locally (outside Doc
 - The desk does not talk to the bot over the network — it reads the bot's shared files
   (`logs/status.json`, `logs/latest_status.txt`, `data/state.json`, `data/risk.json`). Point the
   desk's `LOG_DIR`/`STATE_PATH`/`RISK_PATH` at the same dirs the bot writes to so it shows live status.
+
+### Bitget UTA + Agent MCP
+
+- Trading client is **UTA API v3** (`bot/bitget_client.py`): candles `/api/v3/market/candles`,
+  orders `/api/v3/trade/place-order`, assets `/api/v3/account/assets`, withdraw
+  `/api/v3/account/withdraw`. Docs: https://www.bitget.com/api-doc/uta/intro
+- Parallel container: `bot-bitget` (`EXCHANGE=bitget`, default `BITGET_PAPER=true`). Category via
+  `BITGET_CATEGORY` (alias `BITGET_PRODUCT_TYPE`, default `USDT-FUTURES`).
+- Demo Trading: set `BITGET_PAPER_TRADING=true` **and** Demo API keys (sends `paptrading: 1`).
+- Cursor MCP: `.cursor/mcp.json` runs `npx -y @bitget-ai/bitget-agent-mcp --read-only`. Fill
+  `BITGET_*` env in that file locally (never commit real keys). Official package:
+  https://www.npmjs.com/package/@bitget-ai/bitget-agent-mcp — Agent Hub:
+  https://github.com/Bitget-AI/agent_hub
+- Older npm name `bitget-mcp-server` is superseded; prefer `@bitget-ai/bitget-agent-mcp`.

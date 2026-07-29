@@ -27,7 +27,7 @@ class OHLCV:
 
     @classmethod
     def from_bitget_candles(cls, rows: Sequence[Sequence[str]]) -> OHLCV:
-        # Bitget mix candles: [ts, open, high, low, close, baseVol, quoteVol]
+        # Bitget UTA candles: [ts, open, high, low, close, volume, turnover]
         return cls(
             open=[float(r[1]) for r in rows],
             high=[float(r[2]) for r in rows],
