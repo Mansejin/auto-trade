@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v6",
-  "slug": "daytrade-bb-rsi-div-v6",
-  "hypothesis": "BTC daytrade long-only: close cross_above BB lower AND RSI cross_above rsi_signal (reclaim+turn), ride to BB upper or RSI≥65 (not mid fade).",
+  "active_card": "daytrade-bb-rsi-div-v7",
+  "slug": "daytrade-bb-rsi-div-v7",
+  "hypothesis": "BTC daytrade long-only: while close < BB middle, RSI cross_above rsi_signal (no OS cap), ride to BB upper or RSI≥70.",
   "hypers": {
-    "entry": "bb_lower_reclaim+rsi_signal_cross",
+    "entry": "below_mid+rsi_signal_cross",
     "exit_band": "bb_upper",
-    "rsi_exit": 65
+    "rsi_exit": 70
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-6.74%",
-      "profit_factor": "0.91",
-      "trades": 63,
+      "total_return": "-6.21%",
+      "profit_factor": "0.79",
+      "trades": 43,
       "benchmark": "+3.26%",
-      "trades_per_day": 2.1
+      "trades_per_day": 1.43
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-11.34%",
-      "profit_factor": "0.76",
-      "trades": 77,
+      "total_return": "-15.99%",
+      "profit_factor": "0.52",
+      "trades": 64,
       "benchmark": "-16.19%",
-      "trades_per_day": 2.57
+      "trades_per_day": 2.13
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-7.41%",
-      "profit_factor": "0.91",
-      "trades": 70,
+      "total_return": "-0.97%",
+      "profit_factor": "1.76",
+      "trades": 54,
       "benchmark": "-4.12%",
-      "trades_per_day": 2.33
+      "trades_per_day": 1.8
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 5,
+  "consecutive_fails": 6,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB lower reclaim + RSI/signal cross 후 BB upper/RSI65 라이드 — v6 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v5",
-  "updated_at": "2026-07-29T18:21:30Z"
+  "next_action": "BB mid 아래 RSI/signal cross(OS캡 제거) → BB upper/RSI70 라이드 — v7 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v6",
+  "updated_at": "2026-07-29T18:31:33Z"
 }
