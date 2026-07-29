@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v13",
-  "slug": "daytrade-bb-rsi-div-v13",
-  "hypothesis": "BTC daytrade long-only: prior close≤BB mid then reclaim above mid with RSI>50 and RSI>rsi_signal (bull continuation); exit BB upper or RSI≥70.",
+  "active_card": "daytrade-bb-rsi-div-v14",
+  "slug": "daytrade-bb-rsi-div-v14",
+  "hypothesis": "BTC daytrade long-only: prior close≤BB upper then reclaim above upper with RSI>55 and RSI>rsi_signal (upper-band breakout continuation); exit BB mid or RSI≤45.",
   "hypers": {
-    "pattern": "mid_cross_bull_cont",
-    "rsi_floor": 50,
-    "exit": "bb_upper_or_rsi70"
+    "pattern": "upper_breakout",
+    "rsi_floor": 55,
+    "exit": "bb_mid_or_rsi45"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-1.40%",
-      "profit_factor": "1.43",
-      "trades": 29,
+      "total_return": "-15.90%",
+      "profit_factor": "0.94",
+      "trades": 162,
       "benchmark": "+3.26%",
-      "trades_per_day": 0.97
+      "trades_per_day": 5.4
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-4.22%",
-      "profit_factor": "0.82",
-      "trades": 32,
+      "total_return": "-17.93%",
+      "profit_factor": "0.88",
+      "trades": 156,
       "benchmark": "-16.19%",
-      "trades_per_day": 1.07
+      "trades_per_day": 5.2
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-2.42%",
-      "profit_factor": "1.46",
-      "trades": 42,
+      "total_return": "-17.51%",
+      "profit_factor": "0.73",
+      "trades": 134,
       "benchmark": "-4.12%",
-      "trades_per_day": 1.4
+      "trades_per_day": 4.47
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 12,
+  "consecutive_fails": 13,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB mid cross + RSI>50·RSI>signal → upper/RSI70 — v13 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v12",
-  "updated_at": "2026-07-29T19:32:28Z"
+  "next_action": "BB upper breakout + RSI>55·RSI>signal → mid/RSI45 — v14 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v13",
+  "updated_at": "2026-07-29T19:41:30Z"
 }
