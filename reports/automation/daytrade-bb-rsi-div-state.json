@@ -1,46 +1,46 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v2",
-  "slug": "daytrade-bb-rsi-div-v2",
-  "hypothesis": "BTC daytrade long-only: BB lower reclaim with RSI still below mid and RSI rising vs lookback (bullish momentum vs band stress), fade to BB mid.",
+  "active_card": "daytrade-bb-rsi-div-v3",
+  "slug": "daytrade-bb-rsi-div-v3",
+  "hypothesis": "BTC daytrade long-only: while close at/below BB lower, RSI reclaim above 35 (prior bar < 35), fade to BB mid or RSI≥55.",
   "hypers": {
-    "rsi_cap": 50,
+    "rsi_reclaim": 35,
     "bb_std": 2.0,
-    "div_lookback": 3
+    "rsi_exit": 55
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-0.42%",
-      "profit_factor": "0.00",
-      "trades": 2,
+      "total_return": "-8.32%",
+      "profit_factor": "0.77",
+      "trades": 66,
       "benchmark": "+3.26%"
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-0.90%",
-      "profit_factor": "0.00",
-      "trades": 1,
+      "total_return": "-10.37%",
+      "profit_factor": "0.89",
+      "trades": 92,
       "benchmark": "-16.19%"
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-2.95%",
-      "profit_factor": "0.00",
-      "trades": 4,
+      "total_return": "-9.35%",
+      "profit_factor": "0.80",
+      "trades": 77,
       "benchmark": "-4.12%"
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 1,
+  "consecutive_fails": 2,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB lower reclaim + RSI below mid + RSI rising vs lookback으로 페이드(하드 OS/가격 LL 제거).",
-  "failed_slug": "daytrade-bb-rsi-div-v1",
-  "updated_at": "2026-07-29T17:55:30Z"
+  "next_action": "BB lower 터치에서 RSI 35 재탈환(직전봉 <35) 후 BB mid로 페이드.",
+  "failed_slug": "daytrade-bb-rsi-div-v2",
+  "updated_at": "2026-07-29T18:00:45Z"
 }
