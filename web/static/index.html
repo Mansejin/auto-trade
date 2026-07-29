@@ -30,11 +30,14 @@
         <span id="m-mode" class="pill">—</span>
       </div>
       <div class="ticker-strip" aria-label="봇 상태">
-        <div class="tick"><span class="k">시그널</span><span class="v" id="m-signal">—</span></div>
+        <div class="tick"><span class="k">Upbit</span><span class="v" id="m-signal">—</span></div>
         <div class="tick"><span class="k" id="m-cash-label">원화</span><span class="v" id="m-krw">—</span></div>
-        <div class="tick"><span class="k">Bitget</span><span class="v" id="m-bitget">—</span></div>
         <div class="tick"><span class="k">포지션</span><span class="v" id="m-pos">—</span></div>
-        <div class="tick"><span class="k">전략</span><span class="v" id="m-strategy">—</span></div>
+        <div class="tick sep"></div>
+        <div class="tick"><span class="k">Bitget</span><span class="v" id="m-bg-signal">—</span></div>
+        <div class="tick"><span class="k">USDT</span><span class="v" id="m-bitget">—</span></div>
+        <div class="tick"><span class="k">포지션</span><span class="v" id="m-bg-pos">—</span></div>
+        <div class="tick sep"></div>
         <div class="tick"><span class="k">리스크</span><span class="v" id="m-risk">—</span></div>
       </div>
       <div class="top-meta">
@@ -55,13 +58,22 @@
 
     <section class="bottom">
       <div class="panel">
-        <div class="panel-head">최근 체결</div>
+        <div class="panel-head">Upbit 체결</div>
         <ul class="trades" id="trades"></ul>
         <p class="muted empty" id="trades-empty">아직 기록된 체결이 없습니다.</p>
       </div>
       <div class="panel">
-        <div class="panel-head">상태 요약</div>
+        <div class="panel-head">Bitget 체결</div>
+        <ul class="trades" id="bg-trades"></ul>
+        <p class="muted empty" id="bg-trades-empty">아직 기록된 체결이 없습니다.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Upbit 상태</div>
         <pre class="status-pre" id="latest-text">로딩…</pre>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Bitget 상태</div>
+        <pre class="status-pre" id="bg-latest-text">로딩…</pre>
       </div>
     </section>
   </div>

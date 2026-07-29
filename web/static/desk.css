@@ -243,6 +243,13 @@ body {
   white-space: nowrap;
   min-width: 6.5rem;
 }
+.tick.sep {
+  min-width: 0;
+  width: 2px;
+  padding: 0;
+  background: var(--line);
+  border-right: none;
+}
 
 .tick:last-child {
   border-right: 0;

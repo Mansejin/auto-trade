@@ -111,9 +111,9 @@
     });
   }
 
-  function renderTrades(rows, quote) {
-    const ul = document.getElementById("trades");
-    const empty = document.getElementById("trades-empty");
+  function renderTrades(rows, quote, ulId, emptyId) {
+    const ul = document.getElementById(ulId || "trades");
+    const empty = document.getElementById(emptyId || "trades-empty");
     ul.innerHTML = "";
     if (!rows || !rows.length) {
       empty.classList.remove("hidden");
@@ -167,19 +167,9 @@
     const cashLabel = document.getElementById("m-cash-label");
     if (cashLabel) cashLabel.textContent = quote === "KRW" ? "원화" : quote;
 
+    // Upbit
     document.getElementById("m-signal").textContent = SIGNAL_KO[s.signal] || s.signal || "—";
     document.getElementById("m-krw").textContent = money(cashValue(s), quote);
-
-    // Bitget balance
-    const bg = data.bitget || {};
-    const bgEl = document.getElementById("m-bitget");
-    if (bgEl) {
-      if (bg.cash != null) {
-        bgEl.textContent = money(bg.cash, "USDT");
-      } else {
-        bgEl.textContent = "—";
-      }
-    }
     if (s.position && s.position.qty) {
       document.getElementById("m-pos").textContent = `${qty(s.position.qty)} @ ${money(
         s.position.entry_price,
@@ -188,7 +178,19 @@
     } else {
       document.getElementById("m-pos").textContent = "없음";
     }
-    document.getElementById("m-strategy").textContent = s.strategy || s.strategy_file || "—";
+
+    // Bitget
+    const bg = data.bitget || {};
+    document.getElementById("m-bitget").textContent = bg.cash != null ? money(bg.cash, "USDT") : "—";
+    document.getElementById("m-bg-signal").textContent = SIGNAL_KO[bg.signal] || bg.signal || "—";
+    if (bg.position && bg.position.qty) {
+      document.getElementById("m-bg-pos").textContent = `${qty(bg.position.qty)} @ ${money(
+        bg.position.entry_price,
+        "USDT"
+      )}`;
+    } else {
+      document.getElementById("m-bg-pos").textContent = "없음";
+    }
 
     const riskEl = document.getElementById("m-risk");
     if (risk.trading_halted) {
@@ -207,7 +209,9 @@
     }
 
     document.getElementById("latest-text").textContent = data.latest_text || "(상태 텍스트 없음)";
-    renderTrades(data.recent_trades || [], quote);
+    document.getElementById("bg-latest-text").textContent = bg.latest_text || "(상태 텍스트 없음)";
+    renderTrades(data.recent_trades || [], quote, "trades", "trades-empty");
+    renderTrades(bg.recent_trades || [], "USDT", "bg-trades", "bg-trades-empty");
 
     const symbol = data.tv_symbol || "UPBIT:BTCKRW";
 
