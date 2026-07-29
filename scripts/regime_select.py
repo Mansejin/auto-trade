@@ -3,7 +3,11 @@
 
 v2 adds DI confirmation and SMA50 recovery filter so rising recoveries under a
 bearish MA structure map to transition (trend/participation) instead of bear.
+
+Classification always uses the last *closed* daily candle (drops the in-progress
+bar that Upbit includes in /v1/candles/days).
 """
+
 from __future__ import annotations
 
 import json
@@ -30,7 +34,8 @@ def fetch_days(market: str = "KRW-BTC", want: int = 260) -> list[dict]:
         if to:
             url += f"&to={to}"
         req = urllib.request.Request(
-            url, headers={"Accept": "application/json", "User-Agent": "regime-select-v2"}
+            url,
+            headers={"Accept": "application/json", "User-Agent": "regime-select-v2"},
         )
         with urllib.request.urlopen(req, timeout=30) as resp:
             batch = json.loads(resp.read().decode())
@@ -43,6 +48,13 @@ def fetch_days(market: str = "KRW-BTC", want: int = 260) -> list[dict]:
             break
     by = {c["candle_date_time_utc"][:10]: c for c in rows}
     return [by[k] for k in sorted(by)]
+
+
+def closed_daily_candles(candles: list[dict]) -> list[dict]:
+    """Drop the in-progress daily bar (Upbit always returns a forming candle)."""
+    if len(candles) < 2:
+        raise RuntimeError("need at least 2 daily candles (forming + closed)")
+    return candles[:-1]
 
 
 def sma(arr: list[float], p: int, i: int) -> float | None:
@@ -95,16 +107,18 @@ def adx_last(highs, lows, closes, period: int = 14):
 
 
 def classify(candles: list[dict]) -> dict:
-    closes = [c["trade_price"] for c in candles]
-    highs = [c["high_price"] for c in candles]
-    lows = [c["low_price"] for c in candles]
+    """Classify using the last closed daily bar only (Policy C rules unchanged)."""
+    closed = closed_daily_candles(candles)
+    closes = [c["trade_price"] for c in closed]
+    highs = [c["high_price"] for c in closed]
+    lows = [c["low_price"] for c in closed]
     i = len(closes) - 1
     s50 = sma(closes, 50, i)
     s200 = sma(closes, 200, i)
     pdi, mdi, adx = adx_last(highs, lows, closes)
     if None in (s50, s200, adx, pdi, mdi):
         raise RuntimeError("insufficient candles for SMA200/ADX/DI")
-    # Regime engine v2
+    # Regime engine v2 (Policy C — do not alter thresholds / transition→bull map)
     if adx < 20:
         regime = "sideways"
     elif closes[i] > s200 and s50 > s200 and pdi >= mdi:
@@ -114,7 +128,7 @@ def classify(candles: list[dict]) -> dict:
     else:
         regime = "transition"
     return {
-        "date": candles[i]["candle_date_time_utc"][:10],
+        "date": closed[i]["candle_date_time_utc"][:10],
         "regime": regime,
         "close": closes[i],
         "sma50": s50,
@@ -125,6 +139,7 @@ def classify(candles: list[dict]) -> dict:
         "selected_file": POLICY_C[regime],
         "policy": "C_regime_v2",
         "engine": "v2",
+        "bar": "closed",
         "live_trading": False,
     }
 

@@ -46,12 +46,14 @@ flowchart TD
 
 ## 2. Regime rules (engine v2)
 
-Compute on **daily** candles:
+Compute on **closed daily** candles only (drop Upbit’s in-progress day bar; use `candles[-2]` / `closed_daily_candles`).
 
 - `sideways` if `ADX14 < 20`
 - `bull` if `ADX>=20` AND `close>SMA200` AND `SMA50>SMA200` AND `+DI >= -DI`
 - `bear` if `ADX>=20` AND `close<SMA200` AND `SMA50<SMA200` AND `close<SMA50` AND `-DI > +DI`
 - else `transition`
+
+Policy C maps `transition` → bull strategy (intentional; do not remap without re-backtest).
 
 Reference implementation: `scripts/regime_select.py`  
 (prints JSON + writes `reports/regime-current.json`)
@@ -121,20 +123,21 @@ Bot logs must show:
 ## 4. Safety rules (do not skip)
 
 1. **Only switch JSON + restart** — do not rebuild image unless required.  
-2. **Do not invent new strategy rules** during a switch job.  
-3. Log every switch: old slug, new slug, regime, timestamp → `reports/regime-switch-log.jsonl` (append).  
-4. Optional hysteresis: if last switch &lt; 24h ago AND regime flipped then flipped back, skip (prevent thrash). Recommended min dwell: **24h** or until daily bar confirms.  
-5. LIVE mode places **real orders**. Confirm `.env` mode intentionally.  
-6. Monthly strategy *redesign* still goes through Audit Team (`scripts/strategy_audit.py`). Regime switch ≠ strategy redesign.
+2. **Do not invent new strategy rules** during a switch job. Do not add SMA buffers or change `transition` mapping without a new Policy backtest.  
+3. Log every switch/skip: old slug, new slug, regime, action, timestamp → `logs/regime-switch.jsonl` and human lines in `logs/regime-switch.log`.  
+4. **Hard dwell**: if last *successful or attempted logged* switch is &lt; **24h** (`MIN_DWELL_HOURS`), **block** the switch (`action=dwell_block`). `FORCE=1` bypasses dwell only.  
+5. **Position guard** (before `STRATEGY_PATH` change): cancel open `KRW-BTC` orders; if BTC balance+locked (or paper position) &gt; dust, **skip switch** (`action=position_skip`). **No auto market-sell.** `SKIP_POSITION_GUARD=1` emergency only.  
+6. LIVE mode places **real orders**. Confirm `.env` mode intentionally. Load keys only from server `.env`.  
+7. Monthly strategy *redesign* still goes through Audit Team (`scripts/strategy_audit.py`). Regime switch ≠ strategy redesign.
 
 ---
 
 ## 5. Cron suggestion (on bot server or CI agent)
 
-Run **once per day after daily candle is available** (e.g. 00:20 KST / 15:20 UTC previous day close settled — pick a stable time):
+Upbit daily candles close at **00:00 UTC**. Classification uses the **last closed** bar, so cron may run any time after that (existing `20 15 * * *` UTC is fine; `10 0 * * *` is also fine for fresher signals). Do **not** rely on cron alone to avoid forming-bar noise.
 
 ```cron
-20 15 * * * cd /path/to/auto-trade && python3 scripts/regime_select.py && bash scripts/regime_switch_bot.sh >> logs/regime-switch.log 2>&1
+20 15 * * * cd ~/auto-trade && python3 scripts/remote_regime_switch.py >> logs/regime-switch.cron.log 2>&1
 ```
 
 ---
@@ -188,10 +191,12 @@ Success criteria:
 
 Installed on bot server `ubuntu@129.225.205.185`:
 
-- Script: `~/auto-trade/scripts/remote_regime_switch.py`
+- Script: `~/auto-trade/scripts/remote_regime_switch.py` (**ops guards**: closed bar, hard dwell, cancel-orders + position-skip)
 - Wrapper: `~/auto-trade/scripts/run-regime-switch.sh`
-- Cron (UTC): `20 15 * * *` → daily regime classify + STRATEGY_PATH switch if needed
-- Log: `~/auto-trade/logs/regime-switch.jsonl` and `logs/regime-switch.cron.log`
+- Cron (UTC): `20 15 * * *` → daily regime classify + STRATEGY_PATH switch if needed (forming bar is ignored in code)
+- Log: `~/auto-trade/logs/regime-switch.jsonl`, `logs/regime-switch.log`, and `logs/regime-switch.cron.log`
 - Desk snapshot: `~/auto-trade/logs/regime-current.json` (read by `upbit-desk` ticker “레짐”)
 - Current: regime **bear** → already on `m5-v6` (noop verified)
+
+Redeploy this branch’s `scripts/remote_regime_switch.py` to the server before relying on the new guards.
 
