@@ -2,6 +2,12 @@ __pycache__/
 *.log
 .DS_Store
 .venv/
+freqtrade-research/.venv/
+freqtrade-research/user_data/data/
+freqtrade-research/user_data/logs/
+freqtrade-research/user_data/backtest_results/
+freqtrade-research/user_data/plot/
+freqtrade-research/user_data/notebooks/
 cache/
 reports/ae12-collect/*.jsonl
 reports/ae12-collect/event-study-status.json
