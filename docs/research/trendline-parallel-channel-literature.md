@@ -2,7 +2,8 @@
 
 > **상태**: 자료수집 우선 (2026-07-29). **새 인코딩/백테스트 금지** until §8 체크리스트가 채워짐.  
 > **한 줄**: “빗각”은 인범TV식 브랜드명에 가깝고, 본체는 고전 TA의 **trendline + parallel (price) channel** 이다.  
-> 운영 스펙은 [`docs/inbum-diagonal-channel-playbook.md`](../inbum-diagonal-channel-playbook.md). 이 문서는 **근거·합의·미결**만 모은다.
+> 운영 스펙은 [`docs/inbum-diagonal-channel-playbook.md`](../inbum-diagonal-channel-playbook.md). 이 문서는 **근거·합의·미결**만 모은다.  
+> **커뮤니티·ICT 심리 종합**: [`bitgak-community-psychology-synthesis.md`](bitgak-community-psychology-synthesis.md)
 
 ---
 
@@ -86,6 +87,16 @@
 - [ ] Bulkowski pullbacks + channel patterns 통계 표
 - [ ] 로그 vs 선형 채널 (BTC 장기) 실무 비교 글
 - [ ] Pitchfork / Schiff vs parallel channel 경계
+
+---
+
+### 2.5 커뮤니티·ICT (심리 레이어)
+
+상세: [`bitgak-community-psychology-synthesis.md`](bitgak-community-psychology-synthesis.md)
+
+- Blind/디시: 주관 작도·기다림·도구 혼동(피치포크/Fib Channel)
+- 한글 정리글: 빗각≡추세선으로 수렴
+- ICT: **trendline liquidity** — 예쁜 다중터치 빗각 = 스탑 리본
 
 ---
 

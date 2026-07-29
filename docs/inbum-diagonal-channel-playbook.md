@@ -12,6 +12,7 @@
 | Core claim | 의미 있는 고·저(특히 거래량 터진 변곡)를 이은 채널이 지지·저항·리테스트 타점이 된다 |
 | Automation gap | 작도 자체는 이산 지표 JSON에 없음 → 프록시 또는 커스텀 pivot 엔진 필요 |
 | Literature | [`docs/research/trendline-parallel-channel-literature.md`](research/trendline-parallel-channel-literature.md) |
+| Community / ICT | [`docs/research/bitgak-community-psychology-synthesis.md`](research/bitgak-community-psychology-synthesis.md) |
 | Prior research | Short-TF **LR(40)±2σ** 프록시 v1–v3 **기각** — [`reports/improve/20260729-diagonal-빗각-scalp.md`](../reports/improve/20260729-diagonal-빗각-scalp.md) |
 
 ---
