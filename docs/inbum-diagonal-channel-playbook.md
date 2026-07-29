@@ -337,8 +337,8 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions (자료수집)
 
-1. [`docs/research/trendline-parallel-channel-literature.md`](research/trendline-parallel-channel-literature.md) 백로그·게이트 진행
-2. QQQ 중심 **수동 채널 사건 로그** (≥30)
+1. QQQ 4H 수동 표본 Batch 1 **n=30** 완료 → [`docs/research/channel-manual-sample-batch1.md`](research/channel-manual-sample-batch1.md)
+2. 고전 발췌 + Mode B 규칙 카드 **freeze** (초안만 있음)
 3. Mode A hypers / 새 freqtrade 인코딩 **금지** until 게이트
 4. 승격 전 LIVE/SCALP 금지
 

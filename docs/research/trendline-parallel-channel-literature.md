@@ -194,7 +194,11 @@ skip_reason if any
 
 규칙: **사후 작도 금지에 가깝게** — 사건 당시 보이는 점만. (불가능하면 “hindsight” 플래그)
 
-산출물 위치 후보: `docs/research/channel-manual-sample-log.csv` (아직 미생성).
+산출물:
+
+- [`channel-manual-sample-log.csv`](channel-manual-sample-log.csv) — Batch 1, **n=30**
+- [`channel-manual-sample-batch1.md`](channel-manual-sample-batch1.md) — 관찰 요약 + Mode B 규칙 카드 **초안**
+- [`data/qqq_usdt_4h.json`](data/qqq_usdt_4h.json) — Bitget QQQUSDT 4H
 
 ---
 
@@ -203,8 +207,8 @@ skip_reason if any
 - [x] 빗각 ≡ 추세선/채널 재확인 (공개 2차 소스)
 - [x] Mode A/B/C + vol + 3-touch 합의 정리
 - [ ] 고전 1권(Edwards-Magee 또는 Murphy) 채널 장 발췌 노트
-- [ ] 수동 표본 ≥30 (QQQ 중심 권장)
-- [ ] Mode B만의 **최소 규칙 카드** 1장 (숫자 하이퍼 ≤3개)
+- [x] 수동 표본 ≥30 (QQQ 4H Batch 1) — **전부 hindsight; 품질 재검증 남음**
+- [ ] Mode B만의 **최소 규칙 카드** 1장 (숫자 하이퍼 ≤3개) — **초안만** batch1.md에 있음, freeze 전
 - [ ] Pitchfork/Fib Channel을 parallel과 분리할지 결정
 
 게이트 통과 후에야 playbook §7 인코딩 재개.
@@ -213,8 +217,8 @@ skip_reason if any
 
 ## 9. Next (자료수집만)
 
-1. 수동 표본 로그 시작 (QQQ 4h 채널 사건).
-2. Edwards-Magee / Murphy 발췌 추가.
+1. ~~수동 표본 로그 시작~~ → Batch 2: `session` 컬럼 + TV로 clearest 3건 재작도.
+2. Edwards-Magee / Murphy 발췌 추가 → 규칙 카드 freeze.
 3. 인범 공개 클립에서 **앵커·세션·손절**만 노트로 (룰 복제 X).
 4. playbook의 “다음=QQQ Mode B 구현”은 **이 게이트 뒤로 연기**.
 
