@@ -1,0 +1,15 @@
+{
+  "_": "AE8 disparity stretch — falsified",
+  "id": "AE8",
+  "slug": "alpha-ae8-disparity-stretch-1h",
+  "hypothesis": "When 1h disp_20<97 and ADX>=15, short-term rebound toward disp_20>=100 occurs more often",
+  "verdict": "FALSIFIED_as_standalone_alpha",
+  "promote": false,
+  "windows": {
+    "primary_3m": {"start": "2026-04-29", "end": "2026-07-28", "ret": 5.19, "bh": -18.56, "pf": 3.27, "n": 5},
+    "early_oos": {"start": "2026-01-29", "end": "2026-04-29", "ret": -12.65, "bh": -11.65, "pf": 0.51, "n": 15},
+    "prior_3m": {"start": "2025-10-29", "end": "2026-01-29", "ret": -0.24, "bh": -23.3, "pf": 1.07, "n": 10}
+  },
+  "anti_overfit": "do not retune disp_20=97 after seeing primary; early OOS is decisive",
+  "updated_at": "2026-07-29T04:46:00Z"
+}

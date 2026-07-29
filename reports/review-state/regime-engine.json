@@ -533,8 +533,14 @@
     },
     {
       "id": "AE8",
-      "goal": "new orthogonal OHLCV hypothesis OR forward-collect funding/OB",
-      "chg": "do not retune AE6/AE7 thresholds",
+      "goal": "orthogonal OHLCV: 1h disparity stretch fade",
+      "chg": "Falsified — early OOS PF 0.51 / -12.65% despite strong primary — reports/improve/20260729-ae8-disparity-stretch.md",
+      "status": "done_falsified"
+    },
+    {
+      "id": "AE9",
+      "goal": "trend-continuation family OR forward-collect alt-data",
+      "chg": "avoid another oversold-bounce retune",
       "status": "open"
     }
   ],

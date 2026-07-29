@@ -1,0 +1,67 @@
+{
+  "name": "Alpha AE8 Disparity Stretch Fade 1h",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "1h",
+  "stop_loss": 2.5,
+  "take_profit": 4,
+  "indicators": [
+    {
+      "type": "disparity",
+      "ref": "disp",
+      "params": {
+        "periods": [5, 10, 20, 60]
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "disp.disp_20"
+        },
+        "op": "lt",
+        "right": {
+          "type": "literal",
+          "value": 97
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "gte",
+        "right": {
+          "type": "literal",
+          "value": 15
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "disp.disp_20"
+        },
+        "op": "gte",
+        "right": {
+          "type": "literal",
+          "value": 100
+        }
+      }
+    ]
+  }
+}
