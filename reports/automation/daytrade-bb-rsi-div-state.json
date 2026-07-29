@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v30",
-  "slug": "daytrade-bb-rsi-div-v30",
-  "hypothesis": "BTC daytrade long-only: RSI≤30→>30 reclaim at/below BB lower with soft bull div lookback4; exit BB mid or RSI≥55.",
+  "active_card": "daytrade-bb-rsi-div-v31",
+  "slug": "daytrade-bb-rsi-div-v31",
+  "hypothesis": "BTC daytrade long-only: RSI≤30 then 2-bar rise (failure-swing) + BB lower wick green candle + RSI>rsi_signal; exit BB upper or RSI≥65.",
   "hypers": {
-    "pattern": "rsi30_reclaim_at_lower_softdiv4",
-    "exit": "bb_mid_or_rsi55",
-    "div_lookback": 4
+    "pattern": "rsi_failure_swing_lower_wick_green_gt_signal",
+    "exit": "bb_upper_or_rsi65",
+    "div_lookback": 2
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-0.39%",
-      "profit_factor": "1.74",
-      "trades": 77,
+      "total_return": "+0.00%",
+      "profit_factor": "N/A (0 executed trades)",
+      "trades": 0,
       "benchmark": "+3.26%",
-      "trades_per_day": 2.57
+      "trades_per_day": 0.0
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-10.68%",
-      "profit_factor": "0.92",
-      "trades": 95,
+      "total_return": "+0.00%",
+      "profit_factor": "N/A (0 executed trades)",
+      "trades": 0,
       "benchmark": "-16.19%",
-      "trades_per_day": 3.17
+      "trades_per_day": 0.0
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-6.07%",
-      "profit_factor": "1.20",
-      "trades": 88,
+      "total_return": "+0.00%",
+      "profit_factor": "N/A (0 executed trades)",
+      "trades": 0,
       "benchmark": "-4.12%",
-      "trades_per_day": 2.93
+      "trades_per_day": 0.0
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 29,
+  "consecutive_fails": 30,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "RSI30 reclaim at lower + soft div4 → mid/RSI55 — v30 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v29",
-  "updated_at": "2026-07-29T22:21:40Z"
+  "next_action": "RSI failure-swing(≤30→2바상승) + lower wick green + RSI>signal → upper/RSI65 — v31 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v30",
+  "updated_at": "2026-07-29T22:32:08Z"
 }
