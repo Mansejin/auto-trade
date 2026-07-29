@@ -125,13 +125,67 @@ Bot logs must show:
 1. **Only switch JSON + restart** — do not rebuild image unless required.  
 2. **Do not invent new strategy rules** during a switch job. Do not add SMA buffers or change `transition` mapping without a new Policy backtest.  
 3. Log every switch/skip: old slug, new slug, regime, action, timestamp → `logs/regime-switch.jsonl` and human lines in `logs/regime-switch.log`.  
-4. **Hard dwell**: if last *successful or attempted logged* switch is &lt; **24h** (`MIN_DWELL_HOURS`), **block** the switch (`action=dwell_block`). `FORCE=1` bypasses dwell only.  
+4. **Hard dwell**: if last **`action=switched`** is &lt; **24h** (`MIN_DWELL_HOURS`), **block** the switch (`action=dwell_block`). Ignore noop/skip log noise. `FORCE=1` bypasses dwell only.  
 5. **Position guard** (before `STRATEGY_PATH` change): cancel open `KRW-BTC` orders; if BTC balance+locked (or paper position) &gt; dust, **skip switch** (`action=position_skip`). **No auto market-sell.** `SKIP_POSITION_GUARD=1` emergency only.  
 6. LIVE mode places **real orders**. Confirm `.env` mode intentionally. Load keys only from server `.env`.  
 7. Monthly strategy *redesign* still goes through Audit Team (`scripts/strategy_audit.py`). Regime switch ≠ strategy redesign.
 
 ---
 
+## 4.1 Position handoff (edge cases — defined)
+
+Regime switch changes **which JSON the bot loads**. It does **not** invent a special exit for the old strategy’s bag.
+
+| Situation | Defined behavior |
+|-----------|------------------|
+| Flat (no BTC above dust) + open orders | Cancel open `KRW-BTC` orders → allow `STRATEGY_PATH` change → restart bot |
+| BTC position still open (LIVE wallet or paper `state.json`) | **`position_skip`** — keep current strategy file; retry next cron after flat |
+| Switch allowed, then restart | Bot reloads new JSON; `data/state.json` portfolio is **reused** (not wiped). New strategy’s buy/sell/SL/TP apply to the tracked position going forward |
+| LIVE sell path | Bot sells **tracked bot position qty** only (not “dump whole exchange wallet”) — see bot on `main` |
+| Forced flatten | **Not automated.** Human may flatten manually, then let cron switch. Do not enable `SKIP_POSITION_GUARD` casually |
+
+```mermaid
+flowchart TD
+  C[Daily classify closed bar] --> N{Need different STRATEGY_PATH?}
+  N -->|no| Z[noop]
+  N -->|yes| D{Within dwell window?}
+  D -->|yes| B1[dwell_block]
+  D -->|no| X[Cancel open KRW-BTC orders]
+  X --> P{BTC position > dust?}
+  P -->|yes| B2[position_skip — keep old JSON]
+  P -->|no| S[Set STRATEGY_PATH + restart]
+  S --> H[New strategy inherits flat book]
+```
+
+**Not defined / not supported:** mid-position “soft handoff” where bull entries keep old SL while bear logic runs, or automatic market stop on regime flip. Those would change PnL vs Policy C segment backtests and need a separate study.
+
+---
+
+## 4.2 Known risks & review cadence (not auto-fixed)
+
+### A) Lag of daily SMA50/200 + ADX
+
+These are **lagging** by design. Regime flips often trail the tape by days; that lag is part of Policy C’s cost, not a cron bug.
+
+- **Accept:** “뒷북 전환” drawdowns can happen while still on the previous specialist.
+- **Check:** segment-chain MDD / worst segments in `reports/five-year/` and `reports/review-state/regime-engine.json` — not a single always-on backtest.
+- **Do not “fix” with** arbitrary SMA buffers or leading indicators unless a new Policy backtest beats the current chain **and** passes audit gates.
+
+### B) Parameter / timeframe overfit (ADX 20, 1h vs 4h)
+
+ADX&lt;20 sideways cut and per-regime TFs may be sample-fit to the last ~5y labels.
+
+- **Before changing LIVE map or thresholds:** run `scripts/walk_forward_check.py` on the candidate JSON and `scripts/strategy_audit.py` vs baseline (`reports/review-state/audit-policy.json` gates G1–G8, including MDD).
+- **Cadence:** at least when promoting a new regime JSON, and on a fixed calendar (e.g. monthly redesign window in the audit playbook) — not on every daily switch.
+- Daily cron only **selects among already-audited files**; it must not retune ADX/TF.
+
+### C) Ops vs research boundary
+
+| Layer | Job |
+|-------|-----|
+| Daily `remote_regime_switch.py` | Closed-bar classify + dwell + cancel/skip + path swap |
+| `walk_forward_check.py` / `strategy_audit.py` | Falsify overfit / MDD regression before promotion |
+| Human | Capital size, whether lag MDD is personally tolerable, LIVE approve |
 ## 5. Cron suggestion (on bot server or CI agent)
 
 Upbit daily candles close at **00:00 UTC**. Classification uses the **last closed** bar, so cron may run any time after that (existing `20 15 * * *` UTC is fine; `10 0 * * *` is also fine for fresher signals). Do **not** rely on cron alone to avoid forming-bar noise.
