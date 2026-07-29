@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v33",
-  "slug": "daytrade-bb-rsi-div-v33",
-  "hypothesis": "BTC daytrade long-only: soft bull div (price↓5 RSI↑5) + RSI<40 + close<BB mid; exit BB upper or RSI≥70.",
+  "active_card": "daytrade-bb-rsi-div-v34",
+  "slug": "daytrade-bb-rsi-div-v34",
+  "hypothesis": "BTC daytrade long-only: classic bull div (low LL7 + RSI HL7) at/below BB lower; exit BB middle only.",
   "hypers": {
-    "pattern": "softdiv5_rsi_lt40_below_mid",
-    "exit": "bb_upper_or_rsi70",
-    "div_lookback": 5
+    "pattern": "classic_ll_hl7_at_bb_lower",
+    "exit": "bb_middle_only",
+    "div_lookback": 7
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-4.83%",
-      "profit_factor": "1.33",
-      "trades": 109,
+      "total_return": "-1.99%",
+      "profit_factor": "1.48",
+      "trades": 73,
       "benchmark": "+3.26%",
-      "trades_per_day": 3.63
+      "trades_per_day": 2.43
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-13.68%",
-      "profit_factor": "0.96",
-      "trades": 135,
+      "total_return": "-3.43%",
+      "profit_factor": "1.22",
+      "trades": 98,
       "benchmark": "-16.19%",
-      "trades_per_day": 4.5
+      "trades_per_day": 3.27
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-11.95%",
-      "profit_factor": "0.92",
-      "trades": 108,
+      "total_return": "-6.26%",
+      "profit_factor": "1.11",
+      "trades": 77,
       "benchmark": "-4.12%",
-      "trades_per_day": 3.6
+      "trades_per_day": 2.57
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 32,
+  "consecutive_fails": 33,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "soft bull div5 + RSI<40 below mid → upper/RSI70 — v33 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v32",
-  "updated_at": "2026-07-29T22:51:20Z"
+  "next_action": "classic LL/HL7 at BB lower → mid only — v34 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v33",
+  "updated_at": "2026-07-29T23:02:29Z"
 }
