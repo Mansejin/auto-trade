@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v17",
-  "slug": "daytrade-bb-rsi-div-v17",
-  "hypothesis": "BTC daytrade long-only: prior low tags BB lower then same-bar close snaps above BB mid with RSI>rsi_signal; exit BB upper or RSI≥70.",
+  "active_card": "daytrade-bb-rsi-div-v18",
+  "slug": "daytrade-bb-rsi-div-v18",
+  "hypothesis": "BTC daytrade long-only: while close < BB mid, RSI flips above 50 (prior ≤50); fade to BB mid or RSI≥60.",
   "hypers": {
-    "pattern": "lower_snap_through_mid",
-    "rsi_vs_signal": "gt",
-    "exit": "bb_upper_or_rsi70"
+    "pattern": "rsi50_cross_below_mid_fade",
+    "rsi_flip": 50,
+    "exit": "bb_mid_or_rsi60"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "+0.58%",
-      "profit_factor": "2.86",
-      "trades": 12,
+      "total_return": "-3.41%",
+      "profit_factor": "0.92",
+      "trades": 30,
       "benchmark": "+3.26%",
-      "trades_per_day": 0.4
+      "trades_per_day": 1.0
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-1.23%",
-      "profit_factor": "0.67",
-      "trades": 7,
+      "total_return": "-4.88%",
+      "profit_factor": "0.69",
+      "trades": 28,
       "benchmark": "-16.19%",
-      "trades_per_day": 0.23
+      "trades_per_day": 0.93
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-0.50%",
-      "profit_factor": "1.73",
-      "trades": 7,
+      "total_return": "-1.72%",
+      "profit_factor": "1.71",
+      "trades": 38,
       "benchmark": "-4.12%",
-      "trades_per_day": 0.23
+      "trades_per_day": 1.27
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 16,
+  "consecutive_fails": 17,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "prior low≤BB lower → close>BB mid + RSI>signal → upper/RSI70 — v17 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v16",
-  "updated_at": "2026-07-29T20:11:30Z"
+  "next_action": "close<mid + RSI≤50→>50 flip → mid/RSI60 페이드 — v18 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v17",
+  "updated_at": "2026-07-29T20:21:49Z"
 }
