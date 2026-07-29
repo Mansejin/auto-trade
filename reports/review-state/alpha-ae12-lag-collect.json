@@ -18,6 +18,11 @@
       "H1 fundingRate<=-0.0002 → next-day KRW-BTC mean > baseline",
       "H2 |imbalance|>=0.4 → next 1h signed move > baseline"
     ],
-    "status": "collecting"
+    "status": "collecting_H2_only",
+    "ae12b": {
+      "H1": "RETAINED_for_research",
+      "H2": "NOT_READY",
+      "report": "reports/improve/20260729-ae12b-event-study.md"
+    }
   }
 }

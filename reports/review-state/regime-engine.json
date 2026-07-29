@@ -559,17 +559,23 @@
       "id": "AE12",
       "goal": "lag-MDD measure + forward funding/OB collect",
       "chg": "lag material (7d risk-off median MDD -5.45%); collectors shipped — reports/improve/20260729-ae12-lag-mdd.md",
-      "status": "shipping"
+      "status": "done"
     },
     {
       "id": "AE12b",
-      "goal": "run frozen event study after >=30d collect",
-      "chg": "scripts/ae12_event_study.py readiness gate",
+      "goal": "frozen H1/H2 event study (HTX hist + OB forward)",
+      "chg": "H1 RETAINED_for_research (no promote); H2 NOT_READY — reports/improve/20260729-ae12b-event-study.md",
+      "status": "partial_H2_pending"
+    },
+    {
+      "id": "AE13",
+      "goal": "next alpha only after H2 settle or orthogonal non-funding idea",
+      "chg": "do not mine funding thresholds; keep Policy C; optional paper micro-size if H1 survives fee stress later",
       "status": "open"
     }
   ],
   "auto_propose_after_report": true,
-  "updated_at": "2026-07-28T19:37:42Z",
+  "updated_at": "2026-07-29T05:42:00Z",
   "improve": {
     "sweep_jobs": "~4470 backtests (selected grid + densify + policy path)",
     "bear": "m5-v7 ADX25 RSI52 SL3 TP4.5",

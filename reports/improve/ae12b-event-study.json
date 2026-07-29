@@ -1,0 +1,59 @@
+{
+  "id": "AE12b",
+  "updated_at": "2026-07-29T05:41:37Z",
+  "H1": {
+    "id": "H1",
+    "source": "HTX BTC-USDT funding history",
+    "threshold": -0.0002,
+    "funding_points": 6320,
+    "events_total": 148,
+    "train": {
+      "stats": {
+        "n": 103,
+        "hit_rate": 0.6019,
+        "mean_pct": 0.7892,
+        "median_pct": 0.1894
+      },
+      "baseline": {
+        "n": 1642,
+        "hit_rate": 0.5097,
+        "mean_pct": 0.1727,
+        "median_pct": 0.0278
+      }
+    },
+    "holdout": {
+      "stats": {
+        "n": 45,
+        "hit_rate": 0.6444,
+        "mean_pct": 0.3886,
+        "median_pct": 0.3562
+      },
+      "baseline": {
+        "n": 436,
+        "hit_rate": 0.4908,
+        "mean_pct": -0.0633,
+        "median_pct": -0.0273
+      }
+    },
+    "verdict": "RETAINED_for_research",
+    "falsified": false,
+    "reasons": [],
+    "anti_overfit": [
+      "threshold frozen at -0.0002",
+      "holdout last 30% of events by time",
+      "no threshold sweep"
+    ]
+  },
+  "H2": {
+    "id": "H2",
+    "threshold_abs_imbalance": 0.4,
+    "orderbook_rows": 2,
+    "min_rows": 336,
+    "source_log": "reports/ae12-collect/upbit-orderbook.jsonl",
+    "verdict": "NOT_READY",
+    "reason": "insufficient_forward_orderbook_rows",
+    "message": "keep running ae12_forward_collect.py; do not mine imbalance cut"
+  },
+  "promote": false,
+  "note": "No LIVE/Policy map changes from this study."
+}

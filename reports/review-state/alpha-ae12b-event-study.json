@@ -1,0 +1,30 @@
+{
+  "id": "AE12b",
+  "updated_at": "2026-07-29T05:41:37Z",
+  "H1": {
+    "verdict": "RETAINED_for_research",
+    "source": "HTX BTC-USDT",
+    "threshold": -0.0002,
+    "events_total": 148,
+    "holdout_n": 45,
+    "holdout_mean_pct": 0.3886,
+    "holdout_hit": 0.6444,
+    "baseline_mean_pct": -0.0633,
+    "baseline_hit": 0.4908,
+    "promote": false
+  },
+  "H2": {
+    "verdict": "NOT_READY",
+    "orderbook_rows": 2,
+    "min_rows": 336,
+    "action": "keep ae12_forward_collect cron; no imbalance mining"
+  },
+  "report": "reports/improve/20260729-ae12b-event-study.md",
+  "raw": "reports/improve/ae12b-event-study.json",
+  "script": "scripts/ae12_event_study.py",
+  "anti_overfit": [
+    "frozen thresholds from AE12",
+    "time holdout 30%",
+    "no LIVE/Policy C change"
+  ]
+}
