@@ -348,10 +348,11 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. Frozen Mode B **기각** 기록됨 — hypers 재튜닝 금지
-2. 카드/가설 개정할지는 별도 결정 (단순 유지)
-3. LIVE/SCALP 금지
-4. Pitchfork/Fib 분리 조사는 선택
+1. **엣지 우선** ([`docs/motto.md`](motto.md)) — Frozen Mode B 기각 후, 카드/가설 개정만
+2. Hypers 재튜닝 · LIVE/SCALP · 운영 확장 **금지** until 생존 카드
+3. Pitchfork/Fib 분리·클립 수집은 엣지 가설이 생긴 뒤에만
+
+후보 (아직 미선택): long-only + HTF bias · 빗각=필터 only · 다른 단순 가격행동 1줄.
 
 ---
 
