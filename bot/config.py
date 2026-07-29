@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 
@@ -26,9 +26,23 @@ def _env_int(name: str, default: int) -> int:
     return int(raw)
 
 
+def _whitelist_from_env(prefix: str) -> dict[str, str]:
+    """TRANSFER_WHITELIST_BITGET_USDT=addr → {"USDT": "addr"}."""
+    out: dict[str, str] = {}
+    for key, val in os.environ.items():
+        if not key.startswith(prefix):
+            continue
+        coin = key[len(prefix) :].strip("_").upper()
+        addr = val.strip()
+        if coin and addr:
+            out[coin] = addr
+    return out
+
+
 @dataclass(frozen=True)
 class Settings:
     paper: bool
+    exchange: str  # upbit | bitget
     strategy_path: Path
     state_path: Path
     log_dir: Path
@@ -41,18 +55,42 @@ class Settings:
     max_consecutive_errors: int
     upbit_access_key: str
     upbit_secret_key: str
+    bitget_api_key: str
+    bitget_secret_key: str
+    bitget_passphrase: str
+    bitget_product_type: str
+    bitget_margin_mode: str
+    bitget_margin_coin: str
     live_confirm: str
     log_level: str
     telegram_bot_token: str
     telegram_chat_id: str
+    telegram_commands: bool
+    transfer_enabled: bool
+    transfer_confirm: str
+    transfer_max_amount: float
+    transfer_ttl_sec: int
+    transfer_default_chain: str
+    transfer_whitelist_bitget: dict[str, str] = field(default_factory=dict)
+    transfer_whitelist_upbit: dict[str, str] = field(default_factory=dict)
+
+    @property
+    def bitget_ready(self) -> bool:
+        return bool(self.bitget_api_key and self.bitget_secret_key and self.bitget_passphrase)
 
     @property
     def live_allowed(self) -> bool:
+        if self.paper or self.live_confirm != "I_UNDERSTAND_LIVE_TRADING_RISK":
+            return False
+        if self.exchange == "bitget":
+            return self.bitget_ready
+        return bool(self.upbit_access_key and self.upbit_secret_key)
+
+    @property
+    def transfer_allowed(self) -> bool:
         return (
-            not self.paper
-            and bool(self.upbit_access_key)
-            and bool(self.upbit_secret_key)
-            and self.live_confirm == "I_UNDERSTAND_LIVE_TRADING_RISK"
+            self.transfer_enabled
+            and self.transfer_confirm == "I_UNDERSTAND_TRANSFER_RISK"
         )
 
     @property
@@ -60,9 +98,17 @@ class Settings:
         return bool(self.telegram_bot_token and self.telegram_chat_id)
 
     @property
+    def telegram_commands_enabled(self) -> bool:
+        return self.telegram_enabled and self.telegram_commands
+
+    @property
     def risk_integrity_key(self) -> str:
         """LIVE only: HMAC key for risk.json tamper detection (uses API secret)."""
-        if self.paper or not self.upbit_secret_key:
+        if self.paper:
+            return ""
+        if self.exchange == "bitget":
+            return self.bitget_secret_key if self.bitget_secret_key else ""
+        if not self.upbit_secret_key:
             return ""
         return self.upbit_secret_key
 
@@ -72,8 +118,12 @@ def load_settings() -> Settings:
     fraction = _env_float("ORDER_FRACTION", 1.0)
     if fraction <= 0 or fraction > 1:
         raise ValueError("ORDER_FRACTION must be in (0, 1]")
+    exchange = os.getenv("EXCHANGE", "upbit").strip().lower()
+    if exchange not in {"upbit", "bitget"}:
+        raise ValueError("EXCHANGE must be 'upbit' or 'bitget'")
     return Settings(
         paper=_env_bool("PAPER", True),
+        exchange=exchange,
         strategy_path=Path(
             os.getenv("STRATEGY_PATH", str(root / "strategies" / "sma_cross_btc.json"))
         ),
@@ -83,13 +133,27 @@ def load_settings() -> Settings:
         paper_cash=_env_float("PAPER_CASH", 1_000_000.0),
         fee_rate=_env_float("FEE_RATE", 0.0005),
         order_fraction=fraction,
-        max_order_krw=_env_float("MAX_ORDER_KRW", 0.0),  # 0 = unlimited
-        max_daily_loss_krw=_env_float("MAX_DAILY_LOSS_KRW", 0.0),  # 0 = off
-        max_consecutive_errors=_env_int("MAX_CONSECUTIVE_ERRORS", 5),  # 0 = off
+        max_order_krw=_env_float("MAX_ORDER_KRW", 0.0),
+        max_daily_loss_krw=_env_float("MAX_DAILY_LOSS_KRW", 0.0),
+        max_consecutive_errors=_env_int("MAX_CONSECUTIVE_ERRORS", 5),
         upbit_access_key=os.getenv("UPBIT_ACCESS_KEY", "").strip(),
         upbit_secret_key=os.getenv("UPBIT_SECRET_KEY", "").strip(),
+        bitget_api_key=os.getenv("BITGET_API_KEY", "").strip(),
+        bitget_secret_key=os.getenv("BITGET_SECRET_KEY", "").strip(),
+        bitget_passphrase=os.getenv("BITGET_PASSPHRASE", "").strip(),
+        bitget_product_type=os.getenv("BITGET_PRODUCT_TYPE", "USDT-FUTURES").strip(),
+        bitget_margin_mode=os.getenv("BITGET_MARGIN_MODE", "isolated").strip().lower(),
+        bitget_margin_coin=os.getenv("BITGET_MARGIN_COIN", "USDT").strip().upper(),
         live_confirm=os.getenv("LIVE_CONFIRM", "").strip(),
         log_level=os.getenv("LOG_LEVEL", "INFO").upper(),
         telegram_bot_token=os.getenv("TELEGRAM_BOT_TOKEN", "").strip(),
         telegram_chat_id=os.getenv("TELEGRAM_CHAT_ID", "").strip(),
+        telegram_commands=_env_bool("TELEGRAM_COMMANDS", True),
+        transfer_enabled=_env_bool("TRANSFER_ENABLED", False),
+        transfer_confirm=os.getenv("TRANSFER_CONFIRM", "").strip(),
+        transfer_max_amount=_env_float("TRANSFER_MAX_AMOUNT", 0.0),
+        transfer_ttl_sec=_env_int("TRANSFER_TTL_SEC", 600),
+        transfer_default_chain=os.getenv("TRANSFER_DEFAULT_CHAIN", "TRC20").strip(),
+        transfer_whitelist_bitget=_whitelist_from_env("TRANSFER_WHITELIST_BITGET_"),
+        transfer_whitelist_upbit=_whitelist_from_env("TRANSFER_WHITELIST_UPBIT_"),
     )

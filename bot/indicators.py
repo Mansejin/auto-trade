@@ -25,6 +25,17 @@ class OHLCV:
             volume=[float(c["candle_acc_trade_volume"]) for c in candles],
         )
 
+    @classmethod
+    def from_bitget_candles(cls, rows: Sequence[Sequence[str]]) -> OHLCV:
+        # Bitget mix candles: [ts, open, high, low, close, baseVol, quoteVol]
+        return cls(
+            open=[float(r[1]) for r in rows],
+            high=[float(r[2]) for r in rows],
+            low=[float(r[3]) for r in rows],
+            close=[float(r[4]) for r in rows],
+            volume=[float(r[5]) for r in rows],
+        )
+
 
 Series = list[float | None]
 

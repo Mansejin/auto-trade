@@ -10,6 +10,18 @@
 - [ ] 텔레그램 봇 토큰도 노출 시 BotFather에서 revoke 후 재발급
 - [ ] Cloudflare API 토큰도 채팅 노출 시 rotate
 
+## 1b. Bitget + 반자동 이체
+
+- [ ] Bitget 키는 **System-generated (HMAC)** + IP `129.225.205.185`
+- [ ] 평소 선물/현물 매매만 쓸 때는 **출금(Withdraw) OFF** 권장
+- [ ] 이체 기능을 쓸 때만 Withdraw ON, 사용 후 다시 OFF 검토
+- [ ] `TRANSFER_ENABLED=false` 기본 — 켤 때만:
+  - `TRANSFER_CONFIRM=I_UNDERSTAND_TRANSFER_RISK`
+  - `TRANSFER_WHITELIST_BITGET_<COIN>` / `TRANSFER_WHITELIST_UPBIT_<COIN>` 목적지 주소
+  - `TRANSFER_MAX_AMOUNT` 한도
+- [ ] 텔레그램 `/이체요청` → `/이체승인 <코드>` 두 단계 없으면 출금 안 함
+- [ ] `bot-bitget` 은 `TELEGRAM_COMMANDS=false` (명령 수신은 Upbit `bot`만)
+
 ## 2. `.env` (서버에만 존재)
 
 ```env

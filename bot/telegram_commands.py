@@ -12,6 +12,7 @@ import httpx
 from bot.config import Settings
 from bot.display import fmt_money, fmt_qty, market_ko, mode_ko
 from bot.telegram_notify import TelegramNotifier
+from bot import transfer as xfer
 
 logger = logging.getLogger("bot.telegram.cmd")
 
@@ -21,6 +22,10 @@ HELP = """명령어 안내
 전략 — 지금 쓰는 전략 요약
 로그 — 최근 상태 한 장 보기
 서버 — 오라클 서버 상태
+이체요청 <방향> <코인> <수량> [체인] — 반자동 이체 대기열 등록
+  예: 이체요청 upbit->bitget USDT 50 TRC20
+이체승인 <코드> — 대기 이체 실행
+이체취소 — 대기 이체 취소
 ? — 이 안내"""
 
 
@@ -47,6 +52,7 @@ def _cmd_status(settings: Settings) -> str:
 
     lines = [
         "======= 계좌 / 봇 =======",
+        f"거래소: {settings.exchange}",
         f"모드: {mode}",
         f"전략: {strategy_name}",
         f"파일: {settings.strategy_path.name}",
@@ -55,7 +61,7 @@ def _cmd_status(settings: Settings) -> str:
     ]
 
     # LIVE only: hit private API. PAPER uses local state (avoid leaking keys usage).
-    if (not settings.paper) and settings.upbit_access_key and settings.upbit_secret_key:
+    if (not settings.paper) and settings.exchange == "upbit" and settings.upbit_access_key and settings.upbit_secret_key:
         try:
             from bot.upbit_client import UpbitPrivate  # noqa: PLC0415
 
@@ -72,9 +78,25 @@ def _cmd_status(settings: Settings) -> str:
                 client.close()
         except Exception as e:
             lines.append(f"업비트 잔고 조회 실패: {type(e).__name__}")
+    elif (not settings.paper) and settings.exchange == "bitget" and settings.bitget_ready:
+        try:
+            from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
+
+            client = BitgetPrivate(
+                settings.bitget_api_key,
+                settings.bitget_secret_key,
+                settings.bitget_passphrase,
+            )
+            try:
+                usdt = client.available_usdt(str(market).replace("-", "") if market != "-" else "BTCUSDT")
+                lines.append(f"Bitget USDT(가용≈): {fmt_money(usdt)}")
+            finally:
+                client.close()
+        except Exception as e:
+            lines.append(f"Bitget 잔고 조회 실패: {type(e).__name__}")
     else:
         cash = float(state.get("cash") or settings.paper_cash)
-        lines.append(f"모의 현금: {fmt_money(cash)}원")
+        lines.append(f"모의 현금: {fmt_money(cash)}")
 
     if pos:
         lines.append(
@@ -238,6 +260,11 @@ def handle_command(text: str, settings: Settings) -> str | None:
         "/서버",
         "/server",
         "/상태서버",
+        "/이체요청",
+        "/이체승인",
+        "/이체취소",
+        "/transfer",
+        "/xfer",
     }
     if cmd in known or first.startswith("/") or first == "?":
         now = time.time()
@@ -255,9 +282,41 @@ def handle_command(text: str, settings: Settings) -> str | None:
         return _cmd_log(settings)
     if cmd in {"/서버", "/server", "/상태서버"}:
         return _cmd_server(settings)
+    if cmd in {"/이체요청", "/transfer", "/xfer"}:
+        return _cmd_transfer_request(raw, settings)
+    if cmd in {"/이체승인"}:
+        parts = raw.split()
+        if len(parts) < 2:
+            return "사용법: /이체승인 <코드>"
+        return xfer.approve_transfer(settings, parts[1])
+    if cmd in {"/이체취소"}:
+        return xfer.cancel_transfer(settings)
     if first.startswith("/") or first == "?":
         return f"모르는 명령입니다: {first}\n\n{HELP}"
     return None
+
+
+def _cmd_transfer_request(raw: str, settings: Settings) -> str:
+    # /이체요청 upbit->bitget USDT 50 [TRC20]
+    parts = raw.split()
+    if len(parts) < 4:
+        return (
+            "사용법: /이체요청 <방향> <코인> <수량> [체인]\n"
+            "예: /이체요청 upbit->bitget USDT 50 TRC20\n"
+            "방향: upbit->bitget | bitget->upbit"
+        )
+    direction = xfer.parse_direction(parts[1])
+    if not direction:
+        return "방향을 확인하세요. 예: upbit->bitget"
+    coin = parts[2]
+    try:
+        amount = float(parts[3])
+    except ValueError:
+        return "수량은 숫자여야 합니다."
+    chain = parts[4] if len(parts) >= 5 else None
+    return xfer.request_transfer(
+        settings, direction=direction, coin=coin, amount=amount, chain=chain
+    )
 
 
 def _poll_loop(settings: Settings, notify: TelegramNotifier, stop: threading.Event) -> None:
@@ -308,6 +367,9 @@ def start_command_listener(
     stop: threading.Event,
 ) -> threading.Thread | None:
     if not notify.enabled:
+        return None
+    if not settings.telegram_commands_enabled:
+        logger.info("텔레그램 명령 수신 비활성 (TELEGRAM_COMMANDS=false)")
         return None
     t = threading.Thread(
         target=_poll_loop,

@@ -167,3 +167,35 @@ class UpbitPrivate:
         resp = self._client.post("/v1/orders", data=body, headers=headers)
         resp.raise_for_status()
         return resp.json()
+
+    def deposit_address(self, currency: str, net_type: str | None = None) -> dict[str, Any]:
+        query: dict[str, Any] = {"currency": currency.upper()}
+        if net_type:
+            query["net_type"] = net_type
+        headers = self._auth_header(query)
+        resp = self._client.get("/v1/deposits/coin_address", params=query, headers=headers)
+        resp.raise_for_status()
+        return resp.json()
+
+    def withdraw_coin(
+        self,
+        *,
+        currency: str,
+        amount: float,
+        address: str,
+        net_type: str,
+        secondary_address: str | None = None,
+    ) -> dict[str, Any]:
+        body: dict[str, Any] = {
+            "currency": currency.upper(),
+            "amount": str(amount),
+            "address": address,
+            "net_type": net_type,
+            "transaction_type": "default",
+        }
+        if secondary_address:
+            body["secondary_address"] = secondary_address
+        headers = self._auth_header(body)
+        resp = self._client.post("/v1/withdraws/coin", data=body, headers=headers)
+        resp.raise_for_status()
+        return resp.json()

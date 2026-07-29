@@ -29,9 +29,19 @@ services:
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
       UPBIT_ACCESS_KEY: ${UPBIT_ACCESS_KEY:-}
       UPBIT_SECRET_KEY: ${UPBIT_SECRET_KEY:-}
+      BITGET_API_KEY: ${BITGET_API_KEY:-}
+      BITGET_SECRET_KEY: ${BITGET_SECRET_KEY:-}
+      BITGET_PASSPHRASE: ${BITGET_PASSPHRASE:-}
       LIVE_CONFIRM: ${LIVE_CONFIRM:-}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
       TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      TELEGRAM_COMMANDS: ${TELEGRAM_COMMANDS:-true}
+      EXCHANGE: ${EXCHANGE:-upbit}
+      TRANSFER_ENABLED: ${TRANSFER_ENABLED:-false}
+      TRANSFER_CONFIRM: ${TRANSFER_CONFIRM:-}
+      TRANSFER_MAX_AMOUNT: ${TRANSFER_MAX_AMOUNT:-0}
+      TRANSFER_TTL_SEC: ${TRANSFER_TTL_SEC:-600}
+      TRANSFER_DEFAULT_CHAIN: ${TRANSFER_DEFAULT_CHAIN:-TRC20}
     volumes:
       - ./data:/app/data
       - ./strategies:/app/strategies:ro
@@ -43,6 +53,69 @@ services:
           "python",
           "-c",
           "from pathlib import Path; import time; p=Path('/app/logs/latest_status.txt'); assert p.exists() and time.time()-p.stat().st_mtime < 900",
+        ]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # Parallel Bitget USDT-M futures bot (default PAPER). Shares image/keys; separate state/logs.
+  # Telegram commands stay on `bot` only (TELEGRAM_COMMANDS=false here).
+  bot-bitget:
+    build: .
+    container_name: bitget-futures-bot
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.50
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    env_file:
+      - .env
+    environment:
+      EXCHANGE: bitget
+      PAPER: ${BITGET_PAPER:-true}
+      STRATEGY_PATH: ${BITGET_STRATEGY_PATH:-/app/strategies/bitget_btc_usdt_sma.json}
+      STATE_PATH: ${BITGET_STATE_PATH:-/app/data/bitget_state.json}
+      LOG_DIR: ${BITGET_LOG_DIR:-/app/logs/bitget}
+      POLL_SECONDS: ${BITGET_POLL_SECONDS:-300}
+      PAPER_CASH: ${BITGET_PAPER_CASH:-1000}
+      FEE_RATE: ${FEE_RATE:-0.0005}
+      ORDER_FRACTION: ${BITGET_ORDER_FRACTION:-0.2}
+      MAX_ORDER_KRW: ${BITGET_MAX_ORDER_USDT:-50}
+      MAX_DAILY_LOSS_KRW: ${BITGET_MAX_DAILY_LOSS_USDT:-0}
+      MAX_CONSECUTIVE_ERRORS: ${MAX_CONSECUTIVE_ERRORS:-5}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      BITGET_API_KEY: ${BITGET_API_KEY:-}
+      BITGET_SECRET_KEY: ${BITGET_SECRET_KEY:-}
+      BITGET_PASSPHRASE: ${BITGET_PASSPHRASE:-}
+      BITGET_PRODUCT_TYPE: ${BITGET_PRODUCT_TYPE:-USDT-FUTURES}
+      BITGET_MARGIN_MODE: ${BITGET_MARGIN_MODE:-isolated}
+      BITGET_MARGIN_COIN: ${BITGET_MARGIN_COIN:-USDT}
+      LIVE_CONFIRM: ${LIVE_CONFIRM:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      TELEGRAM_COMMANDS: "false"
+    volumes:
+      - ./data:/app/data
+      - ./strategies:/app/strategies:ro
+      - ./logs:/app/logs
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "from pathlib import Path; import time; p=Path('/app/logs/bitget/latest_status.txt'); assert p.exists() and time.time()-p.stat().st_mtime < 900",
         ]
       interval: 60s
       timeout: 10s

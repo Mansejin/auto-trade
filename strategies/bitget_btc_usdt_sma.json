@@ -1,0 +1,40 @@
+{
+  "name": "Bitget BTCUSDT SMA Cross (paper starter)",
+  "market": "BTCUSDT",
+  "exchange": "bitget",
+  "timeframe": "1h",
+  "stop_loss": 3,
+  "take_profit": 6,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ma_short",
+      "params": { "type": "SMA", "period": 5 }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ma_long",
+      "params": { "type": "SMA", "period": 20 }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "ma_short.value" },
+        "op": "cross_above",
+        "right": { "type": "indicator", "ref": "ma_long.value" }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "ma_short.value" },
+        "op": "cross_below",
+        "right": { "type": "indicator", "ref": "ma_long.value" }
+      }
+    ]
+  }
+}

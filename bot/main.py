@@ -146,6 +146,12 @@ def _fill_avg_and_volume(detail: dict[str, Any], order: dict[str, Any], fallback
 
 
 def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifier) -> None:
+    if settings.exchange == "bitget":
+        from bot.bitget_runner import run_once_bitget  # noqa: PLC0415
+
+        run_once_bitget(settings, trades, notify)
+        return
+
     strategy = load_strategy(settings.strategy_path)
     mode = "PAPER" if settings.paper else "LIVE"
     public = UpbitPublic()
@@ -619,18 +625,19 @@ def main() -> None:
 
     mode = "PAPER(모의)" if settings.paper else "LIVE(실주문)"
     logger.info("=" * 48)
-    logger.info("업비트 자동매매 봇 시작")
+    logger.info("자동매매 봇 시작 (exchange=%s)", settings.exchange)
     logger.info("모드       : %s", mode)
+    logger.info("거래소     : %s", settings.exchange)
     logger.info("전략 파일  : %s", settings.strategy_path)
     logger.info("폴링 주기  : %s초", settings.poll_seconds)
     logger.info("주문 비중  : %.0f%%", settings.order_fraction * 100)
     logger.info(
         "주문 상한  : %s",
-        f"{fmt_money(settings.max_order_krw)}원" if settings.max_order_krw > 0 else "없음",
+        f"{fmt_money(settings.max_order_krw)}" if settings.max_order_krw > 0 else "없음",
     )
     logger.info(
         "일일 손실  : %s",
-        f"{fmt_money(settings.max_daily_loss_krw)}원" if settings.max_daily_loss_krw > 0 else "비활성",
+        f"{fmt_money(settings.max_daily_loss_krw)}" if settings.max_daily_loss_krw > 0 else "비활성",
     )
     logger.info(
         "연속 오류  : %s",
@@ -639,19 +646,21 @@ def main() -> None:
     logger.info("로그 폴더  : %s", settings.log_dir)
     logger.info("상태 파일  : %s", settings.state_path)
     logger.info("텔레그램   : %s", "ON" if notify.enabled else "OFF (토큰/채팅ID 미설정)")
+    logger.info("이체(반자동): %s", "ON" if settings.transfer_allowed else "OFF")
     if not settings.paper:
         logger.warning("주의: LIVE 모드입니다. 실제 주문이 나갈 수 있습니다.")
         if settings.order_fraction >= 1.0 and settings.max_order_krw <= 0:
             logger.warning(
                 "위험: ORDER_FRACTION=100%% 이고 MAX_ORDER_KRW 미설정 — "
-                "가용 KRW 전액 매수 가능. MAX_ORDER_KRW 설정을 권장합니다."
+                "가용 잔고 전액 진입 가능. MAX_ORDER_KRW 설정을 권장합니다."
             )
     logger.info("=" * 48)
 
     if notify.enabled:
         start_command_listener(settings, notify, _TG_STOP)
         notify.send(
-            f"봇 시작\n모드: {mode}\n전략: {settings.strategy_path.name}\n"
+            f"봇 시작\n거래소: {settings.exchange}\n모드: {mode}\n"
+            f"전략: {settings.strategy_path.name}\n"
             f"폴링: {settings.poll_seconds}초\n"
             f"비중: {settings.order_fraction * 100:.0f}%\n\n{HELP}"
         )
