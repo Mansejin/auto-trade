@@ -31,13 +31,14 @@ KIMCHI_STRATEGY = "kimchi-rich-preposition-skip-v1.json"
 # Minimum seconds between overlay switches (separate from regime dwell)
 OVERLAY_COOLDOWN_SEC = int(os.environ.get("OVERLAY_COOLDOWN_SEC", "3600"))
 
-# Policy C map — must match remote_regime_switch.py
+# Policy C map — must match remote_regime_switch.py (sideways Williams + dwell gate)
 POLICY = {
     "bull": "regime-bull-trend-4h-v2.json",
     "transition": "regime-bull-trend-4h-v2.json",
     "bear": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
-    "sideways": "regime-sideways-mr-4h-v5.json",
+    "sideways": "regime-sideways-mr-1h-williams-v1.json",
 }
+SIDEWAYS_FALLBACK = "regime-sideways-mr-4h-v5.json"
 
 
 def log_line(msg: str) -> None:
@@ -99,6 +100,20 @@ def current_regime() -> str:
 
 
 def policy_strategy_for_regime(regime: str) -> str:
+    # Prefer last selected_file from regime engine (includes dwell>=7 Williams gate).
+    if REGIME_CURRENT.exists():
+        try:
+            data = json.loads(REGIME_CURRENT.read_text())
+            sel = data.get("selected_file")
+            if sel and (STRAT_DIR / sel).exists():
+                return sel
+            if (
+                data.get("regime") == "sideways"
+                and data.get("sideways_gate") == "fallback_v5_dwell"
+            ):
+                return SIDEWAYS_FALLBACK
+        except (json.JSONDecodeError, OSError):
+            pass
     return POLICY.get(regime, POLICY["bear"])
 
 

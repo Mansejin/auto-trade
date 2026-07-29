@@ -41,8 +41,12 @@ POLICY = {
     "bull": "regime-bull-trend-4h-v2.json",
     "transition": "regime-bull-trend-4h-v2.json",
     "bear": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
-    "sideways": "regime-sideways-mr-4h-v5.json",
+    # LIVE promote 2026-07-29 (human): Williams MR with dwell>=7 gate below
+    "sideways": "regime-sideways-mr-1h-williams-v1.json",
 }
+# When sideways but streak shorter than this, keep prior sideways MR (v5) to skip stubs.
+SIDEWAYS_WILLIAMS_MIN_DWELL = int(os.environ.get("SIDEWAYS_WILLIAMS_MIN_DWELL", "7"))
+SIDEWAYS_FALLBACK = "regime-sideways-mr-4h-v5.json"
 
 
 def log_line(msg: str) -> None:
@@ -162,14 +166,47 @@ def classify(candles: list[dict]) -> dict:
     pdi, mdi, adx = adx_last(highs, lows, closes)
     if None in (s50, s200, adx, pdi, mdi):
         raise RuntimeError("insufficient candles")
-    if adx < 20:
-        regime = "sideways"
-    elif closes[i] > s200 and s50 > s200 and pdi >= mdi:
-        regime = "bull"
-    elif closes[i] < s200 and s50 < s200 and closes[i] < s50 and mdi > pdi:
-        regime = "bear"
+
+    # Label every closed bar so we can compute sideways dwell ending at i.
+    regimes: list[str] = []
+    for j in range(len(closes)):
+        sj50 = sma(closes, 50, j)
+        sj200 = sma(closes, 200, j)
+        if sj50 is None or sj200 is None or j < 28:
+            regimes.append("warmup")
+            continue
+        # Recompute ADX/DI at j cheaply via full series endpoint — use last-only helper
+        # by slicing; for dwell we only need adx-based sideways vs not on history.
+        # Approximate with same rules using rolling endpoint values from adx_last on prefix.
+        ph, pl, pc = highs[: j + 1], lows[: j + 1], closes[: j + 1]
+        pj_pdi, pj_mdi, pj_adx = adx_last(ph, pl, pc)
+        if None in (pj_adx, pj_pdi, pj_mdi):
+            regimes.append("warmup")
+            continue
+        if pj_adx < 20:
+            regimes.append("sideways")
+        elif pc[j] > sj200 and sj50 > sj200 and pj_pdi >= pj_mdi:
+            regimes.append("bull")
+        elif pc[j] < sj200 and sj50 < sj200 and pc[j] < sj50 and pj_mdi > pj_pdi:
+            regimes.append("bear")
+        else:
+            regimes.append("transition")
+
+    regime = regimes[i]
+    sideways_dwell = 0
+    for r in reversed(regimes[: i + 1]):
+        if r == "sideways":
+            sideways_dwell += 1
+        else:
+            break
+
+    if regime == "sideways" and sideways_dwell < SIDEWAYS_WILLIAMS_MIN_DWELL:
+        strat_file = SIDEWAYS_FALLBACK
+        sideways_gate = "fallback_v5_dwell"
     else:
-        regime = "transition"
+        strat_file = POLICY[regime]
+        sideways_gate = "williams" if regime == "sideways" else "n/a"
+
     return {
         "date": closed[i]["candle_date_time_utc"][:10],
         "regime": regime,
@@ -179,7 +216,9 @@ def classify(candles: list[dict]) -> dict:
         "adx": round(adx, 2),
         "pdi": round(pdi, 2),
         "mdi": round(mdi, 2),
-        "file": POLICY[regime],
+        "sideways_dwell": sideways_dwell,
+        "sideways_gate": sideways_gate,
+        "file": strat_file,
         "bar": "closed",
     }
 
@@ -547,12 +586,14 @@ def main() -> None:
         "adx": info["adx"],
         "pdi": info["pdi"],
         "mdi": info["mdi"],
+        "sideways_dwell": info.get("sideways_dwell"),
+        "sideways_gate": info.get("sideways_gate"),
         "selected_file": target,
         "strategy_path": target_path,
         "action": rec.get("action"),
         "bar": info.get("bar"),
         "engine": "v2",
-        "policy": "C",
+        "policy": "C_williams_sideways_dwell7",
     }
     try:
         REGIME_CURRENT.write_text(

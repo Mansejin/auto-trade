@@ -203,7 +203,7 @@
   "strategies": {
     "bull": "strategies/regime-bull-trend-4h-v2.json",
     "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
-    "sideways": "strategies/regime-sideways-mr-4h-v5.json",
+    "sideways": "strategies/regime-sideways-mr-1h-williams-v1.json",
     "transition": "strategies/regime-bull-trend-4h-v2.json",
     "bear_v6_alt": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
     "bear_v6b_alt": "strategies/krw-btc-1h-ema-adx23-rsi60-di-obv-m5-v6b.json",
@@ -226,7 +226,8 @@
       "strategies/regime-bull-obv-4h-v1.json"
     ],
     "sideways_williams_early_strict_v2": "strategies/regime-sideways-mr-1h-williams-early-strict-v2.json",
-    "sideways_williams_paper_mode": "dwell7"
+    "sideways_williams_paper_mode": "LIVE_dwell7",
+    "sideways_v5_fallback_dwell": "strategies/regime-sideways-mr-4h-v5.json"
   },
   "policyC_map": {
     "bull": "bull",
@@ -500,10 +501,10 @@
   "live_note": "upbit-strategy-toolkit is backtest-only. Bot deploy is separate JSON mount.",
   "next": [
     {
-      "id": "williams-dwell7-paper",
-      "status": "ready_research",
-      "goal": "Williams dwell7 paper-log (not LIVE)",
-      "note": "Prefer dwell7 gate; see reports/improve/20260729-williams-dwell-develop.md. Policy C unchanged."
+      "id": "williams-live-promote",
+      "status": "done_live",
+      "goal": "Promote Williams sideways to Policy C with dwell>=7 fallback to v5",
+      "note": "Human approve 2026-07-29; see reports/improve/20260729-williams-live-promote.md"
     },
     {
       "id": "AE4",

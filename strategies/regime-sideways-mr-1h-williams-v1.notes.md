@@ -37,3 +37,7 @@ See `reports/improve/20260729-williams-dwell-develop.md`.
 ## Falsification (if promoted later)
 - PF&lt;1 on ≥2 of 3 primary SW windows
 - Or regime-mounted forward paper month with PF&lt;1
+
+## LIVE
+Promoted 2026-07-29 into Policy C sideways with dwell>=7 (fallback v5). Human approve; small capital.
+
