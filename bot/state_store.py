@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from bot.integrity import restrict_path_mode
+from bot.portfolio import Portfolio
 
 logger = logging.getLogger(__name__)
 
