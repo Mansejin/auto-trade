@@ -170,6 +170,21 @@ brunch 측 요약: *단순 추세선 터치보다 돌파 후 리테스트가 승
 
 ---
 
+## 5b. V1-day (2026-07-29) — 기각
+
+데이 트레이딩 요구(BTC only, ~3–4회/일, 저유동성 스킵)로 TF를 **15m**으로 내려 구현.
+
+| Item | Value |
+|------|-------|
+| Code | `freqtrade-research/user_data/strategies/DiagonalVolumePivotDayV1.py` |
+| Report | [`freqtrade-research/reports/20260729-diagonal-volume-pivot-day-v1.md`](../freqtrade-research/reports/20260729-diagonal-volume-pivot-day-v1.md) |
+| W1/W2/W3 | PF 1.06 / 0.79 / 0.60 → **falsified** |
+| Avg trades/day | 1.5–2.6 (목표 3–4에 미달·근접) |
+
+Volume-pivot 앵커로도 Mode A 첫 터치 MR은 수수료 하에서 엣지 없음. 파라미터 재튜닝 금지.
+
+---
+
 ## 6. 자동화·백테스트로 옮길 때
 
 ### 6.1 왜 Upbit JSON에 바로 안 들어가나
@@ -181,13 +196,11 @@ brunch 측 요약: *단순 추세선 터치보다 돌파 후 리테스트가 승
 
 | ID | 가설 | 구현 | TF | 상태 |
 |----|------|------|----|------|
-| ~~S1~~ | LR 레일 터치 MR | freqtrade v1–v3 | 5m/15m | **기각** |
-| **V1** | vol≥k×SMA인 스윙 고·저로 채널 → Mode A | freqtrade / script | **4h** | 다음 |
-| **V2** | 동일 앵커 + Mode B 돌파·리테스트 + vol 확인 | freqtrade | 4h | V1 후 |
-| **P1** | BB lower reclaim ≈ 상승채널 하단 (거친 프록시) | upbit JSON | 4h | 선택 |
-| **P2** | Donchian/BB break+hold ≈ 리테스트 | upbit JSON | 4h | 선택 |
-
-**권장**: V1 → V2. P1/P2는 “진짜 빗각”이 아니라 빠른 sanity check용.
+| ~~S1~~ | LR 레일 터치 MR | freqtrade v1–v3 | 5m/15m ETH | **기각** |
+| ~~V1-day~~ | vol-pivot 채널 Mode A + 일봉 유동성 게이트 | `DiagonalVolumePivotDayV1` | **15m BTC** | **기각** (2/3) |
+| **V2** | 동일 앵커 + Mode B 돌파·리테스트 | freqtrade | 15m/1h BTC | 다음 후보 |
+| **V1-gate** | V1-day + daily regime 방향 필터 | freqtrade | 15m BTC | 선택 |
+| **P1** | BB lower reclaim ≈ 상승채널 하단 | upbit JSON | 4h | 선택 |
 
 ### 6.3 V1 앵커 스펙 (사용자 정의 반영 — 구현 전 freeze 후보)
 
@@ -212,22 +225,22 @@ exit: mid / opposite rail / SL beyond rail
 
 ---
 
-## 7. 전략 후보 (승인 대기)
+## 7. 전략 후보 (다음)
 
-### Candidate V1 — `DiagonalVolumePivotChannel4h` (freqtrade, **추천**)
+### Candidate V2 — `DiagonalVolumePivotBreakRetestDayV2` (추천 다음)
 
-- Hypothesis: **거래량 피벗으로 그은 4h 평행채널** 하단 반등은 LR(40) 프록시보다 기대값이 낫다.
-- 기각되면: 앵커 정의가 틀렸거나, 빗각 엣지가 자동화 불가 → 알림-only 하이브리드로 후퇴.
+- 같은 volume-pivot 채널 + **일봉 유동성 게이트**
+- Mode B만: 레일 돌파 실패 후 재진입(리테스트) 시 추세 방향
+- BTC 15m (또는 1h if 15m still too noisy)
 
-### Candidate P1 — `diagonal-proxy-bb-reclaim-4h-v1` (upbit JSON)
+### Candidate V1-gate
 
-- Hypothesis: BB 하단 reclaim + ADX 추세 ≈ Mode A 거친 대리.
-- Buy / Sell / SL-5% / TP+15% / KRW-BTC 4h — create-strategy 승인 후 저장.
+- V1-day 코드 + daily bull/bear 방향 필터 (역방향 채널 터치 무시)
+- 새 파일로만. 기존 V1 hypers 건드리지 않음.
 
-### Candidate P2 — `diagonal-proxy-break-retest-4h-v1` (upbit JSON)
+### Alert-only
 
-- Hypothesis: 밴드 상단 돌파 후 지지 리테스트가 Mode B 대리.
-- create-strategy 승인 후.
+- 자동화 기각이 반복되면: 봇은 레일/터치 알림만, 진입은 사람.
 
 ---
 
@@ -244,10 +257,9 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. **V1** 구현할지 / **P1·P2** 먼저 돌릴지 선택
-2. V1이면 `freqtrade-research`에 volume-pivot 채널 전략 + multi-window BT
-3. P1/P2면 승인 → `strategies/{slug}.json` → backtest skill
-4. 둘 다 기각 시: 알림-only (작도는 사람, 봇은 터치 감지)
+1. V2 (break+retest) 또는 V1-gate 또는 alert-only 중 선택
+2. 기각된 V1-day / LR scalp hypers 재튜닝 금지
+3. LIVE / SCALP sleeve에 올리지 말 것
 
 ---
 
