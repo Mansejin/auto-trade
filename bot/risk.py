@@ -45,7 +45,17 @@ class RiskState:
 
 
 def risk_path(state_path: Path) -> Path:
-    return state_path.with_name("risk.json")
+    """Derive per-bot risk file from state path.
+
+    state.json → risk.json
+    bitget_state.json → bitget_risk.json
+
+    Parallel bots must not share one risk.json (different HMAC secrets).
+    """
+    name = state_path.name.replace("state", "risk", 1)
+    if name == state_path.name:
+        name = f"risk_{state_path.name}"
+    return state_path.with_name(name)
 
 
 def load_risk(state_path: Path, *, integrity_key: str = "") -> RiskState:
