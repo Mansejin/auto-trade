@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "month": "2026-07",
+  "generated_at": "2026-07-29T09:24:06Z",
+  "policy": null,
+  "regime_current": {
+    "regime": null,
+    "selected_file": null,
+    "sideways_dwell": null,
+    "sideways_gate": null
+  },
+  "regime_log": {
+    "rows": 0,
+    "actions": {},
+    "regimes": {},
+    "switches": 0,
+    "switches_to_williams": 0,
+    "switches_to_fallback_v5": 0
+  },
+  "premium_log_rows": 0,
+  "suggestion": "keep",
+  "reason": "Insufficient evidence to change Policy C map",
+  "allowed_improvements": [
+    "keep",
+    "demote_sideways_to_v5",
+    "raise_dwell_to_14",
+    "ops_check",
+    "inconclusive"
+  ],
+  "forbidden": [
+    "retune Williams WR/ADX thresholds from this month alone",
+    "auto-deploy without human"
+  ]
+}
