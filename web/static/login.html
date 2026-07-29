@@ -10,7 +10,9 @@
       var base = "/";
       if (p.indexOf("/autotrade") === 0) base = "/autotrade/";
       window.__DESK_BASE__ = base;
-      document.write('<base href="' + base + '">');
+      var el = document.createElement("base");
+      el.href = base;
+      document.head.insertBefore(el, document.head.firstChild);
     })();
   </script>
   <link rel="stylesheet" href="static/desk.css" />

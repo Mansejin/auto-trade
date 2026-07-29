@@ -75,7 +75,10 @@ export default {
     if (loc) {
       try {
         const u = new URL(loc, ORIGIN);
-        if (u.origin === new URL(ORIGIN).origin || loc.startsWith("/")) {
+        const originHost = new URL(ORIGIN).host;
+        // Match by host, not origin: desk/nginx may redirect with http:// while
+        // Worker ORIGIN is https:// (scheme mismatch would otherwise leak Location).
+        if (u.host === originHost || loc.startsWith("/")) {
           const path = loc.startsWith("http") ? u.pathname + u.search : loc;
           outHeaders.set("Location", new URL(path, incoming.origin).toString());
         }

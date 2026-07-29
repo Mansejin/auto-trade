@@ -110,8 +110,14 @@
     }
   }
 
+  function deskBase() {
+    if (window.__DESK_BASE__) return window.__DESK_BASE__;
+    const p = location.pathname || "/";
+    return p.indexOf("/autotrade") === 0 ? "/autotrade/" : "/";
+  }
+
   async function refresh() {
-    const base = window.__DESK_BASE__ || "/";
+    const base = deskBase();
     let res;
     try {
       res = await fetch(base + "api/status", { credentials: "same-origin" });
@@ -119,7 +125,7 @@
       throw new Error("상태 API 네트워크 오류");
     }
     if (res.status === 401) {
-      location.href = base;
+      location.href = deskBase();
       return;
     }
     if (!res.ok) throw new Error(`상태 API ${res.status}`);
