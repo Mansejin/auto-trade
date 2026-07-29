@@ -1,6 +1,6 @@
 # Auto-Trade Version Registry
 
-**App Version: 0.5.2** (2026-07-29)
+**App Version: 0.5.3** (2026-07-29)
 
 ---
 
@@ -22,6 +22,9 @@
 ---
 
 ## Changelog
+
+### v0.5.3 (2026-07-29)
+- chore: Ponytail Cursor rule only; remove caveman-lite
 
 ### v0.5.2 (2026-07-29)
 - chore: caveman-lite Cursor rule (terse output)
