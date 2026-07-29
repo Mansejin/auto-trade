@@ -1,8 +1,11 @@
 /**
  * Proxy https://mansejin.com/autotrade* -> Oracle desk
  * Origin uses DNS-only hostname (Workers cannot fetch bare IPs).
+ *
+ * Use HTTP until Oracle VCN Security List allows ingress TCP/443 to the VPS.
+ * Edge already terminates TLS locally; switch back to https:// when OCI 443 is open.
  */
-const ORIGIN = "https://autotrade-origin.mansejin.com";
+const ORIGIN = "http://autotrade-origin.mansejin.com";
 const ALLOWED_METHODS = new Set(["GET", "HEAD", "POST"]);
 
 function isSafePath(pathname) {
