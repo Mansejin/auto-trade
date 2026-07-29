@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v20",
-  "slug": "daytrade-bb-rsi-div-v20",
-  "hypothesis": "BTC daytrade long-only: BB squeeze vs 12 bars ago (upper↓ & lower↑) and close cross_above BB mid with RSI>50; ride to BB upper or RSI≥70.",
+  "active_card": "daytrade-bb-rsi-div-v21",
+  "slug": "daytrade-bb-rsi-div-v21",
+  "hypothesis": "BTC daytrade long-only: soft bullish divergence under BB mid — close < close[8] while RSI > RSI[8], then RSI reclaim ≥45 from prior <45; ride to BB upper or RSI≥65.",
   "hypers": {
-    "pattern": "bb_squeeze_mid_cross",
-    "squeeze_lookback": 12,
-    "exit": "bb_upper_or_rsi70"
+    "pattern": "soft_bull_div_rsi45_reclaim",
+    "div_lookback": 8,
+    "exit": "bb_upper_or_rsi65"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-2.90%",
-      "profit_factor": "1.11",
-      "trades": 36,
+      "total_return": "-7.95%",
+      "profit_factor": "1.02",
+      "trades": 86,
       "benchmark": "+3.26%",
-      "trades_per_day": 1.2
+      "trades_per_day": 2.87
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-5.55%",
-      "profit_factor": "0.75",
-      "trades": 35,
+      "total_return": "-11.23%",
+      "profit_factor": "0.81",
+      "trades": 83,
       "benchmark": "-16.19%",
-      "trades_per_day": 1.17
+      "trades_per_day": 2.77
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-4.92%",
-      "profit_factor": "0.71",
-      "trades": 33,
+      "total_return": "-10.68%",
+      "profit_factor": "0.64",
+      "trades": 74,
       "benchmark": "-4.12%",
-      "trades_per_day": 1.1
+      "trades_per_day": 2.47
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 19,
+  "consecutive_fails": 20,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB squeeze(lookback12) + mid cross_above + RSI>50 → upper/RSI70 — v20 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v19",
-  "updated_at": "2026-07-29T20:41:40Z"
+  "next_action": "soft bull div(lookback8) + RSI45 reclaim under BB mid → upper/RSI65 — v21 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v20",
+  "updated_at": "2026-07-29T20:51:50Z"
 }
