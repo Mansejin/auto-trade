@@ -11,7 +11,6 @@ from __future__ import annotations
 import json
 import time
 import urllib.request
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -195,8 +194,8 @@ def main() -> None:
 
     md = f"""# AE12 — Policy C regime-switch lag MDD
 
-> Measures **buy&hold BTC drawdown** in the first L days after a daily regime label flip.  
-> Proxy for “뒷북 전환” pain while SMA/ADX classifiers catch up.  
+> Measures **buy&hold BTC drawdown** in the first L days after a daily regime label flip.
+> Proxy for “뒷북 전환” pain while SMA/ADX classifiers catch up.
 > **Does not** change Policy C rules. Not investment advice.
 
 ## Method
