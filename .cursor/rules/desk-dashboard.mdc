@@ -1,0 +1,14 @@
+---
+description: Desk API + dual Upbit/Bitget UI conventions
+globs: web/**/*
+alwaysApply: false
+---
+
+# Desk Dashboard
+
+- FastAPI `web/app.py`: Upbit from `STATE_PATH`/`LOG_DIR`; Bitget from `BITGET_STATE_PATH` + `BITGET_LOG_DIR` (defaults under `/app/data`, `/app/logs/bitget`).
+- `/api/status` returns `status` (Upbit) + `bitget` `{cash,signal,position,recent_trades,latest_text}`.
+- UI: ticker shows both exchanges; panels split Upbit/Bitget trades + status text.
+- USDT money format: **2 decimal places** (`desk.js` `money()`).
+- Auth: cookie + CSRF; no `?token=`. Rate limit uses `X-Real-IP`.
+- After desk image recreate on VPS, reload nginx (`upbit-edge`).

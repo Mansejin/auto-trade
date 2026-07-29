@@ -1,6 +1,6 @@
 # Auto-Trade Version Registry
 
-**App Version: 0.5.0** (2026-07-29)
+**App Version: 0.5.1** (2026-07-29)
 
 ---
 
@@ -22,6 +22,10 @@
 ---
 
 ## Changelog
+
+### v0.5.1 (2026-07-29)
+- chore: Cursor rules for deploy/treasury/desk (token-saving context)
+- fix(docs): Bitget withdraw path = `/api/v3/account/withdrawal`
 
 ### v0.5.0 (2026-07-29)
 - fix: Bitget 자산 이중 집계 제거 (usdtEquity에 TRX 포함)

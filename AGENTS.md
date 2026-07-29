@@ -61,7 +61,7 @@ below cover only the non-obvious caveats for running things locally (outside Doc
 
 - Trading client is **UTA API v3** (`bot/bitget_client.py`): candles `/api/v3/market/candles`,
   orders `/api/v3/trade/place-order`, assets `/api/v3/account/assets`, withdraw
-  `/api/v3/account/withdraw`. Docs: https://www.bitget.com/api-doc/uta/intro
+  `/api/v3/account/withdrawal` (not `/withdraw`). Docs: https://www.bitget.com/api-doc/uta/intro
 - Parallel container: `bot-bitget` (`EXCHANGE=bitget`). Category via `BITGET_CATEGORY`.
   Strategy may set `funding.enabled` to auto bridge Upbit KRW→TRX→Bitget TRX→USDT when a
   futures buy signal arrives with insufficient margin — requires `TRANSFER_*` env + withdraw

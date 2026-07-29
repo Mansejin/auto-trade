@@ -1,0 +1,16 @@
+---
+description: TRX bridge, rebalance, risk rebase pitfalls
+globs: bot/transfer.py,bot/rebalance.py,bot/risk.py,bot/bitget_runner.py,bot/main.py
+alwaysApply: false
+---
+
+# Treasury / Bridge
+
+- Bridge: **TRX** only (cheap). U→B: KRW→TRX withdraw→Bitget TRX→USDT. B→U: USDT→TRX→Upbit→KRW.
+- Bitget withdraw path: `POST /api/v3/account/withdrawal` + `accountType: uta`. Not `/withdraw`.
+- Whitelist: Bitget address book required. TRX↔USDT Tron address may alias via env.
+- Min Bitget TRX withdraw ~27+fee; idle convert only if TRX ≥ **5** (spot min ~1 USDT).
+- **Equity:** Bitget `usdtEquity` already includes TRX — never add `spot_available("TRX")` again.
+- Auto Upbit→Bitget must call `_rebase_upbit_risk_after_withdraw` (same as Telegram approve).
+- Rebalance: propose → `/리밸런스승인`; band default ±12%. Cooldowns: transfer + alert.
+- Idle HOLD + no position: convert leftover Bitget TRX→USDT.

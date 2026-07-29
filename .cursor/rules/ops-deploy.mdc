@@ -1,0 +1,21 @@
+---
+description: VPS deploy, nginx DNS, LIVE safety — skip rediscovery
+alwaysApply: true
+---
+
+# Ops & Deploy
+
+- Prod: Oracle VPS `ubuntu@129.225.205.185`, repo `~/auto-trade`, compose: `bot` + `bot-bitget` + `desk` + `edge`.
+- SSH key: `C:\Users\Ohola\Desktop\keys\ssh-key-2026-07-27.key` (IdentitiesOnly=yes).
+- Deploy: `git pull origin main && docker compose up -d --build` then **`docker exec upbit-edge nginx -s reload`** (desk IP change → nginx 502 if skipped).
+- nginx uses `resolver 127.0.0.11` + `$upstream` variable so DNS re-resolves; still reload after desk recreate.
+- Public: `https://mansejin.com/autotrade` via Cloudflare Worker → `https://autotrade-origin.mansejin.com`.
+- Never change `PAPER`/`LIVE_CONFIRM`/`DASHBOARD_TOKEN` unless user asks. Never commit `.env` or API keys.
+- Prefer edit/commit on `main` worktree when user asks deploy; sync origin after meaningful changes.
+- Versions: see `VERSION.md`. Architecture caveats: `AGENTS.md`.
+
+# Token hygiene (this project)
+
+- Bot does **not** call LLMs — only exchange REST. Token cost is Cursor sessions only.
+- Do not re-explore VPS/SSH/deploy/bridge basics; use this rule + `AGENTS.md`.
+- Prefer reading known files over broad repo search for treasury/desk/deploy tasks.
