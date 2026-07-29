@@ -19,3 +19,7 @@ cd freqtrade-research
 ## Guardrails
 - Research only. Do not change Policy C / LIVE.
 - Do not hyperopt thresholds after seeing results (overfit).
+
+## Regime gate
+- Strategy: `RsiBbScalpRegimeGateV1` (bull=long, bear=short, else flat)
+- Compare report: `reports/20260729-regime-gate-vs-ungated.md`n
