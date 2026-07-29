@@ -643,7 +643,7 @@ def convert_bitget_trx_to_usdt(settings: Settings, *, min_trx: float = 1.0) -> s
         trx = client.spot_available("TRX")
         if trx < min_trx:
             return f"Bitget TRX 부족({trx:.6f}) — 환전 스킵"
-        qty = round(max(0.0, trx - 0.01), 6)
+        qty = round(max(0.0, trx - 0.01), 2)
         if qty < min_trx:
             return f"Bitget TRX dust only ({trx:.6f})"
         before = client.available_usdt()
