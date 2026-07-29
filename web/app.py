@@ -18,6 +18,8 @@ from starlette.middleware.base import BaseHTTPMiddleware
 LOG_DIR = Path(os.getenv("LOG_DIR", "/app/logs"))
 STATE_PATH = Path(os.getenv("STATE_PATH", "/app/data/state.json"))
 RISK_PATH = Path(os.getenv("RISK_PATH", "/app/data/risk.json"))
+BITGET_STATE_PATH = Path(os.getenv("BITGET_STATE_PATH", "/app/data/bitget_state.json"))
+BITGET_LOG_DIR = Path(os.getenv("BITGET_LOG_DIR", "/app/logs/bitget"))
 TOKEN = os.getenv("DASHBOARD_TOKEN", "").strip()
 BASE_PATH = os.getenv("BASE_PATH", "").strip().rstrip("/")
 COOKIE_NAME = "desk_token"
@@ -276,6 +278,31 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
     status.setdefault("quote_currency", quote)
     status.setdefault("exchange", exchange)
 
+    # Bitget bot state (parallel bot)
+    bitget_state = _load_json(BITGET_STATE_PATH)
+    bitget_status_path = BITGET_LOG_DIR / "status.json"
+    bitget_status = _load_json(bitget_status_path)
+    bitget_text_path = BITGET_LOG_DIR / "latest_status.txt"
+    bitget_latest_text = ""
+    if bitget_text_path.exists():
+        bitget_latest_text = bitget_text_path.read_text(encoding="utf-8", errors="ignore")[:8000]
+    bitget_info: dict[str, Any] = {}
+    if bitget_state or bitget_status:
+        bs = bitget_status or {}
+        bitget_info = {
+            "exchange": "bitget",
+            "mode": bs.get("mode") or bitget_state.get("mode"),
+            "strategy": bs.get("strategy") or bitget_state.get("strategy"),
+            "market": bs.get("market") or bitget_state.get("market"),
+            "cash": bs.get("cash") or bs.get("usdt") or bitget_state.get("cash"),
+            "quote_currency": "USDT",
+            "position": bs.get("position") or bitget_state.get("position"),
+            "signal": bs.get("signal") or "unknown",
+            "latest_text": bitget_latest_text,
+        }
+        bitget_trades = bitget_state.get("trades") or []
+        bitget_info["recent_trades"] = bitget_trades[-8:] if isinstance(bitget_trades, list) else []
+
     return {
         "ok": True,
         "stale": stale,
@@ -290,6 +317,7 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
         "timeframe": str(status.get("timeframe") or "1h"),
         "quote_currency": quote,
         "exchange": exchange,
+        "bitget": bitget_info,
     }
 
 

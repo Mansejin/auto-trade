@@ -169,6 +169,17 @@
 
     document.getElementById("m-signal").textContent = SIGNAL_KO[s.signal] || s.signal || "—";
     document.getElementById("m-krw").textContent = money(cashValue(s), quote);
+
+    // Bitget balance
+    const bg = data.bitget || {};
+    const bgEl = document.getElementById("m-bitget");
+    if (bgEl) {
+      if (bg.cash != null) {
+        bgEl.textContent = money(bg.cash, "USDT");
+      } else {
+        bgEl.textContent = "—";
+      }
+    }
     if (s.position && s.position.qty) {
       document.getElementById("m-pos").textContent = `${qty(s.position.qty)} @ ${money(
         s.position.entry_price,
