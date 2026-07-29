@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v22",
-  "slug": "daytrade-bb-rsi-div-v22",
-  "hypothesis": "BTC daytrade long-only: classic bullish divergence at BB lower — low < low[10] while RSI > RSI[10] and close ≤ BB lower; mean-revert to BB mid or RSI≥55.",
+  "active_card": "daytrade-bb-rsi-div-v23",
+  "slug": "daytrade-bb-rsi-div-v23",
+  "hypothesis": "BTC daytrade long-only: BB lower reclaim with soft bullish divergence — prior close ≤ BB lower then close > lower, while close < close[5] and RSI > RSI[5]; ride to BB upper or RSI≥60.",
   "hypers": {
-    "pattern": "classic_ll_hl_div_bb_lower",
-    "div_lookback": 10,
-    "exit": "bb_mid_or_rsi55"
+    "pattern": "lower_reclaim_soft_div5",
+    "div_lookback": 5,
+    "exit": "bb_upper_or_rsi60"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-1.41%",
-      "profit_factor": "1.64",
-      "trades": 52,
+      "total_return": "-0.00%",
+      "profit_factor": "5.74",
+      "trades": 7,
       "benchmark": "+3.26%",
-      "trades_per_day": 1.73
+      "trades_per_day": 0.23
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-7.39%",
-      "profit_factor": "0.80",
-      "trades": 51,
+      "total_return": "-2.16%",
+      "profit_factor": "0.33",
+      "trades": 8,
       "benchmark": "-16.19%",
-      "trades_per_day": 1.70
+      "trades_per_day": 0.27
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-1.95%",
-      "profit_factor": "1.40",
-      "trades": 40,
+      "total_return": "+0.40%",
+      "profit_factor": "∞",
+      "trades": 4,
       "benchmark": "-4.12%",
-      "trades_per_day": 1.33
+      "trades_per_day": 0.13
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 21,
+  "consecutive_fails": 22,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "classic LL/HL div(lookback10) at BB lower → mid/RSI55 — v22 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v21",
-  "updated_at": "2026-07-29T21:01:54Z"
+  "next_action": "BB lower reclaim + soft div(lookback5) → upper/RSI60 — v23 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v22",
+  "updated_at": "2026-07-29T21:11:40Z"
 }
