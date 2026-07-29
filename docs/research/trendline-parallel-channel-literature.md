@@ -220,19 +220,19 @@ skip_reason if any
 - [x] 고전 1권 발췌 노트 — [`edwards-murphy-excerpts.md`](edwards-murphy-excerpts.md) (Edwards–Magee Ch.14–15 구조 + Murphy Law #5/#10 공개문)
 - [x] 수동 표본 ≥30 (QQQ 4H Batch 1) — **전부 hindsight; 품질 재검증 남음**
 - [x] Clearest 3 ICT 병기 — [`channel-clearest3-ict-overlay.md`](channel-clearest3-ict-overlay.md)
-- [ ] Mode B만의 **최소 규칙 카드** 1장 **freeze** — 개정안은 excerpts §6 / batch1; 사용자 확정 대기
+- [x] Mode B만의 **최소 규칙 카드** 1장 **FROZEN** — [`mode-b-rule-card-frozen.md`](mode-b-rule-card-frozen.md)
 - [ ] Pitchfork/Fib Channel을 parallel과 분리할지 결정
 
-게이트 통과 후에야 playbook §7 인코딩 재개.
+인코딩: `DiagonalQqqModeBFrozenV1` — hypers 재튜닝 금지; 기각 시 카드 개정.
 
 ---
 
 ## 9. Next (자료수집만)
 
-1. ~~수동 표본 / 고전 발췌 / ICT 병기~~ → **Mode B 카드 freeze** 한 번만 찍기.
-2. parallel vs Fib Channel vs pitchfork 분리 결정.
-3. 인범 공개 클립에서 **앵커·세션·손절**만 노트로 (룰 복제 X).
-4. playbook의 “다음=QQQ Mode B 구현”은 **카드 freeze 뒤로 연기**.
+1. ~~카드 freeze~~ → Frozen Mode B 백테스트 기각/생존.
+2. parallel vs Fib Channel vs pitchfork 분리 결정 (보류 OK).
+3. 인범 공개 클립 노트 (선택).
+4. LIVE/SCALP 금지 until survive.
 
 ---
 

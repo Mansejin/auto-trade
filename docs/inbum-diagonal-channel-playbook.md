@@ -266,6 +266,19 @@ Report: [`freqtrade-research/reports/20260729-diagonal-qqq-us-rth-mtf.md`](../fr
 
 ---
 
+### QQQ Mode B Frozen (2026-07-29) — 기각
+
+카드 freeze 후 첫 인코딩. Hypers 재튜닝 없음.
+
+| Item | Value |
+|------|-------|
+| Code | `DiagonalQqqModeBFrozenV1` |
+| Card | [`docs/research/mode-b-rule-card-frozen.md`](research/mode-b-rule-card-frozen.md) |
+| Report | [`freqtrade-research/reports/20260729-diagonal-qqq-mode-b-frozen.md`](../freqtrade-research/reports/20260729-diagonal-qqq-mode-b-frozen.md) |
+| W1/W2/W3 | +0.99% / −0.91% / −2.64% (PF n/a / 0 / 0.27) → **falsified** |
+
+---
+
 ## 6. 자동화·백테스트로 옮길 때
 
 ### 6.1 왜 Upbit JSON에 바로 안 들어가나
@@ -310,17 +323,13 @@ exit: mid / opposite rail / SL beyond rail
 
 ---
 
-## 7. 전략 후보 (문헌 게이트 이후)
-
-고정 후보(게이트 통과 후): **QQQ** · US RTH · 4h 구조 · 저빈도 허용 · **Mode B 우선**.
+## 7. 전략 후보 (카드 freeze 이후)
 
 | ID | 후보 | 상태 |
 |----|------|------|
-| A | QQQ US-RTH + 4h Mode B (돌파+리테스트) | **보류** — 문헌 게이트 전 |
-| B | 1h→15m Mode A | 보류 (Mode A 재탕 위험) |
+| A | QQQ US-RTH + 4h Mode B Frozen | **기각** (2026-07-29) |
+| B | 카드 개정 후에만 재인코딩 (hypers 금지) | 대기 |
 | C | 레일 필터 + 다른 엔트리 | 보류 |
-
-게이트: literature §8 (고전 발췌 + 수동 표본 ≥30 + Mode B 규칙 카드).
 
 ---
 
@@ -332,16 +341,16 @@ exit: mid / opposite rail / SL beyond rail
 - 로그 vs 선형
 - Pitchfork / Fib Channel vs parallel (시청자 툴 ≠ 동일 전략)
 
-추측으로 메우지 말고 **문헌 + 수동 표본**으로 좁힌 뒤 인코딩한다.
+추측으로 메우지 말고 **문헌 + 수동 표본 + freeze 카드**로만 인코딩한다.
 
 ---
 
-## 9. Next actions (자료수집)
+## 9. Next actions
 
-1. QQQ 4H 수동 표본 + ICT 병기 + Edwards·Murphy 발췌 완료
-2. **Mode B 규칙 카드 freeze**만 남음 → [`edwards-murphy-excerpts.md`](research/edwards-murphy-excerpts.md) §6
-3. Mode A hypers / 새 freqtrade 인코딩 **금지** until freeze
-4. 승격 전 LIVE/SCALP 금지
+1. Frozen Mode B **기각** 기록됨 — hypers 재튜닝 금지
+2. 카드/가설 개정할지는 별도 결정 (단순 유지)
+3. LIVE/SCALP 금지
+4. Pitchfork/Fib 분리 조사는 선택
 
 ---
 
