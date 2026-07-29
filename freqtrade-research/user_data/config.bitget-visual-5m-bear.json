@@ -1,0 +1,49 @@
+{
+  "max_open_trades": 1,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.99,
+  "dry_run": true,
+  "dry_run_wallet": 1000,
+  "trading_mode": "futures",
+  "margin_mode": "isolated",
+  "unfilledtimeout": {
+    "entry": 5,
+    "exit": 5,
+    "exit_timeout_count": 0,
+    "unit": "minutes"
+  },
+  "entry_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1
+  },
+  "exit_pricing": {
+    "price_side": "same",
+    "use_order_book": true,
+    "order_book_top": 1
+  },
+  "exchange": {
+    "name": "bitget",
+    "key": "",
+    "secret": "",
+    "password": "",
+    "pair_whitelist": ["ETH/USDT:USDT"],
+    "pair_blacklist": []
+  },
+  "pairlists": [{ "method": "StaticPairList" }],
+  "timeframe": "5m",
+  "startup_candle_count": 80,
+  "stoploss": -0.0012,
+  "trailing_stop": false,
+  "minimal_roi": { "0": 0.002 },
+  "use_exit_signal": false,
+  "exit_profit_only": false,
+  "ignore_roi_if_entry_signal": false,
+  "fee": 0.0006,
+  "strategy": "Visual5mBearShortV2",
+  "bot_name": "freqtrade-visual-5m-bear",
+  "initial_state": "running",
+  "internals": { "process_throttle_secs": 5 },
+  "export": "trades"
+}
