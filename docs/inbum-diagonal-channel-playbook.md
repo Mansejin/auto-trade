@@ -212,6 +212,20 @@ Soft daily gate: bull→long only, bear→short only, else→both.
 
 ---
 
+## 5e. Human-Soft (2026-07-29) — 기각
+
+인간형 용인: pierce 0.4%, width/slope 품질, 쿨다운 4봉. 빈도↑ 기대값↓.
+
+| Item | Value |
+|------|-------|
+| Code | `DiagonalHumanSoftDayV1.py` |
+| Report | [`freqtrade-research/reports/20260729-diagonal-human-soft-day-v1.md`](../freqtrade-research/reports/20260729-diagonal-human-soft-day-v1.md) |
+| W1/W2/W3 PF | 0.77 / 0.66 / 0.89 → **falsified** 3/3 |
+
+교훈: OHLC만으로 “스킵 필터”를 흉내 내면 신호가 늘 뿐, 재량 엣지는 안 생김.
+
+---
+
 ## 6. 자동화·백테스트로 옮길 때
 
 ### 6.1 왜 Upbit JSON에 바로 안 들어가나
@@ -227,6 +241,7 @@ Soft daily gate: bull→long only, bear→short only, else→both.
 | ~~V1-day~~ | vol-pivot 채널 Mode A + 일봉 유동성 게이트 | `DiagonalVolumePivotDayV1` | **15m BTC** | **기각** (2/3) |
 | **V2-day** | 동일 앵커 + Mode B 실패돌파→리테스트 | `DiagonalVolumePivotBreakRetestDayV2` | 15m BTC | **게이트 통과(약함)** / 빈도 미달 / 미승격 |
 | ~~V1-gate~~ | V1 + soft daily bull/bear 방향 필터 | `DiagonalVolumePivotDayGateV1` | 15m BTC | **기각** (2/3) |
+| ~~Human-Soft~~ | pierce 용인 + ugly skip + cooldown | `DiagonalHumanSoftDayV1` | 15m BTC | **기각** (3/3) |
 | **P1** | BB lower reclaim ≈ 상승채널 하단 | upbit JSON | 4h | 선택 |
 
 ### 6.3 V1 앵커 스펙 (사용자 정의 반영 — 구현 전 freeze 후보)
@@ -254,18 +269,15 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 7. 전략 후보 (다음)
 
-### Alert-only (추천)
+### Alert-only (추천 — 남은 인간형 경로)
 
-- 봇: volume-pivot 레일 + 터치/reclaim 핑. 진입은 사람.
-- 자동 진입 인코딩(V1/V2/V1-gate) 세 갈래 모두 승격 불가.
+- 봇: volume-pivot 레일 + soft-touch/reclaim 후보 핑.
+- 사람: 뉴스/각도/호가 “스킵 필터” 담당 → 이게 용인의 본체.
+- 자동 주문 없음.
 
-### V2 longer OOS
+### Stop auto-entry
 
-- hypers 고정, 표본만 키움. 기대 낮음.
-
-### Stop
-
-- 단기 빗각 자동매매 라인 종료. CORE Policy C 유지.
+- V1/V2/gate/soft 모두 승격 불가. CORE Policy C 유지.
 
 ---
 
@@ -282,9 +294,9 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. Alert-only 구현 여부 결정, 또는 단기 빗각 자동매매 라인 종료
-2. V1 / V2 / V1-gate hypers 재튜닝 금지
-3. LIVE / SCALP에 올리지 말 것
+1. Alert-only 스캐너 구현 여부 결정 (또는 라인 종료)
+2. 기존 빗각 hypers 재튜닝 금지
+3. LIVE / SCALP 자동진입에 올리지 말 것
 
 ---
 
