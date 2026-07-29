@@ -2,7 +2,8 @@
 
 > **Goal**: Keep the LIVE Docker bot on the strategy that matches the **current daily regime**.  
 > **Why**: 5y sequential backtests **falsified always-on m5-v6**. Regime Policy C outperformed.  
-> **Not**: investment advice. Switching files ≠ guaranteed profit.
+> **Not**: investment advice. Switching files ≠ guaranteed profit.  
+> **Sleeves**: This playbook is the **CORE** (Upbit) sleeve only. Scalp capital is separate — see [`dual-sleeve-allocation.md`](dual-sleeve-allocation.md) / `config/sleeves.json`.
 
 | Field | Value |
 |-------|-------|

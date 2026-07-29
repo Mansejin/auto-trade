@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "updated": "2026-07-29",
+  "intent": "Additive capital split - CORE does not get replaced by SCALP. Separate wallets / bots.",
+  "weights": {
+    "core_pct": 70,
+    "scalp_pct": 30,
+    "notes": "Human-adjustable. Do not auto-rebalance from a single month of PnL."
+  },
+  "venues": {
+    "core": {
+      "venue": "upbit_spot",
+      "bot": "upbit-paper-bot",
+      "role": "swing / regime Policy C - one STRATEGY_PATH at a time"
+    },
+    "scalp": {
+      "venue": "bitget_uta_futures",
+      "bot": "freqtrade-scalp (not LIVE yet)",
+      "role": "short-capable scalp sleeve - independent USDT wallet"
+    }
+  },
+  "regimes": {
+    "bull": {
+      "core": {
+        "strategy": "regime-bull-trend-4h-v2.json",
+        "sleeve": "swing",
+        "status": "live_policy_c"
+      },
+      "scalp": {
+        "strategy": null,
+        "status": "empty_slot",
+        "notes": "No promoted bull scalp yet."
+      }
+    },
+    "transition": {
+      "core": {
+        "strategy": "regime-bull-trend-4h-v2.json",
+        "sleeve": "swing",
+        "status": "live_policy_c"
+      },
+      "scalp": {
+        "strategy": null,
+        "status": "empty_slot"
+      }
+    },
+    "bear": {
+      "core": {
+        "strategy": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+        "sleeve": "swing",
+        "status": "live_policy_c",
+        "notes": "Long-biased Upbit swing - keep even when scalp short exists."
+      },
+      "scalp": {
+        "strategy": "BearShortBreakdownVolV6",
+        "path": "freqtrade-research/user_data/strategies/BearShortBreakdownVolV6.py",
+        "status": "falsified_research",
+        "notes": "15m BB breakdown+vol falsified on 2/3 bear windows. Slot stays open until a non-falsified candidate."
+      }
+    },
+    "sideways": {
+      "core": {
+        "strategy": "regime-sideways-mr-1h-williams-v1.json",
+        "fallback": "regime-sideways-mr-4h-v5.json",
+        "sleeve": "swing_mr",
+        "status": "live_policy_c",
+        "dwell_gate": "SIDEWAYS_WILLIAMS_MIN_DWELL>=7 else fallback v5",
+        "notes": "Williams 1h is CORE swing MR - not the scalp sleeve."
+      },
+      "scalp": {
+        "strategy": "SidewaysScalp15mBbV1",
+        "path": "freqtrade-research/user_data/strategies/SidewaysScalp15mBbV1.py",
+        "status": "falsified_research",
+        "notes": "15m BB fade long+short PF<1 on 3 calendar windows. Keep slot open; CORE Williams unchanged."
+      }
+    }
+  },
+  "ops_rules": [
+    "Never point upbit-paper-bot STRATEGY_PATH at a Freqtrade/Bitget strategy.",
+    "Never auto-replace CORE Policy C map when promoting a scalp.",
+    "Promote scalp only after multi-window falsification pass + human approve.",
+    "Open position on CORE blocks CORE switch only; SCALP bot is independent.",
+    "Kimchi / premium overlay applies to CORE only until explicitly designed for SCALP."
+  ]
+}

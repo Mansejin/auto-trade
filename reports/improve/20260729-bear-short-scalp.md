@@ -16,6 +16,7 @@ Falsify if ≥2/3 windows: PF&lt;1 or return&lt;0 or WR&lt;38%, or any window MD
 | v3 `BearShortRallyFadeV3` | 15m RSI&gt;58 above EMA + −DI | 4 / PF10.8 / +0.8% | 1 / +0.07% | 1 / −0.61% | inconclusive (n too small) |
 | v4 `BearShortHtfFadeV4` | 1h EMA50&lt;200 + RSI&gt;65 level | 127 / 0.38 / −19.6% | 203 / 0.65 / −18.8% | 136 / 0.81 / −5.7% | **falsified** (continuous re-entry) |
 | v5 `BearShortHtfFadeV5` | same HTF + RSI crossed_above 65 | 82 / 0.43 / −9.2% | 126 / 0.56 / −13.8% | 98 / 0.75 / −5.0% | **falsified** |
+| v6 `BearShortBreakdownVolV6` | 15m BB lower cross + vol≥1.5×SMA + ADX≥25 + 1h bear | 18 / 0.86 / −1.0% | 36 / 0.68 / −5.2% | 26 / 1.10 / +1.1% | **falsified** (2/3 fail) |
 
 ## Takeaways
 
@@ -29,7 +30,12 @@ Falsify if ≥2/3 windows: PF&lt;1 or return&lt;0 or WR&lt;38%, or any window MD
 - Strategies: `freqtrade-research/user_data/strategies/BearShort*.py`
 - Configs: `config.bitget-bear-short.json`, `-v3.json`, `-v4.json`, `-v5.json`
 
+## Allocation note (2026-07-29)
+
+Bear short work is **SCALP sleeve only** — does not replace CORE `m5-v6`.
+See `config/sleeves.json` and `docs/dual-sleeve-allocation.md`.
+
 ## Next (needs new frozen hypothesis, not threshold retune)
 
-- Breakdown short: 15m close cross below BB lower + 1h bear + volume spike, wider R:R
-- Or accept Upbit bear stays long-biased (`m5-v6`) until Bitget LIVE path exists
+- Different bear-scalp structure (e.g. funding + breakdown, or 1h continuation with wider stops)
+- Or leave SCALP bear slot empty / cash until a non-falsified candidate appears
