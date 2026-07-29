@@ -133,10 +133,10 @@ def snapshot_equity(settings: Settings) -> EquitySnapshot:
                 usdt_eq = 0.0
             if usdt_eq <= 0:
                 usdt_eq = client.available_usdt()
-            trx = client.spot_available("TRX")
-            # usdtEquity already covers USDT/futures; add loose TRX if not in equity
-            bitget = usdt_eq * usdt_px + trx * trx_px
-            notes.append(f"Bitget usdtEq={usdt_eq:.4f} TRX={trx:.2f}")
+            # usdtEquity is the TOTAL UTA value in USDT (includes TRX, USDT, positions).
+            # Do NOT add TRX separately — that would double-count.
+            bitget = usdt_eq * usdt_px
+            notes.append(f"Bitget usdtEq={usdt_eq:.4f} (전체UTA USDT환산)")
         finally:
             client.close()
     else:

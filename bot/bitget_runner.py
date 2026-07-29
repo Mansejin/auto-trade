@@ -251,6 +251,15 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
             return
 
         if result.signal == Signal.HOLD and not force_buy:
+            # Idle: convert any lingering TRX to USDT (bridge leftovers)
+            if private is not None and not portfolio.in_position:
+                try:
+                    trx_bal = private.spot_available("TRX")
+                    if trx_bal >= 1.0:
+                        conv = xfer.convert_bitget_trx_to_usdt(settings, min_trx=1.0)
+                        logger.info("Idle TRX→USDT 환전: %s", conv)
+                except Exception:
+                    logger.debug("idle TRX convert skipped", exc_info=True)
             save_state(
                 settings.state_path,
                 portfolio,
