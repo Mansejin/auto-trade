@@ -8,4 +8,5 @@ cache/
 data/
 logs/
 .env
+.cursor/mcp.json
 *.tmp
