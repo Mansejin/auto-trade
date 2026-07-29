@@ -1,6 +1,6 @@
 # Alpha / Regime Handoff — Local Agent Continuation
 
-> **Updated:** 2026-07-29T05:55Z  
+> **Updated:** 2026-07-29T06:03Z  
 > **Purpose:** Cloud agent → local agent 이관용. MCP/환경 제약으로 로컬에서 전략 디벨롭을 이어갈 때 **이 파일 + 아래 프롬프트**만으로 재개 가능해야 함.  
 > **Not investment advice.** LIVE 승격은 사람 승인 + audit 게이트 필수.
 
@@ -14,7 +14,7 @@
 | LIVE / Policy C | **변경 없음.** Bear → `m5-v6`. Map 그대로. |
 | TA scrapes AE6–AE11 | 전부 falsified / untestable. **재개 금지.** |
 | Research shelf | (1) funding H1 `≤ -0.0002` (2) Upbit rich-premium fade |
-| Open | **AE14** — OB collect 후 H2 / 또는 shelf 유지. 컷 재탐색 금지. |
+| Open | **AE14** — H2 when OB ≥336; AE13b fee-stress done; next paper-log or AE15. 컷 재탐색 금지. |
 | Branch | `cursor/alpha-ae6-flush-fade-d7d9` (base: `cursor/regime-ops-guards-d7d9`) |
 | PR | https://github.com/Mansejin/auto-trade/pull/9 |
 
@@ -83,6 +83,8 @@ Playbook: `docs/regime-auto-switch-playbook.md`
 | AE12c | H1 fee/slip ladder | **SURVIVES 20bps** (through 30; fails 50) | `…ae12c-fee-stress.md` |
 | AE13 H_rich | Upbit premium ≥ train 90th → fade | **RETAINED_for_research** | `…ae13-upbit-premium.md` |
 | AE13 H_cheap | premium ≤ train 10th → bounce | **Falsified** | same |
+| AE13b | H_rich fade fee/slip ladder | **SURVIVES 20bps** (through 30; fails 50) | `…ae13b-fee-stress.md` |
+| AE14 | H2 OB re-score when collect ≥336 | **OPEN** (OB jsonl missing locally) | — |
 
 Cheatsheet: `reports/review-state/regime-engine.json` → `next[]`  
 Per-id: `reports/review-state/alpha-ae*.json`
@@ -107,7 +109,8 @@ Per-id: `reports/review-state/alpha-ae*.json`
 - **Frozen rich cut:** train 90th ≈ **`0.004563`** (재적합 금지; 새 AE id 없이는 컷 변경 금지)
 - **Holdout rich events:** n=21, mean **−0.63%**, hit **33%** vs baseline mean **−0.14%**, hit **49%**
 - **Cheap bounce:** falsified — 버려도 됨
-- **Script:** `scripts/ae13_upbit_premium_study.py`
+- **Fee stress (AE13b):** primary **20 bps** RT 생존 (net fade mean +0.43% vs always-short +0.14%); through 30; fails 50
+- **Script:** `scripts/ae13_upbit_premium_study.py`, `scripts/ae13b_fee_stress.py`
 - KRW-USDT daily history ≈ 2024-06~ (overlap ~783d)
 
 ---
@@ -149,9 +152,10 @@ Per-id: `reports/review-state/alpha-ae*.json`
 ### P0 — 데이터 게이트
 1. OB collect 가동 확인 → rows ≥ 336이면 **H2만** 재채점 (`ae12_event_study.py`).
 2. H2 실패/미준비여도 funding/premium 컷 건드리지 말 것.
+3. 로컬(2026-07-29): `upbit-orderbook.jsonl` **없음** → H2 NOT_READY.
 
 ### P1 — Research shelf 심화 (승격 아님)
-1. AE13 **H_rich**에 AE12c식 fee-stress (20 bps primary) — 별도 `AE13b` id.
+1. ~~AE13 **H_rich**에 AE12c식 fee-stress (20 bps primary)~~ — **DONE** AE13b SURVIVES_PRIMARY_FEE.
 2. H1 + H_rich를 **전략 JSON이 아닌** 이벤트 규칙으로 paper 로그 설계만 (사람 승인 전 LIVE 연결 금지).
 3. 수수료·슬리피지·갭 리스크 명시한 1페이지 스펙.
 
@@ -181,6 +185,7 @@ Per-id: `reports/review-state/alpha-ae*.json`
 | `scripts/ae12_event_study.py` | H1 HTX + H2 OB |
 | `scripts/ae12c_fee_stress.py` | H1 fee ladder |
 | `scripts/ae13_upbit_premium_study.py` | premium H_rich / H_cheap |
+| `scripts/ae13b_fee_stress.py` | H_rich fade fee ladder |
 | `scripts/remote_regime_switch.py` | LIVE path swap + guards |
 | `docs/regime-auto-switch-playbook.md` | ops + lag cadence |
 | `.agents/skills/create-strategy/SKILL.md` | 전략 JSON 작성 |

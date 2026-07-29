@@ -1,0 +1,88 @@
+{
+  "id": "AE13b",
+  "updated_at": "2026-07-29T06:03:07Z",
+  "frozen_rich_cut": 0.004563296109377913,
+  "definition": "premium = KRW-BTC/(USDT-BTC*KRW-USDT)-1; fade = short next-day",
+  "overlap_days": 783,
+  "series_n": 782,
+  "holdout_days": 235,
+  "holdout_rich_n": 21,
+  "holdout_fade_gross": {
+    "n": 21,
+    "hit_rate": 0.6667,
+    "mean_pct": 0.6272,
+    "median_pct": 0.4983
+  },
+  "holdout_baseline_always_short": {
+    "n": 221,
+    "hit_rate": 0.5068,
+    "mean_pct": 0.1388,
+    "median_pct": 0.0273
+  },
+  "fade_dir_hit": 0.6667,
+  "baseline_down_hit": 0.5068,
+  "primary_rt_bps": 20,
+  "ladder": [
+    {
+      "rt_bps": 10,
+      "holdout_net": {
+        "n": 21,
+        "hit_rate": 0.6667,
+        "mean_pct": 0.5272,
+        "median_pct": 0.3983
+      },
+      "net_positive_hit": 0.6667,
+      "vs_baseline_mean": true,
+      "vs_baseline_dir_hit": true,
+      "survives": true
+    },
+    {
+      "rt_bps": 20,
+      "holdout_net": {
+        "n": 21,
+        "hit_rate": 0.6667,
+        "mean_pct": 0.4272,
+        "median_pct": 0.2983
+      },
+      "net_positive_hit": 0.6667,
+      "vs_baseline_mean": true,
+      "vs_baseline_dir_hit": true,
+      "survives": true
+    },
+    {
+      "rt_bps": 30,
+      "holdout_net": {
+        "n": 21,
+        "hit_rate": 0.6667,
+        "mean_pct": 0.3272,
+        "median_pct": 0.1983
+      },
+      "net_positive_hit": 0.6667,
+      "vs_baseline_mean": true,
+      "vs_baseline_dir_hit": true,
+      "survives": true
+    },
+    {
+      "rt_bps": 50,
+      "holdout_net": {
+        "n": 21,
+        "hit_rate": 0.4762,
+        "mean_pct": 0.1272,
+        "median_pct": -0.0017
+      },
+      "net_positive_hit": 0.4762,
+      "vs_baseline_mean": false,
+      "vs_baseline_dir_hit": true,
+      "survives": false
+    }
+  ],
+  "verdict": "SURVIVES_PRIMARY_FEE",
+  "promote": false,
+  "note": "Surviving fee stress != LIVE promote. Cut frozen from AE13 train 90th; no refit. Paper micro-size only after human approve.",
+  "anti_overfit": [
+    "frozen rich cut from AE13 (no full-sample refit)",
+    "same 70/30 time split as AE13 for holdout events",
+    "fee ladder only; no threshold mining",
+    "H2 OB path deferred (collect missing locally)"
+  ]
+}
