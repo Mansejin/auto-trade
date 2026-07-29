@@ -73,6 +73,7 @@ class Settings:
     transfer_max_amount: float
     transfer_ttl_sec: int
     transfer_default_chain: str
+    transfer_cooldown_sec: int
     transfer_whitelist_bitget: dict[str, str] = field(default_factory=dict)
     transfer_whitelist_upbit: dict[str, str] = field(default_factory=dict)
 
@@ -160,6 +161,7 @@ def load_settings() -> Settings:
         transfer_max_amount=_env_float("TRANSFER_MAX_AMOUNT", 0.0),
         transfer_ttl_sec=_env_int("TRANSFER_TTL_SEC", 600),
         transfer_default_chain=os.getenv("TRANSFER_DEFAULT_CHAIN", "TRC20").strip(),
+        transfer_cooldown_sec=_env_int("TRANSFER_COOLDOWN_SEC", 1800),
         transfer_whitelist_bitget=_whitelist_from_env("TRANSFER_WHITELIST_BITGET_"),
         transfer_whitelist_upbit=_whitelist_from_env("TRANSFER_WHITELIST_UPBIT_"),
     )

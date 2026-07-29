@@ -1,10 +1,20 @@
 {
-  "name": "Bitget BTCUSDT SMA Cross (paper starter)",
+  "name": "Bitget BTCUSDT SMA Cross (LIVE + auto fund)",
   "market": "BTCUSDT",
   "exchange": "bitget",
   "timeframe": "1h",
   "stop_loss": 3,
   "take_profit": 6,
+  "funding": {
+    "enabled": true,
+    "source": "upbit",
+    "coin": "USDT",
+    "chain": "TRC20",
+    "min_trade_usdt": 10,
+    "top_up_usdt": 50,
+    "max_wait_sec": 7200,
+    "buy_usdt_from_krw": true
+  },
   "indicators": [
     {
       "type": "moving_average",

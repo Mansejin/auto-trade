@@ -10,19 +10,22 @@
 - [ ] 텔레그램 봇 토큰도 노출 시 BotFather에서 revoke 후 재발급
 - [ ] Cloudflare API 토큰도 채팅 노출 시 rotate
 
-## 1b. Bitget + 반자동 이체
+## 1b. Bitget + 이체 (텔레그램 / 전략 자동)
 
 - [ ] Bitget 키는 **System-generated (HMAC)** + IP `129.225.205.185`
 - [ ] 봇/이체는 **UTA v3** (`/api/v3/...`) — Classic mix v2 아님
 - [ ] Cursor MCP(`@bitget-ai/bitget-agent-mcp`)는 기본 `--read-only`; 키는 `.cursor/mcp.json`에만 로컬 기입 (커밋 금지)
 - [ ] USDT 이체는 **TRC20(트론)** 만 사용 (봇이 ERC20 등 지정해도 TRC20으로 고정)
-- [ ] 평소 선물/현물 매매만 쓸 때는 **출금(Withdraw) OFF** 권장
-- [ ] 이체 기능을 쓸 때만 Withdraw ON, 사용 후 다시 OFF 검토
+- [ ] 이체 기능을 쓸 때만 양 거래소 API **Withdraw ON**, 사용 후 다시 OFF 검토
 - [ ] `TRANSFER_ENABLED=false` 기본 — 켤 때만:
   - `TRANSFER_CONFIRM=I_UNDERSTAND_TRANSFER_RISK`
-  - `TRANSFER_WHITELIST_BITGET_<COIN>` / `TRANSFER_WHITELIST_UPBIT_<COIN>` 목적지 주소
-  - `TRANSFER_MAX_AMOUNT` 한도
-- [ ] 텔레그램 `/이체요청` → `/이체승인 <코드>` 두 단계 없으면 출금 안 함
+  - `TRANSFER_MAX_AMOUNT` **필수 (>0)** — 자동이체 상한
+  - `TRANSFER_WHITELIST_BITGET_USDT` = Bitget UTA USDT **TRC20** 입금주소
+  - (선택) `TRANSFER_WHITELIST_UPBIT_USDT` — Bitget→Upbit 수동 이체용
+  - `TRANSFER_COOLDOWN_SEC` (기본 1800) — 연속 출금 방지
+- [ ] 전략 `funding.enabled=true` 이면 **매수 시그널 + Bitget USDT 부족** 시 승인 없이 Upbit→Bitget 출금
+  - Upbit USDT 부족 시 `buy_usdt_from_krw`로 KRW-USDT 시장가 매수 후 출금
+- [ ] 텔레그램 `/이체요청` → `/이체승인` 은 수동 경로 (자동 이체와 별개)
 - [ ] `bot-bitget` 은 `TELEGRAM_COMMANDS=false` (명령 수신은 Upbit `bot`만)
 
 ## 2. `.env` (서버에만 존재)

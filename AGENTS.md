@@ -55,8 +55,10 @@ below cover only the non-obvious caveats for running things locally (outside Doc
 - Trading client is **UTA API v3** (`bot/bitget_client.py`): candles `/api/v3/market/candles`,
   orders `/api/v3/trade/place-order`, assets `/api/v3/account/assets`, withdraw
   `/api/v3/account/withdraw`. Docs: https://www.bitget.com/api-doc/uta/intro
-- Parallel container: `bot-bitget` (`EXCHANGE=bitget`, default `BITGET_PAPER=true`). Category via
-  `BITGET_CATEGORY` (alias `BITGET_PRODUCT_TYPE`, default `USDT-FUTURES`).
+- Parallel container: `bot-bitget` (`EXCHANGE=bitget`). Category via `BITGET_CATEGORY`.
+  Strategy may set `funding.enabled` to auto top-up Bitget USDT from Upbit (TRC20) when a
+  futures buy signal arrives with insufficient margin — requires `TRANSFER_*` env + withdraw
+  permission. No Telegram approve on that path; manual `/이체요청` still exists on Upbit bot.
 - Demo Trading: set `BITGET_PAPER_TRADING=true` **and** Demo API keys (sends `paptrading: 1`).
 - Cursor MCP: copy `.cursor/mcp.json.example` → `.cursor/mcp.json` (gitignored) and fill
   `BITGET_*`. Runs `npx -y @bitget-ai/bitget-agent-mcp --read-only`. Never commit real keys.

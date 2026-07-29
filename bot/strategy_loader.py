@@ -36,6 +36,20 @@ class ConditionGroup:
 
 
 @dataclass(frozen=True)
+class FundingConfig:
+    """Auto top-up Bitget UTA from Upbit when a futures entry needs margin."""
+
+    enabled: bool = False
+    source: str = "upbit"
+    coin: str = "USDT"
+    chain: str = "TRC20"
+    min_trade_usdt: float = 10.0
+    top_up_usdt: float = 50.0
+    max_wait_sec: float = 7200.0
+    buy_usdt_from_krw: bool = True
+
+
+@dataclass(frozen=True)
 class Strategy:
     name: str
     market: str
@@ -45,7 +59,26 @@ class Strategy:
     indicators: list[IndicatorDef]
     buy: ConditionGroup
     sell: ConditionGroup
+    funding: FundingConfig
     raw: dict[str, Any]
+
+
+def _parse_funding(raw: dict[str, Any] | None) -> FundingConfig:
+    if not raw:
+        return FundingConfig()
+    source = str(raw.get("source") or "upbit").strip().lower()
+    if source != "upbit":
+        raise ValueError("funding.source currently only supports 'upbit'")
+    return FundingConfig(
+        enabled=bool(raw.get("enabled")),
+        source=source,
+        coin=str(raw.get("coin") or "USDT").upper(),
+        chain=str(raw.get("chain") or "TRC20").upper(),
+        min_trade_usdt=float(raw.get("min_trade_usdt") or 10.0),
+        top_up_usdt=float(raw.get("top_up_usdt") or 50.0),
+        max_wait_sec=float(raw.get("max_wait_sec") or 7200.0),
+        buy_usdt_from_krw=bool(raw.get("buy_usdt_from_krw", True)),
+    )
 
 
 _OP_ALIASES = {
@@ -126,5 +159,6 @@ def load_strategy(path: Path) -> Strategy:
         indicators=indicators,
         buy=_parse_group(raw.get("buy")),
         sell=_parse_group(raw.get("sell")),
+        funding=_parse_funding(raw.get("funding") if isinstance(raw.get("funding"), dict) else None),
         raw=raw,
     )
