@@ -551,8 +551,14 @@
     },
     {
       "id": "AE11",
-      "goal": "daily trend or structural idea — not another 4h MACD/EMA variant",
-      "chg": "open",
+      "goal": "daily BB breakout trend",
+      "chg": "Falsified — primary WR 0% / -24.9%; bull years lag B&H — reports/improve/20260729-ae11-daily-bb-breakout.md",
+      "status": "done_falsified"
+    },
+    {
+      "id": "AE12",
+      "goal": "pause indicator scrapes; forward-collect alt-data OR revisit Policy C lag-MDD measurement",
+      "chg": "AE6–AE11 all falsified/untestable — avoid more TA variants without new data/hypothesis class",
       "status": "open"
     }
   ],

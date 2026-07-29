@@ -1,0 +1,62 @@
+# section: strategy
+name,Alpha AE11 Daily BB Breakout Trend
+market,KRW-BTC
+timeframe,1d
+stop_loss_pct,8.0
+take_profit_pct,20.0
+indicators,"bb(bollinger_bands, period=20, multiplier=2.0), adx14(adx, period=14)"
+
+# section: disclaimer
+notice,Backtesting results are based on historical data and do not guarantee that the same or similar investment performance will be achieved in the future or in actual trading.
+
+# section: performance
+metric,value
+period,2023-07-29 ~ 2024-07-29 (UTC)
+initial_capital,1000000 KRW
+trading_bars,367
+warmup_bars,29
+benchmark_pct,+147.0067
+total_return_pct,+59.9318
+cagr_pct,+59.7267
+mdd_pct,-12.8622
+sharpe_portfolio,2.0299
+sharpe_trade,5.1787
+trades,5
+win_rate_before_fees_pct,80.00
+profit_factor_before_fees,13.157855
+sl_count,0
+tp_count,2
+sell_count,2
+final_bar_count,1
+total_fee,7011.2297
+
+# section: trades
+entry_dt,entry_price,exit_dt,exit_price,qty,pnl_pct,pnl_abs,exit_reason
+2023-10-21 00:00:00 UTC,40250000.00000000,2023-11-02 00:00:00 UTC,48300000.00000000,0.02483230,+20.0000,198800.5649,TP
+2023-12-02 00:00:00 UTC,51710000.00000000,2023-12-25 00:00:00 UTC,58002000.00000000,0.02317156,+12.1679,144524.3564,sell
+2024-02-28 00:00:00 UTC,78621000.00000000,2024-03-04 00:00:00 UTC,94345000.00000000,0.01707754,+19.9997,267050.3221,TP
+2024-03-05 00:00:00 UTC,95500000.00000000,2024-03-20 00:00:00 UTC,92541000.00000000,0.01685414,-3.0984,-51456.0349,sell
+2024-07-16 00:00:00 UTC,91162000.00000000,2024-07-29 00:00:00 UTC,93618000.00000000,0.01709199,+2.6941,40398.7985,final_bar
+
+# section: signals
+timestamp,type
+2023-08-03 00:00:00 UTC,sell
+2023-08-18 00:00:00 UTC,sell
+2023-09-01 00:00:00 UTC,sell
+2023-09-25 00:00:00 UTC,sell
+2023-10-12 00:00:00 UTC,sell
+2023-10-15 00:00:00 UTC,sell
+2023-10-21 00:00:00 UTC,buy
+2023-10-24 00:00:00 UTC,buy
+2023-11-22 00:00:00 UTC,sell
+2023-12-02 00:00:00 UTC,buy
+2023-12-25 00:00:00 UTC,sell
+2024-01-14 00:00:00 UTC,sell
+2024-02-28 00:00:00 UTC,buy
+2024-03-05 00:00:00 UTC,buy
+2024-03-20 00:00:00 UTC,sell
+2024-03-22 00:00:00 UTC,sell
+2024-04-03 00:00:00 UTC,sell
+2024-04-14 00:00:00 UTC,sell
+2024-06-12 00:00:00 UTC,sell
+2024-07-16 00:00:00 UTC,buy

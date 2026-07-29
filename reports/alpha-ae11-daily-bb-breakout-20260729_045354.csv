@@ -1,0 +1,70 @@
+# section: strategy
+name,Alpha AE11 Daily BB Breakout Trend
+market,KRW-BTC
+timeframe,1d
+stop_loss_pct,8.0
+take_profit_pct,20.0
+indicators,"bb(bollinger_bands, period=20, multiplier=2.0), adx14(adx, period=14)"
+
+# section: disclaimer
+notice,Backtesting results are based on historical data and do not guarantee that the same or similar investment performance will be achieved in the future or in actual trading.
+
+# section: performance
+metric,value
+period,2025-07-29 ~ 2026-07-28 (UTC)
+initial_capital,1000000 KRW
+trading_bars,365
+warmup_bars,29
+benchmark_pct,-43.1962
+total_return_pct,-24.9016
+cagr_pct,-24.9606
+mdd_pct,-25.0945
+sharpe_portfolio,-2.8539
+sharpe_trade,-15.1193
+trades,6
+win_rate_before_fees_pct,0.00
+profit_factor_before_fees,0.000000
+sl_count,0
+tp_count,0
+sell_count,6
+final_bar_count,0
+total_fee,5202.7442
+
+# section: trades
+entry_dt,entry_price,exit_dt,exit_price,qty,pnl_pct,pnl_abs,exit_reason
+2025-08-14 00:00:00 UTC,168051000.00000000,2025-08-19 00:00:00 UTC,161513000.00000000,0.00594760,-3.8905,-39865.4662,sell
+2026-01-06 00:00:00 UTC,136074000.00000000,2026-01-21 00:00:00 UTC,131849000.00000000,0.00705244,-3.1049,-30741.3144,sell
+2026-03-05 00:00:00 UTC,105374000.00000000,2026-03-09 00:00:00 UTC,97845000.00000000,0.00881554,-7.1450,-67267.9433,sell
+2026-03-17 00:00:00 UTC,110062000.00000000,2026-03-23 00:00:00 UTC,102021000.00000000,0.00782917,-7.3059,-63784.5729,sell
+2026-05-06 00:00:00 UTC,119742000.00000000,2026-05-17 00:00:00 UTC,116706000.00000000,0.00666384,-2.5355,-21019.2441,sell
+2026-07-22 00:00:00 UTC,97219000.00000000,2026-07-25 00:00:00 UTC,94019000.00000000,0.00799157,-3.2915,-26337.1699,sell
+
+# section: signals
+timestamp,type
+2025-08-01 00:00:00 UTC,sell
+2025-08-09 00:00:00 UTC,sell
+2025-08-14 00:00:00 UTC,buy
+2025-08-19 00:00:00 UTC,sell
+2025-09-10 00:00:00 UTC,sell
+2025-09-26 00:00:00 UTC,sell
+2025-10-16 00:00:00 UTC,sell
+2025-10-30 00:00:00 UTC,sell
+2025-12-06 00:00:00 UTC,sell
+2025-12-13 00:00:00 UTC,sell
+2026-01-06 00:00:00 UTC,buy
+2026-01-14 00:00:00 UTC,buy
+2026-01-21 00:00:00 UTC,sell
+2026-03-05 00:00:00 UTC,buy
+2026-03-09 00:00:00 UTC,sell
+2026-03-17 00:00:00 UTC,buy
+2026-03-23 00:00:00 UTC,sell
+2026-03-27 00:00:00 UTC,sell
+2026-05-06 00:00:00 UTC,buy
+2026-05-17 00:00:00 UTC,sell
+2026-06-17 00:00:00 UTC,sell
+2026-06-22 00:00:00 UTC,sell
+2026-06-24 00:00:00 UTC,sell
+2026-07-09 00:00:00 UTC,sell
+2026-07-14 00:00:00 UTC,sell
+2026-07-22 00:00:00 UTC,buy
+2026-07-25 00:00:00 UTC,sell
