@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v7",
-  "slug": "daytrade-bb-rsi-div-v7",
-  "hypothesis": "BTC daytrade long-only: while close < BB middle, RSI cross_above rsi_signal (no OS cap), ride to BB upper or RSI≥70.",
+  "active_card": "daytrade-bb-rsi-div-v8",
+  "slug": "daytrade-bb-rsi-div-v8",
+  "hypothesis": "BTC daytrade long-only: at BB lower, price LL + RSI HL (lookback 3) with RSI<45, fade to BB middle or RSI≥55.",
   "hypers": {
-    "entry": "below_mid+rsi_signal_cross",
-    "exit_band": "bb_upper",
-    "rsi_exit": 70
+    "lookback": 3,
+    "rsi_cap": 45,
+    "exit": "bb_mid_or_rsi55"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-6.21%",
-      "profit_factor": "0.79",
-      "trades": 43,
+      "total_return": "-7.77%",
+      "profit_factor": "1.30",
+      "trades": 152,
       "benchmark": "+3.26%",
-      "trades_per_day": 1.43
+      "trades_per_day": 5.07
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-15.99%",
-      "profit_factor": "0.52",
-      "trades": 64,
+      "total_return": "-28.17%",
+      "profit_factor": "0.74",
+      "trades": 183,
       "benchmark": "-16.19%",
-      "trades_per_day": 2.13
+      "trades_per_day": 6.1
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-0.97%",
-      "profit_factor": "1.76",
-      "trades": 54,
+      "total_return": "-11.33%",
+      "profit_factor": "1.09",
+      "trades": 134,
       "benchmark": "-4.12%",
-      "trades_per_day": 1.8
+      "trades_per_day": 4.47
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 6,
+  "consecutive_fails": 7,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB mid 아래 RSI/signal cross(OS캡 제거) → BB upper/RSI70 라이드 — v7 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v6",
-  "updated_at": "2026-07-29T18:31:33Z"
+  "next_action": "BB lower + price LL/RSI HL(lookback3) RSI<45 → mid/RSI55 페이드 — v8 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v7",
+  "updated_at": "2026-07-29T18:41:24Z"
 }
