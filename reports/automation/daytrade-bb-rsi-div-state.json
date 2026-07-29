@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v32",
-  "slug": "daytrade-bb-rsi-div-v32",
-  "hypothesis": "BTC daytrade long-only: close cross_above BB lower + RSI↑1 + RSI<50; exit BB upper or RSI≥70.",
+  "active_card": "daytrade-bb-rsi-div-v33",
+  "slug": "daytrade-bb-rsi-div-v33",
+  "hypothesis": "BTC daytrade long-only: soft bull div (price↓5 RSI↑5) + RSI<40 + close<BB mid; exit BB upper or RSI≥70.",
   "hypers": {
-    "pattern": "bb_lower_reclaim_cross_rsi_up_rsi_lt50",
+    "pattern": "softdiv5_rsi_lt40_below_mid",
     "exit": "bb_upper_or_rsi70",
-    "div_lookback": 0
+    "div_lookback": 5
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-0.44%",
-      "profit_factor": "1.16",
-      "trades": 7,
+      "total_return": "-4.83%",
+      "profit_factor": "1.33",
+      "trades": 109,
       "benchmark": "+3.26%",
-      "trades_per_day": 0.23
+      "trades_per_day": 3.63
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-0.30%",
-      "profit_factor": "1.10",
-      "trades": 4,
+      "total_return": "-13.68%",
+      "profit_factor": "0.96",
+      "trades": 135,
       "benchmark": "-16.19%",
-      "trades_per_day": 0.13
+      "trades_per_day": 4.5
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "+0.36%",
-      "profit_factor": "∞",
-      "trades": 2,
+      "total_return": "-11.95%",
+      "profit_factor": "0.92",
+      "trades": 108,
       "benchmark": "-4.12%",
-      "trades_per_day": 0.07
+      "trades_per_day": 3.6
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 31,
+  "consecutive_fails": 32,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB lower reclaim cross + RSI↑1 RSI<50 → upper/RSI70 — v32 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v31",
-  "updated_at": "2026-07-29T22:41:37Z"
+  "next_action": "soft bull div5 + RSI<40 below mid → upper/RSI70 — v33 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v32",
+  "updated_at": "2026-07-29T22:51:20Z"
 }
