@@ -2,14 +2,16 @@
 
 > **목적**: 공개 자료 + 커뮤니티 해석을 모아, 재현 가능한 **규칙 세트**와 **검증 가능한 가설**로 바꾼다.  
 > **한계**: 인범TV가 출판한 공식 룰북은 공개되어 있지 않다. 아래는 2차 자료·일반 채널/추세선 이론으로 재구성한 **작업용 스펙**이다.  
-> **투자 조언 아님**. 문서화·백테스트용.
+> **투자 조언 아님**. 문서화·백테스트용.  
+> **2026-07-29 우선순위**: 새 인코딩 중단. 문헌·수동 표본 먼저 → [`docs/research/trendline-parallel-channel-literature.md`](research/trendline-parallel-channel-literature.md)
 
 | Field | Value |
 |-------|-------|
 | Updated | 2026-07-29 |
-| Alias | 빗각 = 기울어진 추세선 / 패러럴 채널 |
+| Alias | 빗각 = **브랜드명**; 본체는 고전 **trendline + parallel channel** |
 | Core claim | 의미 있는 고·저(특히 거래량 터진 변곡)를 이은 채널이 지지·저항·리테스트 타점이 된다 |
 | Automation gap | 작도 자체는 이산 지표 JSON에 없음 → 프록시 또는 커스텀 pivot 엔진 필요 |
+| Literature | [`docs/research/trendline-parallel-channel-literature.md`](research/trendline-parallel-channel-literature.md) |
 | Prior research | Short-TF **LR(40)±2σ** 프록시 v1–v3 **기각** — [`reports/improve/20260729-diagonal-빗각-scalp.md`](../reports/improve/20260729-diagonal-빗각-scalp.md) |
 
 ---
@@ -20,9 +22,10 @@
 
 공개 해석의 공통분모:
 
-- “빗각”은 신기한 지표가 아니라 **추세선(+평행 채널)** 의 별칭이다.
+- “빗각”은 신기한 지표가 아니라 **추세선(+평행 채널)** 의 별칭·브랜드에 가깝다. (brunch: 활용 100% 동일)
 - 인범TV 스타일은 **보조지표를 거의 안 쓰고 빗각만으로** 대응하는 쪽에 가깝다 (시청자/리뷰 측 진술).
 - 엣지는 “선 긋기”보다 **어느 점을 의미 있다고 볼지(거래량·변곡)**, **돌파 후 리테스트**, **빠른 무효화(손절)** 에 있다.
+- 깊게 파려면 인범 클립보다 **Edwards–Magee / Murphy / StockCharts 채널 문헌 + 수동 표본**이 본체다 → research 노트.
 
 ---
 
@@ -306,18 +309,17 @@ exit: mid / opposite rail / SL beyond rail
 
 ---
 
-## 7. 전략 후보 (다음)
+## 7. 전략 후보 (문헌 게이트 이후)
 
-고정: **QQQ** · US RTH · 4h 구조 · 저빈도 허용.
+고정 후보(게이트 통과 후): **QQQ** · US RTH · 4h 구조 · 저빈도 허용 · **Mode B 우선**.
 
-### A. QQQ US-RTH + 4h Mode B (추천)
-- 4h 레일 돌파(+거래량) → 15m 리테스트 후 추세 방향.
+| ID | 후보 | 상태 |
+|----|------|------|
+| A | QQQ US-RTH + 4h Mode B (돌파+리테스트) | **보류** — 문헌 게이트 전 |
+| B | 1h→15m Mode A | 보류 (Mode A 재탕 위험) |
+| C | 레일 필터 + 다른 엔트리 | 보류 |
 
-### B. QQQ US-RTH + 1h→15m Mode A
-- 샘플만 늘리는 보조 실험 (Mode A 재탕 위험).
-
-### C. 레일 필터
-- 다른 엔트리 + QQQ US-RTH + 4h 레일 근처.
+게이트: literature §8 (고전 발췌 + 수동 표본 ≥30 + Mode B 규칙 카드).
 
 ---
 
@@ -327,16 +329,18 @@ exit: mid / opposite rail / SL beyond rail
 - 공개 승률 표본 없음
 - 거래량 왜곡 → 거래소 하나로 고정할지
 - 로그 vs 선형
+- Pitchfork / Fib Channel vs parallel (시청자 툴 ≠ 동일 전략)
 
-추측으로 메우지 말고 V1으로 기각/생존시킨다.
+추측으로 메우지 말고 **문헌 + 수동 표본**으로 좁힌 뒤 인코딩한다.
 
 ---
 
-## 9. Next actions
+## 9. Next actions (자료수집)
 
-1. **QQQ + US-RTH + Mode B** 구현 (추천)
-2. Mode A hypers 재튜닝 금지
-3. 승격 전 LIVE/SCALP 금지
+1. [`docs/research/trendline-parallel-channel-literature.md`](research/trendline-parallel-channel-literature.md) 백로그·게이트 진행
+2. QQQ 중심 **수동 채널 사건 로그** (≥30)
+3. Mode A hypers / 새 freqtrade 인코딩 **금지** until 게이트
+4. 승격 전 LIVE/SCALP 금지
 
 ---
 
