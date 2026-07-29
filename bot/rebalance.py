@@ -424,24 +424,9 @@ def _execute_krw_prepare(settings: Settings, req: dict[str, Any]) -> str:
 
 def maybe_alert_rebalance(settings: Settings) -> str | None:
     """Call from Upbit bot tick: if out of band and cooldown OK, return alert text."""
-    if not settings.rebalance_enabled or settings.paper:
+    if not settings.rebalance_enabled or settings.paper or not settings.transfer_allowed:
         return None
-    if not settings.transfer_allowed:
+    if load_pending(settings) or not _alert_cooldown_ok(settings):
         return None
-    if load_pending(settings):
-        return None
-    if not _alert_cooldown_ok(settings):
-        return None
-
-    snap = snapshot_equity(settings)
-    target = settings.rebalance_target
-    band = settings.rebalance_band
-    share = snap.upbit_share
-    if (target - band) <= share <= (target + band):
-        return None
-    direction, move_krw = _plan_move_krw(snap, target=target)
-    if direction == "none" or move_krw < settings.rebalance_min_move_krw:
-        return None
-
-    # Create proposal + alert
-    return propose_rebalance(settings, force=False, reason="auto_band_breach")
+    msg = propose_rebalance(settings, force=False, reason="auto_band_breach")
+    return msg if "======= 리밸런스 제안" in msg else None

@@ -320,17 +320,33 @@ def upbit_net_type(coin: str, chain: str) -> str:
     return chain_u or chain
 
 
-def bitget_whitelist_address(settings: Settings, coin: str) -> str | None:
-    """Resolve Bitget deposit address; TRX↔USDT share the same Tron address."""
+def _whitelist_address(table: dict[str, str], coin: str) -> str | None:
+    """Resolve address; TRX↔USDT Tron address may alias."""
     coin_u = coin.upper()
-    dest = settings.transfer_whitelist_bitget.get(coin_u)
-    if dest:
-        return dest
-    if coin_u == "TRX":
-        return settings.transfer_whitelist_bitget.get("USDT")
-    if coin_u == "USDT":
-        return settings.transfer_whitelist_bitget.get("TRX")
-    return None
+    return table.get(coin_u) or (
+        table.get("USDT") if coin_u == "TRX" else table.get("TRX") if coin_u == "USDT" else None
+    )
+
+
+def bitget_whitelist_address(settings: Settings, coin: str) -> str | None:
+    return _whitelist_address(settings.transfer_whitelist_bitget, coin)
+
+
+def upbit_whitelist_address(settings: Settings, coin: str) -> str | None:
+    return _whitelist_address(settings.transfer_whitelist_upbit, coin)
+
+
+def _bitget_client(settings: Settings):
+    if not settings.bitget_ready:
+        raise RuntimeError("BITGET keys missing")
+    from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
+
+    return BitgetPrivate(
+        settings.bitget_api_key,
+        settings.bitget_secret_key,
+        settings.bitget_passphrase,
+        paper_trading=settings.bitget_paper_trading,
+    )
 
 
 def _execute(settings: Settings, req: TransferRequest) -> str:
@@ -361,14 +377,7 @@ def _execute(settings: Settings, req: TransferRequest) -> str:
             raise RuntimeError(f"TRANSFER_WHITELIST_UPBIT_{req.coin} (or TRX/USDT alias) missing")
         if not settings.bitget_ready:
             raise RuntimeError("BITGET keys missing")
-        from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
-
-        client = BitgetPrivate(
-            settings.bitget_api_key,
-            settings.bitget_secret_key,
-            settings.bitget_passphrase,
-            paper_trading=settings.bitget_paper_trading,
-        )
+        client = _bitget_client(settings)
         try:
             result = client.withdraw(
                 coin=req.coin,
@@ -449,20 +458,6 @@ def _upbit_ticker(market: str) -> float:
         resp.raise_for_status()
         rows = resp.json()
         return float(rows[0]["trade_price"])
-
-
-def _upbit_usdt_ticker() -> float:
-    return _upbit_ticker("KRW-USDT")
-
-
-def ensure_upbit_usdt(
-    settings: Settings,
-    *,
-    amount: float,
-    buy_from_krw: bool,
-) -> str:
-    """Make sure Upbit has enough USDT to withdraw; optionally market-buy from KRW."""
-    return ensure_upbit_coin(settings, coin="USDT", amount=amount, buy_from_krw=buy_from_krw)
 
 
 def ensure_upbit_coin(
@@ -630,16 +625,7 @@ def _rebase_upbit_risk_after_withdraw(settings: Settings, *, coin: str, amount: 
 
 def convert_bitget_trx_to_usdt(settings: Settings, *, min_trx: float = 1.0) -> str:
     """Sell Bitget TRX→USDT on UTA spot. UTA equity is shared with futures."""
-    if not settings.bitget_ready:
-        raise RuntimeError("BITGET keys missing")
-    from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
-
-    client = BitgetPrivate(
-        settings.bitget_api_key,
-        settings.bitget_secret_key,
-        settings.bitget_passphrase,
-        paper_trading=settings.bitget_paper_trading,
-    )
+    client = _bitget_client(settings)
     try:
         trx = client.spot_available("TRX")
         if trx < min_trx:
@@ -664,41 +650,18 @@ def convert_bitget_trx_to_usdt(settings: Settings, *, min_trx: float = 1.0) -> s
         client.close()
 
 
-def upbit_whitelist_address(settings: Settings, coin: str) -> str | None:
-    """Resolve Upbit deposit address; TRX↔USDT Tron address alias."""
-    coin_u = coin.upper()
-    dest = settings.transfer_whitelist_upbit.get(coin_u)
-    if dest:
-        return dest
-    if coin_u == "TRX":
-        return settings.transfer_whitelist_upbit.get("USDT")
-    if coin_u == "USDT":
-        return settings.transfer_whitelist_upbit.get("TRX")
-    return None
-
-
 def convert_bitget_usdt_to_trx(settings: Settings, *, usdt_budget: float) -> str:
     """Buy TRX with USDT on Bitget UTA spot (for Bitget→Upbit bridge)."""
-    if not settings.bitget_ready:
-        raise RuntimeError("BITGET keys missing")
     if usdt_budget <= 0:
         raise RuntimeError("USDT budget must be > 0")
-    from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
-
-    client = BitgetPrivate(
-        settings.bitget_api_key,
-        settings.bitget_secret_key,
-        settings.bitget_passphrase,
-        paper_trading=settings.bitget_paper_trading,
-    )
+    client = _bitget_client(settings)
     try:
         avail = client.available_usdt()
         spend = min(avail, usdt_budget)
         if spend < 1.0:
             raise RuntimeError(f"Bitget USDT 부족 avail={avail:.4f} need≈{usdt_budget:.4f}")
         before = client.spot_available("TRX")
-        # UTA spot market buy: qty is quote USDT for buy side on many venues;
-        # Bitget UTA place-order qty is base size — use approximate TRX qty from Upbit TRX/USDT.
+        # Bitget UTA place-order qty is base size — approx TRX qty from Upbit TRX/USDT.
         trx_krw = _upbit_ticker("KRW-TRX")
         usdt_krw = _upbit_ticker("KRW-USDT")
         trx_usdt = trx_krw / usdt_krw if usdt_krw > 0 else 0.0
@@ -798,14 +761,7 @@ def auto_fund_upbit_from_bitget(
     usdt_budget = (top_up_krw / usdt_px) * 1.02 if usdt_px > 0 else 0.0
     prep = convert_bitget_usdt_to_trx(settings, usdt_budget=usdt_budget)
 
-    from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
-
-    client = BitgetPrivate(
-        settings.bitget_api_key,
-        settings.bitget_secret_key,
-        settings.bitget_passphrase,
-        paper_trading=settings.bitget_paper_trading,
-    )
+    client = _bitget_client(settings)
     try:
         trx = client.spot_available("TRX")
     finally:
