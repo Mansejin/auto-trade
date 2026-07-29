@@ -11,7 +11,10 @@ ADX가 약한 횡보에서 Williams %R &lt; -80 과매도는 단기 평균회귀
 
 ## Mount contract (critical)
 **Only while daily regime == sideways** (Policy C engine).  
-1h ADX&lt;20 alone is NOT enough — on 2026-04-28~07-28 mixed bear the same JSON lost −20.8% (PF 0.28) because 1h ADX dips below 20 inside trends.
+Optional paper guard: **sideways dwell >= 14 calendar days** before allowing Williams entries
+(see `reports/improve/20260729-williams-dwell14-guard.md`).
+
+1h ADX<20 alone is NOT enough — on 2026-04-28~07-28 mixed bear the same JSON lost -20.8% (PF 0.28).
 
 ## Sideways-window results (daily ADX&lt;20 stretches)
 | Window | Trades | WR | PF | Return | Bench |

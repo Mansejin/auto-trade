@@ -1,0 +1,66 @@
+[
+  {
+    "tag": "SW-new1",
+    "full_s": "2025-01-29",
+    "full_e": "2025-02-06",
+    "gate_s": null,
+    "gate_e": null,
+    "status": "FILTERED"
+  },
+  {
+    "tag": "SW-new2",
+    "full_s": "2025-04-04",
+    "full_e": "2025-04-25",
+    "gate_s": "2025-04-17",
+    "gate_e": "2025-04-25",
+    "status": "TRADE"
+  },
+  {
+    "tag": "SW-old1",
+    "full_s": "2025-06-05",
+    "full_e": "2025-07-13",
+    "gate_s": "2025-06-18",
+    "gate_e": "2025-07-13",
+    "status": "TRADE"
+  },
+  {
+    "tag": "SW-A",
+    "full_s": "2025-08-05",
+    "full_e": "2025-08-15",
+    "gate_s": null,
+    "gate_e": null,
+    "status": "FILTERED"
+  },
+  {
+    "tag": "SW-old2",
+    "full_s": "2025-08-20",
+    "full_e": "2025-10-02",
+    "gate_s": "2025-09-02",
+    "gate_e": "2025-10-02",
+    "status": "TRADE"
+  },
+  {
+    "tag": "SW-B",
+    "full_s": "2025-12-29",
+    "full_e": "2026-01-05",
+    "gate_s": null,
+    "gate_e": null,
+    "status": "FILTERED"
+  },
+  {
+    "tag": "SW-old3",
+    "full_s": "2026-03-24",
+    "full_e": "2026-04-22",
+    "gate_s": "2026-04-06",
+    "gate_e": "2026-04-22",
+    "status": "TRADE"
+  },
+  {
+    "tag": "SW-new3",
+    "full_s": "2026-07-23",
+    "full_e": "2026-07-28",
+    "gate_s": null,
+    "gate_e": null,
+    "status": "FILTERED"
+  }
+]
