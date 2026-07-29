@@ -4,6 +4,7 @@
 - Trigger: Scheduled cron UTC `0 9 1 * *` (월 1일 09:00 UTC = 지난달 리뷰)
 - Repository: `Mansejin/auto-trade` (must be set — code changes needed)
 - **Do not** grant unattended LIVE bot deploy. PR only.
+- Coexists with the **10-minute** daytrade automation (`docs/daytrade-bb-rsi-div-automation-prompt.md`) — do not disable that one when restoring this monthly job.
 
 ## Agent prompt (paste into Automation)
 
