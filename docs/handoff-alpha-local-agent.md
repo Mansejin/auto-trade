@@ -139,6 +139,9 @@ Per-id: `reports/review-state/alpha-ae*.json`
 
 # AE12 forward collect (H2용) — 아직 얇음 (각 2행)
 */30 * * * * cd ~/auto-trade && python3 scripts/ae12_forward_collect.py >> logs/ae12-collect.cron.log 2>&1
+
+# Monthly LIVE review (Williams/Policy C ops — no auto-deploy)
+0 16 1 * * cd ~/auto-trade && python3 scripts/monthly_live_review.py >> logs/monthly-review.cron.log 2>&1
 ```
 
 - `remote_regime_switch.py` ops 가드본이 VPS에 복사됐는지 확인 (PR #6 계열).
