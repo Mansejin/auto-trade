@@ -1,0 +1,49 @@
+# AGENTS.md
+
+## Cursor Cloud specific instructions
+
+This repo is an Upbit auto-trading project with two runnable Python services plus a set of
+`uv`-based agent skills. Standard commands and env vars are documented in `README.md`; the notes
+below cover only the non-obvious caveats for running things locally (outside Docker) in this env.
+
+### Services
+
+- **bot** — PAPER/LIVE trading loop. Entry: `python -m bot`. Deps: `requirements.txt` (httpx, PyJWT).
+- **desk** — FastAPI dashboard (`web/app.py`), served by uvicorn. Deps: `web/requirements.txt`.
+- `docker-compose.yml` is the production/deploy path (bot + desk + nginx edge). For local dev,
+  run the two Python processes directly instead of Docker.
+
+### Environment / setup
+
+- The startup update script creates a repo-root `.venv` and installs both `requirements.txt` and
+  `web/requirements.txt`. Use `./.venv/bin/python` / `./.venv/bin/uvicorn`. (`.venv/`, `data/`,
+  `logs/`, `.env` are gitignored.)
+- No formal test or lint framework is configured. Basic syntax check:
+  `./.venv/bin/python -m compileall bot web/app.py`.
+- The backtest / create-strategy skills under `.agents/skills/` use `uv`/`uvx` (see
+  `.agents/skills/setup/SKILL.md`), which is independent of the bot `.venv`.
+
+### Running the bot (non-obvious)
+
+- `bot/config.py` reads config from the **process environment only** — there is NO dotenv loading.
+  `.env` is consumed by docker compose, not by `python -m bot`. For local runs you must export vars
+  inline, e.g. `BOT_ROOT=/workspace PAPER=true POLL_SECONDS=5 ./.venv/bin/python -m bot`.
+- Paths are resolved relative to `BOT_ROOT` (defaults to `/app`, the Docker layout). Locally set
+  `BOT_ROOT=/workspace` (or set `STRATEGY_PATH`/`STATE_PATH`/`LOG_DIR` explicitly) or it will look
+  under `/app` and fail to find strategies.
+- Default `PAPER=true` is safe: virtual fills only, no API keys needed. LIVE requires
+  `UPBIT_ACCESS_KEY` + `UPBIT_SECRET_KEY` + `LIVE_CONFIRM=I_UNDERSTAND_LIVE_TRADING_RISK`; do not
+  enable it during setup/testing.
+- The bot fetches live candles from `api.upbit.com` every tick (even in PAPER), so it needs
+  outbound network access.
+
+### Running the desk dashboard (non-obvious)
+
+- Fail-closed: if `DASHBOARD_TOKEN` is empty every route returns unauthorized; if set it must be
+  >= 8 chars. Log in by POSTing the token to `/login` (or entering it on the login page); it is
+  stored as an httpOnly cookie. `?token=` in the URL is intentionally not accepted.
+- Run uvicorn from the `web/` directory (`uvicorn app:app`), since the static dir is resolved
+  relative to `app.py`.
+- The desk does not talk to the bot over the network — it reads the bot's shared files
+  (`logs/status.json`, `logs/latest_status.txt`, `data/state.json`, `data/risk.json`). Point the
+  desk's `LOG_DIR`/`STATE_PATH`/`RISK_PATH` at the same dirs the bot writes to so it shows live status.
