@@ -1,0 +1,182 @@
+# pragma pylint: disable=missing-docstring, invalid-name
+"""나씨 3틱 C — B + 찐바닥(짧아지는 음봉) 추매.
+
+Card: docs/research/nassi-3tick-c-jinjibadak-card-frozen.md
+"""
+from __future__ import annotations
+
+from datetime import datetime
+
+import numpy as np
+import pandas as pd
+from pandas import DataFrame
+
+from freqtrade.persistence import Trade
+from freqtrade.strategy import IStrategy
+import talib.abstract as ta
+
+from nassi_tick_count import three_tick_entries
+
+
+class NassiThreeTickLongDcaC1(IStrategy):
+    INTERFACE_VERSION = 3
+    can_short = False
+    timeframe = "5m"
+    startup_candle_count = 60
+
+    body_k = 1.5
+    add_step_pct = 0.002
+    max_adds = 5
+
+    body_lookback = 20
+    short_frac = 0.5
+    sideways_reset = 3
+    stake_slices = 40
+    min_run_pct = 0.003
+    pump_k = 3.0
+    pump_lookback = 6
+    sma_len = 50
+    atr_min_pct = 0.0015
+    support_lookback = 6
+
+    position_adjustment_enable = True
+    max_entry_position_adjustment = 5
+
+    stoploss = -0.20
+    use_custom_stoploss = False
+    minimal_roi = {"0": 100}
+    trailing_stop = False
+    use_exit_signal = True
+    process_only_new_candles = True
+
+    def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
+        o, c = dataframe["open"], dataframe["close"]
+        h, l = dataframe["high"], dataframe["low"]
+        body = (c - o).abs()
+        med = body.rolling(self.body_lookback).median()
+        enter, counts = three_tick_entries(
+            o,
+            c,
+            body_k=self.body_k,
+            lookback=self.body_lookback,
+            short_frac=self.short_frac,
+            sideways_reset=self.sideways_reset,
+        )
+        run_drop = (o.shift(2) - c) / c.clip(lower=1e-12)
+        big_green = (c > o) & (body >= self.pump_k * med)
+        recent_pump = big_green.rolling(self.pump_lookback).max().fillna(0).astype(bool)
+
+        sma = ta.SMA(dataframe, timeperiod=self.sma_len)
+        atr = ta.ATR(dataframe, timeperiod=14)
+        not_uptrend = c < sma
+        not_chop = (atr / c.clip(lower=1e-12)) >= self.atr_min_pct
+
+        # 찐바닥 helpers for adjust_trade_position
+        red = c < o
+        shorten = red & red.shift(1) & (body < body.shift(1)) & (body.shift(1) < body.shift(2))
+        near_low = c <= l.rolling(self.support_lookback).min() * 1.001
+
+        dataframe["tick_count"] = counts
+        dataframe["jj_shorten"] = shorten.fillna(False)
+        dataframe["jj_near_low"] = near_low.fillna(False)
+        dataframe["enter_3tick"] = (
+            enter
+            & (run_drop >= self.min_run_pct)
+            & ~recent_pump
+            & not_uptrend
+            & not_chop
+        ).fillna(False)
+        return dataframe
+
+    def populate_entry_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
+        dataframe.loc[
+            dataframe["enter_3tick"] & (dataframe["volume"] > 0),
+            "enter_long",
+        ] = 1
+        return dataframe
+
+    def populate_exit_trend(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
+        dataframe["exit_long"] = 0
+        return dataframe
+
+    def custom_stake_amount(
+        self,
+        pair: str,
+        current_time: datetime,
+        current_rate: float,
+        proposed_stake: float,
+        min_stake: float | None,
+        max_stake: float,
+        leverage: float,
+        entry_tag: str | None,
+        side: str,
+        **kwargs,
+    ) -> float:
+        stake = proposed_stake / self.stake_slices
+        if min_stake is not None:
+            stake = max(stake, min_stake)
+        return min(stake, max_stake)
+
+    def adjust_trade_position(
+        self,
+        trade: Trade,
+        current_time: datetime,
+        current_rate: float,
+        current_profit: float,
+        min_stake: float | None,
+        max_stake: float,
+        current_entry_rate: float,
+        current_exit_rate: float,
+        current_entry_profit: float,
+        current_exit_profit: float,
+        **kwargs,
+    ) -> float | None:
+        filled = trade.nr_of_successful_entries
+        if filled >= 1 + self.max_adds:
+            return None
+        if trade.open_rate <= 0:
+            return None
+        adverse = (trade.open_rate - current_rate) / trade.open_rate
+        if adverse < self.add_step_pct * filled:
+            return None
+
+        dataframe, _ = self.dp.get_analyzed_dataframe(trade.pair, self.timeframe)
+        if dataframe is None or dataframe.empty:
+            return None
+        ts = pd.to_datetime(dataframe["date"], utc=True)
+        now = pd.Timestamp(current_time)
+        if now.tzinfo is None:
+            now = now.tz_localize("UTC")
+        else:
+            now = now.tz_convert("UTC")
+        # last closed bar
+        prior = dataframe.loc[ts < now]
+        if prior.empty:
+            return None
+        row = prior.iloc[-1]
+        if not bool(row.get("jj_shorten", False)) or not bool(row.get("jj_near_low", False)):
+            return None
+
+        slice_stake = trade.stake_amount / filled
+        if min_stake is not None and slice_stake < min_stake:
+            slice_stake = min_stake
+        if slice_stake > max_stake:
+            return None
+        return slice_stake
+
+    def custom_exit(
+        self,
+        pair: str,
+        trade: Trade,
+        current_time: datetime,
+        current_rate: float,
+        current_profit: float,
+        **kwargs,
+    ) -> str | bool | None:
+        if current_profit >= 0.001:
+            return "avg_reclaim"
+        return None
+
+
+if __name__ == "__main__":
+    print("NassiThreeTickLongDcaC1 loaded OK")
