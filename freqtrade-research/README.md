@@ -23,3 +23,8 @@ cd freqtrade-research
 ## Regime gate
 - Strategy: `RsiBbScalpRegimeGateV1` (bull=long, bear=short, else flat)
 - Compare report: `reports/20260729-regime-gate-vs-ungated.md`n
+
+## Sideways MR + ADX switch
+- Upbit candidate: `strategies/regime-sideways-mr-1h-adx-switch-v1.json` (not Policy C LIVE)
+- Freqtrade: `SidewaysMrAdxSwitchV1` + `config.bitget-sideways-mr.json`
+- Report: `reports/20260729-sideways-mr-adx-switch.md`

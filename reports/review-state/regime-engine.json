@@ -213,6 +213,7 @@
     "bear_v7_rejected": "strategies/krw-btc-1h-ema-adx25-rsi52-sl3-tp45-m5-v7.json",
     "bull_v1_backup": "strategies/regime-bull-trend-4h.json",
     "sideways_v4_prev": "strategies/regime-sideways-mr-4h-v4.json",
+    "sideways_adx_switch_v1_candidate": "strategies/regime-sideways-mr-1h-adx-switch-v1.json",
     "bull_alt_ae4_archive": [
       "strategies/regime-bull-macd-4h-v1.json",
       "strategies/regime-bull-di-4h-v1.json",
