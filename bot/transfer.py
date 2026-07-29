@@ -298,6 +298,18 @@ def approve_transfer(settings: Settings, code: str) -> str:
         return f"이체 실패: {type(e).__name__}: {e}\n/이체취소 또는 원인 수정 후 /이체승인 {req.code}"
 
 
+def upbit_net_type(coin: str, chain: str) -> str:
+    """Map our chain labels to Upbit withdraw net_type values."""
+    coin_u = coin.upper()
+    chain_u = chain.upper().replace(" ", "")
+    # Upbit USDT Tron network is net_type=TRX (not TRC20).
+    if coin_u == "USDT" and chain_u in {"TRC20", "TRON", "TRX", "TRC-20"}:
+        return "TRX"
+    if coin_u == "USDC" and chain_u in {"TRC20", "TRON", "TRX", "TRC-20"}:
+        return "TRX"
+    return chain
+
+
 def _execute(settings: Settings, req: TransferRequest) -> str:
     if req.direction == "upbit_to_bitget":
         address = settings.transfer_whitelist_bitget[req.coin]
@@ -305,17 +317,18 @@ def _execute(settings: Settings, req: TransferRequest) -> str:
             raise RuntimeError("UPBIT keys missing")
         from bot.upbit_client import UpbitPrivate  # noqa: PLC0415
 
+        net = upbit_net_type(req.coin, req.chain)
         client = UpbitPrivate(settings.upbit_access_key, settings.upbit_secret_key)
         try:
             result = client.withdraw_coin(
                 currency=req.coin,
                 amount=req.amount,
                 address=address,
-                net_type=req.chain,
+                net_type=net,
             )
         finally:
             client.close()
-        return f"Upbit withdraw uuid={result.get('uuid') or result}"
+        return f"Upbit withdraw uuid={result.get('uuid') or result} net_type={net}"
 
     if req.direction == "bitget_to_upbit":
         address = settings.transfer_whitelist_upbit[req.coin]
