@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v11",
-  "slug": "daytrade-bb-rsi-div-v11",
-  "hypothesis": "BTC daytrade long-only: prior bar close≤BB lower then current close>BB lower (tag-then-reclaim), RSI rising 1 bar and RSI<50; exit BB mid or RSI≥55.",
+  "active_card": "daytrade-bb-rsi-div-v12",
+  "slug": "daytrade-bb-rsi-div-v12",
+  "hypothesis": "BTC daytrade long-only: prior close≤BB mid then reclaim above mid, prior RSI<40 and RSI rising 1 bar; exit BB upper or RSI≥65.",
   "hypers": {
-    "pattern": "tag_reclaim",
-    "rsi_cap": 50,
-    "exit": "bb_mid_or_rsi55"
+    "pattern": "mid_reclaim",
+    "rsi_prior_cap": 40,
+    "exit": "bb_upper_or_rsi65"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "+0.02%",
-      "profit_factor": "4.04",
-      "trades": 9,
+      "total_return": "-9.59%",
+      "profit_factor": "1.35",
+      "trades": 147,
       "benchmark": "+3.26%",
-      "trades_per_day": 0.3
+      "trades_per_day": 4.9
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-0.93%",
-      "profit_factor": "1.03",
-      "trades": 10,
+      "total_return": "-21.86%",
+      "profit_factor": "0.79",
+      "trades": 173,
       "benchmark": "-16.19%",
-      "trades_per_day": 0.33
+      "trades_per_day": 5.77
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-2.22%",
-      "profit_factor": "0.15",
-      "trades": 7,
+      "total_return": "-15.47%",
+      "profit_factor": "0.81",
+      "trades": 135,
       "benchmark": "-4.12%",
-      "trades_per_day": 0.23
+      "trades_per_day": 4.5
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 10,
+  "consecutive_fails": 11,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB lower tag-then-reclaim + RSI↑1 RSI<50 → mid/RSI55 — v11 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v10",
-  "updated_at": "2026-07-29T19:11:32Z"
+  "next_action": "BB mid tag-then-reclaim + prior RSI<40 RSI↑1 → upper/RSI65 — v12 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v11",
+  "updated_at": "2026-07-29T19:22:17Z"
 }
