@@ -185,6 +185,20 @@ Volume-pivot 앵커로도 Mode A 첫 터치 MR은 수수료 하에서 엣지 없
 
 ---
 
+## 5c. V2-day (2026-07-29) — 게이트 통과·실전 미달
+
+Mode B (실패돌파→리테스트). V1 hypers 그대로.
+
+| Item | Value |
+|------|-------|
+| Code | `DiagonalVolumePivotBreakRetestDayV2.py` |
+| Report | [`freqtrade-research/reports/20260729-diagonal-volume-pivot-day-v2.md`](../freqtrade-research/reports/20260729-diagonal-volume-pivot-day-v2.md) |
+| W1/W2/W3 PF | 0.66 / 1.10 / 1.16 → PF 기각 기준(≥2/3)에는 **미해당** |
+| Avg trades/day | 0.5–1.3 (**3–4 목표 실패**) |
+| Promote? | **No** — n 작고 수익≈노이즈 |
+
+---
+
 ## 6. 자동화·백테스트로 옮길 때
 
 ### 6.1 왜 Upbit JSON에 바로 안 들어가나
@@ -198,7 +212,7 @@ Volume-pivot 앵커로도 Mode A 첫 터치 MR은 수수료 하에서 엣지 없
 |----|------|------|----|------|
 | ~~S1~~ | LR 레일 터치 MR | freqtrade v1–v3 | 5m/15m ETH | **기각** |
 | ~~V1-day~~ | vol-pivot 채널 Mode A + 일봉 유동성 게이트 | `DiagonalVolumePivotDayV1` | **15m BTC** | **기각** (2/3) |
-| **V2** | 동일 앵커 + Mode B 돌파·리테스트 | freqtrade | 15m/1h BTC | 다음 후보 |
+| **V2-day** | 동일 앵커 + Mode B 실패돌파→리테스트 | `DiagonalVolumePivotBreakRetestDayV2` | 15m BTC | **게이트 통과(약함)** / 빈도 미달 / 미승격 |
 | **V1-gate** | V1-day + daily regime 방향 필터 | freqtrade | 15m BTC | 선택 |
 | **P1** | BB lower reclaim ≈ 상승채널 하단 | upbit JSON | 4h | 선택 |
 
@@ -227,20 +241,17 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 7. 전략 후보 (다음)
 
-### Candidate V2 — `DiagonalVolumePivotBreakRetestDayV2` (추천 다음)
-
-- 같은 volume-pivot 채널 + **일봉 유동성 게이트**
-- Mode B만: 레일 돌파 실패 후 재진입(리테스트) 시 추세 방향
-- BTC 15m (또는 1h if 15m still too noisy)
-
 ### Candidate V1-gate
 
-- V1-day 코드 + daily bull/bear 방향 필터 (역방향 채널 터치 무시)
-- 새 파일로만. 기존 V1 hypers 건드리지 않음.
+- V1-day + daily bull/bear 방향 필터 (빈도 유지하며 역방향 터치 제거)
+
+### Longer OOS on V2
+
+- 30일×3 등으로 n을 키운 뒤에만 “생존” 재평가. hypers 변경 금지.
 
 ### Alert-only
 
-- 자동화 기각이 반복되면: 봇은 레일/터치 알림만, 진입은 사람.
+- 봇: volume-pivot 레일 + reclaim 핑. 진입은 사람.
 
 ---
 
@@ -257,9 +268,9 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. V2 (break+retest) 또는 V1-gate 또는 alert-only 중 선택
-2. 기각된 V1-day / LR scalp hypers 재튜닝 금지
-3. LIVE / SCALP sleeve에 올리지 말 것
+1. V1-gate / V2 longer OOS / alert-only 중 선택
+2. V1·V2 hypers 재튜닝 금지
+3. LIVE / SCALP에 올리지 말 것
 
 ---
 
