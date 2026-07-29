@@ -199,6 +199,19 @@ Mode B (실패돌파→리테스트). V1 hypers 그대로.
 
 ---
 
+## 5d. V1-gate (2026-07-29) — 기각
+
+Soft daily gate: bull→long only, bear→short only, else→both.
+
+| Item | Value |
+|------|-------|
+| Code | `DiagonalVolumePivotDayGateV1.py` |
+| Report | [`freqtrade-research/reports/20260729-diagonal-volume-pivot-day-gate-v1.md`](../freqtrade-research/reports/20260729-diagonal-volume-pivot-day-gate-v1.md) |
+| W1/W2/W3 PF | 0.90 / 2.58 / 0.53 → **falsified** |
+| Note | W2 bear-shorts worked; W3 bear-gate shorted a +10% rally |
+
+---
+
 ## 6. 자동화·백테스트로 옮길 때
 
 ### 6.1 왜 Upbit JSON에 바로 안 들어가나
@@ -213,7 +226,7 @@ Mode B (실패돌파→리테스트). V1 hypers 그대로.
 | ~~S1~~ | LR 레일 터치 MR | freqtrade v1–v3 | 5m/15m ETH | **기각** |
 | ~~V1-day~~ | vol-pivot 채널 Mode A + 일봉 유동성 게이트 | `DiagonalVolumePivotDayV1` | **15m BTC** | **기각** (2/3) |
 | **V2-day** | 동일 앵커 + Mode B 실패돌파→리테스트 | `DiagonalVolumePivotBreakRetestDayV2` | 15m BTC | **게이트 통과(약함)** / 빈도 미달 / 미승격 |
-| **V1-gate** | V1-day + daily regime 방향 필터 | freqtrade | 15m BTC | 선택 |
+| ~~V1-gate~~ | V1 + soft daily bull/bear 방향 필터 | `DiagonalVolumePivotDayGateV1` | 15m BTC | **기각** (2/3) |
 | **P1** | BB lower reclaim ≈ 상승채널 하단 | upbit JSON | 4h | 선택 |
 
 ### 6.3 V1 앵커 스펙 (사용자 정의 반영 — 구현 전 freeze 후보)
@@ -241,17 +254,18 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 7. 전략 후보 (다음)
 
-### Candidate V1-gate
+### Alert-only (추천)
 
-- V1-day + daily bull/bear 방향 필터 (빈도 유지하며 역방향 터치 제거)
+- 봇: volume-pivot 레일 + 터치/reclaim 핑. 진입은 사람.
+- 자동 진입 인코딩(V1/V2/V1-gate) 세 갈래 모두 승격 불가.
 
-### Longer OOS on V2
+### V2 longer OOS
 
-- 30일×3 등으로 n을 키운 뒤에만 “생존” 재평가. hypers 변경 금지.
+- hypers 고정, 표본만 키움. 기대 낮음.
 
-### Alert-only
+### Stop
 
-- 봇: volume-pivot 레일 + reclaim 핑. 진입은 사람.
+- 단기 빗각 자동매매 라인 종료. CORE Policy C 유지.
 
 ---
 
@@ -268,8 +282,8 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. V1-gate / V2 longer OOS / alert-only 중 선택
-2. V1·V2 hypers 재튜닝 금지
+1. Alert-only 구현 여부 결정, 또는 단기 빗각 자동매매 라인 종료
+2. V1 / V2 / V1-gate hypers 재튜닝 금지
 3. LIVE / SCALP에 올리지 말 것
 
 ---
