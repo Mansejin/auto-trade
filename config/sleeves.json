@@ -59,10 +59,18 @@
         "notes": "Long-biased Upbit swing - keep even when scalp short exists."
       },
       "scalp": {
-        "strategy": "BearShortBreakdownVolV6",
-        "path": "freqtrade-research/user_data/strategies/BearShortBreakdownVolV6.py",
-        "status": "falsified_research",
-        "notes": "15m BB breakdown+vol falsified on 2/3 bear windows. Slot stays open until a non-falsified candidate."
+        "strategy": null,
+        "candidates_falsified": [
+          "BearShortBreakdownVolV6",
+          "BearShortFailedReclaimV7",
+          "BearShortDiContinuationV8",
+          "BearShortDonchianV9",
+          "BearShortDailyDonchianV10",
+          "BearShortEmaCrossV11",
+          "BearShortStochFadeV12"
+        ],
+        "status": "empty_slot_cash",
+        "notes": "All BTCUSDT short-danta candidates v1-v12 falsified or sample-starved. Keep 30% scalp capital in cash for bear until a non-falsified structure exists. CORE m5-v6 unchanged."
       }
     },
     "sideways": {
