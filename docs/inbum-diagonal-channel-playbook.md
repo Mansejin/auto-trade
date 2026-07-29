@@ -338,9 +338,9 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions (자료수집)
 
-1. QQQ 4H 수동 표본 Batch 1 **n=30** 완료 → [`docs/research/channel-manual-sample-batch1.md`](research/channel-manual-sample-batch1.md)
-2. 고전 발췌 + Mode B 규칙 카드 **freeze** (초안만 있음)
-3. Mode A hypers / 새 freqtrade 인코딩 **금지** until 게이트
+1. QQQ 4H 수동 표본 + ICT 병기 + Edwards·Murphy 발췌 완료
+2. **Mode B 규칙 카드 freeze**만 남음 → [`edwards-murphy-excerpts.md`](research/edwards-murphy-excerpts.md) §6
+3. Mode A hypers / 새 freqtrade 인코딩 **금지** until freeze
 4. 승격 전 LIVE/SCALP 금지
 
 ---

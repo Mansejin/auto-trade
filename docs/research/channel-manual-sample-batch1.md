@@ -10,7 +10,9 @@
 | Raw | [`data/qqq_usdt_4h.json`](data/qqq_usdt_4h.json) |
 | Assist only | `_assist_channel_candidates.py` (후보 생성; 로그는 사람 검수) |
 
-**n = 30** (게이트 최소치 도달). 전부 `hindsight=yes`.
+**n = 30** (게이트 최소치 도달). 전부 `hindsight=yes`.  
+**ICT overlay (clearest 3)**: [`channel-clearest3-ict-overlay.md`](channel-clearest3-ict-overlay.md)  
+**Edwards·Murphy 발췌**: [`edwards-murphy-excerpts.md`](edwards-murphy-excerpts.md)
 
 ---
 
@@ -52,17 +54,25 @@
 
 ---
 
-## Mode B 최소 규칙 카드 (초안, 하이퍼 ≤3)
+## Mode B 최소 규칙 카드 (초안 → 고전 반영 개정)
 
-아직 게이트 “확정” 아님 — 표본 기반 **초안**:
+상세 freeze 후보: [`edwards-murphy-excerpts.md`](edwards-murphy-excerpts.md) §6.
 
-1. **구조**: 4H에서 primary 2터치 + parallel 1터치, 각도 steep 제외.  
-2. **돌파**: 종가가 경계 밖 **그리고** `vol ≥ 1.5 × SMA20(vol)` (초안 k=1.5).  
-3. **진입**: 돌파 후 **12봉(≈2일) 이내** 리테스트에서 거절(롱: 저점≥경계·양봉 등) — 리테스트만으로 진입 금지(S19).  
-4. **손절**: 리테스트 실패(종가가 채널 안 재진입).  
-5. **목표**: 1차 = mid 또는 0.5×width; 2차 = 1×width (고정 올인 금지).
+1. **구조**: 4H primary 2터치 + 3터치 확인 + parallel, steep 제외 (Edwards authority / Murphy).  
+2. **돌파**: 종가 밖 + `vol ≥ 1.5×SMA20` — break는 heads-up (Murphy).  
+3. **진입**: 리테스트에서 **거절 확인** 필수 (S19 / ICT sweep_reclaim). 거절 없는 고vol 터치 패스.  
+4. **손절**: 리테스트 실패(종가 재진입).  
+5. **목표**: 0.5×width → 1×width (S11 MM 올인 금지).
 
-하이퍼 후보만 3개로 제한: `vol_k`, `retest_bars`, `max_slope` — 인코딩은 고전 발췌 + 이 카드 freeze 후.
+하이퍼 ≤3: `vol_k`, `retest_bars`, `max_slope`.
+
+### Clearest 3 ICT 병기 요약
+
+| Pair | 결과 |
+|------|------|
+| S15–16 | classic = ICT **동의** (gold) |
+| S10–11 | 진입 동의, TP만 과욕 |
+| S18–19 | classic 숏 오신호; ICT **sweep_reclaim** |
 
 ---
 

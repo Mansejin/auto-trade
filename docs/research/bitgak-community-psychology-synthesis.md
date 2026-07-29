@@ -220,10 +220,11 @@ confluence_horizontal: y/n
 
 ## 7. 다음 연구 액션 (코딩 아님)
 
-1. Batch1 clearest 3건(S15–16, S10–11, S19)에 **ICT 라벨** 병기.  
-2. parallel vs Fib Channel vs pitchfork — 커뮤니티 혼동을 **별 가설**로 분리.  
-3. Mode B 규칙 카드에 “거절 캔들/MSS” 한 줄 추가 검토 (S19).  
-4. 고전 발췌와 ICT trendline-liquidity 문단을 literature 게이트에 묶기.
+1. ~~Batch1 clearest 3건 ICT 라벨~~ → [`channel-clearest3-ict-overlay.md`](channel-clearest3-ict-overlay.md)
+2. ~~Edwards–Magee / Murphy 발췌~~ → [`edwards-murphy-excerpts.md`](edwards-murphy-excerpts.md)
+3. Mode B 규칙 카드 **freeze** (사용자 확정)
+4. parallel vs Fib Channel vs pitchfork 분리 결정
+5. (선택) 인범 공개 클립 앵커·세션·손절 타임스탬프
 
 ---
 

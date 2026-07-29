@@ -217,9 +217,10 @@ skip_reason if any
 
 - [x] 빗각 ≡ 추세선/채널 재확인 (공개 2차 소스)
 - [x] Mode A/B/C + vol + 3-touch 합의 정리
-- [ ] 고전 1권(Edwards-Magee 또는 Murphy) 채널 장 발췌 노트
+- [x] 고전 1권 발췌 노트 — [`edwards-murphy-excerpts.md`](edwards-murphy-excerpts.md) (Edwards–Magee Ch.14–15 구조 + Murphy Law #5/#10 공개문)
 - [x] 수동 표본 ≥30 (QQQ 4H Batch 1) — **전부 hindsight; 품질 재검증 남음**
-- [ ] Mode B만의 **최소 규칙 카드** 1장 (숫자 하이퍼 ≤3개) — **초안만** batch1.md에 있음, freeze 전
+- [x] Clearest 3 ICT 병기 — [`channel-clearest3-ict-overlay.md`](channel-clearest3-ict-overlay.md)
+- [ ] Mode B만의 **최소 규칙 카드** 1장 **freeze** — 개정안은 excerpts §6 / batch1; 사용자 확정 대기
 - [ ] Pitchfork/Fib Channel을 parallel과 분리할지 결정
 
 게이트 통과 후에야 playbook §7 인코딩 재개.
@@ -228,10 +229,10 @@ skip_reason if any
 
 ## 9. Next (자료수집만)
 
-1. ~~수동 표본 로그 시작~~ → Batch 2: `session` 컬럼 + TV로 clearest 3건 재작도.
-2. Edwards-Magee / Murphy 발췌 추가 → 규칙 카드 freeze.
+1. ~~수동 표본 / 고전 발췌 / ICT 병기~~ → **Mode B 카드 freeze** 한 번만 찍기.
+2. parallel vs Fib Channel vs pitchfork 분리 결정.
 3. 인범 공개 클립에서 **앵커·세션·손절**만 노트로 (룰 복제 X).
-4. playbook의 “다음=QQQ Mode B 구현”은 **이 게이트 뒤로 연기**.
+4. playbook의 “다음=QQQ Mode B 구현”은 **카드 freeze 뒤로 연기**.
 
 ---
 
