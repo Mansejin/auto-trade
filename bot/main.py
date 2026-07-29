@@ -204,6 +204,17 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
             equity_mark = krw + (
                 portfolio.position.qty * result.price if portfolio.position else 0.0
             )
+            # Bridge inventory (TRX/USDT) is still Upbit equity — exclude KRW→coin
+            # conversion from looking like a daily loss.
+            try:
+                from bot.transfer import _upbit_ticker  # noqa: PLC0415
+
+                for coin in ("USDT", "TRX"):
+                    bal = private.available_balance(coin)
+                    if bal > 1e-8:
+                        equity_mark += bal * _upbit_ticker(f"KRW-{coin}")
+            except Exception:
+                logger.debug("bridge inventory mark failed", exc_info=True)
         else:
             equity_mark = portfolio.equity(result.price)
         risk = refresh_day(risk, equity_mark)
@@ -670,6 +681,15 @@ def main() -> None:
     while _RUNNING:
         try:
             run_once(settings, trades, notify)
+            if settings.exchange == "upbit" and not settings.paper:
+                try:
+                    from bot.rebalance import maybe_alert_rebalance  # noqa: PLC0415
+
+                    alert = maybe_alert_rebalance(settings)
+                    if alert:
+                        notify.send(alert)
+                except Exception:
+                    logger.exception("rebalance alert failed")
         except Exception:
             logger.exception("틱 처리 중 오류 — 다음 주기에 재시도합니다.")
             risk = record_error(load_risk(settings.state_path, integrity_key=settings.risk_integrity_key), settings.max_consecutive_errors)

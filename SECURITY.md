@@ -15,17 +15,20 @@
 - [ ] Bitget 키는 **System-generated (HMAC)** + IP `129.225.205.185`
 - [ ] 봇/이체는 **UTA v3** (`/api/v3/...`) — Classic mix v2 아님
 - [ ] Cursor MCP(`@bitget-ai/bitget-agent-mcp`)는 기본 `--read-only`; 키는 `.cursor/mcp.json`에만 로컬 기입 (커밋 금지)
-- [ ] USDT 이체는 **TRC20(트론)** 만 사용 (봇이 ERC20 등 지정해도 TRC20으로 고정)
+- [ ] 자동 자금: **Upbit KRW→TRX → Bitget TRX→USDT** (UTA 통합 증거금; 별도 선물 이체 불필요)
 - [ ] 이체 기능을 쓸 때만 양 거래소 API **Withdraw ON**, 사용 후 다시 OFF 검토
 - [ ] `TRANSFER_ENABLED=false` 기본 — 켤 때만:
   - `TRANSFER_CONFIRM=I_UNDERSTAND_TRANSFER_RISK`
-  - `TRANSFER_MAX_AMOUNT` **필수 (>0)** — 자동이체 상한
-  - `TRANSFER_WHITELIST_BITGET_USDT` = Bitget UTA USDT **TRC20** 입금주소
+  - `TRANSFER_MAX_AMOUNT` **필수 (>0)** — 자동이체 상한(코인 수량)
+  - `TRANSFER_WHITELIST_BITGET_USDT` = Bitget 트론 입금주소 (TRX alias로도 사용)
   - (선택) `TRANSFER_WHITELIST_UPBIT_USDT` — Bitget→Upbit 수동 이체용
   - `TRANSFER_COOLDOWN_SEC` (기본 1800) — 연속 출금 방지
-- [ ] 전략 `funding.enabled=true` 이면 **매수 시그널 + Bitget USDT 부족** 시 승인 없이 Upbit→Bitget 출금
-  - Upbit USDT 부족 시 `buy_usdt_from_krw`로 KRW-USDT 시장가 매수 후 출금
+- [ ] 전략 `funding.enabled=true` 이면 **매수 시그널 + Bitget USDT 부족** 시 승인 없이 TRX 브릿지 실행
+  - `top_up_krw` 예산으로 KRW-TRX 매수 → Upbit TRX 출금 → Bitget에서 TRX→USDT 환전 후 선물 진입
 - [ ] 텔레그램 `/이체요청` → `/이체승인` 은 수동 경로 (자동 이체와 별개)
+- [ ] `REBALANCE_ENABLED` — 5:5±밴드 하이브리드(알림→`/리밸런스승인`). 기본 밴드 12%p, 알림 쿨다운·`TRANSFER_COOLDOWN`로 잦은 이체 제한
+- [ ] `/원화준비 <원>` — Bitget→Upbit TRX 브릿지 + Upbit KRW 매도 제안→승인
+- [ ] Bitget→Upbit 에 `TRANSFER_WHITELIST_UPBIT_TRX`(또는 USDT 트론 alias) + Bitget Withdraw
 - [ ] `bot-bitget` 은 `TELEGRAM_COMMANDS=false` (명령 수신은 Upbit `bot`만)
 
 ## 2. `.env` (서버에만 존재)

@@ -50,13 +50,20 @@ below cover only the non-obvious caveats for running things locally (outside Doc
   (`logs/status.json`, `logs/latest_status.txt`, `data/state.json`, `data/risk.json`). Point the
   desk's `LOG_DIR`/`STATE_PATH`/`RISK_PATH` at the same dirs the bot writes to so it shows live status.
 
+### Treasury (Upbit <-> Bitget)
+
+- Bridge coin: **TRX** (cheap withdraw). Paths: KRW->TRX->Bitget->USDT, and reverse USDT->TRX->Upbit->KRW.
+- Hybrid 50:50: REBALANCE_ENABLED=true, band default **12%p**, alert cooldown + transfer cooldown.
+  Bot proposes on band breach; execute only via /리밸런스승인. Manual /리밸런스, /원화준비 <원>, /자산.
+- Use cases: fund Bitget only on futures need; park spending cash on Upbit; avoid fee-churn with band+cooldown.
+
 ### Bitget UTA + Agent MCP
 
 - Trading client is **UTA API v3** (`bot/bitget_client.py`): candles `/api/v3/market/candles`,
   orders `/api/v3/trade/place-order`, assets `/api/v3/account/assets`, withdraw
   `/api/v3/account/withdraw`. Docs: https://www.bitget.com/api-doc/uta/intro
 - Parallel container: `bot-bitget` (`EXCHANGE=bitget`). Category via `BITGET_CATEGORY`.
-  Strategy may set `funding.enabled` to auto top-up Bitget USDT from Upbit (TRC20) when a
+  Strategy may set `funding.enabled` to auto bridge Upbit KRW→TRX→Bitget TRX→USDT when a
   futures buy signal arrives with insufficient margin — requires `TRANSFER_*` env + withdraw
   permission. No Telegram approve on that path; manual `/이체요청` still exists on Upbit bot.
 - Demo Trading: set `BITGET_PAPER_TRADING=true` **and** Demo API keys (sends `paptrading: 1`).

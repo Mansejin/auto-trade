@@ -116,7 +116,7 @@ def parse_direction(token: str) -> str | None:
 _CHEAPEST_CHAIN: dict[str, str] = {
     "USDT": "TRC20",
     "USDC": "TRC20",
-    "TRX": "TRC20",
+    "TRX": "TRX",
 }
 
 _CHAIN_ALIASES: dict[str, str] = {
@@ -179,19 +179,25 @@ def request_transfer(
     chain_u, chain_note = normalize_chain(
         chain, coin_u, settings.transfer_default_chain or "TRC20"
     )
+    if coin_u == "TRX":
+        chain_u = "TRX"
     if direction == "upbit_to_bitget":
-        dest = settings.transfer_whitelist_bitget.get(coin_u)
+        dest = bitget_whitelist_address(settings, coin_u)
         if not dest:
             return (
                 f"Bitget {coin_u} 화이트리스트 주소가 없습니다.\n"
-                f"TRANSFER_WHITELIST_BITGET_{coin_u}=주소 를 .env에 넣으세요."
+                f"TRANSFER_WHITELIST_BITGET_{coin_u}=주소 를 .env에 넣으세요.\n"
+                f"(TRX는 TRANSFER_WHITELIST_BITGET_USDT 트론 주소 alias 가능)"
             )
     elif direction == "bitget_to_upbit":
-        dest = settings.transfer_whitelist_upbit.get(coin_u)
+        if coin_u == "TRX":
+            chain_u = "TRX"
+        dest = upbit_whitelist_address(settings, coin_u)
         if not dest:
             return (
                 f"Upbit {coin_u} 화이트리스트 주소가 없습니다.\n"
-                f"TRANSFER_WHITELIST_UPBIT_{coin_u}=주소 를 .env에 넣으세요."
+                f"TRANSFER_WHITELIST_UPBIT_{coin_u}=주소 를 .env에 넣으세요.\n"
+                f"(TRX는 TRANSFER_WHITELIST_UPBIT_USDT 트론 주소 alias 가능)"
             )
     else:
         return "방향이 올바르지 않습니다. 예: upbit->bitget"
@@ -280,6 +286,8 @@ def approve_transfer(settings: Settings, code: str) -> str:
         )
         _append_history(settings, done)
         save_pending(settings, None)
+        if req.direction == "upbit_to_bitget":
+            _rebase_upbit_risk_after_withdraw(settings, coin=req.coin, amount=req.amount)
         return f"이체 실행됨 ({req.code})\n{detail}"
     except Exception as e:
         logger.exception("transfer execute failed")
@@ -302,17 +310,34 @@ def upbit_net_type(coin: str, chain: str) -> str:
     """Map our chain labels to Upbit withdraw net_type values."""
     coin_u = coin.upper()
     chain_u = chain.upper().replace(" ", "")
+    if coin_u == "TRX":
+        return "TRX"
     # Upbit USDT Tron network is net_type=TRX (not TRC20).
     if coin_u == "USDT" and chain_u in {"TRC20", "TRON", "TRX", "TRC-20"}:
         return "TRX"
     if coin_u == "USDC" and chain_u in {"TRC20", "TRON", "TRX", "TRC-20"}:
         return "TRX"
-    return chain
+    return chain_u or chain
+
+
+def bitget_whitelist_address(settings: Settings, coin: str) -> str | None:
+    """Resolve Bitget deposit address; TRX↔USDT share the same Tron address."""
+    coin_u = coin.upper()
+    dest = settings.transfer_whitelist_bitget.get(coin_u)
+    if dest:
+        return dest
+    if coin_u == "TRX":
+        return settings.transfer_whitelist_bitget.get("USDT")
+    if coin_u == "USDT":
+        return settings.transfer_whitelist_bitget.get("TRX")
+    return None
 
 
 def _execute(settings: Settings, req: TransferRequest) -> str:
     if req.direction == "upbit_to_bitget":
-        address = settings.transfer_whitelist_bitget[req.coin]
+        address = bitget_whitelist_address(settings, req.coin)
+        if not address:
+            raise RuntimeError(f"TRANSFER_WHITELIST_BITGET_{req.coin} (or TRX/USDT alias) missing")
         if not settings.upbit_access_key or not settings.upbit_secret_key:
             raise RuntimeError("UPBIT keys missing")
         from bot.upbit_client import UpbitPrivate  # noqa: PLC0415
@@ -331,7 +356,9 @@ def _execute(settings: Settings, req: TransferRequest) -> str:
         return f"Upbit withdraw uuid={result.get('uuid') or result} net_type={net}"
 
     if req.direction == "bitget_to_upbit":
-        address = settings.transfer_whitelist_upbit[req.coin]
+        address = upbit_whitelist_address(settings, req.coin)
+        if not address:
+            raise RuntimeError(f"TRANSFER_WHITELIST_UPBIT_{req.coin} (or TRX/USDT alias) missing")
         if not settings.bitget_ready:
             raise RuntimeError("BITGET keys missing")
         from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
@@ -416,12 +443,16 @@ def _mark_cooldown(settings: Settings) -> None:
     )
 
 
-def _upbit_usdt_ticker() -> float:
+def _upbit_ticker(market: str) -> float:
     with httpx.Client(timeout=15.0) as client:
-        resp = client.get("https://api.upbit.com/v1/ticker", params={"markets": "KRW-USDT"})
+        resp = client.get("https://api.upbit.com/v1/ticker", params={"markets": market})
         resp.raise_for_status()
         rows = resp.json()
         return float(rows[0]["trade_price"])
+
+
+def _upbit_usdt_ticker() -> float:
+    return _upbit_ticker("KRW-USDT")
 
 
 def ensure_upbit_usdt(
@@ -431,49 +462,76 @@ def ensure_upbit_usdt(
     buy_from_krw: bool,
 ) -> str:
     """Make sure Upbit has enough USDT to withdraw; optionally market-buy from KRW."""
+    return ensure_upbit_coin(settings, coin="USDT", amount=amount, buy_from_krw=buy_from_krw)
+
+
+def ensure_upbit_coin(
+    settings: Settings,
+    *,
+    coin: str,
+    amount: float,
+    buy_from_krw: bool,
+) -> str:
+    """Ensure Upbit has enough `coin`; optionally market-buy from KRW."""
+    coin_u = coin.upper()
     if not settings.upbit_access_key or not settings.upbit_secret_key:
         raise RuntimeError("UPBIT keys missing for auto funding")
     from bot.upbit_client import UpbitPrivate  # noqa: PLC0415
 
+    market = f"KRW-{coin_u}"
     client = UpbitPrivate(settings.upbit_access_key, settings.upbit_secret_key)
-    notes: list[str] = []
     try:
-        have = client.available_balance("USDT")
+        have = client.available_balance(coin_u)
         if have + 1e-8 >= amount:
-            return f"Upbit USDT 충분 ({have:.4f})"
+            return f"Upbit {coin_u} 충분 ({have:.6f})"
         need = amount - have
         if not buy_from_krw:
-            raise RuntimeError(f"Upbit USDT 부족 have={have:.4f} need={amount:.4f}")
-        px = _upbit_usdt_ticker()
-        # price order in KRW; pad 1.5% for fee/slippage
-        krw = int(need * px * 1.015) + 1
+            raise RuntimeError(f"Upbit {coin_u} 부족 have={have:.6f} need={amount:.6f}")
+        px = _upbit_ticker(market)
+        pad = 1.02 if coin_u == "TRX" else 1.015
+        krw = int(need * px * pad) + 1
         krw_bal = client.available_balance("KRW")
         if krw_bal < krw:
             raise RuntimeError(
-                f"Upbit KRW 부족 — USDT {need:.4f} 매수에 약 {krw}원 필요, 보유 {krw_bal:.0f}원"
+                f"Upbit KRW 부족 — {coin_u} {need:.6f} 매수에 약 {krw}원 필요, 보유 {krw_bal:.0f}원"
             )
-        oid = client.make_identifier("usdtbuy")
-        order = client.place_market_buy("KRW-USDT", float(krw), identifier=oid)
-        client.wait_order(uuid_str=str(order.get("uuid") or ""), identifier=oid, timeout_sec=20)
-        have2 = client.available_balance("USDT")
+        oid = client.make_identifier(f"{coin_u.lower()[:4]}buy")
+        order = client.place_market_buy(market, float(krw), identifier=oid)
+        client.wait_order(uuid_str=str(order.get("uuid") or ""), identifier=oid, timeout_sec=25)
+        have2 = client.available_balance(coin_u)
         if have2 + 1e-8 < amount:
-            raise RuntimeError(f"KRW-USDT 매수 후에도 USDT 부족 have={have2:.4f} need={amount:.4f}")
-        notes.append(f"KRW-USDT 매수 {krw}원 → USDT≈{have2:.4f}")
-        return "; ".join(notes)
+            raise RuntimeError(f"{market} 매수 후에도 {coin_u} 부족 have={have2:.6f} need={amount:.6f}")
+        return f"{market} 매수 {krw}원 → {coin_u}≈{have2:.6f}"
     finally:
         client.close()
+
+
+def plan_trx_withdraw_amount(*, top_up_krw: float, transfer_max: float) -> tuple[float, float]:
+    """Convert KRW budget to withdrawable TRX amount (minus Upbit fee buffer)."""
+    px = _upbit_ticker("KRW-TRX")
+    fee = 1.0  # Upbit TRX withdraw fee (approx)
+    raw = max(0.0, (top_up_krw / px) - fee - 0.01)
+    if transfer_max > 0:
+        raw = min(raw, transfer_max)
+    amount = round(raw, 6)
+    if amount < 1.0:
+        raise RuntimeError(f"TRX 이체 수량 너무 작음: {amount} (예산 {top_up_krw}원)")
+    return amount, px
 
 
 def auto_fund_bitget_from_upbit(
     settings: Settings,
     *,
     amount: float,
-    coin: str = "USDT",
+    coin: str = "TRX",
     chain: str | None = None,
-    buy_usdt_from_krw: bool = True,
+    buy_from_krw: bool = True,
+    buy_usdt_from_krw: bool | None = None,
     reason: str = "",
 ) -> str:
     """Execute Upbit→Bitget withdraw immediately (no Telegram approve)."""
+    if buy_usdt_from_krw is not None:
+        buy_from_krw = buy_usdt_from_krw
     if not settings.transfer_allowed:
         raise RuntimeError(
             "자동 이체 OFF — TRANSFER_ENABLED=true + TRANSFER_CONFIRM=I_UNDERSTAND_TRANSFER_RISK"
@@ -492,12 +550,20 @@ def auto_fund_bitget_from_upbit(
         raise RuntimeError(msg)
 
     coin_u = coin.upper()
-    chain_u, _ = normalize_chain(chain, coin_u, settings.transfer_default_chain or "TRC20")
-    dest = settings.transfer_whitelist_bitget.get(coin_u)
-    if not dest:
-        raise RuntimeError(f"TRANSFER_WHITELIST_BITGET_{coin_u} 미설정")
+    default_chain = "TRX" if coin_u == "TRX" else (settings.transfer_default_chain or "TRC20")
+    chain_u, _ = normalize_chain(chain, coin_u, default_chain)
+    if coin_u == "TRX":
+        chain_u = "TRX"
+    if not bitget_whitelist_address(settings, coin_u):
+        raise RuntimeError(
+            f"TRANSFER_WHITELIST_BITGET_{coin_u} 미설정 (TRX는 USDT 트론 주소 alias 가능)"
+        )
 
-    prep = ensure_upbit_usdt(settings, amount=amount, buy_from_krw=buy_usdt_from_krw)
+    fee_buf = 1.0 if coin_u == "TRX" else 0.0
+    need_on_upbit = amount + fee_buf + 0.01
+    prep = ensure_upbit_coin(
+        settings, coin=coin_u, amount=need_on_upbit, buy_from_krw=buy_from_krw
+    )
     req = TransferRequest(
         code=f"AUTO{secrets.token_hex(2).upper()}",
         direction="upbit_to_bitget",
@@ -527,6 +593,257 @@ def auto_fund_bitget_from_upbit(
         amount,
         coin_u,
         chain_u,
+        reason,
+    )
+    return f"{prep}\n{detail}"
+
+
+
+def _rebase_upbit_risk_after_withdraw(settings: Settings, *, coin: str, amount: float) -> None:
+    """After Upbit on-chain withdraw, lower Upbit bot day-start equity by KRW value."""
+    try:
+        from bot.risk import (  # noqa: PLC0415
+            apply_external_outflow,
+            clear_daily_loss_halt,
+            load_risk,
+            save_risk,
+        )
+
+        upbit_state = settings.state_path.with_name("state.json")
+        px = _upbit_ticker(f"KRW-{coin.upper()}") if coin.upper() != "KRW" else 1.0
+        outflow_krw = float(amount) * float(px)
+        # Upbit LIVE integrity uses upbit secret even when called from bitget bot.
+        key = settings.upbit_secret_key or ""
+        risk = load_risk(upbit_state, integrity_key=key)
+        risk = apply_external_outflow(risk, outflow_krw)
+        risk = clear_daily_loss_halt(risk)
+        save_risk(upbit_state, risk, integrity_key=key)
+        logger.info(
+            "Upbit risk rebased after withdraw coin=%s amount=%s ~%s KRW",
+            coin,
+            amount,
+            round(outflow_krw),
+        )
+    except Exception:
+        logger.exception("Upbit risk rebase after withdraw failed")
+
+def convert_bitget_trx_to_usdt(settings: Settings, *, min_trx: float = 1.0) -> str:
+    """Sell Bitget TRX→USDT on UTA spot. UTA equity is shared with futures."""
+    if not settings.bitget_ready:
+        raise RuntimeError("BITGET keys missing")
+    from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
+
+    client = BitgetPrivate(
+        settings.bitget_api_key,
+        settings.bitget_secret_key,
+        settings.bitget_passphrase,
+        paper_trading=settings.bitget_paper_trading,
+    )
+    try:
+        trx = client.spot_available("TRX")
+        if trx < min_trx:
+            return f"Bitget TRX 부족({trx:.6f}) — 환전 스킵"
+        qty = round(max(0.0, trx - 0.01), 6)
+        if qty < min_trx:
+            return f"Bitget TRX dust only ({trx:.6f})"
+        before = client.available_usdt()
+        order = client.place_order(
+            category="SPOT",
+            symbol="TRXUSDT",
+            side="sell",
+            order_type="market",
+            qty=str(qty),
+        )
+        after = client.available_usdt()
+        return (
+            f"Bitget TRX→USDT 환전 qty={qty} order={order.get('orderId') or order} "
+            f"USDT {before:.4f}→{after:.4f} (UTA 통합=선물 사용 가능)"
+        )
+    finally:
+        client.close()
+
+
+def upbit_whitelist_address(settings: Settings, coin: str) -> str | None:
+    """Resolve Upbit deposit address; TRX↔USDT Tron address alias."""
+    coin_u = coin.upper()
+    dest = settings.transfer_whitelist_upbit.get(coin_u)
+    if dest:
+        return dest
+    if coin_u == "TRX":
+        return settings.transfer_whitelist_upbit.get("USDT")
+    if coin_u == "USDT":
+        return settings.transfer_whitelist_upbit.get("TRX")
+    return None
+
+
+def convert_bitget_usdt_to_trx(settings: Settings, *, usdt_budget: float) -> str:
+    """Buy TRX with USDT on Bitget UTA spot (for Bitget→Upbit bridge)."""
+    if not settings.bitget_ready:
+        raise RuntimeError("BITGET keys missing")
+    if usdt_budget <= 0:
+        raise RuntimeError("USDT budget must be > 0")
+    from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
+
+    client = BitgetPrivate(
+        settings.bitget_api_key,
+        settings.bitget_secret_key,
+        settings.bitget_passphrase,
+        paper_trading=settings.bitget_paper_trading,
+    )
+    try:
+        avail = client.available_usdt()
+        spend = min(avail, usdt_budget)
+        if spend < 1.0:
+            raise RuntimeError(f"Bitget USDT 부족 avail={avail:.4f} need≈{usdt_budget:.4f}")
+        before = client.spot_available("TRX")
+        # UTA spot market buy: qty is quote USDT for buy side on many venues;
+        # Bitget UTA place-order qty is base size — use approximate TRX qty from Upbit TRX/USDT.
+        trx_krw = _upbit_ticker("KRW-TRX")
+        usdt_krw = _upbit_ticker("KRW-USDT")
+        trx_usdt = trx_krw / usdt_krw if usdt_krw > 0 else 0.0
+        if trx_usdt <= 0:
+            raise RuntimeError("TRX/USDT price unavailable")
+        qty = round((spend * 0.98) / trx_usdt, 2)
+        if qty < 1.0:
+            raise RuntimeError(f"TRX buy qty too small: {qty}")
+        order = client.place_order(
+            category="SPOT",
+            symbol="TRXUSDT",
+            side="buy",
+            order_type="market",
+            qty=str(qty),
+        )
+        after = client.spot_available("TRX")
+        return (
+            f"Bitget USDT→TRX buy qty≈{qty} spend≤{spend:.4f} "
+            f"order={order.get('orderId') or order} TRX {before:.4f}→{after:.4f}"
+        )
+    finally:
+        client.close()
+
+
+def ensure_upbit_krw(settings: Settings, *, target_krw: float, sell_bridge: bool = True) -> str:
+    """Sell Upbit TRX/USDT into KRW until cash >= target (best-effort)."""
+    if not settings.upbit_access_key or not settings.upbit_secret_key:
+        raise RuntimeError("UPBIT keys missing")
+    from bot.upbit_client import UpbitPrivate  # noqa: PLC0415
+
+    client = UpbitPrivate(settings.upbit_access_key, settings.upbit_secret_key)
+    notes: list[str] = []
+    try:
+        krw = client.available_balance("KRW")
+        if krw + 1e-6 >= target_krw:
+            return f"Upbit KRW 충분 ({krw:,.0f} ≥ {target_krw:,.0f})"
+        if not sell_bridge:
+            raise RuntimeError(f"Upbit KRW 부족 have={krw:,.0f} need={target_krw:,.0f}")
+        need = target_krw - krw
+        # Prefer TRX then USDT
+        for coin in ("TRX", "USDT"):
+            if need <= 0:
+                break
+            bal = client.available_balance(coin)
+            if bal <= 0:
+                continue
+            px = _upbit_ticker(f"KRW-{coin}")
+            # sell enough for remaining need (+2% pad)
+            want = min(bal, (need * 1.02) / px if px > 0 else 0.0)
+            if coin == "TRX":
+                want = round(want, 4)
+            else:
+                want = round(want, 6)
+            if want <= 0:
+                continue
+            oid = client.make_identifier(f"{coin.lower()[:4]}sel")
+            order = client.place_market_sell(f"KRW-{coin}", want, identifier=oid)
+            client.wait_order(uuid_str=str(order.get("uuid") or ""), identifier=oid, timeout_sec=25)
+            notes.append(f"KRW-{coin} 매도 {want}")
+            krw = client.available_balance("KRW")
+            need = max(0.0, target_krw - krw)
+        krw2 = client.available_balance("KRW")
+        notes.append(f"Upbit KRW {krw2:,.0f} (목표 {target_krw:,.0f})")
+        if krw2 + 1e-6 < target_krw:
+            notes.append("목표 미달 — Bitget 브릿지 입금 대기 후 재시도")
+        return "; ".join(notes)
+    finally:
+        client.close()
+
+
+def auto_fund_upbit_from_bitget(
+    settings: Settings,
+    *,
+    top_up_krw: float,
+    reason: str = "",
+) -> str:
+    """Bitget USDT→TRX → withdraw TRX to Upbit (no Telegram approve)."""
+    if not settings.transfer_allowed:
+        raise RuntimeError(
+            "자동 이체 OFF — TRANSFER_ENABLED=true + TRANSFER_CONFIRM=I_UNDERSTAND_TRANSFER_RISK"
+        )
+    if settings.transfer_max_amount <= 0:
+        raise RuntimeError("자동 이체는 TRANSFER_MAX_AMOUNT>0 필수")
+    if top_up_krw <= 0:
+        raise RuntimeError("top_up_krw must be > 0")
+
+    ok, msg = _cooldown_ok(settings)
+    if not ok:
+        raise RuntimeError(msg)
+
+    if not upbit_whitelist_address(settings, "TRX"):
+        raise RuntimeError(
+            "TRANSFER_WHITELIST_UPBIT_TRX (또는 USDT 트론 주소 alias) 미설정"
+        )
+
+    usdt_px = _upbit_ticker("KRW-USDT")
+    usdt_budget = (top_up_krw / usdt_px) * 1.02 if usdt_px > 0 else 0.0
+    prep = convert_bitget_usdt_to_trx(settings, usdt_budget=usdt_budget)
+
+    from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
+
+    client = BitgetPrivate(
+        settings.bitget_api_key,
+        settings.bitget_secret_key,
+        settings.bitget_passphrase,
+        paper_trading=settings.bitget_paper_trading,
+    )
+    try:
+        trx = client.spot_available("TRX")
+    finally:
+        client.close()
+
+    # leave dust; Bitget withdraw fee is exchange-side — keep small buffer
+    amount = round(max(0.0, trx - 1.0), 6)
+    if settings.transfer_max_amount > 0:
+        amount = min(amount, settings.transfer_max_amount)
+    if amount < 1.0:
+        raise RuntimeError(f"Bitget TRX 출금 수량 부족: {amount} (after buy)")
+
+    req = TransferRequest(
+        code=f"AUTO{secrets.token_hex(2).upper()}",
+        direction="bitget_to_upbit",
+        coin="TRX",
+        amount=amount,
+        chain="TRX",
+        created_at=time.time(),
+        status="pending",
+        detail=reason or "auto_fund_b2u",
+    )
+    detail = _execute(settings, req)
+    done = TransferRequest(
+        code=req.code,
+        direction=req.direction,
+        coin=req.coin,
+        amount=req.amount,
+        chain=req.chain,
+        created_at=req.created_at,
+        status="executed",
+        detail=f"{prep} | {detail}",
+    )
+    _append_history(settings, done)
+    _mark_cooldown(settings)
+    logger.warning(
+        "AUTO TRANSFER B2U executed code=%s amount=%s TRX reason=%s",
+        req.code,
+        amount,
         reason,
     )
     return f"{prep}\n{detail}"

@@ -1,5 +1,5 @@
 {
-  "name": "Bitget BTCUSDT SMA Cross (LIVE + auto fund)",
+  "name": "Bitget BTCUSDT SMA Cross (LIVE + TRX bridge fund)",
   "market": "BTCUSDT",
   "exchange": "bitget",
   "timeframe": "1h",
@@ -8,12 +8,13 @@
   "funding": {
     "enabled": true,
     "source": "upbit",
-    "coin": "USDT",
-    "chain": "TRC20",
+    "coin": "TRX",
+    "chain": "TRX",
     "min_trade_usdt": 10,
-    "top_up_usdt": 100000,
+    "top_up_krw": 100000,
     "max_wait_sec": 7200,
-    "buy_usdt_from_krw": true
+    "buy_from_krw": true,
+    "convert_to_usdt": true
   },
   "indicators": [
     {

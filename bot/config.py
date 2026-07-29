@@ -76,6 +76,11 @@ class Settings:
     transfer_cooldown_sec: int
     transfer_whitelist_bitget: dict[str, str] = field(default_factory=dict)
     transfer_whitelist_upbit: dict[str, str] = field(default_factory=dict)
+    rebalance_enabled: bool = False
+    rebalance_target: float = 0.5
+    rebalance_band: float = 0.12
+    rebalance_alert_cooldown_sec: int = 3600
+    rebalance_min_move_krw: float = 50_000.0
 
     @property
     def bitget_ready(self) -> bool:
@@ -164,4 +169,9 @@ def load_settings() -> Settings:
         transfer_cooldown_sec=_env_int("TRANSFER_COOLDOWN_SEC", 1800),
         transfer_whitelist_bitget=_whitelist_from_env("TRANSFER_WHITELIST_BITGET_"),
         transfer_whitelist_upbit=_whitelist_from_env("TRANSFER_WHITELIST_UPBIT_"),
+        rebalance_enabled=_env_bool("REBALANCE_ENABLED", False),
+        rebalance_target=_env_float("REBALANCE_TARGET", 0.5),
+        rebalance_band=_env_float("REBALANCE_BAND", 0.12),
+        rebalance_alert_cooldown_sec=_env_int("REBALANCE_ALERT_COOLDOWN_SEC", 3600),
+        rebalance_min_move_krw=_env_float("REBALANCE_MIN_MOVE_KRW", 50_000.0),
     )

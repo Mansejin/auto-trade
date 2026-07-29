@@ -37,16 +37,27 @@ class ConditionGroup:
 
 @dataclass(frozen=True)
 class FundingConfig:
-    """Auto top-up Bitget UTA from Upbit when a futures entry needs margin."""
+    """Auto top-up Bitget UTA from Upbit when a futures entry needs margin.
+
+    Preferred bridge: Upbit KRW→TRX → withdraw TRX → Bitget TRX→USDT (UTA shared equity).
+    Legacy USDT/TRC20 path still works if coin=USDT.
+    """
 
     enabled: bool = False
     source: str = "upbit"
-    coin: str = "USDT"
-    chain: str = "TRC20"
+    coin: str = "TRX"
+    chain: str = "TRX"
     min_trade_usdt: float = 10.0
-    top_up_usdt: float = 50.0
+    top_up_krw: float = 100_000.0
+    top_up_usdt: float = 50.0  # legacy when coin=USDT
     max_wait_sec: float = 7200.0
-    buy_usdt_from_krw: bool = True
+    buy_from_krw: bool = True
+    convert_to_usdt: bool = True
+
+    @property
+    def buy_usdt_from_krw(self) -> bool:
+        """Alias kept for older call sites."""
+        return self.buy_from_krw
 
 
 @dataclass(frozen=True)
@@ -69,15 +80,25 @@ def _parse_funding(raw: dict[str, Any] | None) -> FundingConfig:
     source = str(raw.get("source") or "upbit").strip().lower()
     if source != "upbit":
         raise ValueError("funding.source currently only supports 'upbit'")
+    coin = str(raw.get("coin") or "TRX").upper()
+    default_chain = "TRX" if coin == "TRX" else "TRC20"
+    chain = str(raw.get("chain") or default_chain).upper()
+    if coin == "TRX":
+        chain = "TRX"
+    buy_from_krw = raw.get("buy_from_krw")
+    if buy_from_krw is None:
+        buy_from_krw = raw.get("buy_usdt_from_krw", True)
     return FundingConfig(
         enabled=bool(raw.get("enabled")),
         source=source,
-        coin=str(raw.get("coin") or "USDT").upper(),
-        chain=str(raw.get("chain") or "TRC20").upper(),
+        coin=coin,
+        chain=chain,
         min_trade_usdt=float(raw.get("min_trade_usdt") or 10.0),
+        top_up_krw=float(raw.get("top_up_krw") or 100_000.0),
         top_up_usdt=float(raw.get("top_up_usdt") or 50.0),
         max_wait_sec=float(raw.get("max_wait_sec") or 7200.0),
-        buy_usdt_from_krw=bool(raw.get("buy_usdt_from_krw", True)),
+        buy_from_krw=bool(buy_from_krw),
+        convert_to_usdt=bool(raw.get("convert_to_usdt", coin == "TRX")),
     )
 
 

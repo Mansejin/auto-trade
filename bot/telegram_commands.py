@@ -13,20 +13,24 @@ from bot.config import Settings
 from bot.display import fmt_money, fmt_qty, fmt_quote, market_ko, mode_ko
 from bot.telegram_notify import TelegramNotifier
 from bot import transfer as xfer
+from bot import rebalance as rebal
 
 logger = logging.getLogger("bot.telegram.cmd")
 
 HELP = """명령어 안내
 
 조회 — 계좌·보유·최근 판단 보기
+자산 — Upbit/Bitget 5:5 배분 현황
 전략 — 지금 쓰는 전략 요약
 로그 — 최근 상태 한 장 보기
 서버 — 오라클 서버 상태
-이체요청 <방향> <코인> <수량> [체인] — 반자동 이체 대기열 등록
-  예: 이체요청 upbit->bitget USDT 50
-  (체인 생략 시 USDT는 TRC20/트론 최저수수료로 고정)
-이체승인 <코드> — 대기 이체 실행
-이체취소 — 대기 이체 취소
+이체요청 <방향> <코인> <수량> [체인] — 반자동 이체 대기열
+  예: 이체요청 upbit->bitget TRX 100
+  방향: upbit->bitget | bitget->upbit
+이체승인 <코드> / 이체취소
+원화준비 <원> — Upbit KRW 목표 (제안→승인)
+리밸런스 — 5:5±밴드 이탈 시 제안 (또는 강제 제안)
+리밸런스승인 <코드> / 리밸런스취소
 ? — 이 안내"""
 
 
@@ -271,6 +275,12 @@ def handle_command(text: str, settings: Settings) -> str | None:
         "/이체취소",
         "/transfer",
         "/xfer",
+        "/자산",
+        "/배분",
+        "/원화준비",
+        "/리밸런스",
+        "/리밸런스승인",
+        "/리밸런스취소",
     }
     if cmd in known or first.startswith("/") or first == "?":
         now = time.time()
@@ -297,6 +307,29 @@ def handle_command(text: str, settings: Settings) -> str | None:
         return xfer.approve_transfer(settings, parts[1])
     if cmd in {"/이체취소"}:
         return xfer.cancel_transfer(settings)
+    if cmd in {"/자산", "/배분"}:
+        snap = rebal.snapshot_equity(settings)
+        return rebal.format_snapshot(
+            snap, target=settings.rebalance_target, band=settings.rebalance_band
+        )
+    if cmd in {"/원화준비"}:
+        parts = raw.split()
+        if len(parts) < 2:
+            return "사용법: /원화준비 <원>  예: /원화준비 500000"
+        try:
+            amt = float(parts[1].replace(",", ""))
+        except ValueError:
+            return "금액은 숫자여야 합니다."
+        return rebal.propose_krw_prepare(settings, amt)
+    if cmd in {"/리밸런스"}:
+        return rebal.propose_rebalance(settings, force=True, reason="telegram")
+    if cmd in {"/리밸런스승인"}:
+        parts = raw.split()
+        if len(parts) < 2:
+            return "사용법: /리밸런스승인 <코드>"
+        return rebal.approve_pending(settings, parts[1])
+    if cmd in {"/리밸런스취소"}:
+        return rebal.cancel_pending(settings)
     if first.startswith("/") or first == "?":
         return f"모르는 명령입니다: {first}\n\n{HELP}"
     return None

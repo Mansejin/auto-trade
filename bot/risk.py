@@ -110,6 +110,52 @@ def refresh_day(risk: RiskState, equity: float) -> RiskState:
     return risk
 
 
+def apply_external_outflow(risk: RiskState, amount: float) -> RiskState:
+    """Lower day-start equity after withdraw/transfer so cash-out is not counted as PnL loss."""
+    if amount <= 0 or risk.day_start_equity <= 0:
+        return risk
+    before = risk.day_start_equity
+    risk.day_start_equity = max(0.0, risk.day_start_equity - amount)
+    logger.info(
+        "외부 출금 반영 — day_start_equity %.2f → %.2f (outflow %.2f)",
+        before,
+        risk.day_start_equity,
+        amount,
+    )
+    return risk
+
+
+def clear_daily_loss_halt(risk: RiskState) -> RiskState:
+    if risk.halt_buys_only and (risk.halt_reason or "").startswith("일일 손실"):
+        risk.trading_halted = False
+        risk.halt_reason = ""
+        risk.halt_buys_only = False
+    return risk
+
+
+def apply_external_outflow(risk: RiskState, amount: float) -> RiskState:
+    """Lower day-start equity after withdraw/transfer so cash-out is not counted as PnL loss."""
+    if amount <= 0 or risk.day_start_equity <= 0:
+        return risk
+    before = risk.day_start_equity
+    risk.day_start_equity = max(0.0, risk.day_start_equity - amount)
+    logger.info(
+        "외부 출금 반영 — day_start_equity %.2f → %.2f (outflow %.2f)",
+        before,
+        risk.day_start_equity,
+        amount,
+    )
+    return risk
+
+
+def clear_daily_loss_halt(risk: RiskState) -> RiskState:
+    if risk.halt_buys_only and (risk.halt_reason or "").startswith("일일 손실"):
+        risk.trading_halted = False
+        risk.halt_reason = ""
+        risk.halt_buys_only = False
+    return risk
+
+
 def check_daily_loss(risk: RiskState, equity: float, max_daily_loss_krw: float) -> RiskState:
     if max_daily_loss_krw <= 0 or risk.day_start_equity <= 0:
         return risk
@@ -122,6 +168,9 @@ def check_daily_loss(risk: RiskState, equity: float, max_daily_loss_krw: float) 
             "신규 매수 중단. 매도는 허용."
         )
         logger.warning(risk.halt_reason)
+    else:
+        # Recovered or day-start rebased after withdraw — lift buys-only halt.
+        clear_daily_loss_halt(risk)
     return risk
 
 

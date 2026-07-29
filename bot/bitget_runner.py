@@ -129,9 +129,31 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
             max_wait = float(intent.get("max_wait_sec") or funding.max_wait_sec)
             started = float(intent.get("started_at") or 0.0)
             age = time.time() - started
+            fund_coin = str(intent.get("coin") or funding.coin or "TRX").upper()
+            do_convert = bool(
+                intent.get(
+                    "convert_to_usdt",
+                    funding.convert_to_usdt if fund_coin == "TRX" else False,
+                )
+            )
+            if fund_coin == "TRX" and do_convert and private is not None:
+                try:
+                    trx_bal = private.spot_available("TRX")
+                    if trx_bal >= 1.0:
+                        conv = xfer.convert_bitget_trx_to_usdt(settings)
+                        usdt = private.available_usdt(symbol)
+                        if not portfolio.in_position:
+                            portfolio.cash = usdt or portfolio.cash
+                        funding_note = conv
+                        logger.info("TRX→USDT 환전: %s | USDT≈%s", conv, usdt)
+                except Exception:
+                    logger.exception("Bitget TRX→USDT 환전 실패")
+                    funding_note = "TRX환전실패(재시도대기)"
             if usdt is not None and usdt >= min_need:
                 force_buy = True
-                funding_note = f"입금확인→진입대기(USDT {usdt:.4f})"
+                funding_note = (
+                    funding_note + " | " if funding_note else ""
+                ) + f"입금확인→진입대기(USDT {usdt:.4f})"
                 logger.info("자동이체 입금 확인 — deferred futures entry usdt=%.4f", usdt)
             elif age > max_wait:
                 expired = intent
@@ -139,12 +161,13 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                 intent = None
                 notify.send(
                     "자동 이체 입금 대기 만료\n"
-                    f"보낸 금액: {expired.get('amount')} {expired.get('coin', 'USDT')}\n"
+                    f"보낸 금액: {expired.get('amount')} {expired.get('coin', 'TRX')}\n"
                     "다음 매수 시그널에서 다시 시도합니다."
                 )
             else:
                 funding_wait = True
-                funding_note = f"입금대기중({int(max_wait - age)}s)"
+                if not funding_note:
+                    funding_note = f"입금대기중({int(max_wait - age)}s,{fund_coin})"
 
         base_asset = symbol.replace("USDT", "") or "BTC"
         pos_txt = (
@@ -345,25 +368,48 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                     risk = record_success(risk)
                     save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
                     return
-                top_up = min(funding.top_up_usdt, settings.transfer_max_amount)
-                top_up = max(top_up, min(min_need, settings.transfer_max_amount))
+                coin_u = (funding.coin or "TRX").upper()
+                chain_u = "TRX" if coin_u == "TRX" else funding.chain
                 try:
-                    detail = xfer.auto_fund_bitget_from_upbit(
-                        settings,
-                        amount=float(f"{top_up:.4f}"),
-                        coin=funding.coin,
-                        chain=funding.chain,
-                        buy_usdt_from_krw=funding.buy_usdt_from_krw,
-                        reason=f"futures_entry_signal:{result.reason}",
-                    )
+                    if coin_u == "TRX":
+                        top_up, trx_px = xfer.plan_trx_withdraw_amount(
+                            top_up_krw=funding.top_up_krw,
+                            transfer_max=settings.transfer_max_amount,
+                        )
+                        detail = xfer.auto_fund_bitget_from_upbit(
+                            settings,
+                            amount=float(f"{top_up:.6f}"),
+                            coin="TRX",
+                            chain="TRX",
+                            buy_from_krw=funding.buy_from_krw,
+                            reason=f"futures_entry_signal:{result.reason}",
+                        )
+                        bridge_line = (
+                            f"Upbit KRW→TRX→Bitget (예산 {funding.top_up_krw:.0f}원, "
+                            f"~{top_up} TRX @ {trx_px:.2f}) → Bitget TRX→USDT"
+                        )
+                    else:
+                        top_up = min(funding.top_up_usdt, settings.transfer_max_amount)
+                        top_up = max(top_up, min(min_need, settings.transfer_max_amount))
+                        detail = xfer.auto_fund_bitget_from_upbit(
+                            settings,
+                            amount=float(f"{top_up:.4f}"),
+                            coin=coin_u,
+                            chain=chain_u,
+                            buy_from_krw=funding.buy_from_krw,
+                            reason=f"futures_entry_signal:{result.reason}",
+                        )
+                        bridge_line = f"Upbit → Bitget {top_up} {coin_u} ({chain_u})"
                     xfer.save_funding_intent(
                         settings,
                         {
                             "status": "awaiting_deposit",
                             "started_at": time.time(),
                             "amount": top_up,
-                            "coin": funding.coin,
-                            "chain": funding.chain,
+                            "top_up_krw": funding.top_up_krw if coin_u == "TRX" else None,
+                            "coin": coin_u,
+                            "chain": chain_u,
+                            "convert_to_usdt": funding.convert_to_usdt if coin_u == "TRX" else False,
                             "min_trade_usdt": min_need,
                             "max_wait_sec": funding.max_wait_sec,
                             "bar_key": bar_key,
@@ -373,9 +419,9 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                     notify.send(
                         "======= 자동 이체 실행 =======\n"
                         f"사유: 선물 진입 시그널 + Bitget USDT 부족 ({avail:.4f} < {min_need})\n"
-                        f"Upbit → Bitget {top_up} {funding.coin} ({funding.chain})\n"
+                        f"{bridge_line}\n"
                         f"{detail}\n"
-                        "입금 확인 후 다음 틱에서 자동 진입합니다.\n"
+                        "입금·환전 확인 후 다음 틱에서 자동 진입합니다.\n"
                         "==============================="
                     )
                 except Exception as e:
