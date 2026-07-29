@@ -58,8 +58,8 @@ below cover only the non-obvious caveats for running things locally (outside Doc
 - Parallel container: `bot-bitget` (`EXCHANGE=bitget`, default `BITGET_PAPER=true`). Category via
   `BITGET_CATEGORY` (alias `BITGET_PRODUCT_TYPE`, default `USDT-FUTURES`).
 - Demo Trading: set `BITGET_PAPER_TRADING=true` **and** Demo API keys (sends `paptrading: 1`).
-- Cursor MCP: `.cursor/mcp.json` runs `npx -y @bitget-ai/bitget-agent-mcp --read-only`. Fill
-  `BITGET_*` env in that file locally (never commit real keys). Official package:
-  https://www.npmjs.com/package/@bitget-ai/bitget-agent-mcp — Agent Hub:
+- Cursor MCP: copy `.cursor/mcp.json.example` → `.cursor/mcp.json` (gitignored) and fill
+  `BITGET_*`. Runs `npx -y @bitget-ai/bitget-agent-mcp --read-only`. Never commit real keys.
+  Official package: https://www.npmjs.com/package/@bitget-ai/bitget-agent-mcp — Agent Hub:
   https://github.com/Bitget-AI/agent_hub
 - Older npm name `bitget-mcp-server` is superseded; prefer `@bitget-ai/bitget-agent-mcp`.
