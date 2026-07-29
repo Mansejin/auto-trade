@@ -506,6 +506,24 @@
       "goal": "desk shows current regime",
       "chg": "Desk ticker + logs/regime-current.json from switcher",
       "status": "shipping"
+    },
+    {
+      "id": "AE6",
+      "goal": "first non-Policy-C alpha: MFI+Williams flush fade",
+      "chg": "Falsified standalone (early OOS PF 0.77) — reports/improve/20260729-ae6-flush-fade.md",
+      "status": "done_falsified"
+    },
+    {
+      "id": "AE6b",
+      "goal": "optional: gate AE6 only on bear/sideways daily labels",
+      "chg": "segment backtests before any Policy map change",
+      "status": "open"
+    },
+    {
+      "id": "AE7",
+      "goal": "alt-data alpha: one hypothesis then fetcher",
+      "chg": "orderbook imbalance OR funding — write falsify plan before scaffolding",
+      "status": "open"
     }
   ],
   "auto_propose_after_report": true,

@@ -1,0 +1,96 @@
+{
+  "name": "Alpha AE6 MFI Williams Flush Fade 4h",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 3,
+  "take_profit": 5,
+  "indicators": [
+    {
+      "type": "mfi",
+      "ref": "mfi14",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "type": "williams_r",
+      "ref": "wr14",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "mfi14.mfi"
+        },
+        "op": "lt",
+        "right": {
+          "type": "literal",
+          "value": 20
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "wr14.williams_r"
+        },
+        "op": "lt",
+        "right": {
+          "type": "literal",
+          "value": -90
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "lt",
+        "right": {
+          "type": "literal",
+          "value": 35
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "mfi14.mfi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 55
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "wr14.williams_r"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": -30
+        }
+      }
+    ]
+  }
+}

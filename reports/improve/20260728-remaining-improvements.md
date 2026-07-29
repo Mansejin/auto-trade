@@ -24,3 +24,5 @@
 
 - Accept 2021-10 participation gap under bull-v2, or explore **sub-regime** routing (not a single-engine swap)
 - Monthly automation will re-check AE4-style candidates via `docs/monthly-automation-prompt.md`
+- **AE6** MFI+Williams flush-fade: **falsified** as standalone alpha — see `reports/improve/20260729-ae6-flush-fade.md`
+- **AE6b/AE7**: regime-gated segment test or one alt-data hypothesis (no empty pipeline)
