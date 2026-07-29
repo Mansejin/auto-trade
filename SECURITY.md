@@ -15,6 +15,7 @@
 - [ ] Bitget 키는 **System-generated (HMAC)** + IP `129.225.205.185`
 - [ ] 봇/이체는 **UTA v3** (`/api/v3/...`) — Classic mix v2 아님
 - [ ] Cursor MCP(`@bitget-ai/bitget-agent-mcp`)는 기본 `--read-only`; 키는 `.cursor/mcp.json`에만 로컬 기입 (커밋 금지)
+- [ ] USDT 이체는 **TRC20(트론)** 만 사용 (봇이 ERC20 등 지정해도 TRC20으로 고정)
 - [ ] 평소 선물/현물 매매만 쓸 때는 **출금(Withdraw) OFF** 권장
 - [ ] 이체 기능을 쓸 때만 Withdraw ON, 사용 후 다시 OFF 검토
 - [ ] `TRANSFER_ENABLED=false` 기본 — 켤 때만:

@@ -8,7 +8,7 @@ import uuid
 
 from bot.broker import PaperBroker
 from bot.config import Settings
-from bot.display import format_status_block, fmt_money, fmt_qty
+from bot.display import format_status_block, fmt_qty, fmt_quote
 from bot.indicators import OHLCV
 from bot.logging_setup import write_latest_status, write_status_json
 from bot.portfolio import Position, Trade, utc_now
@@ -103,7 +103,7 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                 usdt = private.available_usdt(symbol)
                 if not portfolio.in_position:
                     portfolio.cash = usdt
-                logger.info("잔고 조회 성공 | USDT≈%s", fmt_money(usdt))
+                logger.info("잔고 조회 성공 | USDT≈%s", fmt_quote(usdt, "USDT"))
             except Exception:
                 logger.exception("Bitget 잔고 조회 실패")
                 usdt = None
@@ -118,8 +118,10 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
         risk = check_daily_loss(risk, equity_mark, settings.max_daily_loss_krw)
         save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
 
+        base_asset = symbol.replace("USDT", "") or "BTC"
         pos_txt = (
-            f"{fmt_qty(portfolio.position.qty)} @ {fmt_money(portfolio.position.entry_price)}"
+            f"{fmt_qty(portfolio.position.qty)} {base_asset} @ "
+            f"{fmt_quote(portfolio.position.entry_price, 'USDT')}"
             if portfolio.position
             else "없음"
         )
@@ -132,8 +134,9 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
             price=result.price,
             signal=result.signal.value,
             reason=result.reason,
-            krw=usdt,
-            base="USDT",
+            cash=usdt,
+            quote="USDT",
+            base=base_asset,
             base_qty=portfolio.position.qty if portfolio.position else 0.0,
             position=pos_txt,
             values=values,
@@ -144,6 +147,7 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
             {
                 "mode": mode,
                 "exchange": "bitget",
+                "quote_currency": "USDT",
                 "strategy": strategy.name,
                 "strategy_file": settings.strategy_path.name,
                 "market": symbol,
@@ -152,6 +156,8 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                 "signal": result.signal.value,
                 "reason": result.reason,
                 "usdt": usdt,
+                "krw": None,
+                "cash": usdt,
                 "in_position": portfolio.in_position,
                 "position": None
                 if not portfolio.position
@@ -239,6 +245,7 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                         price=result.price,
                         reason=result.reason,
                         order_id="paper",
+                        quote="USDT",
                     )
                 )
             else:
@@ -254,6 +261,7 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                         order_id="paper",
                         entry_price=None,
                         fee=last.fee if last else 0.0,
+                        quote="USDT",
                     )
                 )
             portfolio.last_signal_bar = bar_key
@@ -320,6 +328,7 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                     price=result.price,
                     reason=result.reason,
                     order_id=str(order.get("orderId") or oid),
+                    quote="USDT",
                 )
             )
         else:
@@ -369,6 +378,7 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
                     order_id=str(order.get("orderId") or oid),
                     entry_price=entry_price,
                     fee=qty * result.price * settings.fee_rate,
+                    quote="USDT",
                 )
             )
 

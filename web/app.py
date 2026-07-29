@@ -258,10 +258,23 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
     recent = trades[-8:] if isinstance(trades, list) else []
 
     market = str(status.get("market") or state.get("market") or "KRW-BTC")
+    exchange = str(status.get("exchange") or state.get("exchange") or "upbit").lower()
+    quote = str(status.get("quote_currency") or ("USDT" if exchange == "bitget" else "KRW")).upper()
     tv_symbol = "UPBIT:BTCKRW"
     if market.startswith("KRW-"):
         base = market.split("-", 1)[1]
         tv_symbol = f"UPBIT:{base}KRW"
+    elif exchange == "bitget" or market.upper().endswith("USDT"):
+        sym = market.upper().replace("-", "")
+        if not sym.endswith("USDT"):
+            sym = f"{sym}USDT"
+        tv_symbol = f"BITGET:{sym}"
+
+    # Normalize cash field for the desk ticker
+    if status.get("cash") is None and status.get("usdt") is not None:
+        status = {**status, "cash": status.get("usdt")}
+    status.setdefault("quote_currency", quote)
+    status.setdefault("exchange", exchange)
 
     return {
         "ok": True,
@@ -275,6 +288,8 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
         "tv_interval": _tf_to_tv(str(status.get("timeframe") or "60")),
         "market": market,
         "timeframe": str(status.get("timeframe") or "1h"),
+        "quote_currency": quote,
+        "exchange": exchange,
     }
 
 

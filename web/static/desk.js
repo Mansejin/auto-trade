@@ -12,9 +12,35 @@
   let tvWidget = null;
   let lastTvKey = "";
 
-  function money(v) {
+  function money(v, quote) {
     if (v == null || Number.isNaN(Number(v))) return "—";
-    return `${Math.round(Number(v)).toLocaleString("ko-KR")}원`;
+    const q = String(quote || "KRW").toUpperCase();
+    const n = Number(v);
+    if (q === "KRW") {
+      return `${Math.round(n).toLocaleString("ko-KR")}원`;
+    }
+    const digits = Math.abs(n) >= 100 ? 2 : 4;
+    const body = n.toLocaleString("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: digits,
+    });
+    return `${body} ${q}`;
+  }
+
+  function cashValue(s) {
+    if (s.cash != null) return s.cash;
+    if (s.usdt != null) return s.usdt;
+    return s.krw;
+  }
+
+  function quoteOf(s, data) {
+    return (
+      s.quote_currency ||
+      data.quote_currency ||
+      (String(s.exchange || data.exchange || "").toLowerCase() === "bitget"
+        ? "USDT"
+        : "KRW")
+    );
   }
 
   function qty(v) {
@@ -85,7 +111,7 @@
     });
   }
 
-  function renderTrades(rows) {
+  function renderTrades(rows, quote) {
     const ul = document.getElementById("trades");
     const empty = document.getElementById("trades-empty");
     ul.innerHTML = "";
@@ -101,7 +127,7 @@
       sideEl.className = side === "buy" ? "side-buy" : "side-sell";
       sideEl.textContent = side === "buy" ? "매수" : "매도";
       const mid = document.createElement("span");
-      mid.textContent = `${money(t.price)} · ${qty(t.qty)}`;
+      mid.textContent = `${money(t.price, quote)} · ${qty(t.qty)}`;
       const ts = document.createElement("span");
       ts.className = "muted";
       ts.textContent = String(t.ts || "").replace("T", " ").slice(0, 19);
@@ -137,11 +163,16 @@
     modeEl.textContent = s.mode === "LIVE" ? "실주문" : s.mode === "PAPER" ? "모의" : s.mode || "—";
     modeEl.className = "pill" + (s.mode === "LIVE" ? " live" : "");
 
+    const quote = quoteOf(s, data);
+    const cashLabel = document.getElementById("m-cash-label");
+    if (cashLabel) cashLabel.textContent = quote === "KRW" ? "원화" : quote;
+
     document.getElementById("m-signal").textContent = SIGNAL_KO[s.signal] || s.signal || "—";
-    document.getElementById("m-krw").textContent = money(s.krw);
+    document.getElementById("m-krw").textContent = money(cashValue(s), quote);
     if (s.position && s.position.qty) {
       document.getElementById("m-pos").textContent = `${qty(s.position.qty)} @ ${money(
-        s.position.entry_price
+        s.position.entry_price,
+        quote
       )}`;
     } else {
       document.getElementById("m-pos").textContent = "없음";
@@ -165,7 +196,7 @@
     }
 
     document.getElementById("latest-text").textContent = data.latest_text || "(상태 텍스트 없음)";
-    renderTrades(data.recent_trades || []);
+    renderTrades(data.recent_trades || [], quote);
 
     const symbol = data.tv_symbol || "UPBIT:BTCKRW";
 

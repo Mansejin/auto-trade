@@ -110,6 +110,48 @@ def parse_direction(token: str) -> str | None:
     return aliases.get(t)
 
 
+# Prefer lowest-fee networks for cross-exchange USDT (Tron TRC20 ≪ ERC20).
+_CHEAPEST_CHAIN: dict[str, str] = {
+    "USDT": "TRC20",
+    "USDC": "TRC20",
+    "TRX": "TRC20",
+}
+
+_CHAIN_ALIASES: dict[str, str] = {
+    "TRON": "TRC20",
+    "TRX": "TRC20",
+    "TRC-20": "TRC20",
+    "TRC20": "TRC20",
+    "ETH": "ERC20",
+    "ETHEREUM": "ERC20",
+    "ERC-20": "ERC20",
+    "ERC20": "ERC20",
+    "BSC": "BEP20",
+    "BNB": "BEP20",
+    "BEP20": "BEP20",
+    "BEP-20": "BEP20",
+    "POLYGON": "POLYGON",
+    "MATIC": "POLYGON",
+    "BTC": "BTC",
+    "BITCOIN": "BTC",
+}
+
+
+def normalize_chain(raw: str | None, coin: str, default: str) -> tuple[str, str | None]:
+    """Return (chain, note). Always pick cheapest for known coins (e.g. USDT→TRC20)."""
+    coin_u = coin.upper()
+    preferred = _CHEAPEST_CHAIN.get(coin_u) or (default or "TRC20").strip()
+    if not raw or not str(raw).strip():
+        return preferred, None
+
+    key = str(raw).strip().upper().replace(" ", "")
+    mapped = _CHAIN_ALIASES.get(key, key)
+    if coin_u in _CHEAPEST_CHAIN and mapped != preferred:
+        note = f"수수료 절감을 위해 {mapped} 대신 {preferred}(최저수수료)로 고정했습니다."
+        return preferred, note
+    return mapped, None
+
+
 def request_transfer(
     settings: Settings,
     *,
@@ -132,7 +174,9 @@ def request_transfer(
         return f"한도 초과 — 최대 {settings.transfer_max_amount} 까지 가능합니다."
 
     coin_u = coin.upper()
-    chain_u = (chain or settings.transfer_default_chain).strip()
+    chain_u, chain_note = normalize_chain(
+        chain, coin_u, settings.transfer_default_chain or "TRC20"
+    )
     if direction == "upbit_to_bitget":
         dest = settings.transfer_whitelist_bitget.get(coin_u)
         if not dest:
@@ -168,20 +212,25 @@ def request_transfer(
     )
     save_pending(settings, req)
     arrow = "Upbit → Bitget" if direction == "upbit_to_bitget" else "Bitget → Upbit"
-    return "\n".join(
+    lines = [
+        "======= 이체 요청 (미실행) =======",
+        f"코드: {code}",
+        f"방향: {arrow}",
+        f"자산: {amount} {coin_u}",
+        f"체인: {chain_u} (최저수수료 우선)",
+        f"목적지(화이트리스트): {dest[:8]}…{dest[-6:]}",
+    ]
+    if chain_note:
+        lines.append(f"참고: {chain_note}")
+    lines.extend(
         [
-            "======= 이체 요청 (미실행) =======",
-            f"코드: {code}",
-            f"방향: {arrow}",
-            f"자산: {amount} {coin_u}",
-            f"체인: {chain_u}",
-            f"목적지(화이트리스트): {dest[:8]}…{dest[-6:]}",
             "",
             f"실행: /이체승인 {code}",
             "취소: /이체취소",
             "===============================",
         ]
     )
+    return "\n".join(lines)
 
 
 def cancel_transfer(settings: Settings) -> str:

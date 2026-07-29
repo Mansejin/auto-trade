@@ -10,7 +10,7 @@ from pathlib import Path
 import httpx
 
 from bot.config import Settings
-from bot.display import fmt_money, fmt_qty, market_ko, mode_ko
+from bot.display import fmt_money, fmt_qty, fmt_quote, market_ko, mode_ko
 from bot.telegram_notify import TelegramNotifier
 from bot import transfer as xfer
 
@@ -23,7 +23,8 @@ HELP = """명령어 안내
 로그 — 최근 상태 한 장 보기
 서버 — 오라클 서버 상태
 이체요청 <방향> <코인> <수량> [체인] — 반자동 이체 대기열 등록
-  예: 이체요청 upbit->bitget USDT 50 TRC20
+  예: 이체요청 upbit->bitget USDT 50
+  (체인 생략 시 USDT는 TRC20/트론 최저수수료로 고정)
 이체승인 <코드> — 대기 이체 실행
 이체취소 — 대기 이체 취소
 ? — 이 안내"""
@@ -90,19 +91,23 @@ def _cmd_status(settings: Settings) -> str:
             )
             try:
                 usdt = client.available_usdt(str(market).replace("-", "") if market != "-" else "BTCUSDT")
-                lines.append(f"Bitget USDT(가용≈): {fmt_money(usdt)}")
+                lines.append(f"Bitget USDT(가용≈): {fmt_quote(usdt, 'USDT')}")
             finally:
                 client.close()
         except Exception as e:
             lines.append(f"Bitget 잔고 조회 실패: {type(e).__name__}")
     else:
         cash = float(state.get("cash") or settings.paper_cash)
-        lines.append(f"모의 현금: {fmt_money(cash)}")
+        if settings.exchange == "bitget":
+            lines.append(f"모의 현금: {fmt_quote(cash, 'USDT')}")
+        else:
+            lines.append(f"모의 현금: {fmt_quote(cash, 'KRW')}")
 
+    quote = "USDT" if settings.exchange == "bitget" else "KRW"
     if pos:
         lines.append(
             f"보유: {fmt_qty(float(pos.get('qty') or 0))}개 "
-            f"(평균 {fmt_money(float(pos.get('entry_price') or 0))}원)"
+            f"(평균 {fmt_quote(float(pos.get('entry_price') or 0), quote)})"
         )
         lines.append(f"진입 시각: {pos.get('opened_at') or '-'}")
     else:
@@ -113,7 +118,7 @@ def _cmd_status(settings: Settings) -> str:
         last = trades[-1]
         lines.append(
             f"최근 거래: {_side_ko(str(last.get('side')))} "
-            f"{fmt_money(float(last.get('price') or 0))}원 "
+            f"{fmt_quote(float(last.get('price') or 0), quote)} "
             f"({last.get('ts') or '-'})"
         )
 
@@ -303,8 +308,9 @@ def _cmd_transfer_request(raw: str, settings: Settings) -> str:
     if len(parts) < 4:
         return (
             "사용법: /이체요청 <방향> <코인> <수량> [체인]\n"
-            "예: /이체요청 upbit->bitget USDT 50 TRC20\n"
-            "방향: upbit->bitget | bitget->upbit"
+            "예: /이체요청 upbit->bitget USDT 50\n"
+            "방향: upbit->bitget | bitget->upbit\n"
+            "체인 생략 시 USDT는 TRC20(트론, 최저수수료) 고정"
         )
     direction = xfer.parse_direction(parts[1])
     if not direction:

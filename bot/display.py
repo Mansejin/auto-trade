@@ -42,8 +42,20 @@ _KEY_LABELS = {
 
 
 def fmt_money(v: float) -> str:
-    """KRW display — never show decimals."""
+    """KRW integer display (legacy helper)."""
     return f"{int(round(v)):,}"
+
+
+def fmt_quote(v: float, quote: str = "KRW") -> str:
+    """Format a price/amount with the correct quote unit."""
+    q = (quote or "KRW").upper()
+    if q == "KRW":
+        return f"{int(round(v)):,}원"
+    if abs(v) >= 100:
+        num = f"{v:,.2f}".rstrip("0").rstrip(".")
+    else:
+        num = f"{v:,.4f}".rstrip("0").rstrip(".")
+    return f"{num} {q}"
 
 
 def fmt_qty(v: float) -> str:
@@ -70,6 +82,9 @@ def mode_ko(mode: str) -> str:
         return "실주문"
     if m == "PAPER":
         return "모의투자"
+    if "/BITGET" in m:
+        base = "실주문" if m.startswith("LIVE") else "모의투자"
+        return f"{base} (Bitget)"
     return mode
 
 
@@ -78,6 +93,8 @@ def market_ko(market: str) -> str:
         "KRW-BTC": "비트코인",
         "KRW-ETH": "이더리움",
         "KRW-XRP": "리플",
+        "BTCUSDT": "비트코인",
+        "ETHUSDT": "이더리움",
     }
     base = names.get(market)
     return f"{base} ({market})" if base else market
@@ -113,16 +130,23 @@ def _label_for_key(key: str) -> str:
     return key
 
 
-def _fmt_indicator_value(key: str, value: float) -> str:
-    # Oscillators: 1 decimal; prices: integer won
+def _fmt_indicator_value(key: str, value: float, quote: str = "KRW") -> str:
+    # Oscillators: 1 decimal; prices: quote-aware
     osc_parts = ("adx", "rsi", "pdi", "mdi", "stoch", "mfi", "williams", "histogram")
     low = key.lower()
     if any(p in low for p in osc_parts):
         return f"{value:.1f}"
-    return fmt_money(value)
+    q = (quote or "KRW").upper()
+    if q == "KRW":
+        return fmt_money(value)
+    if abs(value) >= 100:
+        return f"{value:,.2f}".rstrip("0").rstrip(".")
+    return f"{value:,.4f}".rstrip("0").rstrip(".")
 
 
-def format_indicators(values: dict[str, float], limit: int = 8) -> list[str]:
+def format_indicators(
+    values: dict[str, float], limit: int = 8, *, quote: str = "KRW"
+) -> list[str]:
     """Return Korean bullet lines; dedupe alias keys."""
     seen_labels: set[str] = set()
     lines: list[str] = []
@@ -137,7 +161,7 @@ def format_indicators(values: dict[str, float], limit: int = 8) -> list[str]:
         if label in seen_labels:
             continue
         seen_labels.add(label)
-        lines.append(f"· {label}: {_fmt_indicator_value(key, value)}")
+        lines.append(f"· {label}: {_fmt_indicator_value(key, value, quote)}")
         if len(lines) >= limit:
             break
     return lines
@@ -152,12 +176,18 @@ def format_status_block(
     price: float,
     signal: str,
     reason: str,
-    krw: float | None,
+    krw: float | None = None,
+    cash: float | None = None,
+    quote: str = "KRW",
     base: str,
     base_qty: float | None,
     position: str,
     values: dict[str, float],
 ) -> str:
+    q = (quote or "KRW").upper()
+    cash_v = cash if cash is not None else krw
+    cash_label = "원화 잔고" if q == "KRW" else f"{q} 잔고"
+
     lines = [
         "======= 봇 상태 =======",
         f"시각: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
@@ -165,16 +195,16 @@ def format_status_block(
         f"전략: {strategy}",
         f"종목: {market_ko(market)}",
         f"봉간격: {timeframe}",
-        f"현재가: {fmt_money(price)}원",
+        f"현재가: {fmt_quote(price, q)}",
         f"판단: {signal_ko(signal)} — {reason_ko(reason)}",
         f"보유: {position}",
     ]
-    if krw is not None:
-        lines.append(f"원화 잔고: {fmt_money(krw)}원")
+    if cash_v is not None:
+        lines.append(f"{cash_label}: {fmt_quote(cash_v, q)}")
     if base_qty is not None:
         lines.append(f"{base} 잔고: {fmt_qty(base_qty)}")
 
-    ind = format_indicators(values)
+    ind = format_indicators(values, quote=q)
     if ind:
         lines.append("")
         lines.append("---- 주요 지표 ----")

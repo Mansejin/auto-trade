@@ -240,6 +240,8 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
             settings.log_dir,
             {
                 "mode": mode,
+                "exchange": "upbit",
+                "quote_currency": "KRW",
                 "strategy": strategy.name,
                 "strategy_file": settings.strategy_path.name,
                 "market": strategy.market,
