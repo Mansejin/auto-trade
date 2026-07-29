@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v15",
-  "slug": "daytrade-bb-rsi-div-v15",
-  "hypothesis": "BTC daytrade long-only: while close stays above BB mid, low tags BB mid (mid-support bounce) with RSI>45 and RSI>rsi_signal; exit BB upper or RSI≥70.",
+  "active_card": "daytrade-bb-rsi-div-v16",
+  "slug": "daytrade-bb-rsi-div-v16",
+  "hypothesis": "BTC daytrade long-only: BB mid rising (mid>mid[5]) + low tags BB lower with close reclaiming above lower + RSI<40; exit BB mid or RSI≥60.",
   "hypers": {
-    "pattern": "mid_support_bounce",
-    "rsi_floor": 45,
-    "exit": "bb_upper_or_rsi70"
+    "pattern": "mid_slope_lower_bounce",
+    "rsi_os": 40,
+    "exit": "bb_mid_or_rsi60"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-17.07%",
-      "profit_factor": "0.85",
-      "trades": 158,
+      "total_return": "-12.97%",
+      "profit_factor": "0.99",
+      "trades": 136,
       "benchmark": "+3.26%",
-      "trades_per_day": 5.27
+      "trades_per_day": 4.53
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-18.26%",
-      "profit_factor": "0.72",
-      "trades": 136,
+      "total_return": "-20.20%",
+      "profit_factor": "0.67",
+      "trades": 125,
       "benchmark": "-16.19%",
-      "trades_per_day": 4.53
+      "trades_per_day": 4.17
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-9.92%",
-      "profit_factor": "1.20",
-      "trades": 129,
+      "total_return": "-11.40%",
+      "profit_factor": "0.93",
+      "trades": 110,
       "benchmark": "-4.12%",
-      "trades_per_day": 4.3
+      "trades_per_day": 3.67
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 14,
+  "consecutive_fails": 15,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB mid-support bounce(위유지+low터치) + RSI>45·RSI>signal → upper/RSI70 — v15 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v14",
-  "updated_at": "2026-07-29T19:51:39Z"
+  "next_action": "BB mid 상승 필터 + lower tag/reclaim + RSI<40 → mid/RSI60 — v16 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v15",
+  "updated_at": "2026-07-29T20:01:10Z"
 }
