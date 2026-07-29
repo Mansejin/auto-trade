@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v5",
-  "slug": "daytrade-bb-rsi-div-v5",
-  "hypothesis": "BTC daytrade long-only: while close below BB middle, RSI crosses above rsi_signal with RSI<40 (turn in lower half), fade to BB mid or RSI≥55.",
+  "active_card": "daytrade-bb-rsi-div-v6",
+  "slug": "daytrade-bb-rsi-div-v6",
+  "hypothesis": "BTC daytrade long-only: close cross_above BB lower AND RSI cross_above rsi_signal (reclaim+turn), ride to BB upper or RSI≥65 (not mid fade).",
   "hypers": {
-    "rsi_cap": 40,
-    "entry_zone": "bb_middle",
-    "rsi_exit": 55
+    "entry": "bb_lower_reclaim+rsi_signal_cross",
+    "exit_band": "bb_upper",
+    "rsi_exit": 65
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
+      "total_return": "-6.74%",
+      "profit_factor": "0.91",
+      "trades": 63,
       "benchmark": "+3.26%",
-      "trades_per_day": 0.0
+      "trades_per_day": 2.1
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
+      "total_return": "-11.34%",
+      "profit_factor": "0.76",
+      "trades": 77,
       "benchmark": "-16.19%",
-      "trades_per_day": 0.0
+      "trades_per_day": 2.57
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
+      "total_return": "-7.41%",
+      "profit_factor": "0.91",
+      "trades": 70,
       "benchmark": "-4.12%",
-      "trades_per_day": 0.0
+      "trades_per_day": 2.33
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 4,
+  "consecutive_fails": 5,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB mid 아래 + RSI가 rsi_signal cross_above(RSI<40) 후 BB mid/RSI55 페이드 — v5 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v4",
-  "updated_at": "2026-07-29T18:11:03Z"
+  "next_action": "BB lower reclaim + RSI/signal cross 후 BB upper/RSI65 라이드 — v6 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v5",
+  "updated_at": "2026-07-29T18:21:30Z"
 }
