@@ -1,29 +1,29 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v9",
-  "slug": "daytrade-bb-rsi-div-v9",
-  "hypothesis": "BTC daytrade long-only: below BB middle, hidden bull div (price HL + RSI LL lookback 5) with RSI<50, ride to BB upper or RSI≥60.",
+  "active_card": "daytrade-bb-rsi-div-v10",
+  "slug": "daytrade-bb-rsi-div-v10",
+  "hypothesis": "BTC daytrade long-only: OR of (BB lower + regular bull LL/HL lookback4 RSI<48) OR (BB mid + hidden bull HL/LL lookback4 RSI<48); exit BB mid or RSI≥55.",
   "hypers": {
-    "lookback": 5,
-    "rsi_cap": 50,
-    "exit": "bb_upper_or_rsi60"
+    "lookback": 4,
+    "rsi_cap": 48,
+    "exit": "bb_mid_or_rsi55"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "-0.58%",
-      "profit_factor": "1.74",
-      "trades": 10,
+      "total_return": "-1.72%",
+      "profit_factor": "0.42",
+      "trades": 8,
       "benchmark": "+3.26%",
-      "trades_per_day": 0.33
+      "trades_per_day": 0.27
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-4.85%",
-      "profit_factor": "0.20",
+      "total_return": "-3.16%",
+      "profit_factor": "0.38",
       "trades": 11,
       "benchmark": "-16.19%",
       "trades_per_day": 0.37
@@ -32,18 +32,18 @@
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-3.31%",
-      "profit_factor": "0.33",
-      "trades": 12,
+      "total_return": "-3.95%",
+      "profit_factor": "0.28",
+      "trades": 11,
       "benchmark": "-4.12%",
-      "trades_per_day": 0.4
+      "trades_per_day": 0.37
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 8,
+  "consecutive_fails": 9,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB mid 이하 + price HL/RSI LL(lookback5) RSI<50 → upper/RSI60 히든불 — v9 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v8",
-  "updated_at": "2026-07-29T18:51:30Z"
+  "next_action": "정규+히든불 OR(lookback4) RSI<48 → mid/RSI55 — v10 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v9",
+  "updated_at": "2026-07-29T19:01:45Z"
 }
