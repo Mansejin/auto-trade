@@ -39,11 +39,13 @@ below cover only the non-obvious caveats for running things locally (outside Doc
 
 ### Running the desk dashboard (non-obvious)
 
-- Fail-closed: if `DASHBOARD_TOKEN` is empty every route returns unauthorized; if set it must be
-  >= 8 chars. Log in by POSTing the token to `/login` (or entering it on the login page); it is
-  stored as an httpOnly cookie. `?token=` in the URL is intentionally not accepted.
+- Fail-closed: if `DASHBOARD_TOKEN` is empty the status API stays unauthorized; if set it must be
+  >= 32 chars. Log in by POSTing the token + CSRF hidden field to `/login` (or use the login page);
+  auth is stored as an httpOnly cookie. `?token=` in the URL is intentionally not accepted.
+- Rate limiting uses `X-Real-IP` (set by nginx/Cloudflare Worker), not client `X-Forwarded-For`.
 - Run uvicorn from the `web/` directory (`uvicorn app:app`), since the static dir is resolved
-  relative to `app.py`.
+  relative to `app.py`. Use `--forwarded-allow-ips=` so uvicorn does not trust client
+  `X-Forwarded-For` for `request.client.host` (rate limiting uses `X-Real-IP` or the peer).
 - The desk does not talk to the bot over the network — it reads the bot's shared files
   (`logs/status.json`, `logs/latest_status.txt`, `data/state.json`, `data/risk.json`). Point the
   desk's `LOG_DIR`/`STATE_PATH`/`RISK_PATH` at the same dirs the bot writes to so it shows live status.

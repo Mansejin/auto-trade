@@ -27,6 +27,7 @@
       </div>
       <p class="lede">봇 현황을 보려면 로그인하세요.</p>
       <form class="login-form" method="post" action="login">
+        <input type="hidden" name="csrf" value="{{CSRF}}" />
         <label for="token">비밀번호</label>
         <input id="token" name="token" type="password" autocomplete="current-password" required autofocus />
         <button type="submit">로그인</button>

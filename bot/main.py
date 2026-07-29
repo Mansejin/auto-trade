@@ -193,7 +193,7 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
             krw = portfolio.cash
             base_qty = portfolio.position.qty if portfolio.position else 0.0
 
-        risk = load_risk(settings.state_path)
+        risk = load_risk(settings.state_path, integrity_key=settings.risk_integrity_key)
         if private is not None and krw is not None:
             equity_mark = krw + (
                 portfolio.position.qty * result.price if portfolio.position else 0.0
@@ -204,7 +204,7 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
         risk = check_daily_loss(risk, equity_mark, settings.max_daily_loss_krw)
         if risk.trading_halted:
             _notify_halt(notify, risk.halt_reason)
-        save_risk(settings.state_path, risk)
+        save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
 
         if portfolio.position:
             pos_txt = (
@@ -276,13 +276,13 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
                 extra={"strategy": strategy.name, "market": strategy.market, "mode": mode},
             )
             risk = record_success(risk)
-            save_risk(settings.state_path, risk)
+            save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
             return
 
         if portfolio.last_signal_bar == bar_key:
             logger.info("이미 처리한 봉(%s) — 중복 주문 건너뜀", bar_key)
             risk = record_success(risk)
-            save_risk(settings.state_path, risk)
+            save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
             return
 
         is_buy = result.signal == Signal.BUY
@@ -290,13 +290,13 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
             logger.warning("매수 생략 — %s", risk.halt_reason or "거래 중단")
             trades.info("BUY SKIP | halted | %s", risk.halt_reason)
             risk = record_success(risk)
-            save_risk(settings.state_path, risk)
+            save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
             return
         if (not is_buy) and not allow_sell(risk):
             logger.warning("매도 생략 — %s", risk.halt_reason or "거래 중단")
             trades.info("SELL SKIP | halted | %s", risk.halt_reason)
             risk = record_success(risk)
-            save_risk(settings.state_path, risk)
+            save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
             return
 
         if settings.paper:
@@ -308,7 +308,7 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
                 if buy_budget < 5000:
                     logger.warning("PAPER 매수 생략 — 예산 부족 %s원", fmt_money(buy_budget))
                     risk = record_success(risk)
-                    save_risk(settings.state_path, risk)
+                    save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
                     return
             portfolio = broker.execute(
                 portfolio,
@@ -369,7 +369,7 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
             risk = refresh_day(risk, portfolio.equity(result.price))
             risk = check_daily_loss(risk, portfolio.equity(result.price), settings.max_daily_loss_krw)
             risk = record_success(risk)
-            save_risk(settings.state_path, risk)
+            save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
             if risk.trading_halted:
                 _notify_halt(notify, risk.halt_reason)
             return
@@ -394,7 +394,7 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
                 )
                 # Do NOT claim bar — allow retry after deposit
                 risk = record_success(risk)
-                save_risk(settings.state_path, risk)
+                save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
                 return
 
             identifier = UpbitPrivate.make_identifier("b")
@@ -485,7 +485,7 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
                 logger.info("매도 생략 — 봇 포지션 없음 (거래소 잔고 전량매도 안 함)")
                 trades.info("LIVE SELL SKIP | %s | reason=no_bot_position", strategy.market)
                 risk = record_success(risk)
-                save_risk(settings.state_path, risk)
+                save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
                 return
 
             exch = private.available_balance(base)
@@ -501,7 +501,7 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
                     extra={"strategy": strategy.name, "market": strategy.market, "mode": mode},
                 )
                 risk = record_success(risk)
-                save_risk(settings.state_path, risk)
+                save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
                 return
 
             entry_price = portfolio.position.entry_price
@@ -600,7 +600,7 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
         risk = refresh_day(risk, live_eq)
         risk = check_daily_loss(risk, live_eq, settings.max_daily_loss_krw)
         risk = record_success(risk)
-        save_risk(settings.state_path, risk)
+        save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
         if risk.trading_halted:
             _notify_halt(notify, risk.halt_reason)
     finally:
@@ -661,8 +661,8 @@ def main() -> None:
             run_once(settings, trades, notify)
         except Exception:
             logger.exception("틱 처리 중 오류 — 다음 주기에 재시도합니다.")
-            risk = record_error(load_risk(settings.state_path), settings.max_consecutive_errors)
-            save_risk(settings.state_path, risk)
+            risk = record_error(load_risk(settings.state_path, integrity_key=settings.risk_integrity_key), settings.max_consecutive_errors)
+            save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
             write_latest_status(
                 settings.log_dir,
                 f"시각      : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"

@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+from bot.integrity import INTEGRITY_FIELD, attach_integrity, restrict_path_mode, verify_dict
+
 logger = logging.getLogger(__name__)
 
 
@@ -46,23 +48,36 @@ def risk_path(state_path: Path) -> Path:
     return state_path.with_name("risk.json")
 
 
-def load_risk(state_path: Path) -> RiskState:
+def load_risk(state_path: Path, *, integrity_key: str = "") -> RiskState:
     path = risk_path(state_path)
     if not path.exists():
         return RiskState()
     try:
-        return RiskState.from_dict(json.loads(path.read_text(encoding="utf-8")))
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        key = integrity_key.strip()
+        if key and raw.get(INTEGRITY_FIELD) and not verify_dict(raw, key):
+            logger.error("risk.json integrity verification failed — halting trading")
+            return RiskState(
+                trading_halted=True,
+                halt_reason="risk.json integrity check failed (possible tampering)",
+            )
+        if key and raw and not raw.get(INTEGRITY_FIELD):
+            logger.warning("risk.json lacks integrity signature; signing on next save")
+        body = {k: v for k, v in raw.items() if k != INTEGRITY_FIELD}
+        return RiskState.from_dict(body)
     except Exception:
         logger.exception("risk.json 로드 실패 — 초기화")
         return RiskState()
 
 
-def save_risk(state_path: Path, risk: RiskState) -> None:
+def save_risk(state_path: Path, risk: RiskState, *, integrity_key: str = "") -> None:
     path = risk_path(state_path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    payload = attach_integrity(risk.to_dict(), integrity_key.strip())
     tmp = path.with_suffix(path.suffix + ".tmp")
-    tmp.write_text(json.dumps(risk.to_dict(), ensure_ascii=False, indent=2), encoding="utf-8")
+    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(path)
+    restrict_path_mode(path)
 
 
 def today_key() -> str:

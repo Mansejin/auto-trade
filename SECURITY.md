@@ -19,7 +19,7 @@ ORDER_FRACTION=0.5          # 권장: 전액(1.0) 지양
 MAX_ORDER_KRW=10000         # 1회 상한
 MAX_DAILY_LOSS_KRW=3000     # 일일 손실 시 신규 매수 중단 (0=끔)
 MAX_CONSECUTIVE_ERRORS=5    # 연속 오류 시 주문 전면 중단
-DASHBOARD_TOKEN=긴-랜덤-문자열   # 최소 8자, 권장 16자+
+DASHBOARD_TOKEN=긴-랜덤-문자열   # 최소 32자 (openssl rand -hex 32 권장)
 ```
 
 - [ ] `chmod 600 .env`
@@ -34,10 +34,14 @@ edge는 **호스트 80만 공개**, 8080은 `127.0.0.1` 바인딩(로컬 디버�
 
 ## 4. DESK / 프록시 (적용됨)
 
-- 로그인 실패 IP당 5분 8회 제한
+- 로그인 실패 IP당 5분 8회 제한 (`X-Real-IP` 기준 — 클라이언트 XFF 스푸핑 무시)
+- nginx `/login` edge rate limit (1r/s, burst 5)
+- 로그인/로그아웃 CSRF 토큰 (HMAC, `DASHBOARD_TOKEN` 기반)
 - `?token=` 쿼리 인증 제거 (쿠키/Bearer만)
-- 보안 헤더: nosniff / DENY frame / no-referrer
-- Worker는 `/autotrade*` + GET/HEAD/POST만 전달, hop-by-hop 헤더 최소화
+- CSP + 보안 헤더: nosniff / DENY frame / no-referrer
+- Worker → origin **HTTPS** (`https://autotrade-origin.mansejin.com`)
+- LIVE 시 `risk.json` HMAC 무결성 (`UPBIT_SECRET_KEY` 기반, 변조 시 거래 중단)
+- `data/state.json`, `data/risk.json` 저장 시 `chmod 600`
 
 ## 5. mem-guard sudo 최소화
 
@@ -51,7 +55,9 @@ sudo visudo -cf /etc/sudoers.d/mem-guard
 
 ## 6. 중단 해제
 
-연속 오류/일일 손실로 중단되면 `data/risk.json`의 `trading_halted`를 `false`로 돌리거나 파일을 삭제한 뒤 컨테이너를 재시작합니다. 원인 확인 후에만 해제하세요.
+연속 오류/일일 손실로 중단되면 원인 확인 후 `data/risk.json`을 수정합니다.  
+LIVE 모드에서는 파일에 `_integrity` HMAC이 포함되므로, 수동 편집 시 서명이 깨지면 **거래가 자동 중단**됩니다.  
+안전한 해제: 봇 중지 → `risk.json` 삭제 또는 `trading_halted`/`halt_buys_only`/`halt_reason`만 수정 후 봇 재시작(다음 save 시 재서명).
 
 ## 7. 키 재발급 후 서버 반영
 
