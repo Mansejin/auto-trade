@@ -25,4 +25,6 @@
 - Accept 2021-10 participation gap under bull-v2, or explore **sub-regime** routing (not a single-engine swap)
 - Monthly automation will re-check AE4-style candidates via `docs/monthly-automation-prompt.md`
 - **AE6** MFI+Williams flush-fade: **falsified** as standalone alpha — see `reports/improve/20260729-ae6-flush-fade.md`
-- **AE6b/AE7**: regime-gated segment test or one alt-data hypothesis (no empty pipeline)
+- **AE6b** regime-gated AE6: **falsified** (sparse + deep-bear PF 0.13) — `reports/improve/20260729-ae6b-regime-gate.md`
+- **AE7/AE7b** funding extremes: AE7 untestable at −0.05% in available history; AE7b relative 10th-pct **falsified** on holdout mean — `reports/improve/20260729-ae7*.md`
+- **Next open:** collect longer funding/orderbook history forward (no threshold mining); or a new OHLCV hypothesis **orthogonal** to flush-fade

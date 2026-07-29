@@ -1,0 +1,52 @@
+{
+  "id": "AE7b",
+  "source": "OKX BTC-USDT-SWAP (~3m history available via public API here)",
+  "hypothesis": "When funding is in the bottom 10% of the train-period funding distribution, next-day KRW-BTC return beats same-window baseline",
+  "percentile": 0.1,
+  "threshold_from_train_only": -4.28255342382e-05,
+  "split_mid_funding_time_utc": "2026-06-13T08:00:00+00:00",
+  "funding_points": 276,
+  "train": {
+    "stats": {
+      "n": 13,
+      "hit_rate": 0.4615,
+      "mean_fwd_1d_pct": -0.024,
+      "median_fwd_1d_pct": -0.0273
+    },
+    "baseline": {
+      "n": 47,
+      "lo": "2026-04-28",
+      "hi": "2026-06-13",
+      "hit_rate": 0.5106,
+      "mean_fwd_1d_pct": -0.2709
+    },
+    "events_preview_n": 13
+  },
+  "holdout": {
+    "stats": {
+      "n": 8,
+      "hit_rate": 0.5,
+      "mean_fwd_1d_pct": -0.1901,
+      "median_fwd_1d_pct": 0.3026
+    },
+    "baseline": {
+      "n": 46,
+      "lo": "2026-06-13",
+      "hi": "2026-07-29",
+      "hit_rate": 0.4783,
+      "mean_fwd_1d_pct": -0.1334
+    }
+  },
+  "verdict": "FALSIFIED",
+  "falsified": true,
+  "reasons": [
+    "holdout_mean_fwd<=baseline_mean"
+  ],
+  "anti_overfit": [
+    "percentile fixed at 10% before looking at returns",
+    "threshold computed on train funding only",
+    "holdout is later half by time; no threshold refit",
+    "AE7 absolute -0.05% kept as separate failed/untestable id"
+  ],
+  "data_limit": "Public OKX/Bitget history depth ~3 months in this environment; absolute -0.05% never observed in-window"
+}

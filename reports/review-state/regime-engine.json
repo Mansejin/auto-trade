@@ -515,14 +515,26 @@
     },
     {
       "id": "AE6b",
-      "goal": "optional: gate AE6 only on bear/sideways daily labels",
-      "chg": "segment backtests before any Policy map change",
-      "status": "open"
+      "goal": "gate AE6 only on bear/sideways daily labels",
+      "chg": "Falsified — sparse n<=1 on most segs; deep-bear PF 0.13 — reports/improve/20260729-ae6b-regime-gate.md",
+      "status": "done_falsified"
     },
     {
       "id": "AE7",
-      "goal": "alt-data alpha: one hypothesis then fetcher",
-      "chg": "orderbook imbalance OR funding — write falsify plan before scaffolding",
+      "goal": "alt-data: funding <= -0.05% → next-day KRW-BTC",
+      "chg": "Untestable here (0 events; OKX/Bitget ~3m history never hit -0.05%)",
+      "status": "done_untestable"
+    },
+    {
+      "id": "AE7b",
+      "goal": "relative funding bottom 10% train → next-day KRW-BTC",
+      "chg": "Falsified holdout mean <= baseline — reports/improve/20260729-ae7b-funding-percentile.md",
+      "status": "done_falsified"
+    },
+    {
+      "id": "AE8",
+      "goal": "new orthogonal OHLCV hypothesis OR forward-collect funding/OB",
+      "chg": "do not retune AE6/AE7 thresholds",
       "status": "open"
     }
   ],
