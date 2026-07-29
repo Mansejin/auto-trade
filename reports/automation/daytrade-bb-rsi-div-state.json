@@ -1,0 +1,17 @@
+{
+  "active_card": "daytrade-bb-rsi-div-v1",
+  "slug": "daytrade-bb-rsi-div-v1",
+  "hypothesis": "BTC daytrade: RSI extreme + BB outer band, divergence confirms fade to mid; SL beyond signal extreme.",
+  "hypers": {
+    "rsi_os": 30,
+    "bb_std": 2.0,
+    "div_lookback": 5
+  },
+  "last_windows": [],
+  "last_verdict": "pending",
+  "consecutive_fails": 0,
+  "deployed_slug": null,
+  "deploy_status": "none",
+  "next_action": "backtest_v1",
+  "updated_at": "2026-07-29T17:54:03Z"
+}
