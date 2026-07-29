@@ -22,14 +22,21 @@ def main() -> int:
         return 1
     data = json.loads(SLEEVES.read_text(encoding="utf-8"))
     w = data.get("weights", {})
+    labels = w.get("labels") or {"core": "장기", "scalp": "단타"}
     intent = (data.get("intent") or "").replace("\u2014", "-")
     _out(f"dual-sleeve v{data.get('version')}  updated={data.get('updated')}")
-    _out(f"weights: CORE {w.get('core_pct')}% / SCALP {w.get('scalp_pct')}%")
+    _out(
+        f"weights: {labels.get('core', '장기')} {w.get('core_pct')}% / "
+        f"{labels.get('scalp', '단타')} {w.get('scalp_pct')}%  (ratio {w.get('ratio', '7:3')})"
+    )
+    if w.get("frozen_by"):
+        _out(f"frozen_by: {w.get('frozen_by')}")
     _out(f"intent: {intent}")
     _out("")
     venues = data.get("venues", {})
     for name, v in venues.items():
-        _out(f"[{name}] {v.get('venue')}  bot={v.get('bot')}")
+        lab = v.get("label") or labels.get(name, name)
+        _out(f"[{lab}/{name}] {v.get('venue')}  bot={v.get('bot')}")
         _out(f"         {v.get('role')}")
     _out("")
     for regime, slots in data.get("regimes", {}).items():
@@ -38,7 +45,8 @@ def main() -> int:
             s = slots.get(sleeve, {})
             strat = s.get("strategy") or "(empty)"
             status = s.get("status", "?")
-            _out(f"  {sleeve:5}  {status:22}  {strat}")
+            lab = labels.get(sleeve, sleeve)
+            _out(f"  {lab}({sleeve})  {status:22}  {strat}")
             if s.get("notes"):
                 note = str(s["notes"]).replace("\u2014", "-")
                 _out(f"         {note}")

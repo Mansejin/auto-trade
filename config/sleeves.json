@@ -1,19 +1,27 @@
 {
-  "version": 1,
+  "version": 2,
   "updated": "2026-07-29",
   "intent": "Additive capital split - CORE does not get replaced by SCALP. Separate wallets / bots.",
   "weights": {
     "core_pct": 70,
     "scalp_pct": 30,
-    "notes": "Human-adjustable. Do not auto-rebalance from a single month of PnL."
+    "ratio": "7:3",
+    "labels": {
+      "core": "장기",
+      "scalp": "단타"
+    },
+    "frozen_by": "human_2026-07-29",
+    "notes": "Frozen 장기70 / 단타30. Do not auto-rebalance from a single month of PnL."
   },
   "venues": {
     "core": {
+      "label": "장기",
       "venue": "upbit_spot",
       "bot": "upbit-paper-bot",
       "role": "swing / regime Policy C - one STRATEGY_PATH at a time"
     },
     "scalp": {
+      "label": "단타",
       "venue": "bitget_uta_futures",
       "bot": "freqtrade-scalp (not LIVE yet)",
       "role": "short-capable scalp sleeve - independent USDT wallet"

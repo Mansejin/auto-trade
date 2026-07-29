@@ -7,19 +7,19 @@
 
 One Upbit bot can only run one `STRATEGY_PATH`. Mixing swing (4h/1h) and scalps on the same wallet forces constant regime-file swaps and blocks shorts (Upbit spot).
 
-Split:
+Split (human-frozen **2026-07-29**: 장기 7 / 단타 3):
 
-| Sleeve | Venue | Role | Capital (default) |
-|--------|-------|------|-------------------|
-| **CORE** | Upbit spot (`upbit-paper-bot`) | Policy C swing / MR | 70% |
-| **SCALP** | Bitget UTA futures (Freqtrade) | Short-capable, faster TF | 30% |
+| Sleeve | 한글 | Venue | Role | Capital |
+|--------|------|-------|------|---------|
+| **CORE** | 장기 | Upbit spot (`upbit-paper-bot`) | Policy C swing / MR | **70%** |
+| **SCALP** | 단타 | Bitget UTA futures (Freqtrade) | Short-capable, faster TF | **30%** |
 
-Weights are human knobs — do not auto-tune from one month of live PnL.
+Do not auto-tune weights from one month of live PnL.
 
 ```mermaid
 flowchart LR
-  Capital --> CORE["CORE 70% Upbit"]
-  Capital --> SCALP["SCALP 30% Bitget"]
+  Capital --> CORE["장기 CORE 70% Upbit"]
+  Capital --> SCALP["단타 SCALP 30% Bitget"]
   CORE --> PC["Policy C map"]
   PC --> Bull["bull 4h-v2"]
   PC --> Bear["bear m5-v6"]

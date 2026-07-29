@@ -2,10 +2,10 @@
 
 ## Allocation
 
-- Config: `config/sleeves.json` (CORE 70% Upbit / SCALP 30% Bitget)
+- Config: `config/sleeves.json` — **장기 70% / 단타 30%** (`ratio 7:3`, frozen human 2026-07-29)
 - Docs: `docs/dual-sleeve-allocation.md`
 - Helper: `python scripts/sleeve_status.py`
-- LIVE Policy C **unchanged** (CORE only)
+- LIVE Policy C **unchanged** (CORE / 장기 only)
 
 ## Sideways split
 
