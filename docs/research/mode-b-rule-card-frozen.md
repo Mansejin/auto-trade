@@ -1,5 +1,7 @@
 # Mode B Rule Card — FROZEN
 
+> 모토: [`docs/motto.md`](../motto.md)
+
 | Field | Value |
 |-------|-------|
 | Status | **FROZEN** 2026-07-29 |

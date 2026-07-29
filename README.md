@@ -1,5 +1,8 @@
 # auto-trade
 
+> **모토**: 단순한 매매 원칙을 가지고 기계적으로 매매하는 행위는, 결국 우상향하는 수익을 벌어들인다.  
+> → [`docs/motto.md`](docs/motto.md)
+
 업비트 공식 [upbit-strategy-toolkit](https://github.com/upbit-official/upbit-strategy-toolkit) 기반  
 **전략 JSON 작성 + 백테스트 리포트** 전용 저장소입니다.
 
