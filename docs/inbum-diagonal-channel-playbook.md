@@ -348,11 +348,12 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. **엣지 우선** ([`docs/motto.md`](motto.md)) — Frozen Mode B 기각 후, 카드/가설 개정만
+1. **엣지 우선** ([`docs/motto.md`](motto.md)) — 유니버스 = **BTC·알트·(필요시)QQQ**, 세션 = **전시간 기본**
 2. Hypers 재튜닝 · LIVE/SCALP · 운영 확장 **금지** until 생존 카드
-3. Pitchfork/Fib 분리·클립 수집은 엣지 가설이 생긴 뒤에만
+3. 페어/세션 제약은 카드에 이유와 함께 freeze할 때만 (선제 QQQ-RTH 고정 금지)
+4. Pitchfork/Fib·클립 수집은 엣지 가설이 생긴 뒤에만
 
-후보 (아직 미선택): long-only + HTF bias · 빗각=필터 only · 다른 단순 가격행동 1줄.
+후보 (아직 미선택): long-only Mode B · 빗각=필터 · 다른 단순 가격행동 1줄 — **자산·세션은 가설별로 연다**.
 
 ---
 
