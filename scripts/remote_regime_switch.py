@@ -1,20 +1,41 @@
 #!/usr/bin/env python3
-"""Server-side daily regime classifier + STRATEGY_PATH switcher (stdlib only)."""
+"""Server-side daily regime classifier + STRATEGY_PATH switcher (stdlib only).
+
+Ops guards (Policy C rules unchanged):
+  - Classify on last *closed* daily candle only.
+  - Min dwell: block strategy switches within MIN_DWELL_HOURS (FORCE bypasses dwell only).
+  - Before switch: cancel open KRW-BTC orders; if BTC position remains, skip switch.
+  - Never auto market-sell the position.
+"""
+
 from __future__ import annotations
 
+import base64
+import hashlib
+import hmac
 import json
 import os
 import subprocess
 import time
+import urllib.error
+import urllib.parse
 import urllib.request
+import uuid
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(os.environ.get("AUTO_TRADE_ROOT", str(Path.home() / "auto-trade")))
 STRAT_DIR = ROOT / "strategies"
 ENV_FILE = ROOT / ".env"
 LOG_FILE = ROOT / "logs" / "regime-switch.jsonl"
+TEXT_LOG = ROOT / "logs" / "regime-switch.log"
 REGIME_CURRENT = ROOT / "logs" / "regime-current.json"
 ACTIVE = STRAT_DIR / "ACTIVE_STRATEGY"
+STATE_FILE = ROOT / "data" / "state.json"
+UPBIT_API = "https://api.upbit.com"
+MARKET = "KRW-BTC"
+BTC_DUST = float(os.environ.get("BTC_POSITION_DUST", "0.00008"))
+MIN_DWELL_HOURS = float(os.environ.get("MIN_DWELL_HOURS", "24"))
 
 POLICY = {
     "bull": "regime-bull-trend-4h-v2.json",
@@ -22,6 +43,30 @@ POLICY = {
     "bear": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
     "sideways": "regime-sideways-mr-4h-v5.json",
 }
+
+
+def log_line(msg: str) -> None:
+    line = f"{time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} {msg}"
+    print(line)
+    try:
+        TEXT_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with TEXT_LOG.open("a") as f:
+            f.write(line + "\n")
+    except OSError as e:
+        print(f"warn: could not append {TEXT_LOG}: {e}")
+
+
+def load_dotenv(path: Path = ENV_FILE) -> dict[str, str]:
+    env: dict[str, str] = {}
+    if not path.exists():
+        return env
+    for raw in path.read_text().splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, val = line.split("=", 1)
+        env[key.strip()] = val.strip().strip('"').strip("'")
+    return env
 
 
 def fetch_days(want: int = 260) -> list[dict]:
@@ -32,7 +77,11 @@ def fetch_days(want: int = 260) -> list[dict]:
         if to:
             url += f"&to={to}"
         req = urllib.request.Request(
-            url, headers={"Accept": "application/json", "User-Agent": "regime-switch-server"}
+            url,
+            headers={
+                "Accept": "application/json",
+                "User-Agent": "regime-switch-server",
+            },
         )
         with urllib.request.urlopen(req, timeout=30) as resp:
             batch = json.loads(resp.read().decode())
@@ -45,6 +94,12 @@ def fetch_days(want: int = 260) -> list[dict]:
             break
     by = {c["candle_date_time_utc"][:10]: c for c in rows}
     return [by[k] for k in sorted(by)]
+
+
+def closed_daily_candles(candles: list[dict]) -> list[dict]:
+    if len(candles) < 2:
+        raise RuntimeError("need at least 2 daily candles (forming + closed)")
+    return candles[:-1]
 
 
 def sma(arr: list[float], p: int, i: int):
@@ -97,9 +152,10 @@ def adx_last(highs, lows, closes, period: int = 14):
 
 
 def classify(candles: list[dict]) -> dict:
-    closes = [c["trade_price"] for c in candles]
-    highs = [c["high_price"] for c in candles]
-    lows = [c["low_price"] for c in candles]
+    closed = closed_daily_candles(candles)
+    closes = [c["trade_price"] for c in closed]
+    highs = [c["high_price"] for c in closed]
+    lows = [c["low_price"] for c in closed]
     i = len(closes) - 1
     s50 = sma(closes, 50, i)
     s200 = sma(closes, 200, i)
@@ -115,7 +171,7 @@ def classify(candles: list[dict]) -> dict:
     else:
         regime = "transition"
     return {
-        "date": candles[i]["candle_date_time_utc"][:10],
+        "date": closed[i]["candle_date_time_utc"][:10],
         "regime": regime,
         "close": closes[i],
         "sma50": s50,
@@ -124,6 +180,7 @@ def classify(candles: list[dict]) -> dict:
         "pdi": round(pdi, 2),
         "mdi": round(mdi, 2),
         "file": POLICY[regime],
+        "bar": "closed",
     }
 
 
@@ -167,9 +224,247 @@ def restart_bot() -> str:
     return (p.stdout or "") + (p.stderr or "")
 
 
+def last_successful_switch_age_hours() -> float | None:
+    """Age since last action=switched only (ignore noop / skip / dwell_block lines)."""
+    if not LOG_FILE.exists():
+        return None
+    last_switched = ""
+    with LOG_FILE.open() as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if rec.get("action") == "switched":
+                last_switched = line
+    if not last_switched:
+        return None
+    rec = json.loads(last_switched)
+    ts = rec.get("ts_epoch")
+    if ts is None and rec.get("ts_utc"):
+        try:
+            ts = time.mktime(time.strptime(rec["ts_utc"], "%Y-%m-%dT%H:%M:%SZ"))
+        except ValueError:
+            return None
+    if not ts:
+        return None
+    return (time.time() - float(ts)) / 3600.0
+
+
+def _b64url(data: bytes) -> str:
+    return base64.urlsafe_b64encode(data).rstrip(b"=").decode()
+
+
+def _upbit_jwt(
+    access_key: str, secret_key: str, query: dict[str, Any] | None = None
+) -> str:
+    payload: dict[str, Any] = {
+        "access_key": access_key,
+        "nonce": str(uuid.uuid4()),
+    }
+    if query is not None:
+        qs = urllib.parse.urlencode(query)
+        payload["query_hash"] = hashlib.sha512(qs.encode()).hexdigest()
+        payload["query_hash_alg"] = "SHA512"
+    header = {"alg": "HS256", "typ": "JWT"}
+    s1 = _b64url(json.dumps(header, separators=(",", ":")).encode())
+    s2 = _b64url(json.dumps(payload, separators=(",", ":")).encode())
+    sig = hmac.new(secret_key.encode(), f"{s1}.{s2}".encode(), hashlib.sha256).digest()
+    return f"{s1}.{s2}.{_b64url(sig)}"
+
+
+def _upbit_request(
+    method: str,
+    path: str,
+    access_key: str,
+    secret_key: str,
+    query: dict[str, Any] | None = None,
+) -> Any:
+    query = query or {}
+    token = _upbit_jwt(access_key, secret_key, query if query else None)
+    url = UPBIT_API + path
+    if query:
+        url += "?" + urllib.parse.urlencode(query)
+    req = urllib.request.Request(
+        url,
+        method=method,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            "User-Agent": "regime-switch-server",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            body = resp.read().decode()
+            return json.loads(body) if body else None
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode(errors="replace")
+        raise RuntimeError(f"Upbit {method} {path} failed: {e.code} {detail}") from e
+
+
+def paper_btc_position() -> float:
+    if not STATE_FILE.exists():
+        return 0.0
+    try:
+        state = json.loads(STATE_FILE.read_text())
+    except (OSError, json.JSONDecodeError):
+        return 0.0
+    pos = state.get("position") or state.get("portfolio", {}).get("position") or {}
+    if isinstance(pos, dict):
+        for key in ("qty", "quantity", "btc", "volume"):
+            if key in pos:
+                try:
+                    return float(pos[key] or 0.0)
+                except (TypeError, ValueError):
+                    return 0.0
+    try:
+        return float(state.get("btc_balance") or state.get("position_qty") or 0.0)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def cancel_open_orders(access_key: str, secret_key: str) -> dict[str, Any]:
+    """Cancel all open KRW-BTC orders. Does not place sells."""
+    orders = _upbit_request(
+        "GET",
+        "/v1/orders",
+        access_key,
+        secret_key,
+        {"market": MARKET, "state": "wait"},
+    )
+    if not isinstance(orders, list):
+        orders = []
+    cancelled = []
+    failures = []
+    for order in orders:
+        oid = order.get("uuid")
+        if not oid:
+            continue
+        try:
+            _upbit_request(
+                "DELETE",
+                "/v1/order",
+                access_key,
+                secret_key,
+                {"uuid": oid},
+            )
+            cancelled.append(oid)
+            time.sleep(0.05)
+        except Exception as e:  # noqa: BLE001 — log and continue cancelling others
+            failures.append({"uuid": oid, "error": str(e)})
+    return {
+        "open_before": len(orders),
+        "cancelled": len(cancelled),
+        "failures": failures,
+        "ok": len(failures) == 0,
+    }
+
+
+def live_btc_total(access_key: str, secret_key: str) -> float:
+    accounts = _upbit_request("GET", "/v1/accounts", access_key, secret_key)
+    if not isinstance(accounts, list):
+        return 0.0
+    for row in accounts:
+        if str(row.get("currency", "")).upper() == "BTC":
+            bal = float(row.get("balance") or 0.0)
+            locked = float(row.get("locked") or 0.0)
+            return bal + locked
+    return 0.0
+
+
+def prepare_switch_guards(env: dict[str, str]) -> dict[str, Any]:
+    """Cancel open orders; report whether a BTC position blocks the switch."""
+    skip_guard = os.environ.get("SKIP_POSITION_GUARD", "0") == "1"
+    paper = env.get("PAPER", "true").lower() in {"1", "true", "yes"}
+    result: dict[str, Any] = {
+        "paper": paper,
+        "cancel": None,
+        "btc": 0.0,
+        "blocked": False,
+        "reason": None,
+    }
+    if skip_guard:
+        result["reason"] = "SKIP_POSITION_GUARD=1"
+        log_line("guard: SKIP_POSITION_GUARD=1 — not checking position/orders")
+        return result
+
+    if paper:
+        btc = paper_btc_position()
+        result["btc"] = btc
+        result["cancel"] = {
+            "ok": True,
+            "cancelled": 0,
+            "note": "paper_mode_no_upbit_cancel",
+        }
+        if btc > BTC_DUST:
+            result["blocked"] = True
+            result["reason"] = f"paper_position_btc={btc}"
+            log_line(
+                f"guard: FAIL skip switch — paper BTC position {btc} > dust {BTC_DUST}"
+            )
+        else:
+            log_line("guard: OK paper flat (or no state) — switch allowed")
+        return result
+
+    access = env.get("UPBIT_ACCESS_KEY", "")
+    secret = env.get("UPBIT_SECRET_KEY", "")
+    if not access or not secret:
+        result["blocked"] = True
+        result["reason"] = "missing_upbit_keys"
+        log_line(
+            "guard: FAIL missing UPBIT_ACCESS_KEY/SECRET_KEY in .env — skip switch"
+        )
+        return result
+
+    try:
+        cancel = cancel_open_orders(access, secret)
+        result["cancel"] = cancel
+        if cancel["ok"]:
+            log_line(
+                f"guard: cancel orders OK — open_before={cancel['open_before']} "
+                f"cancelled={cancel['cancelled']}"
+            )
+        else:
+            log_line(f"guard: cancel orders PARTIAL/FAIL — {cancel}")
+            result["blocked"] = True
+            result["reason"] = "cancel_orders_failed"
+            return result
+    except Exception as e:  # noqa: BLE001
+        log_line(f"guard: FAIL cancel orders — {e}")
+        result["blocked"] = True
+        result["reason"] = f"cancel_orders_error:{e}"
+        result["cancel"] = {"ok": False, "error": str(e)}
+        return result
+
+    try:
+        btc = live_btc_total(access, secret)
+        result["btc"] = btc
+    except Exception as e:  # noqa: BLE001
+        log_line(f"guard: FAIL balance lookup — {e}")
+        result["blocked"] = True
+        result["reason"] = f"balance_error:{e}"
+        return result
+
+    if btc > BTC_DUST:
+        result["blocked"] = True
+        result["reason"] = f"live_position_btc={btc}"
+        log_line(
+            f"guard: FAIL skip switch — BTC position {btc} > dust {BTC_DUST} "
+            "(no auto market-sell; wait until flat)"
+        )
+    else:
+        log_line(f"guard: OK flat after cancel — btc={btc}")
+    return result
+
+
 def main() -> None:
     dry = os.environ.get("DRY_RUN", "0") == "1"
     force = os.environ.get("FORCE", "0") == "1"
+    env = load_dotenv()
     info = classify(fetch_days())
     target = info["file"]
     target_path = f"/app/strategies/{target}"
@@ -178,37 +473,70 @@ def main() -> None:
     if not local.exists():
         raise SystemExit(f"missing strategy file: {local}")
 
-    rec = {
+    rec: dict[str, Any] = {
         "ts_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "ts_epoch": int(time.time()),
         "regime": info["regime"],
         "adx": info["adx"],
         "pdi": info["pdi"],
         "mdi": info["mdi"],
+        "bar": info.get("bar"),
+        "date": info["date"],
         "old": current,
         "new": target_path,
         "changed": current != target_path,
         "dry_run": dry,
     }
 
-    print(json.dumps({**info, "current_strategy": current}, ensure_ascii=False, indent=2))
+    print(
+        json.dumps({**info, "current_strategy": current}, ensure_ascii=False, indent=2)
+    )
 
     if current == target_path and not force:
         print("already on correct strategy — no-op")
         rec["action"] = "noop"
+        log_line(f"action=noop regime={info['regime']} strategy={target_path}")
     elif dry:
         print(f"DRY_RUN would switch {current} -> {target_path}")
         rec["action"] = "dry_run"
+        log_line(f"action=dry_run {current} -> {target_path}")
     else:
-        set_strategy(target)
-        logs = restart_bot()
-        rec["action"] = "switched"
-        print("--- bot logs ---")
-        print(logs)
-        print(f"switched {current} -> {target_path}")
+        age_h = last_successful_switch_age_hours()
+        if (
+            not force
+            and current != target_path
+            and age_h is not None
+            and age_h < MIN_DWELL_HOURS
+        ):
+            rec["action"] = "dwell_block"
+            rec["dwell_age_hours"] = round(age_h, 3)
+            log_line(
+                f"action=dwell_block age_h={age_h:.2f} < {MIN_DWELL_HOURS} "
+                f"(FORCE=1 to bypass dwell only) — keep {current}"
+            )
+        else:
+            guard = prepare_switch_guards(env)
+            rec["guard"] = {
+                "paper": guard.get("paper"),
+                "btc": guard.get("btc"),
+                "blocked": guard.get("blocked"),
+                "reason": guard.get("reason"),
+                "cancel": guard.get("cancel"),
+            }
+            if guard.get("blocked"):
+                rec["action"] = "position_skip"
+                log_line(f"action=position_skip reason={guard.get('reason')}")
+            else:
+                set_strategy(target)
+                logs = restart_bot()
+                rec["action"] = "switched"
+                log_line(f"action=switched {current} -> {target_path}")
+                print("--- bot logs ---")
+                print(logs)
+                print(f"switched {current} -> {target_path}")
 
     LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 
-    # Desk-readable snapshot (mounted read-only into upbit-desk via ./logs)
     snapshot = {
         "updated_at": rec["ts_utc"],
         "date": info["date"],
@@ -222,11 +550,14 @@ def main() -> None:
         "selected_file": target,
         "strategy_path": target_path,
         "action": rec.get("action"),
+        "bar": info.get("bar"),
         "engine": "v2",
         "policy": "C",
     }
     try:
-        REGIME_CURRENT.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
+        REGIME_CURRENT.write_text(
+            json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n"
+        )
     except OSError as e:
         print(f"warn: could not write {REGIME_CURRENT}: {e}")
 

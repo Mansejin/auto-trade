@@ -4,6 +4,7 @@
 Fixes fake-bear rising windows (e.g. 2024-08..11 labeled bear while price rose)
 by requiring close < SMA50 and -DI > +DI for bear.
 """
+
 from __future__ import annotations
 
 import json
@@ -24,7 +25,8 @@ def fetch_days(market: str = "KRW-BTC", want: int = 1100) -> list[dict]:
         if to:
             url += f"&to={to}"
         req = urllib.request.Request(
-            url, headers={"Accept": "application/json", "User-Agent": "regime-engine-v2"}
+            url,
+            headers={"Accept": "application/json", "User-Agent": "regime-engine-v2"},
         )
         with urllib.request.urlopen(req, timeout=30) as resp:
             batch = json.loads(resp.read().decode())
@@ -102,7 +104,9 @@ def classify_day(close, s50, s200, adx, pdi, mdi) -> str:
     return "transition"
 
 
-def build_segments(candles: list[dict], min_run: int = MIN_RUN) -> tuple[list[dict], dict]:
+def build_segments(
+    candles: list[dict], min_run: int = MIN_RUN
+) -> tuple[list[dict], dict]:
     closes = [c["trade_price"] for c in candles]
     highs = [c["high_price"] for c in candles]
     lows = [c["low_price"] for c in candles]
@@ -159,7 +163,10 @@ def build_segments(candles: list[dict], min_run: int = MIN_RUN) -> tuple[list[di
             }
         )
 
+    # Prefer last closed daily bar for "current" (Upbit includes a forming candle).
     i = len(closes) - 1
+    if i >= 1:
+        i = i - 1
     current = {
         "date": dates[i],
         "regime": labels[i],
@@ -169,6 +176,7 @@ def build_segments(candles: list[dict], min_run: int = MIN_RUN) -> tuple[list[di
         "adx": round(adx[i], 2) if adx[i] is not None else None,
         "pdi": round(pdi[i], 2) if pdi[i] is not None else None,
         "mdi": round(mdi[i], 2) if mdi[i] is not None else None,
+        "bar": "closed",
     }
     return segs, current
 
