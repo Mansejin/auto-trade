@@ -37,6 +37,7 @@
       <div class="top-meta">
         <span id="freshness" class="freshness"><span class="pulse" id="pulse"></span><span id="fresh-text">갱신 대기</span></span>
         <form method="post" action="logout">
+          <input type="hidden" name="csrf" value="{{CSRF}}" />
           <button class="ghost-btn" type="submit">로그아웃</button>
         </form>
       </div>

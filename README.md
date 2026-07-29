@@ -99,7 +99,7 @@ Oracle 고정 IP를 Upbit API 키 허용 IP에 등록하세요.
 토큰 로그인 + TradingView(`UPBIT:BTCKRW`) 상황 페이지.
 
 ```env
-DASHBOARD_TOKEN=긴-랜덤-문자열
+DASHBOARD_TOKEN=긴-랜덤-문자열   # openssl rand -hex 32 (최소 32자)
 ```
 
 ```bash

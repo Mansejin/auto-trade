@@ -1,8 +1,9 @@
 /**
  * Proxy https://mansejin.com/autotrade* -> Oracle desk
  * Origin uses DNS-only hostname (Workers cannot fetch bare IPs).
+ * OCI Security List ingress TCP/443 is open; Worker fetches origin over HTTPS.
  */
-const ORIGIN = "http://autotrade-origin.mansejin.com";
+const ORIGIN = "https://autotrade-origin.mansejin.com";
 const ALLOWED_METHODS = new Set(["GET", "HEAD", "POST"]);
 
 function isSafePath(pathname) {
@@ -47,7 +48,10 @@ export default {
     headers.set("X-Forwarded-Proto", "https");
     headers.set("X-Forwarded-Prefix", "/autotrade");
     const clientIp = request.headers.get("cf-connecting-ip");
-    if (clientIp) headers.set("X-Forwarded-For", clientIp);
+    if (clientIp) {
+      headers.set("X-Forwarded-For", clientIp);
+      headers.set("X-Real-IP", clientIp);
+    }
 
     const init = {
       method: request.method,

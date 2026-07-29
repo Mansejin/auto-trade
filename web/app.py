@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import hmac
 import json
 import os
 import secrets
@@ -9,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import Cookie, Depends, FastAPI, Form, HTTPException, Request, Response
-from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.base import BaseHTTPMiddleware
 
@@ -22,6 +24,20 @@ COOKIE_NAME = "desk_token"
 COOKIE_MAX_AGE = 60 * 60 * 24 * 14
 LOGIN_WINDOW_SEC = 300
 LOGIN_MAX_ATTEMPTS = 8
+MIN_TOKEN_LEN = 32
+
+# TradingView embed + same-origin API polling
+CSP = (
+    "default-src 'self'; "
+    "script-src 'self' https://s3.tradingview.com; "
+    "style-src 'self' 'unsafe-inline'; "
+    "img-src 'self' data: https:; "
+    "connect-src 'self' https://*.tradingview.com wss://*.tradingview.com; "
+    "frame-src https://*.tradingview.com https://www.tradingview.com; "
+    "base-uri 'self'; "
+    "form-action 'self'; "
+    "frame-ancestors 'none'"
+)
 
 STATIC = Path(__file__).resolve().parent / "static"
 app = FastAPI(title="Auto-Trade Desk", docs_url=None, redoc_url=None)
@@ -40,6 +56,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
             "camera=(), microphone=(), geolocation=()",
         )
         resp.headers.setdefault("Cache-Control", "no-store")
+        resp.headers.setdefault("Content-Security-Policy", CSP)
         return resp
 
 
@@ -53,10 +70,10 @@ def _p(path: str) -> str:
 
 
 def _client_ip(request: Request) -> str:
-    # Prefer edge-provided client IP; fall back to direct peer.
-    xff = (request.headers.get("x-forwarded-for") or "").split(",")[0].strip()
-    if xff:
-        return xff[:64]
+    """Use proxy-set client IP only — never trust client-supplied X-Forwarded-For."""
+    real_ip = (request.headers.get("x-real-ip") or "").strip()
+    if real_ip:
+        return real_ip[:64]
     if request.client and request.client.host:
         return request.client.host
     return "unknown"
@@ -89,6 +106,31 @@ def _authorized(token: str | None) -> bool:
     if len(token) != len(TOKEN):
         return False
     return secrets.compare_digest(token, TOKEN)
+
+
+def _issue_csrf() -> str:
+    if not TOKEN:
+        return ""
+    nonce = secrets.token_urlsafe(16)
+    sig = hmac.new(TOKEN.encode("utf-8"), nonce.encode("utf-8"), hashlib.sha256).hexdigest()
+    return f"{nonce}.{sig}"
+
+
+def _verify_csrf(value: str | None) -> bool:
+    if not TOKEN or not value:
+        return False
+    parts = value.rsplit(".", 1)
+    if len(parts) != 2:
+        return False
+    nonce, sig = parts
+    expected = hmac.new(TOKEN.encode("utf-8"), nonce.encode("utf-8"), hashlib.sha256).hexdigest()
+    return hmac.compare_digest(sig, expected)
+
+
+def _serve_html(name: str) -> HTMLResponse:
+    raw = (STATIC / name).read_text(encoding="utf-8")
+    html = raw.replace("{{CSRF}}", _issue_csrf())
+    return HTMLResponse(html)
 
 
 def _cookie_secure(request: Request) -> bool:
@@ -149,11 +191,13 @@ def index(
     desk_token: str | None = Cookie(default=None, alias=COOKIE_NAME),
 ) -> Response:
     if _authorized(desk_token):
-        return FileResponse(STATIC / "index.html")
-    return FileResponse(STATIC / "login.html")
+        return _serve_html("index.html")
+    return _serve_html("login.html")
 
 
-def login(request: Request, token: str = Form(...)) -> Response:
+def login(request: Request, token: str = Form(...), csrf: str = Form(...)) -> Response:
+    if not _verify_csrf(csrf):
+        return HTMLResponse("Invalid request.", status_code=403)
     ip = _client_ip(request)
     if not _login_allowed(ip):
         return HTMLResponse("Too many login attempts. Try again later.", status_code=429)
@@ -165,7 +209,9 @@ def login(request: Request, token: str = Form(...)) -> Response:
     return resp
 
 
-def logout() -> Response:
+def logout(request: Request, csrf: str = Form(...)) -> Response:
+    if not _verify_csrf(csrf):
+        return HTMLResponse("Invalid request.", status_code=403)
     resp = RedirectResponse(_p("/"), status_code=303)
     _clear_auth_cookie(resp)
     return resp
@@ -256,5 +302,5 @@ def _startup_checks() -> None:
     if not TOKEN:
         # Fail-closed: every page/API stays unauthorized.
         return
-    if len(TOKEN) < 8:
-        raise RuntimeError("DASHBOARD_TOKEN must be at least 8 characters")
+    if len(TOKEN) < MIN_TOKEN_LEN:
+        raise RuntimeError(f"DASHBOARD_TOKEN must be at least {MIN_TOKEN_LEN} characters")

@@ -59,6 +59,13 @@ class Settings:
     def telegram_enabled(self) -> bool:
         return bool(self.telegram_bot_token and self.telegram_chat_id)
 
+    @property
+    def risk_integrity_key(self) -> str:
+        """LIVE only: HMAC key for risk.json tamper detection (uses API secret)."""
+        if self.paper or not self.upbit_secret_key:
+            return ""
+        return self.upbit_secret_key
+
 
 def load_settings() -> Settings:
     root = Path(os.getenv("BOT_ROOT", "/app"))

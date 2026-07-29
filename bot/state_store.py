@@ -5,6 +5,7 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from bot.integrity import restrict_path_mode
 from bot.portfolio import Portfolio
 
 logger = logging.getLogger(__name__)
@@ -26,3 +27,4 @@ def save_state(path: Path, portfolio: Portfolio, extra: dict[str, Any] | None = 
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(path)
+    restrict_path_mode(path)
