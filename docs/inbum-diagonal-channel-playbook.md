@@ -241,6 +241,21 @@ Soft daily gate: bull→long only, bear→short only, else→both.
 
 ---
 
+## 5g. US session + Multi-TF (2026-07-29) — 기각
+
+운영 제약 확정: BTC / 미국장(RTH) / 저빈도 OK / 4h 작도·15m 진입.
+
+| Variant | Window | Result |
+|---------|--------|--------|
+| Open 09:30–12:30 | 2w×3 | 0–4 trades, useless |
+| RTH 09:30–16:00 | ~30d×3 | PF 0.46 / 0 / 0 → **falsified** |
+
+Report: [`freqtrade-research/reports/20260729-diagonal-us-session-mtf.md`](../freqtrade-research/reports/20260729-diagonal-us-session-mtf.md)
+
+Mode A 첫 터치는 세션을 맞춰도 안 산다 → **진입 논리 교체**가 다음.
+
+---
+
 ## 6. 자동화·백테스트로 옮길 때
 
 ### 6.1 왜 Upbit JSON에 바로 안 들어가나
@@ -258,6 +273,7 @@ Soft daily gate: bull→long only, bear→short only, else→both.
 | ~~V1-gate~~ | V1 + soft daily bull/bear 방향 필터 | `DiagonalVolumePivotDayGateV1` | 15m BTC | **기각** (2/3) |
 | ~~Human-Soft~~ | pierce 용인 + ugly skip + cooldown | `DiagonalHumanSoftDayV1` | 15m BTC | **기각** (3/3) |
 | ~~Multi-TF~~ | **4h** volume-pivot + **15m** Mode A 터치 | `DiagonalMultiTfDayV1` | 4h→15m BTC | **기각** (3/3, 희소) |
+| ~~US-RTH MTF~~ | 위 + **미국 정규장만** + vol | `DiagonalUsRthMultiTfV1` | 4h→15m BTC | **기각** (3/3) |
 | **P1** | BB lower reclaim ≈ 상승채널 하단 | upbit JSON | 4h | 선택 |
 
 ### 6.3 V1 앵커 스펙 (사용자 정의 반영 — 구현 전 freeze 후보)
@@ -283,18 +299,18 @@ exit: mid / opposite rail / SL beyond rail
 
 ---
 
-## 7. 전략 후보 (다음 — 살릴 방향)
+## 7. 전략 후보 (다음 — 세션 고정)
 
-### A. Multi-TF 1h→15m
-- 4h는 희소. 1h 작도면 레일 방문↑, 구조는 15m보다 깨끗.
+고정: BTC · US RTH · 4h 구조 · 저빈도 허용.
 
-### B. 4h 레일 + 진짜 Mode B
-- 4h 상단 돌파(+vol) → 15m 리테스트 지지 롱 (실패돌파 페이드 아님).
+### A. US-RTH + 4h Mode B (추천)
+- 4h 레일 돌파(+거래량) → 15m에서 리테스트 후 추세 방향.
 
-### C. 레일 필터 (#4)
-- 기존 MR/추세 시그널 + “가격이 4h volume-pivot 레일 근처”.
+### B. US-RTH + 1h→15m Mode A
+- 레일 방문 수를 늘려 샘플 확보 (같은 MR 논리).
 
-알림-only는 선택지일 뿐, 기본 추천이 아님.
+### C. 레일 필터
+- 다른 엔트리 + US-RTH + 4h 레일 근처.
 
 ---
 
@@ -311,8 +327,8 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. A(1h→15m) / B(4h+Mode B) / C(레일 필터) 중 선택해 계속
-2. 기각 파일 hypers 재튜닝 금지
+1. A(US-RTH+Mode B) / B(1h HTF) / C(필터) 선택
+2. 기각 hypers 재튜닝 금지
 3. 승격 전 LIVE/SCALP 금지
 
 ---
