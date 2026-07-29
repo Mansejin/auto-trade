@@ -224,7 +224,9 @@
       "strategies/regime-bull-cci-4h-v1.json",
       "strategies/regime-bull-stochrsi-4h-v1.json",
       "strategies/regime-bull-obv-4h-v1.json"
-    ]
+    ],
+    "sideways_williams_early_strict_v2": "strategies/regime-sideways-mr-1h-williams-early-strict-v2.json",
+    "sideways_williams_paper_mode": "dwell7"
   },
   "policyC_map": {
     "bull": "bull",
@@ -497,6 +499,12 @@
   "live_trading": false,
   "live_note": "upbit-strategy-toolkit is backtest-only. Bot deploy is separate JSON mount.",
   "next": [
+    {
+      "id": "williams-dwell7-paper",
+      "status": "ready_research",
+      "goal": "Williams dwell7 paper-log (not LIVE)",
+      "note": "Prefer dwell7 gate; see reports/improve/20260729-williams-dwell-develop.md. Policy C unchanged."
+    },
     {
       "id": "AE4",
       "goal": "bull participation family beyond EMA",
