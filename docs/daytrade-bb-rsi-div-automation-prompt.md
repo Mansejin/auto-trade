@@ -10,8 +10,18 @@
 | Trigger | Cron `*/15 * * * *` |
 | Repo | `Mansejin/auto-trade` |
 | Memory | **On** |
-| Secrets / env | SSH to bot host (`REMOTE_HOST`), repo write, exchange data download as needed |
-| Deploy target | Upbit paper bot via `scripts/deploy-strategy-to-bot.sh` (SCALP/daytrade JSON only) |
+| Secrets / env | Bot SSH (below), repo write, candle download |
+| Deploy target | Upbit paper bot via `scripts/deploy-strategy-to-bot.sh` (`daytrade-bb-rsi-div-*` only) |
+
+### SSH (this machine — already wired)
+
+| Item | Value |
+|------|-------|
+| Key file | `Desktop/keys/ssh-key-2026-07-27.key` (do **not** commit) |
+| SSH host alias | `auto-trade-bot` in `~/.ssh/config` |
+| Default deploy host | `REMOTE_HOST=auto-trade-bot` |
+
+**Cloud Automations:** desktop keys are NOT on the cloud VM. Add Cursor Cloud secret `AUTO_TRADE_BOT_SSH_KEY` = private key PEM body. Each run write it to a temp file mode 600 and `export IDENTITY_FILE=... REMOTE_HOST=ubuntu@129.225.205.185` before deploy.
 
 Do **not** change Policy C / CORE regime map. Do **not** deploy unrelated slugs.
 
@@ -61,8 +71,12 @@ If promotion bar PASSES (AUTO-DEPLOY):
   1) Save strategies/daytrade-bb-rsi-div-<tag>.json (validated)
   2) Freeze docs/research/daytrade-bb-rsi-div-<tag>-card-frozen.md
   3) git commit + push to automation/daytrade-bb-rsi-div (or main if that is the deploy branch policy — prefer push then deploy from committed file)
-  4) Run: bash scripts/deploy-strategy-to-bot.sh daytrade-bb-rsi-div-<tag>
-     (script scp + sets STRATEGY_PATH + docker compose up -d)
+  4) Deploy SSH:
+     - If secret AUTO_TRADE_BOT_SSH_KEY exists: write to /tmp/auto-trade-bot.pem, chmod 600,
+       export IDENTITY_FILE=/tmp/auto-trade-bot.pem REMOTE_HOST=ubuntu@129.225.205.185
+     - Else if host alias works: export REMOTE_HOST=auto-trade-bot
+     - Run: bash scripts/deploy-strategy-to-bot.sh daytrade-bb-rsi-div-<tag>
+     - Shred/remove temp key file after deploy
   5) Verify remote: ssh grep STRATEGY_PATH and docker ps / logs tail — paste into report
   6) state.deployed_slug=…, deploy_status=deployed, next_action=HOLD
   7) Subsequent 15m runs: HOLD — only re-validate data/health; do not churn a deployed winner unless it fails a fresh 3-window recheck twice in a row
