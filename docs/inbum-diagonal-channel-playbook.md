@@ -226,6 +226,21 @@ Soft daily gate: bull→long only, bear→short only, else→both.
 
 ---
 
+## 5f. Multi-TF 4h→15m (2026-07-29) — 기각
+
+사람이 쓰는 방식(상위 작도·하위 진입). Mode A 유지, 레일만 4h.
+
+| Item | Value |
+|------|-------|
+| Code | `DiagonalMultiTfDayV1.py` |
+| Report | [`freqtrade-research/reports/20260729-diagonal-multi-tf-day-v1.md`](../freqtrade-research/reports/20260729-diagonal-multi-tf-day-v1.md) |
+| W1/W2/W3 PF | 0.61 / 0.20 / 0.40 → **falsified** 3/3 |
+| Trades/day | 0.2–0.9 (너무 희소) |
+
+다음 후보(종료 아님): **1h→15m**, **4h+Mode B 돌파 리테스트**, **레일=필터(#4)**.
+
+---
+
 ## 6. 자동화·백테스트로 옮길 때
 
 ### 6.1 왜 Upbit JSON에 바로 안 들어가나
@@ -242,6 +257,7 @@ Soft daily gate: bull→long only, bear→short only, else→both.
 | **V2-day** | 동일 앵커 + Mode B 실패돌파→리테스트 | `DiagonalVolumePivotBreakRetestDayV2` | 15m BTC | **게이트 통과(약함)** / 빈도 미달 / 미승격 |
 | ~~V1-gate~~ | V1 + soft daily bull/bear 방향 필터 | `DiagonalVolumePivotDayGateV1` | 15m BTC | **기각** (2/3) |
 | ~~Human-Soft~~ | pierce 용인 + ugly skip + cooldown | `DiagonalHumanSoftDayV1` | 15m BTC | **기각** (3/3) |
+| ~~Multi-TF~~ | **4h** volume-pivot + **15m** Mode A 터치 | `DiagonalMultiTfDayV1` | 4h→15m BTC | **기각** (3/3, 희소) |
 | **P1** | BB lower reclaim ≈ 상승채널 하단 | upbit JSON | 4h | 선택 |
 
 ### 6.3 V1 앵커 스펙 (사용자 정의 반영 — 구현 전 freeze 후보)
@@ -267,17 +283,18 @@ exit: mid / opposite rail / SL beyond rail
 
 ---
 
-## 7. 전략 후보 (다음)
+## 7. 전략 후보 (다음 — 살릴 방향)
 
-### Alert-only (추천 — 남은 인간형 경로)
+### A. Multi-TF 1h→15m
+- 4h는 희소. 1h 작도면 레일 방문↑, 구조는 15m보다 깨끗.
 
-- 봇: volume-pivot 레일 + soft-touch/reclaim 후보 핑.
-- 사람: 뉴스/각도/호가 “스킵 필터” 담당 → 이게 용인의 본체.
-- 자동 주문 없음.
+### B. 4h 레일 + 진짜 Mode B
+- 4h 상단 돌파(+vol) → 15m 리테스트 지지 롱 (실패돌파 페이드 아님).
 
-### Stop auto-entry
+### C. 레일 필터 (#4)
+- 기존 MR/추세 시그널 + “가격이 4h volume-pivot 레일 근처”.
 
-- V1/V2/gate/soft 모두 승격 불가. CORE Policy C 유지.
+알림-only는 선택지일 뿐, 기본 추천이 아님.
 
 ---
 
@@ -294,9 +311,9 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. Alert-only 스캐너 구현 여부 결정 (또는 라인 종료)
-2. 기존 빗각 hypers 재튜닝 금지
-3. LIVE / SCALP 자동진입에 올리지 말 것
+1. A(1h→15m) / B(4h+Mode B) / C(레일 필터) 중 선택해 계속
+2. 기각 파일 hypers 재튜닝 금지
+3. 승격 전 LIVE/SCALP 금지
 
 ---
 
