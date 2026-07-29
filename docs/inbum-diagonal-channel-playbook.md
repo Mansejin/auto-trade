@@ -348,12 +348,11 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. **엣지 우선** ([`docs/motto.md`](motto.md)) — 유니버스 = **BTC·알트·(필요시)QQQ**, 세션 = **전시간 기본**
-2. Hypers 재튜닝 · LIVE/SCALP · 운영 확장 **금지** until 생존 카드
-3. 페어/세션 제약은 카드에 이유와 함께 freeze할 때만 (선제 QQQ-RTH 고정 금지)
-4. Pitchfork/Fib·클립 수집은 엣지 가설이 생긴 뒤에만
+1. **엣지 우선** · 유니버스 BTC/알트/전시간
+2. Hammer reclaim 15m **기각** — 되돌림 취향은 유지, **카드 개정**만 (1h/4h 또는 필터). hypers 금지
+3. LIVE/SCALP 금지
 
-후보 (아직 미선택): long-only Mode B · 빗각=필터 · 다른 단순 가격행동 1줄 — **자산·세션은 가설별로 연다**.
+최근: [`hammer-reclaim-long-card-frozen.md`](research/hammer-reclaim-long-card-frozen.md) → falsified ([report](../freqtrade-research/reports/20260729-hammer-reclaim-long-v1.md)).
 
 ---
 
