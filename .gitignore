@@ -3,3 +3,5 @@ __pycache__/
 .DS_Store
 .venv/
 cache/
+reports/ae12-collect/*.jsonl
+reports/ae12-collect/event-study-status.json

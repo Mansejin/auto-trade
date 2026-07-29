@@ -167,8 +167,8 @@ flowchart TD
 
 These are **lagging** by design. Regime flips often trail the tape by days; that lag is part of Policy C’s cost, not a cron bug.
 
+- **Measured (AE12):** risk-off switches show **7d median BTC MDD ≈ −5.45%**, worst ≈ **−15.5%** (`reports/improve/20260729-ae12-lag-mdd.md`). Treat as **material for sizing**, not a reason to add ad-hoc SMA buffers.
 - **Accept:** “뒷북 전환” drawdowns can happen while still on the previous specialist.
-- **Check:** segment-chain MDD / worst segments in `reports/five-year/` and `reports/review-state/regime-engine.json` — not a single always-on backtest.
 - **Do not “fix” with** arbitrary SMA buffers or leading indicators unless a new Policy backtest beats the current chain **and** passes audit gates.
 
 ### B) Parameter / timeframe overfit (ADX 20, 1h vs 4h)

@@ -557,8 +557,14 @@
     },
     {
       "id": "AE12",
-      "goal": "pause indicator scrapes; forward-collect alt-data OR revisit Policy C lag-MDD measurement",
-      "chg": "AE6–AE11 all falsified/untestable — avoid more TA variants without new data/hypothesis class",
+      "goal": "lag-MDD measure + forward funding/OB collect",
+      "chg": "lag material (7d risk-off median MDD -5.45%); collectors shipped — reports/improve/20260729-ae12-lag-mdd.md",
+      "status": "shipping"
+    },
+    {
+      "id": "AE12b",
+      "goal": "run frozen event study after >=30d collect",
+      "chg": "scripts/ae12_event_study.py readiness gate",
       "status": "open"
     }
   ],

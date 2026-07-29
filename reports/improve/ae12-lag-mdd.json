@@ -1,0 +1,276 @@
+{
+  "id": "AE12_lag_mdd",
+  "segments_file": "reports/regimes-krw-btc-1d-5y.json",
+  "n_segments": 36,
+  "n_switches": 35,
+  "lags_days": [
+    3,
+    5,
+    7,
+    10,
+    14
+  ],
+  "materiality_pre_registered": {
+    "risk_off_7d_median_mdd_lt": -5.0,
+    "risk_off_7d_worst_mdd_lt": -12.0
+  },
+  "lag_is_material_for_sizing": true,
+  "risk_off_summary": {
+    "n_switches": 15,
+    "by_lag": {
+      "3": {
+        "n": 15,
+        "mdd_median_pct": -3.331,
+        "mdd_worst_pct": -14.0,
+        "mdd_p25_pct": -5.167,
+        "ret_median_pct": -1.611,
+        "ret_mean_pct": -3.033
+      },
+      "5": {
+        "n": 15,
+        "mdd_median_pct": -3.749,
+        "mdd_worst_pct": -15.535,
+        "mdd_p25_pct": -5.768,
+        "ret_median_pct": -2.54,
+        "ret_mean_pct": -3.301
+      },
+      "7": {
+        "n": 15,
+        "mdd_median_pct": -5.445,
+        "mdd_worst_pct": -15.535,
+        "mdd_p25_pct": -7.873,
+        "ret_median_pct": -1.782,
+        "ret_mean_pct": -3.296
+      },
+      "10": {
+        "n": 15,
+        "mdd_median_pct": -6.455,
+        "mdd_worst_pct": -17.278,
+        "mdd_p25_pct": -9.792,
+        "ret_median_pct": -3.507,
+        "ret_mean_pct": -3.864
+      },
+      "14": {
+        "n": 15,
+        "mdd_median_pct": -7.203,
+        "mdd_worst_pct": -17.674,
+        "mdd_p25_pct": -15.248,
+        "ret_median_pct": -0.945,
+        "ret_mean_pct": -3.145
+      }
+    }
+  },
+  "risk_on_summary": {
+    "n_switches": 20,
+    "by_lag": {
+      "3": {
+        "n": 20,
+        "mdd_median_pct": -0.896,
+        "mdd_worst_pct": -2.953,
+        "mdd_p25_pct": -1.853,
+        "ret_median_pct": 1.037,
+        "ret_mean_pct": 2.402
+      },
+      "5": {
+        "n": 20,
+        "mdd_median_pct": -1.521,
+        "mdd_worst_pct": -6.847,
+        "mdd_p25_pct": -2.465,
+        "ret_median_pct": 1.968,
+        "ret_mean_pct": 3.23
+      },
+      "7": {
+        "n": 20,
+        "mdd_median_pct": -2.465,
+        "mdd_worst_pct": -6.847,
+        "mdd_p25_pct": -3.155,
+        "ret_median_pct": 1.094,
+        "ret_mean_pct": 2.996
+      },
+      "10": {
+        "n": 20,
+        "mdd_median_pct": -2.785,
+        "mdd_worst_pct": -8.402,
+        "mdd_p25_pct": -3.786,
+        "ret_median_pct": 1.653,
+        "ret_mean_pct": 4.648
+      },
+      "14": {
+        "n": 20,
+        "mdd_median_pct": -3.444,
+        "mdd_worst_pct": -14.089,
+        "mdd_p25_pct": -6.819,
+        "ret_median_pct": 3.014,
+        "ret_mean_pct": 4.777
+      }
+    }
+  },
+  "worst_risk_off_events": [
+    {
+      "switch": "2022-11-08",
+      "from": "sideways",
+      "to": "bear",
+      "kind": "risk_off",
+      "lags": {
+        "3": {
+          "ret_pct": -11.235,
+          "mdd_pct": -14.0,
+          "bars": 4
+        },
+        "5": {
+          "ret_pct": -15.535,
+          "mdd_pct": -15.535,
+          "bars": 6
+        },
+        "7": {
+          "ret_pct": -13.685,
+          "mdd_pct": -15.535,
+          "bars": 8
+        },
+        "10": {
+          "ret_pct": -13.467,
+          "mdd_pct": -15.535,
+          "bars": 11
+        },
+        "14": {
+          "ret_pct": -15.257,
+          "mdd_pct": -16.623,
+          "bars": 15
+        }
+      }
+    },
+    {
+      "switch": "2022-01-18",
+      "from": "transition",
+      "to": "bear",
+      "kind": "risk_off",
+      "lags": {
+        "3": {
+          "ret_pct": -11.456,
+          "mdd_pct": -11.456,
+          "bars": 4
+        },
+        "5": {
+          "ret_pct": -13.533,
+          "mdd_pct": -15.248,
+          "bars": 6
+        },
+        "7": {
+          "ret_pct": -12.251,
+          "mdd_pct": -15.248,
+          "bars": 8
+        },
+        "10": {
+          "ret_pct": -8.97,
+          "mdd_pct": -15.248,
+          "bars": 11
+        },
+        "14": {
+          "ret_pct": -6.68,
+          "mdd_pct": -15.248,
+          "bars": 15
+        }
+      }
+    },
+    {
+      "switch": "2026-05-26",
+      "from": "transition",
+      "to": "bear",
+      "kind": "risk_off",
+      "lags": {
+        "3": {
+          "ret_pct": -3.233,
+          "mdd_pct": -3.522,
+          "bars": 4
+        },
+        "5": {
+          "ret_pct": -3.54,
+          "mdd_pct": -3.54,
+          "bars": 6
+        },
+        "7": {
+          "ret_pct": -12.155,
+          "mdd_pct": -12.155,
+          "bars": 8
+        },
+        "10": {
+          "ret_pct": -17.278,
+          "mdd_pct": -17.278,
+          "bars": 11
+        },
+        "14": {
+          "ret_pct": -17.674,
+          "mdd_pct": -17.674,
+          "bars": 15
+        }
+      }
+    },
+    {
+      "switch": "2022-03-09",
+      "from": "bear",
+      "to": "sideways",
+      "kind": "risk_off",
+      "lags": {
+        "3": {
+          "ret_pct": -5.953,
+          "mdd_pct": -6.312,
+          "bars": 4
+        },
+        "5": {
+          "ret_pct": -4.652,
+          "mdd_pct": -7.873,
+          "bars": 6
+        },
+        "7": {
+          "ret_pct": -2.29,
+          "mdd_pct": -7.873,
+          "bars": 8
+        },
+        "10": {
+          "ret_pct": -0.63,
+          "mdd_pct": -7.873,
+          "bars": 11
+        },
+        "14": {
+          "ret_pct": 1.101,
+          "mdd_pct": -7.873,
+          "bars": 15
+        }
+      }
+    },
+    {
+      "switch": "2023-05-04",
+      "from": "bull",
+      "to": "sideways",
+      "kind": "risk_off",
+      "lags": {
+        "3": {
+          "ret_pct": -1.133,
+          "mdd_pct": -2.33,
+          "bars": 4
+        },
+        "5": {
+          "ret_pct": -3.707,
+          "mdd_pct": -4.873,
+          "bars": 6
+        },
+        "7": {
+          "ret_pct": -5.622,
+          "mdd_pct": -6.765,
+          "bars": 8
+        },
+        "10": {
+          "ret_pct": -5.612,
+          "mdd_pct": -6.944,
+          "bars": 11
+        },
+        "14": {
+          "ret_pct": -6.065,
+          "mdd_pct": -7.203,
+          "bars": 15
+        }
+      }
+    }
+  ],
+  "note": "MDD is buy&hold BTC from switch-day close over L days — proxy for cost of still being long while classifier lags into risk-off."
+}

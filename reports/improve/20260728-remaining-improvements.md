@@ -27,4 +27,6 @@
 - **AE6** MFI+Williams flush-fade: **falsified** as standalone alpha — see `reports/improve/20260729-ae6-flush-fade.md`
 - **AE6b** regime-gated AE6: **falsified** (sparse + deep-bear PF 0.13) — `reports/improve/20260729-ae6b-regime-gate.md`
 - **AE7/AE7b** funding extremes: AE7 untestable at −0.05% in available history; AE7b relative 10th-pct **falsified** on holdout mean — `reports/improve/20260729-ae7*.md`
-- **Next open:** collect longer funding/orderbook history forward (no threshold mining); or a new OHLCV hypothesis **orthogonal** to flush-fade
+- **AE12** lag-MDD + forward collect: **shipping** — 7d risk-off median MDD −5.45% (material); `scripts/ae12_forward_collect.py` / `ae12_lag_mdd.py`
+- **AE12b**: run frozen funding/OB event study after ≥30d collection (`scripts/ae12_event_study.py`)
+- **Next open:** do not restart TA scrapes (AE6–AE11 closed); keep LIVE caps sized for lag worst-case
