@@ -1,0 +1,109 @@
+{
+  "name": "Alpha AE9 Trend Pullback Continuation 4h",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 5,
+  "take_profit": 12,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ema20",
+      "params": {
+        "type": "EMA",
+        "period": 20
+      }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ema50",
+      "params": {
+        "type": "EMA",
+        "period": 50
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "ema20.value"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ema20.value"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "ema50.value"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "gte",
+        "right": {
+          "type": "literal",
+          "value": 25
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "ema20.value"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        }
+      }
+    ]
+  }
+}

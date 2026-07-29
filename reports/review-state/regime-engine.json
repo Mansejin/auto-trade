@@ -539,8 +539,20 @@
     },
     {
       "id": "AE9",
-      "goal": "trend-continuation family OR forward-collect alt-data",
-      "chg": "avoid another oversold-bounce retune",
+      "goal": "trend-continuation: EMA20 reclaim pullback 4h",
+      "chg": "Falsified — early/prior PF 0.52 / 0.02 — reports/improve/20260729-ae9-trend-pullback.md",
+      "status": "done_falsified"
+    },
+    {
+      "id": "AE10",
+      "goal": "trend-continuation: MACD cross + ADX/DI 4h",
+      "chg": "Falsified — early OOS WR 0% PF 0 — reports/improve/20260729-ae10-macd-trend.md",
+      "status": "done_falsified"
+    },
+    {
+      "id": "AE11",
+      "goal": "daily trend or structural idea — not another 4h MACD/EMA variant",
+      "chg": "open",
       "status": "open"
     }
   ],
