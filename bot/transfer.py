@@ -587,6 +587,7 @@ def auto_fund_bitget_from_upbit(
     )
     _append_history(settings, done)
     _mark_cooldown(settings)
+    _rebase_upbit_risk_after_withdraw(settings, coin=coin_u, amount=amount)
     logger.warning(
         "AUTO TRANSFER executed code=%s amount=%s %s chain=%s reason=%s",
         req.code,
