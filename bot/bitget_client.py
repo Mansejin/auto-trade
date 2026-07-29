@@ -307,7 +307,7 @@ class BitgetPrivate:
         tag: str | None = None,
         client_oid: str | None = None,
     ) -> dict[str, Any]:
-        """POST /api/v3/account/withdraw (on-chain)."""
+        """POST /api/v3/account/withdrawal (on-chain)."""
         body: dict[str, Any] = {
             "coin": coin.upper(),
             "transferType": "on_chain",
@@ -315,8 +315,9 @@ class BitgetPrivate:
             "chain": chain,
             "size": str(amount),
             "clientOid": client_oid or uuid.uuid4().hex[:32],
+            "accountType": "uta",
         }
         if tag:
             body["tag"] = tag
-        data = self._request("POST", "/api/v3/account/withdraw", body=body)
+        data = self._request("POST", "/api/v3/account/withdrawal", body=body)
         return data or {}
