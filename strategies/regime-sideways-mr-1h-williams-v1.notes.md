@@ -10,9 +10,14 @@ ADX가 약한 횡보에서 Williams %R &lt; -80 과매도는 단기 평균회귀
 - TF: 1h KRW-BTC
 
 ## Mount contract (critical)
-**Only while daily regime == sideways** (Policy C engine).  
-Optional paper guard: **sideways dwell >= 14 calendar days** before allowing Williams entries
-(see `reports/improve/20260729-williams-dwell14-guard.md`).
+**Only while daily regime == sideways** (Policy C engine).
+
+Paper / research mount modes (`scripts/williams_dwell_gate.py`):
+- **`dwell7` (preferred develop)** — allow when sideways dwell >= 7
+- `dwell14` — stricter; blocks stubs but regressed old1 in BT
+- `hybrid` — dwell 7..13 early-strict v2; dwell>=14 base v1 (mixed; not preferred)
+
+See `reports/improve/20260729-williams-dwell-develop.md`.
 
 1h ADX<20 alone is NOT enough — on 2026-04-28~07-28 mixed bear the same JSON lost -20.8% (PF 0.28).
 

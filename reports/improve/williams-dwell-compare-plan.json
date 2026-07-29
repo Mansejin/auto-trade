@@ -1,0 +1,162 @@
+[
+  {
+    "tag": "SW-new1",
+    "full_s": "2025-01-29",
+    "full_e": "2025-02-06",
+    "min_dwell": 7,
+    "status": "TRADE",
+    "gate_s": "2025-02-04",
+    "gate_e": "2025-02-06",
+    "allow_days": 3
+  },
+  {
+    "tag": "SW-new1",
+    "full_s": "2025-01-29",
+    "full_e": "2025-02-06",
+    "min_dwell": 14,
+    "status": "FILTERED",
+    "gate_s": null,
+    "gate_e": null,
+    "allow_days": 0
+  },
+  {
+    "tag": "SW-new2",
+    "full_s": "2025-04-04",
+    "full_e": "2025-04-25",
+    "min_dwell": 7,
+    "status": "TRADE",
+    "gate_s": "2025-04-10",
+    "gate_e": "2025-04-25",
+    "allow_days": 16
+  },
+  {
+    "tag": "SW-new2",
+    "full_s": "2025-04-04",
+    "full_e": "2025-04-25",
+    "min_dwell": 14,
+    "status": "TRADE",
+    "gate_s": "2025-04-17",
+    "gate_e": "2025-04-25",
+    "allow_days": 9
+  },
+  {
+    "tag": "SW-old1",
+    "full_s": "2025-06-05",
+    "full_e": "2025-07-13",
+    "min_dwell": 7,
+    "status": "TRADE",
+    "gate_s": "2025-06-11",
+    "gate_e": "2025-07-13",
+    "allow_days": 33
+  },
+  {
+    "tag": "SW-old1",
+    "full_s": "2025-06-05",
+    "full_e": "2025-07-13",
+    "min_dwell": 14,
+    "status": "TRADE",
+    "gate_s": "2025-06-18",
+    "gate_e": "2025-07-13",
+    "allow_days": 26
+  },
+  {
+    "tag": "SW-A",
+    "full_s": "2025-08-05",
+    "full_e": "2025-08-15",
+    "min_dwell": 7,
+    "status": "TRADE",
+    "gate_s": "2025-08-11",
+    "gate_e": "2025-08-15",
+    "allow_days": 5
+  },
+  {
+    "tag": "SW-A",
+    "full_s": "2025-08-05",
+    "full_e": "2025-08-15",
+    "min_dwell": 14,
+    "status": "FILTERED",
+    "gate_s": null,
+    "gate_e": null,
+    "allow_days": 0
+  },
+  {
+    "tag": "SW-old2",
+    "full_s": "2025-08-20",
+    "full_e": "2025-10-02",
+    "min_dwell": 7,
+    "status": "TRADE",
+    "gate_s": "2025-08-26",
+    "gate_e": "2025-10-02",
+    "allow_days": 38
+  },
+  {
+    "tag": "SW-old2",
+    "full_s": "2025-08-20",
+    "full_e": "2025-10-02",
+    "min_dwell": 14,
+    "status": "TRADE",
+    "gate_s": "2025-09-02",
+    "gate_e": "2025-10-02",
+    "allow_days": 31
+  },
+  {
+    "tag": "SW-B",
+    "full_s": "2025-12-29",
+    "full_e": "2026-01-05",
+    "min_dwell": 7,
+    "status": "TRADE",
+    "gate_s": "2026-01-04",
+    "gate_e": "2026-01-05",
+    "allow_days": 2
+  },
+  {
+    "tag": "SW-B",
+    "full_s": "2025-12-29",
+    "full_e": "2026-01-05",
+    "min_dwell": 14,
+    "status": "FILTERED",
+    "gate_s": null,
+    "gate_e": null,
+    "allow_days": 0
+  },
+  {
+    "tag": "SW-old3",
+    "full_s": "2026-03-24",
+    "full_e": "2026-04-22",
+    "min_dwell": 7,
+    "status": "TRADE",
+    "gate_s": "2026-03-30",
+    "gate_e": "2026-04-22",
+    "allow_days": 24
+  },
+  {
+    "tag": "SW-old3",
+    "full_s": "2026-03-24",
+    "full_e": "2026-04-22",
+    "min_dwell": 14,
+    "status": "TRADE",
+    "gate_s": "2026-04-06",
+    "gate_e": "2026-04-22",
+    "allow_days": 17
+  },
+  {
+    "tag": "SW-new3",
+    "full_s": "2026-07-23",
+    "full_e": "2026-07-28",
+    "min_dwell": 7,
+    "status": "FILTERED",
+    "gate_s": null,
+    "gate_e": null,
+    "allow_days": 0
+  },
+  {
+    "tag": "SW-new3",
+    "full_s": "2026-07-23",
+    "full_e": "2026-07-28",
+    "min_dwell": 14,
+    "status": "FILTERED",
+    "gate_s": null,
+    "gate_e": null,
+    "allow_days": 0
+  }
+]
