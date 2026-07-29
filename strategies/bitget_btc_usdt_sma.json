@@ -11,7 +11,7 @@
     "coin": "USDT",
     "chain": "TRC20",
     "min_trade_usdt": 10,
-    "top_up_usdt": 50,
+    "top_up_usdt": 100000,
     "max_wait_sec": 7200,
     "buy_usdt_from_krw": true
   },
