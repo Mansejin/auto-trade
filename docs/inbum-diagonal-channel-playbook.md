@@ -254,6 +254,12 @@ Report: [`freqtrade-research/reports/20260729-diagonal-us-session-mtf.md`](../fr
 
 Mode A 첫 터치는 세션을 맞춰도 안 산다 → **진입 논리 교체**가 다음.
 
+### QQQ 이식 (2026-07-29)
+`QQQ/USDT:USDT` + 동일 US-RTH Multi-TF Mode A → PF 0.40 / 0.40 / 0 (**기각**).  
+Report: [`freqtrade-research/reports/20260729-diagonal-qqq-us-rth-mtf.md`](../freqtrade-research/reports/20260729-diagonal-qqq-us-rth-mtf.md)
+
+고정 스택 후보: **QQQ · US RTH · 4h 작도 · Mode B 진입**.
+
 ---
 
 ## 6. 자동화·백테스트로 옮길 때
@@ -274,6 +280,7 @@ Mode A 첫 터치는 세션을 맞춰도 안 산다 → **진입 논리 교체**
 | ~~Human-Soft~~ | pierce 용인 + ugly skip + cooldown | `DiagonalHumanSoftDayV1` | 15m BTC | **기각** (3/3) |
 | ~~Multi-TF~~ | **4h** volume-pivot + **15m** Mode A 터치 | `DiagonalMultiTfDayV1` | 4h→15m BTC | **기각** (3/3, 희소) |
 | ~~US-RTH MTF~~ | 위 + **미국 정규장만** + vol | `DiagonalUsRthMultiTfV1` | 4h→15m BTC | **기각** (3/3) |
+| ~~QQQ US-RTH~~ | 동일 규칙, 자산만 **QQQ** | same strat + qqq config | 4h→15m QQQ | **기각** (3/3) |
 | **P1** | BB lower reclaim ≈ 상승채널 하단 | upbit JSON | 4h | 선택 |
 
 ### 6.3 V1 앵커 스펙 (사용자 정의 반영 — 구현 전 freeze 후보)
@@ -299,18 +306,18 @@ exit: mid / opposite rail / SL beyond rail
 
 ---
 
-## 7. 전략 후보 (다음 — 세션 고정)
+## 7. 전략 후보 (다음)
 
-고정: BTC · US RTH · 4h 구조 · 저빈도 허용.
+고정: **QQQ** · US RTH · 4h 구조 · 저빈도 허용.
 
-### A. US-RTH + 4h Mode B (추천)
-- 4h 레일 돌파(+거래량) → 15m에서 리테스트 후 추세 방향.
+### A. QQQ US-RTH + 4h Mode B (추천)
+- 4h 레일 돌파(+거래량) → 15m 리테스트 후 추세 방향.
 
-### B. US-RTH + 1h→15m Mode A
-- 레일 방문 수를 늘려 샘플 확보 (같은 MR 논리).
+### B. QQQ US-RTH + 1h→15m Mode A
+- 샘플만 늘리는 보조 실험 (Mode A 재탕 위험).
 
 ### C. 레일 필터
-- 다른 엔트리 + US-RTH + 4h 레일 근처.
+- 다른 엔트리 + QQQ US-RTH + 4h 레일 근처.
 
 ---
 
@@ -327,8 +334,8 @@ exit: mid / opposite rail / SL beyond rail
 
 ## 9. Next actions
 
-1. A(US-RTH+Mode B) / B(1h HTF) / C(필터) 선택
-2. 기각 hypers 재튜닝 금지
+1. **QQQ + US-RTH + Mode B** 구현 (추천)
+2. Mode A hypers 재튜닝 금지
 3. 승격 전 LIVE/SCALP 금지
 
 ---
