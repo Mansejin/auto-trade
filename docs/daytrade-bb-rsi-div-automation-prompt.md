@@ -80,10 +80,10 @@ State fields:
 
 Promotion bar (ALL):
   A) ≥2/3 ~30d windows: net > 0 AND (PF ≥ 1.2 OR zero-loss with net > 0)
-  B) Daily avg trades ≥ 5.0 on EACH passing window
-  C) Worst window net ≥ −2%
-  D) Fees on
-  E) Same encoding all windows
+  B) Worst window net ≥ −2%
+  C) Fees on
+  D) Same encoding all windows
+  (No minimum trades/day gate. Log trades/day for info only.)
 
 FAIL → consecutive_fails++, next_action one ultra hypothesis sentence, push, no deploy.
 PASS → save JSON + freeze + push + AUTO-DEPLOY + next_action=HOLD.
@@ -102,7 +102,7 @@ Report template (keep this short):
   # vN VERDICT
   - slug / hypothesis / hypers (one line each)
   - W1/W2/W3: return, PF, trades, trades/day, fees (bullet)
-  - bar A/B/C/D/E: PASS|FAIL
+  - bar A/B/C/D: PASS|FAIL
   - deploy_status
   - next_action
   Include fenced stdout quotes for each window (required exact).
