@@ -1,0 +1,51 @@
+{
+  "period": "2021-07-30 ~ 2026-07-30",
+  "n_days": 1827,
+  "start_px": 48555000.0,
+  "end_px": 92058000.0,
+  "btc_price_return": 0.8959530429409948,
+  "rules": {
+    "target": "BTC:KRW 50:50",
+    "band_pp": 0.12,
+    "trigger": "w_btc outside [0.38, 0.62]",
+    "cooldown_days": 30,
+    "dca": "initial 10,000,000 KRW + monthly 1,000,000 KRW at 50:50",
+    "fee": 0.0005,
+    "cash_yield": 0.0
+  },
+  "strategies": {
+    "rebalance_5050": {
+      "final_equity": 97234403.78683943,
+      "contributed": 70000000.0,
+      "multiple_on_contrib": 1.3890629112405632,
+      "pnl": 27234403.786839426,
+      "pnl_pct_on_contrib": 0.38906291124056325,
+      "mdd": -0.23574262371002785,
+      "fees": 31689.469141224217,
+      "rebalances": 4,
+      "final_w_btc": 0.394205975665784
+    },
+    "hold_5050_no_rebal": {
+      "final_equity": 93167048.6411477,
+      "contributed": 70000000.0,
+      "multiple_on_contrib": 1.3309578377306814,
+      "pnl": 23167048.641147703,
+      "pnl_pct_on_contrib": 0.33095783773068144,
+      "mdd": -0.34560251497870187,
+      "fees": 17500.0,
+      "rebalances": 0,
+      "final_w_btc": 0.624330699421318
+    },
+    "dca_100pct_btc": {
+      "final_equity": 116334097.2822954,
+      "contributed": 70000000.0,
+      "multiple_on_contrib": 1.6619156754613629,
+      "pnl": 46334097.282295406,
+      "pnl_pct_on_contrib": 0.6619156754613629,
+      "mdd": -0.5407746550088803,
+      "fees": 35000.0,
+      "rebalances": 0,
+      "final_w_btc": 1.0
+    }
+  }
+}
