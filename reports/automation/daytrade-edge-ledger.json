@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T04:03:59Z",
+  "updated_at": "2026-07-30T04:07:40Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
-  "cards_tried": 72,
-  "last_slug": "daytrade-edge-15m-div-v2",
+  "cards_tried": 73,
+  "last_slug": "daytrade-edge-15m-div-v3",
   "consecutive_fails": 0,
   "failure_mode_counts": {
     "FEE_BLEED": 28,
@@ -47,12 +47,19 @@
       "worst_net": "-1.14%",
       "note": "classic+hidden OR @ BB lower → upper; A–D PASS; more trades; W1 worse than v1",
       "keep": true
+    },
+    {
+      "slug": "daytrade-edge-15m-div-v3",
+      "a_pass": "2/3",
+      "worst_net": "-0.04%",
+      "note": "ADX<25 + classic+hidden OR @ BB lower → upper; A–D PASS; W1 bleed cut vs v2; sparser",
+      "keep": true
     }
   ],
   "promising_axes": [
     "PROMOTED: 15m hidden bull @ BB lower → upper-only (daytrade-edge-15m-div-v1)",
     "PROMOTED: 15m classic+hidden OR @ BB lower → upper-only (daytrade-edge-15m-div-v2)",
-    "one ATR/ADX vol gate on v2 base (filter W1 bleed; not RSI nudge)",
+    "PROMOTED: 15m ADX<25 + classic+hidden OR @ BB lower → upper-only (daytrade-edge-15m-div-v3)",
     "two-sided / bear-window short on 15m div family",
     "hold/exit variant still upper-primary (no mid fee scrape)"
   ],
@@ -63,7 +70,8 @@
     "W2 large down-bench + long-only MR often REGIME_LONG_BLEED → add short or risk-off",
     "15m TF jump on v35-family + drop RSI early-exit cleared A–D; 5m leave-OS line never did",
     "Cloud automation cannot use AUTO_TRADE_BOT_SSH_KEY reliably — develop-only; human deploys locally",
-    "classic+hidden OR on 15m cleared A–D with denser trades; W1 still soft (−1.14%) → next vol gate not RSI"
+    "classic+hidden OR on 15m cleared A–D with denser trades; W1 still soft (−1.14%) → next vol gate not RSI",
+    "ADX<25 ranging gate on v2 cut W1 −1.14%→−0.04% and kept A–D; sparser trades OK"
   ],
-  "next_priority": "Encode daytrade-edge-15m-div-v3: ONE ATR or ADX gate hyper on classic+hidden OR base to cut W1 bleed. No deploy. Keep v1+v2 frozen."
+  "next_priority": "Encode daytrade-edge-15m-div-short-v1: 15m classic+hidden bear div @ BB upper → short-proxy exit BB lower. No deploy. Keep v1–v3 frozen."
 }
