@@ -1,29 +1,29 @@
 {
-  "active_card": "daytrade-edge-15m-div-short-v1",
-  "slug": "daytrade-edge-15m-div-short-v1",
-  "hypothesis": "BTC 15m short-proxy: (classic bear HH+RSI LH3 OR hidden bear LH+RSI HH3) @ BB upper → buy; exit BB lower only.",
+  "active_card": "daytrade-edge-15m-div-short-inv-v1",
+  "slug": "daytrade-edge-15m-div-short-inv-v1",
+  "hypothesis": "BTC 15m short-proxy inv: (classic bear HH+RSI LH3 OR hidden bear LH+RSI HH3) @ BB upper → buy; exit BB lower; SL 2.5 / TP 0.8 so proxy PnL tracks short.",
   "hypers": {
     "tf": "15m",
     "div_lookback": 3,
-    "side": "short-proxy"
+    "sl_tp": "2.5/0.8"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "-4.74%",
-      "profit_factor": "0.18",
-      "trades": 9,
+      "total_return": "-3.50%",
+      "profit_factor": "0.48",
+      "trades": 10,
       "benchmark": "+1.85%",
-      "trades_per_day": 0.3
+      "trades_per_day": 0.33
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "-0.12%",
-      "profit_factor": "1.10",
+      "total_return": "-1.12%",
+      "profit_factor": "0.46",
       "trades": 2,
       "benchmark": "-17.47%",
       "trades_per_day": 0.07
@@ -32,19 +32,19 @@
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "-0.34%",
-      "profit_factor": "1.04",
-      "trades": 4,
+      "total_return": "-0.79%",
+      "profit_factor": "0.84",
+      "trades": 5,
       "benchmark": "-4.49%",
-      "trades_per_day": 0.13
+      "trades_per_day": 0.17
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 1,
+  "consecutive_fails": 2,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "Encode daytrade-edge-15m-div-short-inv-v1: same bear div @ BB upper, exit BB lower, inverted SL/TP (2.5/0.8) so proxy net tracks short. Keep v1–v3 frozen. No SSH.",
-  "failed_slug": "daytrade-edge-15m-div-short-v1",
+  "next_action": "Encode daytrade-edge-15m-div-hold-v1: v1 hidden bull HL+RSI LL3 @ BB lower → BB upper only, take_profit null (upper-primary hold). Keep v1–v3 frozen. No SSH.",
+  "failed_slug": "daytrade-edge-15m-div-short-inv-v1",
   "fail_mode": "WORST_BLEED",
-  "updated_at": "2026-07-30T04:10:36Z"
+  "updated_at": "2026-07-30T04:14:00Z"
 }
