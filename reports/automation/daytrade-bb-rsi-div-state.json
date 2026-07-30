@@ -1,50 +1,50 @@
 {
-  "active_card": "daytrade-edge-15m-div-v3",
-  "slug": "daytrade-edge-15m-div-v3",
-  "hypothesis": "BTC 15m: ADX<25 ranging gate AND (classic bull OR hidden bull) @ BB lower → long; exit BB upper only.",
+  "active_card": "daytrade-edge-15m-div-short-v1",
+  "slug": "daytrade-edge-15m-div-short-v1",
+  "hypothesis": "BTC 15m short-proxy: (classic bear HH+RSI LH3 OR hidden bear LH+RSI HH3) @ BB upper → buy; exit BB lower only.",
   "hypers": {
     "tf": "15m",
     "div_lookback": 3,
-    "adx_max": 25
+    "side": "short-proxy"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "-0.04%",
-      "profit_factor": "1.20",
-      "trades": 2,
+      "total_return": "-4.74%",
+      "profit_factor": "0.18",
+      "trades": 9,
       "benchmark": "+1.85%",
-      "trades_per_day": 0.07
+      "trades_per_day": 0.3
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "+1.30%",
-      "profit_factor": "∞",
-      "trades": 1,
+      "total_return": "-0.12%",
+      "profit_factor": "1.10",
+      "trades": 2,
       "benchmark": "-17.47%",
-      "trades_per_day": 0.03
+      "trades_per_day": 0.07
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "+1.33%",
-      "profit_factor": "∞",
-      "trades": 2,
+      "total_return": "-0.34%",
+      "profit_factor": "1.04",
+      "trades": 4,
       "benchmark": "-4.49%",
-      "trades_per_day": 0.07
+      "trades_per_day": 0.13
     }
   ],
-  "last_verdict": "PASS",
-  "consecutive_fails": 0,
+  "last_verdict": "FAIL",
+  "consecutive_fails": 1,
   "deployed_slug": null,
-  "deploy_status": "skipped_no_deploy",
-  "next_action": "Encode daytrade-edge-15m-div-short-v1: 15m classic+hidden bear div @ BB upper → short-proxy/exit BB lower. No SSH deploy. Keep v1–v3 frozen.",
-  "failed_slug": null,
-  "fail_mode": null,
-  "updated_at": "2026-07-30T04:07:40Z"
+  "deploy_status": "none",
+  "next_action": "Encode daytrade-edge-15m-div-short-inv-v1: same bear div @ BB upper, exit BB lower, inverted SL/TP (2.5/0.8) so proxy net tracks short. Keep v1–v3 frozen. No SSH.",
+  "failed_slug": "daytrade-edge-15m-div-short-v1",
+  "fail_mode": "WORST_BLEED",
+  "updated_at": "2026-07-30T04:10:36Z"
 }

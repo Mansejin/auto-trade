@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T04:07:40Z",
+  "updated_at": "2026-07-30T04:10:36Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
-  "cards_tried": 73,
-  "last_slug": "daytrade-edge-15m-div-v3",
-  "consecutive_fails": 0,
+  "cards_tried": 74,
+  "last_slug": "daytrade-edge-15m-div-short-v1",
+  "consecutive_fails": 1,
   "failure_mode_counts": {
     "FEE_BLEED": 28,
     "SPARSE_ZERO": 14,
     "A_FAIL": 45,
-    "WORST_BLEED": 22,
+    "WORST_BLEED": 23,
     "REGIME_LONG_BLEED": 8
   },
   "banned_moves": [
@@ -60,7 +60,7 @@
     "PROMOTED: 15m hidden bull @ BB lower → upper-only (daytrade-edge-15m-div-v1)",
     "PROMOTED: 15m classic+hidden OR @ BB lower → upper-only (daytrade-edge-15m-div-v2)",
     "PROMOTED: 15m ADX<25 + classic+hidden OR @ BB lower → upper-only (daytrade-edge-15m-div-v3)",
-    "two-sided / bear-window short on 15m div family",
+    "short-inv SL/TP flip on 15m bear div @ BB upper (proxy PnL align)",
     "hold/exit variant still upper-primary (no mid fee scrape)"
   ],
   "lessons": [
@@ -71,7 +71,8 @@
     "15m TF jump on v35-family + drop RSI early-exit cleared A–D; 5m leave-OS line never did",
     "Cloud automation cannot use AUTO_TRADE_BOT_SSH_KEY reliably — develop-only; human deploys locally",
     "classic+hidden OR on 15m cleared A–D with denser trades; W1 still soft (−1.14%) → next vol gate not RSI",
-    "ADX<25 ranging gate on v2 cut W1 −1.14%→−0.04% and kept A–D; sparser trades OK"
+    "ADX<25 ranging gate on v2 cut W1 −1.14%→−0.04% and kept A–D; sparser trades OK",
+    "short-proxy long@upper→lower WORST_BLEED on toolkit net; W1 SL 6/9 + sell 3 = down follow-through → try inv SL/TP next"
   ],
-  "next_priority": "Encode daytrade-edge-15m-div-short-v1: 15m classic+hidden bear div @ BB upper → short-proxy exit BB lower. No deploy. Keep v1–v3 frozen."
+  "next_priority": "Encode daytrade-edge-15m-div-short-inv-v1: same classic+hidden bear @ BB upper, exit BB lower, inverted SL/TP 2.5/0.8. No deploy. Keep v1–v3 frozen."
 }
