@@ -1,7 +1,7 @@
 {
-  "active_card": "daytrade-edge-15m-div-atr-adx-v1",
-  "slug": "daytrade-edge-15m-div-atr-adx-v1",
-  "hypothesis": "BTC 15m classic+hidden OR (HL/LL3 RSI) @ BB lower with ADX<25 and ATR expanding (atr14 > atr offset 3) → long; exit BB upper only.",
+  "active_card": "daytrade-edge-15m-div-atr-adx-hold-v1",
+  "slug": "daytrade-edge-15m-div-atr-adx-hold-v1",
+  "hypothesis": "BTC 15m classic+hidden OR (HL/LL3 RSI) @ BB lower with ADX<25 and ATR expanding (atr14 > atr offset 3) → long; exit BB upper only; take_profit null (upper-primary hold).",
   "hypers": {
     "tf": "15m",
     "atr_expand_lookback": 3,
@@ -43,8 +43,8 @@
   "consecutive_fails": 0,
   "deployed_slug": null,
   "deploy_status": "skipped_no_deploy",
-  "next_action": "Encode daytrade-edge-15m-div-atr-adx-hold-v1: same ADX<25 + ATR expand + classic+hidden OR @ BB lower → BB upper, take_profit null (upper-primary hold). Keep promoted cards frozen. No SSH.",
+  "next_action": "Encode daytrade-edge-30m-div-atr-adx-v1: same ADX<25 + ATR expand + classic+hidden OR @ BB lower → BB upper on 30m TF. Keep promoted cards frozen. No SSH.",
   "failed_slug": null,
   "fail_mode": "PASS",
-  "updated_at": "2026-07-30T04:31:31Z"
+  "updated_at": "2026-07-30T04:34:30Z"
 }
