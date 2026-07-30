@@ -1,11 +1,11 @@
 {
-  "active_card": "daytrade-edge-30m-div-atr-adx-v1",
-  "slug": "daytrade-edge-30m-div-atr-adx-v1",
-  "hypothesis": "BTC 30m classic+hidden OR (HL/LL3 RSI) @ BB lower with ADX<25 and ATR expanding (atr14 > atr offset 3) → long; exit BB upper only.",
+  "active_card": "daytrade-edge-30m-div-adx-v1",
+  "slug": "daytrade-edge-30m-div-adx-v1",
+  "hypothesis": "BTC 30m classic+hidden OR (HL/LL3 RSI) @ BB lower with ADX<25 → long; exit BB upper only.",
   "hypers": {
     "tf": "30m",
-    "atr_expand_lookback": 3,
-    "adx_max": 25
+    "adx_max": 25,
+    "div_lookback": 3
   },
   "last_windows": [
     {
@@ -40,11 +40,11 @@
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 1,
+  "consecutive_fails": 2,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "Encode daytrade-edge-30m-div-adx-v1: ADX<25 + classic+hidden OR @ BB lower → BB upper on 30m (drop ATR gate to cut sparsity). Keep promoted cards frozen. No SSH.",
-  "failed_slug": "daytrade-edge-30m-div-atr-adx-v1",
+  "next_action": "Encode daytrade-edge-30m-div-v1: classic+hidden OR @ BB lower → BB upper on 30m (drop ADX after adx-v1 matched atr-adx SPARSE_ZERO). Keep promoted cards frozen. No SSH.",
+  "failed_slug": "daytrade-edge-30m-div-adx-v1",
   "fail_mode": "SPARSE_ZERO",
-  "updated_at": "2026-07-30T04:38:09Z"
+  "updated_at": "2026-07-30T04:40:30Z"
 }
