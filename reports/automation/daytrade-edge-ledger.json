@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "updated_at": "2026-07-30T03:36:26Z",
+  "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
+  "open_directions": true,
+  "allowed_slug_prefix": "daytrade-",
+  "cards_tried": 70,
+  "last_slug": "daytrade-bb-rsi-div-v70",
+  "consecutive_fails": 69,
+  "failure_mode_counts": {
+    "FEE_BLEED": 28,
+    "SPARSE_ZERO": 14,
+    "A_FAIL": 45,
+    "WORST_BLEED": 22,
+    "REGIME_LONG_BLEED": 8
+  },
+  "banned_moves": [
+    "RSI OS / exit threshold nudge only (e.g. 30↔35↔40, 50↔60↔65)",
+    "leave-OS / RSI hysteresis-only line on 5m",
+    "Loosen entry to chase trades/day after near-miss",
+    "Invent daily≥5 trades gate (removed)",
+    "Re-run same encoding with new slug only"
+  ],
+  "exhausted_lines": [
+    "5m long-only BB+RSI leave-OS / reclaim / RSI-signal chop (v42–v70 cluster)"
+  ],
+  "near_misses": [
+    {
+      "slug": "daytrade-bb-rsi-div-v35",
+      "a_pass": "2/3",
+      "worst_net": "-0.04%",
+      "note": "hidden bull HL/LL3 @ BB lower → upper; tiny net; sparse ~0.1 tpd",
+      "keep": true
+    }
+  ],
+  "promising_axes": [
+    "TF jump 5m→15m (fee relief) keeping divergence structure",
+    "two-sided or bear-window short (W2 bench≪0 kills long-only)",
+    "v35-family: classic/hidden div @ BB outer, hold to upper, no RSI early exit",
+    "one volatility/ADX/ATR gate as a hyper (not RSI nudge)",
+    "longer hold target (upper/BB mid hold) when FEE_BLEED"
+  ],
+  "lessons": [
+    "High WR + PF≈1.0–1.2 + large Total Fees = FEE_BLEED → never loosen entry; lengthen exit or raise TF or stricter pattern",
+    "A near-pass + sparse (v35) → do not scrape for frequency; change TF/session/two-sided",
+    "0 trades = broken/over-strict encoding → change pattern family, not ±1 hyper",
+    "W2 large down-bench + long-only MR often REGIME_LONG_BLEED → add short or risk-off"
+  ],
+  "next_priority": "STOP 5m leave-OS/reclaim RSI-signal line. Next card ONE axis only: (1) 15m v35-family div fade OR (2) two-sided 5m div OR (3) 5m v35-family with upper-only exit no RSI early-exit. Prefer (1)."
+}

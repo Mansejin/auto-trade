@@ -1,11 +1,11 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v70",
-  "slug": "daytrade-bb-rsi-div-v70",
-  "hypothesis": "BTC daytrade long-only: outer pierce close[2]<BB lower[2] then close cross_above mid + LL/HL3 RSI<50; exit BB upper.",
+  "active_card": "daytrade-edge-15m-div-v1",
+  "slug": "daytrade-edge-15m-div-v1",
+  "hypothesis": "BTC daytrade: 15m hidden/classic bull div at BB lower → long; exit BB upper only. Hypers: div_lookback, bb_std, tf=15m.",
   "hypers": {
-    "pierce_lag": 2,
+    "tf": "15m",
     "div_lookback": 3,
-    "rsi_os": 50
+    "exit": "bb_upper_only"
   },
   "last_windows": [
     {
@@ -43,7 +43,7 @@
   "consecutive_fails": 69,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "outer pierce close[2]<lower[2] then mid reclaim + LL/HL3 RSI<50; exit upper — v70 백테스트 (v54-family, no-tpd bar).",
+  "next_action": "LEARN: leave 5m leave-OS line. Encode 15m v35-family hidden/classic div @ BB outer → upper only (no RSI early exit). Update ledger.",
   "failed_slug": "daytrade-bb-rsi-div-v69",
-  "updated_at": "2026-07-30T03:36:26Z"
+  "updated_at": "2026-07-30T03:39:57Z"
 }
