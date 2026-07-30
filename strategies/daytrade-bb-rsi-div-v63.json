@@ -1,0 +1,62 @@
+{
+  "name": "Daytrade BB RSI Div v63",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "5m",
+  "stop_loss": 0.8,
+  "take_profit": 2.5,
+  "indicators": [
+    {
+      "type": "rsi",
+      "ref": "rsi14",
+      "params": {
+        "period": 14,
+        "signal_period": 9,
+        "signal_type": "EMA"
+      }
+    },
+    {
+      "type": "bollinger_bands",
+      "ref": "bb20",
+      "params": {
+        "period": 20,
+        "multiplier": 1.0
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "lt",
+        "right": { "type": "indicator", "ref": "bb20.bb_lower" }
+      },
+      {
+        "left": { "type": "field", "field": "low" },
+        "op": "lt",
+        "right": { "type": "field", "field": "low", "offset": 3 }
+      },
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "gt",
+        "right": { "type": "indicator", "ref": "rsi14.rsi", "offset": 3 }
+      },
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "lt",
+        "right": { "type": "literal", "value": 40 }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "gte",
+        "right": { "type": "literal", "value": 65 }
+      }
+    ]
+  }
+}
