@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v61",
-  "slug": "daytrade-bb-rsi-div-v61",
-  "hypothesis": "BTC daytrade long-only: BB 1.0σ wick low<lower + price LL3 RSI HL3 RSI<50; exit mid cross.",
+  "active_card": "daytrade-bb-rsi-div-v62",
+  "slug": "daytrade-bb-rsi-div-v62",
+  "hypothesis": "BTC daytrade long-only: BB 1.5σ close<lower + price LL4 RSI HL4 RSI<40; exit RSI>=60.",
   "hypers": {
-    "bb_std": 1.0,
-    "div_lookback": 3,
-    "exit": "mid_cross"
+    "bb_std": 1.5,
+    "div_lookback": 4,
+    "exit": "rsi60_gte"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "-25.19%",
-      "profit_factor": "1.11",
-      "trades": 313,
+      "total_return": "-16.90%",
+      "profit_factor": "1.09",
+      "trades": 200,
       "benchmark": "+1.79%",
-      "trades_per_day": 10.43
+      "trades_per_day": 6.67
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "-32.64%",
-      "profit_factor": "0.95",
-      "trades": 379,
+      "total_return": "-28.37%",
+      "profit_factor": "0.79",
+      "trades": 243,
       "benchmark": "-17.77%",
-      "trades_per_day": 12.63
+      "trades_per_day": 8.1
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "-27.86%",
-      "profit_factor": "0.92",
-      "trades": 302,
+      "total_return": "-16.88%",
+      "profit_factor": "1.05",
+      "trades": 193,
       "benchmark": "-4.56%",
-      "trades_per_day": 10.07
+      "trades_per_day": 6.43
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 60,
+  "consecutive_fails": 61,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB 1.0σ wick low<lower + price LL3 RSI HL3 RSI<50; exit mid cross — v61 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v60",
-  "updated_at": "2026-07-30T02:21:00Z"
+  "next_action": "BB 1.5σ close<lower + price LL4 RSI HL4 RSI<40; exit RSI>=60 — v62 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v61",
+  "updated_at": "2026-07-30T02:25:00Z"
 }
