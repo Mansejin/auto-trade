@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v60",
-  "slug": "daytrade-bb-rsi-div-v60",
-  "hypothesis": "BTC daytrade long-only: BB 1.0σ wick low<lower + RSI<45 flat (no rise); exit RSI>=48.",
+  "active_card": "daytrade-bb-rsi-div-v61",
+  "slug": "daytrade-bb-rsi-div-v61",
+  "hypothesis": "BTC daytrade long-only: BB 1.0σ wick low<lower + price LL3 RSI HL3 RSI<50; exit mid cross.",
   "hypers": {
     "bb_std": 1.0,
-    "pattern": "wick_lower_rsi45_flat",
-    "exit": "rsi48_gte"
+    "div_lookback": 3,
+    "exit": "mid_cross"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "-3.88%",
-      "profit_factor": "1.36",
-      "trades": 67,
+      "total_return": "-25.19%",
+      "profit_factor": "1.11",
+      "trades": 313,
       "benchmark": "+1.79%",
-      "trades_per_day": 2.23
+      "trades_per_day": 10.43
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "-12.87%",
-      "profit_factor": "0.78",
-      "trades": 86,
+      "total_return": "-32.64%",
+      "profit_factor": "0.95",
+      "trades": 379,
       "benchmark": "-17.77%",
-      "trades_per_day": 2.87
+      "trades_per_day": 12.63
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "-9.08%",
-      "profit_factor": "0.89",
-      "trades": 81,
+      "total_return": "-27.86%",
+      "profit_factor": "0.92",
+      "trades": 302,
       "benchmark": "-4.56%",
-      "trades_per_day": 2.7
+      "trades_per_day": 10.07
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 59,
+  "consecutive_fails": 60,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB 1.0σ wick low<lower + RSI<45 flat (no rise); exit RSI>=48 — v60 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v59",
-  "updated_at": "2026-07-30T02:16:00Z"
+  "next_action": "BB 1.0σ wick low<lower + price LL3 RSI HL3 RSI<50; exit mid cross — v61 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v60",
+  "updated_at": "2026-07-30T02:21:00Z"
 }
