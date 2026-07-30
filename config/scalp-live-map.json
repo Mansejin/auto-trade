@@ -2,7 +2,7 @@
   "version": 1,
   "updated": "2026-07-30",
   "venue": "bitget_uta_futures",
-  "bot": "freqtrade-scalp",
+  "bot": "bitget-futures-bot",
   "capital_pct": 50,
   "pointer_file": "freqtrade-research/user_data/ACTIVE_SCALP_STRATEGY",
   "fee": 0.0006,
@@ -10,10 +10,10 @@
     "bull": null,
     "transition": null,
     "bear": {
-      "strategy": "DaytradeEdge10mDivAtrV1",
-      "config": "freqtrade-research/user_data/config.bitget-scalp-div-atr-live.json",
+      "strategy": "bitget-scalp-div-atr-v1",
+      "config": "strategies/bitget-scalp-div-atr-v1.json",
       "upbit_ref": "strategies/daytrade-edge-10m-div-atr-v1.json",
-      "note": "Bitget timeframe=15m (exchange has no 10m); encoding matches Upbit JSON"
+      "note": "Oracle bot-bitget; TF=15m (no 10m on Bitget)"
     },
     "sideways": {
       "strategy": "SidewaysEdge15mBbFadeV5",
@@ -22,9 +22,11 @@
     }
   },
   "switch_notes": [
-    "When daily regime=bear → load bear config/strategy and restart freqtrade-scalp.",
-    "When daily regime=sideways → load sideways config/strategy.",
-    "When bull/transition → flat / stop bot (cash). Do not run side fade in bull.",
+    "When daily regime=bear \u2192 load bear config/strategy and restart freqtrade-scalp.",
+    "When daily regime=sideways \u2192 load sideways config/strategy.",
+    "When bull/transition \u2192 flat / stop bot (cash). Do not run side fade in bull.",
     "CORE Policy C on Upbit switches independently via regime-auto-switch-playbook."
-  ]
+  ],
+  "host": "oracle",
+  "live_strategy_file": "strategies/bitget-scalp-div-atr-v1.json"
 }
