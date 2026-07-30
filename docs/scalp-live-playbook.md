@@ -12,7 +12,7 @@ Reason: second-opinion review — Div ATR bear “defense” (+2.3% vs BTC −43
 
 | Sleeve | Venue | Bot | LIVE |
 |--------|-------|-----|------|
-| 장타 CORE | Upbit spot | `upbit-paper-bot` Policy C | **ON** |
+| 장타 CORE | Upbit spot | `upbit-paper-bot` famous mount | **ON** |
 | 단타 SCALP | Bitget UTA | `bitget-futures-bot` | **OFF / cash** |
 
 Capital intent remains 장타50:단타50 when SCALP is later re-enabled; until then idle Bitget USDT is just parked cash. No TRX rebalance below 50만 KRW total.

@@ -1,13 +1,13 @@
 # Regime Auto-Switch Playbook (Bot / Agent)
 
 > **Goal**: Keep the LIVE Docker bot on the strategy that matches the **current daily regime**.  
-> **Why**: 5y sequential backtests **falsified always-on m5-v6**. Regime Policy C outperformed.  
+> **Live map (2026-07-31)**: famous textbook rules — see [`regime-famous-mount.md`](regime-famous-mount.md).  
 > **Not**: investment advice. Switching files ≠ guaranteed profit.  
 > **Sleeves**: This playbook is the **CORE** (Upbit) sleeve only. Scalp capital is separate — see [`dual-sleeve-allocation.md`](dual-sleeve-allocation.md) / `config/sleeves.json`.
 
 | Field | Value |
 |-------|-------|
-| Updated | 2026-07-28 |
+| Updated | 2026-07-31 |
 | Repo | `Mansejin/auto-trade` |
 | Branch (work) | `cursor/sma-golden-cross-filtered-827b` |
 | Bot host | `ubuntu@129.225.205.185` |
@@ -23,10 +23,10 @@
 
 | Regime | Local file | Slug (filename without `.json`) | TF |
 |--------|------------|----------------------------------|-----|
-| `bull` | `strategies/regime-bull-trend-4h-v2.json` | `regime-bull-trend-4h-v2` | 4h |
-| `bear` | `strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json` | `krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6` | 1h |
-| `sideways` | `strategies/regime-sideways-mr-4h-v5.json` | `regime-sideways-mr-4h-v5` | 4h |
-| `transition` | `strategies/regime-bull-trend-4h-v2.json` | `regime-bull-trend-4h-v2` | 4h |
+| `bull` | `strategies/famous-faber-10mo-sma-1d.json` | `famous-faber-10mo-sma-1d` | 1d |
+| `bear` | `strategies/famous-cash-flat-1d.json` | `famous-cash-flat-1d` | 1d |
+| `sideways` | `strategies/famous-wilder-rsi-mr-1d.json` | `famous-wilder-rsi-mr-1d` | 1d |
+| `transition` | `strategies/famous-faber-10mo-sma-1d.json` | `famous-faber-10mo-sma-1d` | 1d |
 
 Pointer file after switch: `strategies/ACTIVE_STRATEGY` = `<slug>` (one line).
 
@@ -34,10 +34,10 @@ Pointer file after switch: `strategies/ACTIVE_STRATEGY` = `<slug>` (one line).
 flowchart TD
   D["Fetch daily KRW-BTC candles"] --> C["Classify regime v2"]
   C --> R{"regime"}
-  R -->|bull| B["bull-trend-4h-v2"]
+  R -->|bull| B["famous-faber SMA200 1d"]
   R -->|transition| B
-  R -->|bear| E["m5-v6 1h"]
-  R -->|sideways| S["sideways-mr-4h-v4"]
+  R -->|bear| E["famous-cash-flat 1d"]
+  R -->|sideways| S["famous-wilder RSI 1d"]
   B --> P["STRATEGY_PATH + restart bot"]
   E --> P
   S --> P
