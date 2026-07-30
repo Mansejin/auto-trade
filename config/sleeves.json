@@ -67,10 +67,11 @@
           "BearShortDonchianV9",
           "BearShortDailyDonchianV10",
           "BearShortEmaCrossV11",
-          "BearShortStochFadeV12"
+          "BearShortStochFadeV12",
+          "BearShortDivAtrV13"
         ],
         "status": "empty_slot_cash",
-        "notes": "All BTCUSDT short-danta candidates v1-v12 falsified or sample-starved. Keep 30% scalp capital in cash for bear until a non-falsified structure exists. CORE m5-v6 unchanged."
+        "notes": "BTCUSDT short-danta v1-v13 falsified (v13=div+ATR mirror of Upbit long edge). Keep 30% scalp cash in bear until a non-falsified structure exists. CORE m5-v6 unchanged."
       }
     },
     "sideways": {
