@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+    "bitget": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "dotenv-cli",
+        "-e",
+        ".env",
+        "--",
+        "npx",
+        "-y",
+        "@bitget-ai/bitget-agent-mcp",
+        "--read-only"
+      ]
+    },
+    "upbit": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "dotenv-cli",
+        "-e",
+        ".env",
+        "--",
+        "npx",
+        "-y",
+        "@iqai/mcp-upbit"
+      ],
+      "env": {
+        "UPBIT_SERVER_URL": "https://api.upbit.com",
+        "UPBIT_ENABLE_TRADING": "true"
+      }
+    }
+  }
+}

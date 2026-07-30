@@ -10,7 +10,8 @@
 | Repo | `Mansejin/auto-trade` |
 | Checkout branch | **`automation/daytrade-bb-rsi-div`** |
 | Memory | **On** |
-| Secrets | `AUTO_TRADE_BOT_SSH_KEY` = bot PEM |
+| Secrets | `AUTO_TRADE_BOT_SSH_KEY` = bot PEM; optional Upbit/Bitget keys for MCP (see `docs/mcp-setup.md`) |
+| MCP | Upbit + Bitget **read/health only** — no live orders via MCP |
 | Deploy | `scripts/deploy-strategy-to-bot.sh` · slug `daytrade-bb-rsi-div-*` only |
 
 ### SSH
@@ -56,6 +57,12 @@ OWNER OVERRIDE: promotion bar PASS → deploy unattended (no PR wait, no ask).
   bash scripts/deploy-strategy-to-bot.sh daytrade-bb-rsi-div-<tag>
   SSH: AUTO_TRADE_BOT_SSH_KEY → temp pem + IDENTITY_FILE, or REMOTE_HOST=auto-trade-bot local.
   Remove temp key. Verify STRATEGY_PATH + docker logs (one line each in report).
+
+MCP (optional health — never replaces backtest or promotion bar):
+  Upbit MCP: ticker/orderbook/accounts/orders READ only. Forbidden: CREATE_ORDER, CANCEL_ORDER, CREATE_WITHDRAWAL, CREATE_DEPOSIT_ADDRESS, any withdraw/deposit write.
+  Bitget MCP: market / account_overview / position READ only (--read-only). Forbidden: order place/cancel, withdraw, transfer.
+  After PASS deploy: one Upbit GET_TICKER KRW-BTC (or accounts) line in report if MCP available. MCP missing → skip, do not fail the run.
+  Never use MCP fills/PnL to rewrite A–D bar. Edge = toolkit backtest only.
 
 Mission (one family):
   BTC daytrade. Upbit toolkit JSON under strategies/.
@@ -118,4 +125,5 @@ Final message (2 lines Korean ultra):
 3. Replace instructions with the prompt above.
 4. Repo checkout branch = `automation/daytrade-bb-rsi-div`
 5. Memory On · secret `AUTO_TRADE_BOT_SSH_KEY` set
-6. Save (keep monthly automation separate; do not disable 10m loop)
+6. Optional Cloud secrets for MCP: `UPBIT_ACCESS_KEY`, `UPBIT_SECRET_KEY`, `BITGET_API_KEY`, `BITGET_SECRET_KEY`, `BITGET_PASSPHRASE` (see `docs/mcp-setup.md`)
+7. Save (keep monthly automation separate; do not disable 10m loop)
