@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v59",
-  "slug": "daytrade-bb-rsi-div-v59",
-  "hypothesis": "BTC daytrade long-only: BB 1.0σ wick low<lower + RSI rising RSI<35; exit RSI>=50.",
+  "active_card": "daytrade-bb-rsi-div-v60",
+  "slug": "daytrade-bb-rsi-div-v60",
+  "hypothesis": "BTC daytrade long-only: BB 1.0σ wick low<lower + RSI<45 flat (no rise); exit RSI>=48.",
   "hypers": {
     "bb_std": 1.0,
-    "pattern": "wick_lower_rsi_up35",
-    "exit": "rsi50_gte"
+    "pattern": "wick_lower_rsi45_flat",
+    "exit": "rsi48_gte"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "-2.94%",
-      "profit_factor": "0.98",
-      "trades": 29,
+      "total_return": "-3.88%",
+      "profit_factor": "1.36",
+      "trades": 67,
       "benchmark": "+1.79%",
-      "trades_per_day": 0.97
+      "trades_per_day": 2.23
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "-4.99%",
-      "profit_factor": "0.85",
-      "trades": 39,
+      "total_return": "-12.87%",
+      "profit_factor": "0.78",
+      "trades": 86,
       "benchmark": "-17.77%",
-      "trades_per_day": 1.3
+      "trades_per_day": 2.87
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "-4.29%",
-      "profit_factor": "0.78",
-      "trades": 32,
+      "total_return": "-9.08%",
+      "profit_factor": "0.89",
+      "trades": 81,
       "benchmark": "-4.56%",
-      "trades_per_day": 1.07
+      "trades_per_day": 2.7
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 58,
+  "consecutive_fails": 59,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB 1.0σ wick low<lower + RSI rising RSI<35; exit RSI>=50 — v59 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v58",
-  "updated_at": "2026-07-30T02:12:00Z"
+  "next_action": "BB 1.0σ wick low<lower + RSI<45 flat (no rise); exit RSI>=48 — v60 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v59",
+  "updated_at": "2026-07-30T02:16:00Z"
 }
