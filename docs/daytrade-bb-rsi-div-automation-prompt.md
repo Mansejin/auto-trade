@@ -10,6 +10,7 @@
 | Repo | `Mansejin/auto-trade` |
 | Checkout branch | **`automation/daytrade-bb-rsi-div`** |
 | Memory | **On** |
+| Cloud env | `.cursor/environment.json` → `scripts/cloud-install.sh` (uv+toolkit once; snapshot) |
 | Secrets | `AUTO_TRADE_BOT_SSH_KEY` = bot PEM; optional Upbit/Bitget keys for MCP (see `docs/mcp-setup.md`) |
 | MCP | Upbit + Bitget **read/health only** — no live orders via MCP |
 | Deploy | `scripts/deploy-strategy-to-bot.sh` · slug `daytrade-bb-rsi-div-*` only |
@@ -37,6 +38,13 @@ OUTPUT STYLE — caveman ultra (ALWAYS, every message + report prose):
   Final chat: 2 lines max Korean ultra.
   Report md: bullets + quoted stdout only. No intro/outro essays.
 
+TOOLCHAIN (save time — ephemeral VM may already have tools from cloud install snapshot):
+  export PATH="$HOME/.local/bin:$PATH"
+  FORBIDDEN every run: curl astral.sh uv install; setup skill full diagnostics; uv sync; uvx --from git+... unless binary missing; npm/pip install; re-clone toolkit.
+  If `command -v uv` AND `command -v upbit-strategy-toolkit` both OK → use them. Else ONCE: bash scripts/cloud-install.sh
+  Backtest ONLY via: bash .agents/skills/backtest/scripts/upbit-strategy-toolkit.sh ...
+  Do not re-read create-strategy/setup skill docs each run.
+
 CONTINUITY (mandatory — next run = resume):
   Branch: automation/daytrade-bb-rsi-div
   Handoff: reports/automation/daytrade-bb-rsi-div-state.json
@@ -44,7 +52,7 @@ CONTINUITY (mandatory — next run = resume):
     1) git fetch origin
     2) git checkout automation/daytrade-bb-rsi-div || git checkout -b automation/daytrade-bb-rsi-div origin/automation/daytrade-bb-rsi-div
     3) git pull --ff-only origin automation/daytrade-bb-rsi-div
-    4) Read state.json first (missing → bootstrap). Skim latest reports/automation/daytrade-bb-rsi-div-*.md
+    4) Read state.json first (if missing, bootstrap). Skim ONLY the single latest reports/automation/daytrade-bb-rsi-div-20*.md (not the whole history).
     5) Obey next_action / active_card / consecutive_fails. Never restart v1 if state says v3+.
   END every run (non-negotiable):
     1) Update state.json (active_card, slug, hypothesis, hypers, last_windows, last_verdict, consecutive_fails, deployed_slug, deploy_status, next_action, failed_slug, updated_at ISO)
@@ -70,7 +78,7 @@ Mission (one family):
   No Nassi / diagonal / box-fade / other families.
 
 Goal each run:
-  Advance ONE card from state. Pass → freeze + DEPLOY. Fail → new card hypothesis in next_action (not hyper retune).
+  Advance ONE card from state. Pass → freeze + DEPLOY. Fail → new card hypothesis in state.next_action (not hyper retune).
 
 Hard rules:
 1) Hypers ≤3. Fail → new -vN card/hypothesis. No nudge same three numbers.
@@ -80,6 +88,7 @@ Hard rules:
 5) Never edit Policy C / CORE regime / Williams ACTIVE.
 6) Deploy ONLY slug prefix daytrade-bb-rsi-div-.
 7) SSH fail → deploy_status=failed, push state, retry next run. Never fake success.
+8) No trades/day minimum gate. Do not invent bar E or daily≥5.
 
 State fields:
   active_card, slug, hypothesis, hypers, last_windows, last_verdict, consecutive_fails,
@@ -126,4 +135,5 @@ Final message (2 lines Korean ultra):
 4. Repo checkout branch = `automation/daytrade-bb-rsi-div`
 5. Memory On · secret `AUTO_TRADE_BOT_SSH_KEY` set
 6. Optional Cloud secrets for MCP: `UPBIT_ACCESS_KEY`, `UPBIT_SECRET_KEY`, `BITGET_API_KEY`, `BITGET_SECRET_KEY`, `BITGET_PASSPHRASE` (see `docs/mcp-setup.md`)
-7. Save (keep monthly automation separate; do not disable 10m loop)
+7. Confirm Cloud Agents environment for this repo picks up `.cursor/environment.json` (or refresh snapshot once after first slow install).
+8. Save (keep monthly automation separate; do not disable 10m loop)

@@ -45,3 +45,11 @@ Cloud runs do **not** get gitignored `.cursor/mcp.json` or local `.env`. For the
 - **Upbit**: `GET_TICKER` / `GET_ORDERBOOK` for KRW-BTC spot check after deploy; `GET_ACCOUNTS` / `GET_ORDERS` for bot health — not for strategy edge.
 - **Bitget**: `market` / `account_overview` / `position` for futures sleeve health — daytrade family stays Upbit toolkit JSON.
 - Never use MCP to replace a failed backtest window or to “confirm” promotion bar A–D.
+
+## Cloud install (uv / toolkit — do not redo each run)
+
+Repo ships [`.cursor/environment.json`](../.cursor/environment.json) → [`scripts/cloud-install.sh`](../scripts/cloud-install.sh).
+
+That install is idempotent: installs `uv` only if missing, installs `upbit-strategy-toolkit` as a `uv tool` only if missing. Cursor snapshots long installs so later Cloud/Automation runs start warm.
+
+Agents must not `curl …/uv/install.sh` or `uvx --from git+…` every 10 minutes when binaries already exist on `PATH` (`$HOME/.local/bin`).
