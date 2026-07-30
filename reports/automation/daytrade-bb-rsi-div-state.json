@@ -1,50 +1,50 @@
 {
   "active_card": "daytrade-edge-15m-div-v2",
   "slug": "daytrade-edge-15m-div-v2",
-  "hypothesis": "BTC 15m daytrade: develop from v1 — two-sided OR classic+hidden div @ BB outer; exit upper-primary. Hypers <=3.",
+  "hypothesis": "BTC 15m: classic bull (LL+RSI HL3) OR hidden bull (HL+RSI LL3) @ BB lower → long; exit BB upper only.",
   "hypers": {
     "tf": "15m",
-    "family": "div_bb_outer",
-    "exit": "bb_upper_primary"
+    "div_lookback": 3,
+    "exit": "bb_upper_only"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "-0.21%",
-      "profit_factor": "0.00",
-      "trades": 1,
+      "total_return": "-1.14%",
+      "profit_factor": "0.57",
+      "trades": 4,
       "benchmark": "+1.85%",
-      "trades_per_day": 0.03
+      "trades_per_day": 0.13
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "+0.39%",
-      "profit_factor": "∞",
-      "trades": 1,
+      "total_return": "+0.77%",
+      "profit_factor": "2.34",
+      "trades": 3,
       "benchmark": "-17.47%",
-      "trades_per_day": 0.03
+      "trades_per_day": 0.10
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "+1.33%",
+      "total_return": "+2.41%",
       "profit_factor": "∞",
-      "trades": 2,
+      "trades": 4,
       "benchmark": "-4.49%",
-      "trades_per_day": 0.07
+      "trades_per_day": 0.13
     }
   ],
   "last_verdict": "PASS",
   "consecutive_fails": 0,
   "deployed_slug": null,
   "deploy_status": "skipped_no_deploy",
-  "next_action": "Encode daytrade-edge-15m-div-v2 sibling (two-sided OR classic+hidden). No SSH deploy. Keep v1 frozen.",
+  "next_action": "Encode daytrade-edge-15m-div-v3: ONE ATR/ADX vol gate on classic+hidden OR (filter W1 bleed). No SSH deploy. Keep v1+v2 frozen.",
   "failed_slug": null,
   "fail_mode": null,
-  "updated_at": "2026-07-30T04:00:28Z"
+  "updated_at": "2026-07-30T04:03:59Z"
 }

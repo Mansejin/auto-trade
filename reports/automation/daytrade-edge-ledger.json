@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T04:00:28Z",
+  "updated_at": "2026-07-30T04:03:59Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
-  "cards_tried": 71,
-  "last_slug": "daytrade-edge-15m-div-v1",
+  "cards_tried": 72,
+  "last_slug": "daytrade-edge-15m-div-v2",
   "consecutive_fails": 0,
   "failure_mode_counts": {
     "FEE_BLEED": 28,
@@ -38,18 +38,23 @@
       "slug": "daytrade-edge-15m-div-v1",
       "a_pass": "2/3",
       "worst_net": "-0.21%",
-      "note": "15m v35-family upper-only; A–D PASS; W1 single loss -0.21%; deploy SSH missing",
+      "note": "15m v35-family upper-only; A–D PASS; W1 single loss -0.21%; deploy skipped_no_deploy",
+      "keep": true
+    },
+    {
+      "slug": "daytrade-edge-15m-div-v2",
+      "a_pass": "2/3",
+      "worst_net": "-1.14%",
+      "note": "classic+hidden OR @ BB lower → upper; A–D PASS; more trades; W1 worse than v1",
       "keep": true
     }
   ],
   "promising_axes": [
-    "PROMOTED: 15m v35-family hidden bull @ BB lower → upper-only (daytrade-edge-15m-div-v1)",
-    "two-sided or bear-window short (W1 still soft; W2/W3 worked long-only)",
-    "classic+hidden OR on 15m if live sparse",
-    "one volatility/ADX/ATR gate as a hyper (not RSI nudge)",
+    "PROMOTED: 15m hidden bull @ BB lower → upper-only (daytrade-edge-15m-div-v1)",
+    "PROMOTED: 15m classic+hidden OR @ BB lower → upper-only (daytrade-edge-15m-div-v2)",
+    "one ATR/ADX vol gate on v2 base (filter W1 bleed; not RSI nudge)",
     "two-sided / bear-window short on 15m div family",
-    "classic+hidden OR entry on 15m (cut sparsity)",
-    "one ATR/ADX gate hyper (not RSI nudge)"
+    "hold/exit variant still upper-primary (no mid fee scrape)"
   ],
   "lessons": [
     "High WR + PF≈1.0–1.2 + large Total Fees = FEE_BLEED → never loosen entry; lengthen exit or raise TF or stricter pattern",
@@ -57,7 +62,8 @@
     "0 trades = broken/over-strict encoding → change pattern family, not ±1 hyper",
     "W2 large down-bench + long-only MR often REGIME_LONG_BLEED → add short or risk-off",
     "15m TF jump on v35-family + drop RSI early-exit cleared A–D; 5m leave-OS line never did",
-    "Cloud automation cannot use AUTO_TRADE_BOT_SSH_KEY reliably — develop-only; human deploys locally"
+    "Cloud automation cannot use AUTO_TRADE_BOT_SSH_KEY reliably — develop-only; human deploys locally",
+    "classic+hidden OR on 15m cleared A–D with denser trades; W1 still soft (−1.14%) → next vol gate not RSI"
   ],
-  "next_priority": "Develop sibling daytrade-edge-15m-div-v2: ONE axis — prefer two-sided 15m div OR classic+hidden OR. No deploy. Keep v1 frozen."
+  "next_priority": "Encode daytrade-edge-15m-div-v3: ONE ATR or ADX gate hyper on classic+hidden OR base to cut W1 bleed. No deploy. Keep v1+v2 frozen."
 }
