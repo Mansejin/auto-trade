@@ -13,5 +13,6 @@ reports/ae12-collect/*.jsonl
 reports/ae12-collect/event-study-status.json
 reports/ae14-paper/*.jsonl
 .env
+freqtrade-research/user_data/config.bitget-scalp.secrets.json
 .cursor/*
 !.cursor/environment.json

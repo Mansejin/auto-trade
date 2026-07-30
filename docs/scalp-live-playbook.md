@@ -28,13 +28,18 @@ Upbit JSON refs (research / audit):
 
 ## Switch (local / remote Bitget bot)
 
+Keys: keep Bitget credentials in gitignored `user_data/config.bitget-scalp.secrets.json` (copy from `.env` `BITGET_*`). Never commit keys into the live strategy configs.
+
 ```powershell
 cd freqtrade-research
 # example: bear
 echo DaytradeEdge10mDivAtrV1 > user_data/ACTIVE_SCALP_STRATEGY
-.\.venv\Scripts\freqtrade.exe download-data -c user_data/config.bitget-scalp-div-atr-live.json --trading-mode futures -t 10m --timerange 20260501-
-# dry-run trade (LIVE keys only after human approve):
-.\.venv\Scripts\freqtrade.exe trade -c user_data/config.bitget-scalp-div-atr-live.json --strategy DaytradeEdge10mDivAtrV1
+# dry-run (default). Merge secrets overlay for exchange auth:
+.\.venv\Scripts\freqtrade.exe trade `
+  -c user_data/config.bitget-scalp-div-atr-live.json `
+  -c user_data/config.bitget-scalp.secrets.json `
+  --strategy DaytradeEdge10mDivAtrV1
+# LIVE: set dry_run=false in the strategy config (local only), then same command.
 ```
 
 Do **not** point `upbit-paper-bot` STRATEGY_PATH at these.
