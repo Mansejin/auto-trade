@@ -1,50 +1,50 @@
 {
-  "active_card": "daytrade-edge-15m-div-atr-v1",
-  "slug": "daytrade-edge-15m-div-atr-v1",
-  "hypothesis": "BTC 15m hidden bull (price HL3 + RSI LL3) @ BB lower with ATR contracting (atr14 < atr offset 3) → long; exit BB upper only.",
+  "active_card": "daytrade-edge-15m-div-atr-v2",
+  "slug": "daytrade-edge-15m-div-atr-v2",
+  "hypothesis": "BTC 15m hidden bull (price HL3 + RSI LL3) @ BB lower with ATR expanding (atr14 > atr offset 3) → long; exit BB upper only.",
   "hypers": {
     "tf": "15m",
     "div_lookback": 3,
-    "atr_contract_lookback": 3
+    "atr_expand_lookback": 3
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
+      "total_return": "-0.21%",
+      "profit_factor": "0.00",
+      "trades": 1,
       "benchmark": "+1.85%",
-      "trades_per_day": 0.0
+      "trades_per_day": 0.03
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
+      "total_return": "+0.39%",
+      "profit_factor": "∞",
+      "trades": 1,
       "benchmark": "-17.47%",
-      "trades_per_day": 0.0
+      "trades_per_day": 0.03
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
+      "total_return": "+1.33%",
+      "profit_factor": "∞",
+      "trades": 2,
       "benchmark": "-4.49%",
-      "trades_per_day": 0.0
+      "trades_per_day": 0.07
     }
   ],
-  "last_verdict": "FAIL",
-  "consecutive_fails": 1,
+  "last_verdict": "PASS",
+  "consecutive_fails": 0,
   "deployed_slug": null,
-  "deploy_status": "none",
-  "next_action": "Encode daytrade-edge-15m-div-atr-v2: ONE ATR expanding gate (atr14 > atr offset 3) on hidden-bull v1 base @ BB lower → BB upper. Keep promoted cards frozen. No SSH.",
-  "failed_slug": "daytrade-edge-15m-div-atr-v1",
-  "fail_mode": "SPARSE_ZERO",
-  "updated_at": "2026-07-30T04:22:20Z"
+  "deploy_status": "skipped_no_deploy",
+  "next_action": "Encode daytrade-edge-15m-div-atr-or-v1: ONE ATR expanding gate (atr14 > atr offset 3) on classic+hidden OR @ BB lower → BB upper (densify vs atr-v2). Keep promoted cards frozen. No SSH.",
+  "failed_slug": null,
+  "fail_mode": "PASS",
+  "updated_at": "2026-07-30T04:25:30Z"
 }

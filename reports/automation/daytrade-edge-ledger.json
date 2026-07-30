@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T04:22:20Z",
+  "updated_at": "2026-07-30T04:25:30Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
-  "cards_tried": 77,
-  "last_slug": "daytrade-edge-15m-div-atr-v1",
-  "consecutive_fails": 1,
+  "cards_tried": 78,
+  "last_slug": "daytrade-edge-15m-div-atr-v2",
+  "consecutive_fails": 0,
   "failure_mode_counts": {
     "FEE_BLEED": 28,
     "SPARSE_ZERO": 15,
@@ -62,6 +62,13 @@
       "worst_net": "-0.21%",
       "note": "v1 + take_profit null; A–D PASS; nets match v1 (TP never fired); deploy skipped_no_deploy",
       "keep": true
+    },
+    {
+      "slug": "daytrade-edge-15m-div-atr-v2",
+      "a_pass": "2/3",
+      "worst_net": "-0.21%",
+      "note": "ATR expand + hidden bull @ BB lower → upper; A–D PASS; sparse 1–2 trades/window; W1 -0.21% like v1; deploy skipped_no_deploy",
+      "keep": true
     }
   ],
   "promising_axes": [
@@ -69,7 +76,8 @@
     "PROMOTED: 15m classic+hidden OR @ BB lower → upper-only (daytrade-edge-15m-div-v2)",
     "PROMOTED: 15m ADX<25 + classic+hidden OR @ BB lower → upper-only (daytrade-edge-15m-div-v3)",
     "PROMOTED: 15m hidden bull upper-primary hold take_profit null (daytrade-edge-15m-div-hold-v1)",
-    "ATR expanding gate on 15m bull family (atr-v1 contract = SPARSE_ZERO)"
+    "PROMOTED: 15m ATR expand + hidden bull @ BB lower → upper (daytrade-edge-15m-div-atr-v2)",
+    "ATR expand on classic+hidden OR (densify atr-v2 while keeping vol gate)"
   ],
   "lessons": [
     "High WR + PF≈1.0–1.2 + large Total Fees = FEE_BLEED → never loosen entry; lengthen exit or raise TF or stricter pattern",
@@ -82,7 +90,8 @@
     "ADX<25 ranging gate on v2 cut W1 −1.14%→−0.04% and kept A–D; sparser trades OK",
     "short-proxy long@upper→lower WORST_BLEED twice (short-v1 −4.74%, short-inv −3.50%); leave short-proxy; resume long upper-primary hold axis",
     "take_profit null on v1 matched v1 window nets (TP never fired); skip more exit scrapes — try ATR gate next",
-    "ATR contracting (atr < atr offset 3) on sparse 15m hidden-bull → 0 trades all windows; try ATR expanding next"
+    "ATR contracting (atr < atr offset 3) on sparse 15m hidden-bull → 0 trades all windows; try ATR expanding next",
+    "ATR expanding (atr > atr offset 3) on hidden-bull cleared A–D; sparse 1–2 trades/window; W1 −0.21% mirrors v1 — next densify via classic+hidden OR + same ATR expand"
   ],
-  "next_priority": "Encode daytrade-edge-15m-div-atr-v2: ONE ATR expanding gate (atr14 > atr offset 3) on hidden-bull v1 base @ BB lower → BB upper. No deploy. Keep promoted cards frozen."
+  "next_priority": "Encode daytrade-edge-15m-div-atr-or-v1: ONE ATR expanding gate (atr14 > atr offset 3) on classic+hidden OR @ BB lower → BB upper. No deploy. Keep promoted cards frozen."
 }
