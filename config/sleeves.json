@@ -1,30 +1,38 @@
 {
-  "version": 2,
-  "updated": "2026-07-29",
-  "intent": "Additive capital split - CORE does not get replaced by SCALP. Separate wallets / bots.",
+  "version": 3,
+  "updated": "2026-07-30",
+  "intent": "장타(CORE) 50% Upbit + 단타(SCALP) 50% Bitget. Venue split equals sleeve split (5:5).",
   "weights": {
-    "core_pct": 70,
-    "scalp_pct": 30,
-    "ratio": "7:3",
+    "core_pct": 50,
+    "scalp_pct": 50,
+    "ratio": "5:5",
     "labels": {
-      "core": "장기",
+      "core": "장타",
       "scalp": "단타"
     },
-    "frozen_by": "human_2026-07-29",
-    "notes": "Frozen 장기70 / 단타30. Do not auto-rebalance from a single month of PnL."
+    "venue_split": {
+      "upbit_pct": 50,
+      "bitget_pct": 50,
+      "notes": "Upbit hosts 장타 only; Bitget hosts 단타 only — keeps 빗겟:업비트 5:5."
+    },
+    "frozen_by": "human_2026-07-30",
+    "notes": "Frozen 장타50 / 단타50. Do not auto-rebalance from a single month of PnL."
   },
   "venues": {
     "core": {
-      "label": "장기",
+      "label": "장타",
       "venue": "upbit_spot",
       "bot": "upbit-paper-bot",
+      "capital_pct": 50,
       "role": "swing / regime Policy C - one STRATEGY_PATH at a time"
     },
     "scalp": {
       "label": "단타",
       "venue": "bitget_uta_futures",
-      "bot": "freqtrade-scalp (not LIVE yet)",
-      "role": "short-capable scalp sleeve - independent USDT wallet"
+      "bot": "freqtrade-scalp",
+      "capital_pct": 50,
+      "role": "regime scalp map - long survivors live; short slots open for automation",
+      "live_map": "config/scalp-live-map.json"
     }
   },
   "regimes": {
@@ -36,8 +44,8 @@
       },
       "scalp": {
         "strategy": null,
-        "status": "empty_slot",
-        "notes": "No promoted bull scalp yet."
+        "status": "empty_slot_cash",
+        "notes": "No bull daytrade survivor. Cash until short/long edge automation finds one."
       }
     },
     "transition": {
@@ -48,7 +56,8 @@
       },
       "scalp": {
         "strategy": null,
-        "status": "empty_slot"
+        "status": "empty_slot_cash",
+        "notes": "Follow cash like bull scalp until a transition specialist exists."
       }
     },
     "bear": {
@@ -59,8 +68,12 @@
         "notes": "Long-biased Upbit swing - keep even when scalp short exists."
       },
       "scalp": {
-        "strategy": null,
-        "candidates_falsified": [
+        "strategy": "DaytradeEdge10mDivAtrV1",
+        "path": "freqtrade-research/user_data/strategies/DaytradeEdge10mDivAtrV1.py",
+        "upbit_ref": "strategies/daytrade-edge-10m-div-atr-v1.json",
+        "status": "live_scalp",
+        "notes": "Promoted daytrade-edge long MR (bear-window + OOS). Bitget long scalp — not a short. Short slot still open via automation.",
+        "candidates_falsified_short": [
           "BearShortBreakdownVolV6",
           "BearShortFailedReclaimV7",
           "BearShortDiContinuationV8",
@@ -70,8 +83,10 @@
           "BearShortStochFadeV12",
           "BearShortDivAtrV13"
         ],
-        "status": "empty_slot_cash",
-        "notes": "BTCUSDT short-danta v1-v13 falsified (v13=div+ATR mirror of Upbit long edge). Keep 30% scalp cash in bear until a non-falsified structure exists. CORE m5-v6 unchanged."
+        "siblings_ready": [
+          "daytrade-edge-10m-div-v1",
+          "daytrade-edge-10m-div-adx-v1"
+        ]
       }
     },
     "sideways": {
@@ -81,21 +96,25 @@
         "sleeve": "swing_mr",
         "status": "live_policy_c",
         "dwell_gate": "SIDEWAYS_WILLIAMS_MIN_DWELL>=7 else fallback v5",
-        "notes": "Williams 1h is CORE swing MR - not the scalp sleeve."
+        "notes": "Williams 1h is 장타 MR - not the scalp sleeve."
       },
       "scalp": {
-        "strategy": "SidewaysScalp15mBbV1",
-        "path": "freqtrade-research/user_data/strategies/SidewaysScalp15mBbV1.py",
-        "status": "falsified_research",
-        "notes": "15m BB fade long+short PF<1 on 3 calendar windows. Keep slot open; CORE Williams unchanged."
+        "strategy": "SidewaysEdge15mBbFadeV5",
+        "path": "freqtrade-research/user_data/strategies/SidewaysEdge15mBbFadeV5.py",
+        "upbit_ref": "strategies/daytrade-edge-side-15m-bb-fade-v5.json",
+        "status": "live_scalp",
+        "notes": "Promoted side 15m BB fade (ADX<20 + RSI<30). Off in bull. Prior SidewaysScalp15mBbV1 falsified.",
+        "falsified_prior": ["SidewaysScalp15mBbV1"]
       }
     }
   },
   "ops_rules": [
     "Never point upbit-paper-bot STRATEGY_PATH at a Freqtrade/Bitget strategy.",
     "Never auto-replace CORE Policy C map when promoting a scalp.",
-    "Promote scalp only after multi-window falsification pass + human approve.",
+    "장타 capital stays on Upbit; 단타 capital stays on Bitget (maintains 5:5 venues).",
+    "Promote scalp short only after multi-window falsification pass + human approve.",
     "Open position on CORE blocks CORE switch only; SCALP bot is independent.",
-    "Kimchi / premium overlay applies to CORE only until explicitly designed for SCALP."
+    "Kimchi / premium overlay applies to CORE only until explicitly designed for SCALP.",
+    "Ban long-to-short mirrors as default short hunt (v13 falsified)."
   ]
 }
