@@ -43,7 +43,7 @@
   "consecutive_fails": 48,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "OR reclaim(cross↑lower+RSI HL1 RSI<45) / soft LL/HL2@lower → mid/RSI60 — v49 백테스트.",
+  "next_action": "OR reclaim(cross_above lower+RSI HL1 RSI<45) / soft LL/HL2@lower exit mid/RSI60 — v49 백테스트.",
   "failed_slug": "daytrade-bb-rsi-div-v48",
   "updated_at": "2026-07-30T01:21:40Z"
 }

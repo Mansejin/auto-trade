@@ -12,7 +12,7 @@
 - bar D: PASS
 - bar E: PASS
 - deploy_status: none
-- next_action: OR reclaim(cross↑lower+RSI HL1 RSI<45) / soft LL/HL2@lower → mid/RSI60 — v49 백테스트.
+- next_action: OR reclaim(cross_above lower+RSI HL1 RSI<45) / soft LL/HL2@lower exit mid/RSI60 — v49 백테스트.
 - staged: `strategies/daytrade-bb-rsi-div-v49.json` validate OK
 
 ### W1 stdout
