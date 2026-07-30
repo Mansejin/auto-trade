@@ -1,7 +1,7 @@
 {
-  "active_card": "daytrade-edge-10m-div-atr-adx-v1",
-  "slug": "daytrade-edge-10m-div-atr-adx-v1",
-  "hypothesis": "BTC 10m ADX<25 + ATR expand (atr>atr offset 3) + classic+hidden OR (HL/LL3 RSI) @ BB lower → long; exit BB upper only.",
+  "active_card": "daytrade-edge-10m-div-atr-adx-hold-v1",
+  "slug": "daytrade-edge-10m-div-atr-adx-hold-v1",
+  "hypothesis": "BTC 10m ADX<25 + ATR expand (atr>atr offset 3) + classic+hidden OR (HL/LL3 RSI) @ BB lower → long; take_profit null; exit BB upper only.",
   "hypers": {
     "tf": "10m",
     "adx_lt": 25,
@@ -16,7 +16,7 @@
       "profit_factor": "2.33",
       "trades": 3,
       "benchmark": "+1.93%",
-      "trades_per_day": 0.10
+      "trades_per_day": 0.1
     },
     {
       "label": "w2",
@@ -43,8 +43,8 @@
   "consecutive_fails": 0,
   "deployed_slug": null,
   "deploy_status": "skipped_no_deploy",
-  "next_action": "Encode daytrade-edge-10m-div-atr-adx-hold-v1: atr-adx + take_profit null; exit BB upper only on 10m. Keep promoted frozen. No SSH.",
+  "next_action": "Encode daytrade-edge-20m-div-v1: 20m classic+hidden OR @ BB lower → upper only (TF between 10m PASS and 30m sparse fail). Keep promoted frozen. No SSH.",
   "failed_slug": null,
   "fail_mode": "PASS",
-  "updated_at": "2026-07-30T05:01:30Z"
+  "updated_at": "2026-07-30T05:05:02Z"
 }
