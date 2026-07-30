@@ -1,0 +1,98 @@
+{
+  "period": "2021-07-30 ~ 2026-07-30",
+  "n_days": 1827,
+  "btc_price_return": 0.8998661311914324,
+  "strategies": {
+    "A_50_50_pm12_cd30": {
+      "target": 0.5,
+      "band": 0.12,
+      "cooldown_days": 30,
+      "final_equity": 97313514.48631676,
+      "contributed": 70000000.0,
+      "pnl": 27313514.486316755,
+      "pnl_pct_on_contrib": 0.39019306409023935,
+      "mdd": -0.23574262371002785,
+      "fees": 31689.469141224217,
+      "rebalances": 4,
+      "final_w_btc": 0.39469845391258507
+    },
+    "B_70_30_pm10_cd14": {
+      "target": 0.7,
+      "band": 0.1,
+      "cooldown_days": 14,
+      "final_equity": 109758345.24853387,
+      "contributed": 70000000.0,
+      "pnl": 39758345.248533875,
+      "pnl_pct_on_contrib": 0.567976360693341,
+      "mdd": -0.3461141633303174,
+      "fees": 46701.182520887756,
+      "rebalances": 5,
+      "final_w_btc": 0.6977190235390683
+    },
+    "C_80_20_pm10_cd14": {
+      "target": 0.8,
+      "band": 0.1,
+      "cooldown_days": 14,
+      "final_equity": 116766227.18068703,
+      "contributed": 70000000.0,
+      "pnl": 46766227.180687025,
+      "pnl_pct_on_contrib": 0.6680889597241004,
+      "mdd": -0.41057169540336547,
+      "fees": 47853.037546910906,
+      "rebalances": 4,
+      "final_w_btc": 0.7983095933189495
+    },
+    "D_90_10_pm08_cd14": {
+      "target": 0.9,
+      "band": 0.08,
+      "cooldown_days": 14,
+      "final_equity": 114488510.7644795,
+      "contributed": 70000000.0,
+      "pnl": 44488510.7644795,
+      "pnl_pct_on_contrib": 0.6355501537782786,
+      "mdd": -0.47342334809175,
+      "fees": 31980.803872564044,
+      "rebalances": 1,
+      "final_w_btc": 0.9472576574317241
+    },
+    "hold_80_20": {
+      "target": 0.8,
+      "band": 0.1,
+      "cooldown_days": 14,
+      "final_equity": 107259360.89071831,
+      "contributed": 70000000.0,
+      "pnl": 37259360.89071831,
+      "pnl_pct_on_contrib": 0.5322765841531187,
+      "mdd": -0.4288328888499201,
+      "fees": 28000.0,
+      "rebalances": 0,
+      "final_w_btc": 0.8694752617977655
+    },
+    "hold_90_10": {
+      "target": 0.9,
+      "band": 0.08,
+      "cooldown_days": 14,
+      "final_equity": 111916781.0020581,
+      "contributed": 70000000.0,
+      "pnl": 41916781.0020581,
+      "pnl_pct_on_contrib": 0.5988111571722585,
+      "mdd": -0.4734011163969547,
+      "fees": 31500.0,
+      "rebalances": 0,
+      "final_w_btc": 0.9374535262958352
+    },
+    "dca_100pct_btc": {
+      "target": 1.0,
+      "band": 0.0,
+      "cooldown_days": 0,
+      "final_equity": 116574201.11339793,
+      "contributed": 70000000.0,
+      "pnl": 46574201.113397926,
+      "pnl_pct_on_contrib": 0.665345730191399,
+      "mdd": -0.5407746550088803,
+      "fees": 35000.0,
+      "rebalances": 0,
+      "final_w_btc": 1.0
+    }
+  }
+}
