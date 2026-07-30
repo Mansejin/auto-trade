@@ -1,7 +1,7 @@
 {
   "active_card": "daytrade-edge-15m-div-v1",
   "slug": "daytrade-edge-15m-div-v1",
-  "hypothesis": "BTC daytrade: 15m hidden/classic bull div at BB lower → long; exit BB upper only. Hypers: div_lookback, bb_std, tf=15m.",
+  "hypothesis": "BTC daytrade: 15m hidden bull div (HL + RSI LL3) at BB lower → long; exit BB upper only. Hypers: div_lookback, bb_std, tf=15m.",
   "hypers": {
     "tf": "15m",
     "div_lookback": 3,
@@ -12,38 +12,40 @@
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
-      "benchmark": "+1.79%",
-      "trades_per_day": 0
+      "total_return": "-0.21%",
+      "profit_factor": "0.00",
+      "trades": 1,
+      "benchmark": "+1.85%",
+      "trades_per_day": 0.03
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
-      "benchmark": "-17.77%",
-      "trades_per_day": 0
+      "total_return": "+0.39%",
+      "profit_factor": "∞",
+      "trades": 1,
+      "benchmark": "-17.47%",
+      "trades_per_day": 0.03
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
-      "benchmark": "-4.56%",
-      "trades_per_day": 0
+      "total_return": "+1.33%",
+      "profit_factor": "∞",
+      "trades": 2,
+      "benchmark": "-4.49%",
+      "trades_per_day": 0.07
     }
   ],
-  "last_verdict": "FAIL",
-  "consecutive_fails": 69,
+  "last_verdict": "PASS",
+  "consecutive_fails": 0,
   "deployed_slug": null,
-  "deploy_status": "none",
-  "next_action": "LEARN: leave 5m leave-OS line. Encode 15m v35-family hidden/classic div @ BB outer → upper only (no RSI early exit). Update ledger.",
-  "failed_slug": "daytrade-bb-rsi-div-v69",
-  "updated_at": "2026-07-30T03:39:57Z"
+  "deploy_status": "failed",
+  "deploy_error": "AUTO_TRADE_BOT_SSH_KEY unset",
+  "next_action": "FREEZE daytrade-edge-15m-div-v1. Retry deploy when AUTO_TRADE_BOT_SSH_KEY present. Live bleed → two-sided 15m div OR classic+hidden OR.",
+  "failed_slug": null,
+  "fail_mode": null,
+  "updated_at": "2026-07-30T03:54:00Z"
 }
