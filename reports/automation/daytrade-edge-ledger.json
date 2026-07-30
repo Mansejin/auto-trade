@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T04:40:30Z",
+  "updated_at": "2026-07-30T04:43:00Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
-  "cards_tried": 83,
-  "last_slug": "daytrade-edge-30m-div-adx-v1",
-  "consecutive_fails": 2,
+  "cards_tried": 84,
+  "last_slug": "daytrade-edge-30m-div-v1",
+  "consecutive_fails": 3,
   "failure_mode_counts": {
     "FEE_BLEED": 28,
     "SPARSE_ZERO": 17,
-    "A_FAIL": 45,
+    "A_FAIL": 46,
     "WORST_BLEED": 24,
     "REGIME_LONG_BLEED": 8
   },
@@ -101,7 +101,7 @@
     "PROMOTED: 15m ATR expand + classic+hidden OR @ BB lower → upper (daytrade-edge-15m-div-atr-or-v1)",
     "PROMOTED: 15m ADX<25 + ATR expand + classic+hidden OR @ BB lower → upper (daytrade-edge-15m-div-atr-adx-v1)",
     "PROMOTED: 15m atr-adx upper-primary hold take_profit null (daytrade-edge-15m-div-atr-adx-hold-v1)",
-    "30m bare classic+hidden OR upper-only (drop ADX) after adx-v1 matched atr-adx SPARSE_ZERO"
+    "10m classic+hidden OR upper-only after 30m OR A_FAIL (W3 +1.63% but W2=0 W1 -0.53%)"
   ],
   "lessons": [
     "High WR + PF≈1.0–1.2 + large Total Fees = FEE_BLEED → never loosen entry; lengthen exit or raise TF or stricter pattern",
@@ -120,7 +120,8 @@
     "ADX<25 on atr-or cut W1 −1.14%→−0.04% and kept A–D (PF1.20 on W1); sparse 2/1/2 — next upper-primary hold on this card",
     "take_profit null on atr-adx matched atr-adx nets (TP never fired); skip more hold scrapes — next TF jump 30m same atr-adx gates",
     "30m atr-adx classic+hidden OR → SPARSE_ZERO (W2/W3 0 trades; W1 1×SL −0.90%); drop ATR next, keep ADX+OR on 30m",
-    "30m ADX-only OR matched atr-adx SPARSE_ZERO (same 1/0/0, W1 −0.90%); ATR gate inert on 30m — next drop ADX, bare classic+hidden OR on 30m"
+    "30m ADX-only OR matched atr-adx SPARSE_ZERO (same 1/0/0, W1 −0.90%); ATR gate inert on 30m — next drop ADX, bare classic+hidden OR on 30m",
+    "30m bare OR densified vs ADX (2/0/2) + W3 +1.63% PF∞ but A_FAIL (W1 −0.53% PF0.59; W2 still 0) — leave 30m OR line; next 10m same OR upper-only"
   ],
-  "next_priority": "Encode daytrade-edge-30m-div-v1: classic+hidden OR @ BB lower → BB upper on 30m (drop ADX). No deploy. Keep promoted cards frozen."
+  "next_priority": "Encode daytrade-edge-10m-div-v1: classic+hidden OR @ BB lower → BB upper on 10m. No deploy. Keep promoted cards frozen."
 }

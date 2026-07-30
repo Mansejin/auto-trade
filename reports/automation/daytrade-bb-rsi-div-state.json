@@ -1,22 +1,22 @@
 {
-  "active_card": "daytrade-edge-30m-div-adx-v1",
-  "slug": "daytrade-edge-30m-div-adx-v1",
-  "hypothesis": "BTC 30m classic+hidden OR (HL/LL3 RSI) @ BB lower with ADX<25 → long; exit BB upper only.",
+  "active_card": "daytrade-edge-30m-div-v1",
+  "slug": "daytrade-edge-30m-div-v1",
+  "hypothesis": "BTC 30m classic+hidden OR (HL/LL3 RSI) @ BB lower → long; exit BB upper only (no ADX).",
   "hypers": {
     "tf": "30m",
-    "adx_max": 25,
-    "div_lookback": 3
+    "div_lookback": 3,
+    "bb_exit": "upper"
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "-0.90%",
-      "profit_factor": "0.00",
-      "trades": 1,
+      "total_return": "-0.53%",
+      "profit_factor": "0.59",
+      "trades": 2,
       "benchmark": "+2.16%",
-      "trades_per_day": 0.03
+      "trades_per_day": 0.07
     },
     {
       "label": "w2",
@@ -32,19 +32,19 @@
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
+      "total_return": "+1.63%",
+      "profit_factor": "∞",
+      "trades": 2,
       "benchmark": "-4.52%",
-      "trades_per_day": 0.00
+      "trades_per_day": 0.07
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 2,
+  "consecutive_fails": 3,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "Encode daytrade-edge-30m-div-v1: classic+hidden OR @ BB lower → BB upper on 30m (drop ADX after adx-v1 matched atr-adx SPARSE_ZERO). Keep promoted cards frozen. No SSH.",
-  "failed_slug": "daytrade-edge-30m-div-adx-v1",
-  "fail_mode": "SPARSE_ZERO",
-  "updated_at": "2026-07-30T04:40:30Z"
+  "next_action": "Encode daytrade-edge-10m-div-v1: classic+hidden OR @ BB lower → BB upper on 10m (densify after 30m OR still W2=0 + W1 soft A_FAIL). Keep promoted cards frozen. No SSH.",
+  "failed_slug": "daytrade-edge-30m-div-v1",
+  "fail_mode": "A_FAIL",
+  "updated_at": "2026-07-30T04:43:00Z"
 }
