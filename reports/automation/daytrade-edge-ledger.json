@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T04:16:19Z",
+  "updated_at": "2026-07-30T04:19:15Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
-  "cards_tried": 75,
-  "last_slug": "daytrade-edge-15m-div-short-inv-v1",
-  "consecutive_fails": 2,
+  "cards_tried": 76,
+  "last_slug": "daytrade-edge-15m-div-hold-v1",
+  "consecutive_fails": 0,
   "failure_mode_counts": {
     "FEE_BLEED": 28,
     "SPARSE_ZERO": 14,
@@ -55,13 +55,20 @@
       "worst_net": "-0.04%",
       "note": "ADX<25 + classic+hidden OR @ BB lower → upper; A–D PASS; W1 bleed cut vs v2; sparser",
       "keep": true
+    },
+    {
+      "slug": "daytrade-edge-15m-div-hold-v1",
+      "a_pass": "2/3",
+      "worst_net": "-0.21%",
+      "note": "v1 + take_profit null; A–D PASS; nets match v1 (TP never fired); deploy skipped_no_deploy",
+      "keep": true
     }
   ],
   "promising_axes": [
     "PROMOTED: 15m hidden bull @ BB lower → upper-only (daytrade-edge-15m-div-v1)",
     "PROMOTED: 15m classic+hidden OR @ BB lower → upper-only (daytrade-edge-15m-div-v2)",
     "PROMOTED: 15m ADX<25 + classic+hidden OR @ BB lower → upper-only (daytrade-edge-15m-div-v3)",
-    "hold/exit variant still upper-primary: take_profit null on v1 skeleton (daytrade-edge-15m-div-hold-v1)",
+    "PROMOTED: 15m hidden bull upper-primary hold take_profit null (daytrade-edge-15m-div-hold-v1)",
     "ATR gate hyper on 15m bull family (not RSI threshold)"
   ],
   "lessons": [
@@ -73,7 +80,8 @@
     "Cloud automation cannot use AUTO_TRADE_BOT_SSH_KEY reliably — develop-only; human deploys locally",
     "classic+hidden OR on 15m cleared A–D with denser trades; W1 still soft (−1.14%) → next vol gate not RSI",
     "ADX<25 ranging gate on v2 cut W1 −1.14%→−0.04% and kept A–D; sparser trades OK",
-    "short-proxy long@upper→lower WORST_BLEED twice (short-v1 −4.74%, short-inv −3.50%); leave short-proxy; resume long upper-primary hold axis"
+    "short-proxy long@upper→lower WORST_BLEED twice (short-v1 −4.74%, short-inv −3.50%); leave short-proxy; resume long upper-primary hold axis",
+    "take_profit null on v1 matched v1 window nets (TP never fired); skip more exit scrapes — try ATR gate next"
   ],
-  "next_priority": "Encode daytrade-edge-15m-div-hold-v1: v1 hidden bull HL+RSI LL3 @ BB lower → BB upper only, take_profit null. No deploy. Keep v1–v3 frozen."
+  "next_priority": "Encode daytrade-edge-15m-div-atr-v1: ONE ATR gate hyper on hidden-bull v1 base @ BB lower → BB upper. No deploy. Keep v1–v3+hold-v1 frozen."
 }
