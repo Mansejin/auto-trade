@@ -30,6 +30,8 @@ Upbit JSON refs (research / audit):
 
 Keys: keep Bitget credentials in gitignored `user_data/config.bitget-scalp.secrets.json` (copy from `.env` `BITGET_*`). Never commit keys into the live strategy configs.
 
+Bitget **UTA** required: live configs set `exchange.ccxt_config.options.uta=true`. API key IP whitelist must include the machine that runs `freqtrade trade` (error `40018 Invalid IP` otherwise).
+
 ```powershell
 cd freqtrade-research
 # example: bear
