@@ -1,32 +1,26 @@
 {
-  "version": 1,
+  "version": 2,
   "updated": "2026-07-30",
   "venue": "bitget_uta_futures",
   "bot": "bitget-futures-bot",
+  "host": "oracle",
   "capital_pct": 50,
-  "pointer_file": "freqtrade-research/user_data/ACTIVE_SCALP_STRATEGY",
+  "status": "stopped_cash",
   "fee": 0.0006,
   "map": {
     "bull": null,
     "transition": null,
-    "bear": {
-      "strategy": "bitget-scalp-div-atr-v1",
-      "config": "strategies/bitget-scalp-div-atr-v1.json",
-      "upbit_ref": "strategies/daytrade-edge-10m-div-atr-v1.json",
-      "note": "Oracle bot-bitget; TF=15m (no 10m on Bitget)"
-    },
-    "sideways": {
-      "strategy": "SidewaysEdge15mBbFadeV5",
-      "config": "freqtrade-research/user_data/config.bitget-scalp-side-fade-live.json",
-      "upbit_ref": "strategies/daytrade-edge-side-15m-bb-fade-v5.json"
-    }
+    "bear": null,
+    "sideways": null
   },
   "switch_notes": [
-    "When daily regime=bear \u2192 load bear config/strategy and restart freqtrade-scalp.",
-    "When daily regime=sideways \u2192 load sideways config/strategy.",
-    "When bull/transition \u2192 flat / stop bot (cash). Do not run side fade in bull.",
-    "CORE Policy C on Upbit switches independently via regime-auto-switch-playbook."
+    "2026-07-30: Div ATR + all SCALP LIVE stopped after second-opinion (fee/slippage/TF-drift). Bear scalp = cash.",
+    "bot-bitget is compose profile 'scalp' — default `docker compose up -d` does NOT start it.",
+    "CORE Policy C on Upbit remains the only active LIVE sleeve until a scalp card re-passes falsification."
   ],
-  "host": "oracle",
-  "live_strategy_file": "strategies/bitget-scalp-div-atr-v1.json"
+  "parked": {
+    "bear_was": "bitget-scalp-div-atr-v1",
+    "sideways_was": "SidewaysEdge15mBbFadeV5",
+    "reason": "Gemini+agent: Div ATR not worth fee risk as bear defense; cash dominates"
+  }
 }

@@ -31,7 +31,7 @@
       "venue": "bitget_uta_futures",
       "bot": "freqtrade-scalp",
       "capital_pct": 50,
-      "role": "regime scalp map - long survivors live; short slots open for automation",
+      "role": "SCALP LIVE stopped (cash). Research/automation only until re-promotion.",
       "live_map": "config/scalp-live-map.json"
     }
   },
@@ -68,11 +68,10 @@
         "notes": "Long-biased Upbit swing - keep even when scalp short exists."
       },
       "scalp": {
-        "strategy": "DaytradeEdge10mDivAtrV1",
-        "path": "freqtrade-research/user_data/strategies/DaytradeEdge10mDivAtrV1.py",
+        "strategy": null,
         "upbit_ref": "strategies/daytrade-edge-10m-div-atr-v1.json",
-        "status": "live_scalp",
-        "notes": "Promoted daytrade-edge long MR (bear-window + OOS). Bitget long scalp — not a short. Short slot still open via automation.",
+        "status": "cash_stopped",
+        "notes": "2026-07-30: Div ATR LIVE stopped (2nd opinion — fee/slippage/15m drift). bot-bitget stopped. Short slot still open for research only.",
         "candidates_falsified_short": [
           "BearShortBreakdownVolV6",
           "BearShortFailedReclaimV7",
@@ -99,11 +98,10 @@
         "notes": "Williams 1h is 장타 MR - not the scalp sleeve."
       },
       "scalp": {
-        "strategy": "SidewaysEdge15mBbFadeV5",
-        "path": "freqtrade-research/user_data/strategies/SidewaysEdge15mBbFadeV5.py",
+        "strategy": null,
         "upbit_ref": "strategies/daytrade-edge-side-15m-bb-fade-v5.json",
-        "status": "live_scalp",
-        "notes": "Promoted side 15m BB fade (ADX<20 + RSI<30). Off in bull. Prior SidewaysScalp15mBbV1 falsified.",
+        "status": "cash_stopped",
+        "notes": "2026-07-30: SCALP sleeve fully cash; side fade parked with Div ATR stop.",
         "falsified_prior": ["SidewaysScalp15mBbV1"]
       }
     }

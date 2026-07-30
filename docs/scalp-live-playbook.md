@@ -1,45 +1,34 @@
 # SCALP (단타) live playbook — Bitget 50%
 
-> Pair with 장타 CORE Upbit 50% (`docs/regime-auto-switch-playbook.md`).  
+> Pair with 장타 CORE Upbit (`docs/regime-auto-switch-playbook.md`).  
 > Source of truth: `config/sleeves.json` + `config/scalp-live-map.json`.
 
-## Capital
+## Status (2026-07-30)
 
-| Sleeve | Venue | % | Bot |
-|--------|-------|---|-----|
-| 장타 CORE | Upbit spot | 50 | `upbit-paper-bot` Policy C |
-| 단타 SCALP | Bitget UTA futures | 50 | `freqtrade-scalp` |
+**SCALP LIVE = OFF (cash).**  
+`bitget-futures-bot` stopped on Oracle. Compose profile `scalp` — default `docker compose up -d` does not start it.
 
-Venue split = sleeve split → **빗겟:업비트 5:5**.
+Reason: second-opinion review — Div ATR bear “defense” (+2.3% vs BTC −43% on paper) is too fee/slippage/TF-drift fragile; cash dominates for bear scalp until a card re-passes falsification.
 
-## SCALP regime map (LIVE)
+| Sleeve | Venue | Bot | LIVE |
+|--------|-------|-----|------|
+| 장타 CORE | Upbit spot | `upbit-paper-bot` Policy C | **ON** |
+| 단타 SCALP | Bitget UTA | `bitget-futures-bot` | **OFF / cash** |
 
-| Regime | Strategy | Config |
-|--------|----------|--------|
-| `bear` | `DaytradeEdge10mDivAtrV1` (15m port; Bitget has no 10m) | `config.bitget-scalp-div-atr-live.json` |
-| `sideways` | `SidewaysEdge15mBbFadeV5` | `config.bitget-scalp-side-fade-live.json` |
-| `bull` / `transition` | **flat / stop** | cash |
+Capital intent remains 장타50:단타50 when SCALP is later re-enabled; until then idle Bitget USDT is just parked cash. No TRX rebalance below 50만 KRW total.
 
-Pointer: `freqtrade-research/user_data/ACTIVE_SCALP_STRATEGY`
+## Regime map (parked)
 
-Upbit JSON refs (research / audit):  
-`strategies/daytrade-edge-10m-div-atr-v1.json`,  
-`strategies/daytrade-edge-side-15m-bb-fade-v5.json`
+| Regime | LIVE |
+|--------|------|
+| all | **null / cash** |
 
-## LIVE host = Oracle `bot-bitget` (not local Freqtrade)
+Parked refs: `bitget-scalp-div-atr-v1`, `SidewaysEdge15mBbFadeV5` (research only).
 
-Production: `bitget-futures-bot` on `auto-trade-bot` (Oracle).  
-Active file: `strategies/bitget-scalp-div-atr-v1.json` via `BITGET_STRATEGY_PATH` (Upbit CORE stays on `STRATEGY_PATH`).
+## Re-enable (human only)
 
 ```bash
-scp strategies/bitget-scalp-div-atr-v1.json auto-trade-bot:~/auto-trade/strategies/
-ssh auto-trade-bot 'cd ~/auto-trade && grep BITGET_STRATEGY_PATH .env && docker compose up -d bot-bitget'
+ssh auto-trade-bot 'cd ~/auto-trade && docker compose --profile scalp up -d bot-bitget'
 ```
 
-Freqtrade ports under `freqtrade-research/` are research-only. Do **not** run `freqtrade trade` on the home PC for LIVE.  
-Bitget API IP whitelist = Oracle egress, not your laptop.
-
-## Empty slots → automation
-
-Bull scalp + bear **short** slots remain open.  
-Hunt via `docs/scalp-short-edge-automation-prompt.md` (mirrors banned).
+Only after a new card passes multi-window falsification + explicit approve.
