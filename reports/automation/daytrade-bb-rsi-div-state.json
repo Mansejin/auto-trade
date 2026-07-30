@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v39",
-  "slug": "daytrade-bb-rsi-div-v39",
-  "hypothesis": "BTC daytrade long-only: soft bull (low LL4 + RSI HL4) with low≤BB lower and green close; exit BB upper or RSI≥55.",
+  "active_card": "daytrade-bb-rsi-div-v40",
+  "slug": "daytrade-bb-rsi-div-v40",
+  "hypothesis": "BTC daytrade long-only: hidden bull (low HL2 + RSI LL2) at/below BB lower; exit BB mid or RSI≥55.",
   "hypers": {
-    "pattern": "soft_ll_hl4_green_at_lower",
-    "exit": "bb_upper_or_rsi55",
-    "div_lookback": 4
+    "pattern": "hidden_hl_ll2_at_lower",
+    "exit": "bb_mid_or_rsi55",
+    "div_lookback": 2
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-29",
       "end": "2026-07-28",
-      "total_return": "+0.00%",
-      "profit_factor": "N/A",
-      "trades": 0,
+      "total_return": "-4.20%",
+      "profit_factor": "1.28",
+      "trades": 62,
       "benchmark": "+3.26%",
-      "trades_per_day": 0.0
+      "trades_per_day": 2.07
     },
     {
       "label": "w2",
       "start": "2026-05-30",
       "end": "2026-06-28",
-      "total_return": "-0.90%",
-      "profit_factor": "0.00",
-      "trades": 1,
+      "total_return": "-8.15%",
+      "profit_factor": "0.98",
+      "trades": 83,
       "benchmark": "-16.19%",
-      "trades_per_day": 0.03
+      "trades_per_day": 2.77
     },
     {
       "label": "w3",
       "start": "2026-04-30",
       "end": "2026-05-29",
-      "total_return": "-0.90%",
-      "profit_factor": "0.00",
-      "trades": 1,
+      "total_return": "-7.12%",
+      "profit_factor": "0.99",
+      "trades": 72,
       "benchmark": "-4.12%",
-      "trades_per_day": 0.03
+      "trades_per_day": 2.40
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 38,
+  "consecutive_fails": 39,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "soft LL/HL4 green @lower → upper/RSI55 — v39 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v38",
-  "updated_at": "2026-07-29T23:51:38Z"
+  "next_action": "hidden HL/LL2 @lower → mid/RSI55 — v40 백테스트.",
+  "failed_slug": "daytrade-bb-rsi-div-v39",
+  "updated_at": "2026-07-30T00:02:59Z"
 }
