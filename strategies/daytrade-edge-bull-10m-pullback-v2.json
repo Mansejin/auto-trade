@@ -1,0 +1,82 @@
+{
+  "name": "Daytrade Edge Bull 10m Pullback v2",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "10m",
+  "stop_loss": 0.8,
+  "take_profit": 2.5,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ema21",
+      "params": {
+        "type": "EMA",
+        "period": 21
+      }
+    },
+    {
+      "type": "bollinger_bands",
+      "ref": "bb20",
+      "params": {
+        "period": 20,
+        "multiplier": 2.0
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "type": "rsi",
+      "ref": "rsi14",
+      "params": {
+        "period": 14,
+        "signal_period": 9,
+        "signal_type": "EMA"
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "gt",
+        "right": { "type": "indicator", "ref": "ema21.value" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "adx14.adx" },
+        "op": "gte",
+        "right": { "type": "literal", "value": 20 }
+      },
+      {
+        "left": { "type": "indicator", "ref": "adx14.adx_pdi" },
+        "op": "gte",
+        "right": { "type": "indicator", "ref": "adx14.adx_mdi" }
+      },
+      {
+        "left": { "type": "field", "field": "low" },
+        "op": "lte",
+        "right": { "type": "indicator", "ref": "bb20.bb_lower" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "lt",
+        "right": { "type": "literal", "value": 55 }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "gte",
+        "right": { "type": "indicator", "ref": "bb20.bb_upper" }
+      }
+    ]
+  }
+}
