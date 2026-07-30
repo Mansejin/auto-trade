@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T05:05:02Z",
+  "updated_at": "2026-07-30T05:11:44Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
-  "cards_tried": 89,
-  "last_slug": "daytrade-edge-10m-div-atr-adx-hold-v1",
-  "consecutive_fails": 0,
+  "cards_tried": 90,
+  "last_slug": "daytrade-edge-1h-div-v1",
+  "consecutive_fails": 1,
   "failure_mode_counts": {
     "FEE_BLEED": 28,
     "SPARSE_ZERO": 17,
-    "A_FAIL": 46,
+    "A_FAIL": 47,
     "WORST_BLEED": 24,
     "REGIME_LONG_BLEED": 8
   },
@@ -21,7 +21,8 @@
     "Invent daily≥5 trades gate (removed)",
     "Re-run same encoding with new slug only",
     "SSH / deploy-strategy-to-bot from Cloud automation",
-    "Overwrite daytrade-edge-15m-div-v1.json"
+    "Overwrite daytrade-edge-15m-div-v1.json",
+    "20m timeframe (not in toolkit enum: 1M 1w 1d 4h 1h 30m 15m 10m 5m 3m 1m 1s)"
   ],
   "exhausted_lines": [
     "5m long-only BB+RSI leave-OS / reclaim / RSI-signal chop (v42–v70 cluster)",
@@ -141,7 +142,7 @@
     "PROMOTED: 10m ATR expand + classic+hidden OR @ BB lower → upper (daytrade-edge-10m-div-atr-v1) — 3/3 denser 9/4/3",
     "PROMOTED: 10m ADX<25 + ATR expand + classic+hidden OR @ BB lower → upper (daytrade-edge-10m-div-atr-adx-v1) — 3/3 sparse 3/1/1 ATR inert",
     "PROMOTED: 10m atr-adx upper-primary hold take_profit null (daytrade-edge-10m-div-atr-adx-hold-v1) — 3/3 nets match atr-adx",
-    "20m classic+hidden OR @ BB lower → upper (TF between 10m PASS and 30m sparse fail)"
+    "10m MFI<20 + classic+hidden OR @ BB lower → upper (flow gate on densest PASS line; not ATR/ADX)"
   ],
   "lessons": [
     "High WR + PF≈1.0–1.2 + large Total Fees = FEE_BLEED → never loosen entry; lengthen exit or raise TF or stricter pattern",
@@ -166,7 +167,8 @@
     "10m ADX<25 on bare OR cleared A–D 3/3; sparse 3/1/1 vs bare 9/5/3; MDD W1 −1.59%→−0.95% — next ATR expand on 10m OR",
     "10m ATR expand on bare OR cleared A–D 3/3; denser 9/4/3 vs ADX 3/1/1; W1 +0.29% softer than ADX +0.78% — next ADX+ATR combo on 10m",
     "10m ADX+ATR on OR cleared A–D 3/3; sparse 3/1/1 and W1 +0.78% match adx-v1; ATR inert under ADX — next upper-primary hold on atr-adx",
-    "take_profit null on 10m atr-adx matched atr-adx nets (TP never fired); skip more hold scrapes — next 20m bare OR (between 10m PASS and 30m fail)"
+    "take_profit null on 10m atr-adx matched atr-adx nets (TP never fired); skip more hold scrapes — next 20m bare OR (between 10m PASS and 30m fail)",
+    "20m not in toolkit timeframe enum; 1h bare OR → A_FAIL (W1 +1.54% PF∞; W2 0 trades; W3 −0.90% SL) — leave 1h bare OR; next MFI<20 flow gate on 10m OR"
   ],
-  "next_priority": "Encode daytrade-edge-20m-div-v1: 20m classic+hidden OR @ BB lower → upper only (TF between 10m PASS and 30m sparse fail). No deploy. Keep promoted cards frozen."
+  "next_priority": "Encode daytrade-edge-10m-div-mfi-v1: 10m MFI<20 + classic+hidden OR @ BB lower → upper only (flow gate on densest PASS line). No deploy. Keep promoted cards frozen."
 }
