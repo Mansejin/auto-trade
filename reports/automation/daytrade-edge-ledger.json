@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T04:58:24Z",
+  "updated_at": "2026-07-30T05:01:30Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
-  "cards_tried": 87,
-  "last_slug": "daytrade-edge-10m-div-atr-v1",
+  "cards_tried": 88,
+  "last_slug": "daytrade-edge-10m-div-atr-adx-v1",
   "consecutive_fails": 0,
   "failure_mode_counts": {
     "FEE_BLEED": 28,
@@ -111,6 +111,13 @@
       "worst_net": "+0.05%",
       "note": "10m ATR expand + classic+hidden OR @ BB lower → upper; A–D PASS 3/3; denser 9/4/3 vs ADX 3/1/1; W1 +0.29% softer than ADX +0.78%; deploy skipped_no_deploy",
       "keep": true
+    },
+    {
+      "slug": "daytrade-edge-10m-div-atr-adx-v1",
+      "a_pass": "3/3",
+      "worst_net": "+0.29%",
+      "note": "10m ADX<25 + ATR expand + classic+hidden OR @ BB lower → upper; A–D PASS 3/3; sparse 3/1/1 matches adx-v1; W1 +0.78% same; ATR inert under ADX; deploy skipped_no_deploy",
+      "keep": true
     }
   ],
   "promising_axes": [
@@ -125,7 +132,8 @@
     "PROMOTED: 10m classic+hidden OR @ BB lower → upper (daytrade-edge-10m-div-v1) — 3/3 all net+",
     "PROMOTED: 10m ADX<25 + classic+hidden OR @ BB lower → upper (daytrade-edge-10m-div-adx-v1) — 3/3 sparse",
     "PROMOTED: 10m ATR expand + classic+hidden OR @ BB lower → upper (daytrade-edge-10m-div-atr-v1) — 3/3 denser 9/4/3",
-    "10m ADX<25 + ATR expand + classic+hidden OR after ATR PASS (mirror 15m atr-adx path)"
+    "PROMOTED: 10m ADX<25 + ATR expand + classic+hidden OR @ BB lower → upper (daytrade-edge-10m-div-atr-adx-v1) — 3/3 sparse 3/1/1 ATR inert",
+    "10m atr-adx upper-primary hold take_profit null (mirror 15m atr-adx-hold)"
   ],
   "lessons": [
     "High WR + PF≈1.0–1.2 + large Total Fees = FEE_BLEED → never loosen entry; lengthen exit or raise TF or stricter pattern",
@@ -148,7 +156,8 @@
     "30m bare OR densified vs ADX (2/0/2) + W3 +1.63% PF∞ but A_FAIL (W1 −0.53% PF0.59; W2 still 0) — leave 30m OR line; next 10m same OR upper-only",
     "10m bare classic+hidden OR cleared A–D 3/3 all net+ (W2 +2.63% PF2.97 vs bench −17.76%); denser 9/5/3 — next ADX<25 vol gate on 10m OR",
     "10m ADX<25 on bare OR cleared A–D 3/3; sparse 3/1/1 vs bare 9/5/3; MDD W1 −1.59%→−0.95% — next ATR expand on 10m OR",
-    "10m ATR expand on bare OR cleared A–D 3/3; denser 9/4/3 vs ADX 3/1/1; W1 +0.29% softer than ADX +0.78% — next ADX+ATR combo on 10m"
+    "10m ATR expand on bare OR cleared A–D 3/3; denser 9/4/3 vs ADX 3/1/1; W1 +0.29% softer than ADX +0.78% — next ADX+ATR combo on 10m",
+    "10m ADX+ATR on OR cleared A–D 3/3; sparse 3/1/1 and W1 +0.78% match adx-v1; ATR inert under ADX — next upper-primary hold on atr-adx"
   ],
-  "next_priority": "Encode daytrade-edge-10m-div-atr-adx-v1: ADX<25 + ATR expand (atr>atr offset 3) + classic+hidden OR @ BB lower → BB upper on 10m. No deploy. Keep promoted cards frozen."
+  "next_priority": "Encode daytrade-edge-10m-div-atr-adx-hold-v1: atr-adx + take_profit null; exit BB upper only on 10m. No deploy. Keep promoted cards frozen."
 }

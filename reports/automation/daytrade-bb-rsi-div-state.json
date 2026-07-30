@@ -1,51 +1,50 @@
 {
-  "active_card": "daytrade-edge-10m-div-atr-v1",
-  "slug": "daytrade-edge-10m-div-atr-v1",
-  "hypothesis": "BTC 10m ATR expand (atr>atr offset 3) + classic+hidden OR (HL/LL3 RSI) @ BB lower → long; exit BB upper only.",
+  "active_card": "daytrade-edge-10m-div-atr-adx-v1",
+  "slug": "daytrade-edge-10m-div-atr-adx-v1",
+  "hypothesis": "BTC 10m ADX<25 + ATR expand (atr>atr offset 3) + classic+hidden OR (HL/LL3 RSI) @ BB lower → long; exit BB upper only.",
   "hypers": {
     "tf": "10m",
-    "atr_offset": 3,
-    "div_lookback": 3,
-    "bb_exit": "upper"
+    "adx_lt": 25,
+    "atr_offset": 3
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "+0.29%",
-      "profit_factor": "1.69",
-      "trades": 9,
+      "total_return": "+0.78%",
+      "profit_factor": "2.33",
+      "trades": 3,
       "benchmark": "+1.93%",
-      "trades_per_day": 0.30
+      "trades_per_day": 0.10
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "+1.78%",
-      "profit_factor": "2.37",
-      "trades": 4,
+      "total_return": "+1.21%",
+      "profit_factor": "∞",
+      "trades": 1,
       "benchmark": "-17.76%",
-      "trades_per_day": 0.13
+      "trades_per_day": 0.03
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "+0.05%",
-      "profit_factor": "1.44",
-      "trades": 3,
+      "total_return": "+0.29%",
+      "profit_factor": "∞",
+      "trades": 1,
       "benchmark": "-4.49%",
-      "trades_per_day": 0.10
+      "trades_per_day": 0.03
     }
   ],
   "last_verdict": "PASS",
   "consecutive_fails": 0,
   "deployed_slug": null,
   "deploy_status": "skipped_no_deploy",
-  "next_action": "Encode daytrade-edge-10m-div-atr-adx-v1: ADX<25 + ATR expand (atr>atr offset 3) + classic+hidden OR @ BB lower → BB upper on 10m. Keep promoted frozen. No SSH.",
+  "next_action": "Encode daytrade-edge-10m-div-atr-adx-hold-v1: atr-adx + take_profit null; exit BB upper only on 10m. Keep promoted frozen. No SSH.",
   "failed_slug": null,
   "fail_mode": "PASS",
-  "updated_at": "2026-07-30T04:58:24Z"
+  "updated_at": "2026-07-30T05:01:30Z"
 }
