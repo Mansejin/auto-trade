@@ -1,49 +1,49 @@
 {
-  "active_card": "daytrade-bb-rsi-div-v69",
-  "slug": "daytrade-bb-rsi-div-v69",
-  "hypothesis": "BTC daytrade long-only: BB 2.5σ prior close<lower then close cross_above mid + LL/HL5 RSI<40; exit mid.",
+  "active_card": "daytrade-bb-rsi-div-v70",
+  "slug": "daytrade-bb-rsi-div-v70",
+  "hypothesis": "BTC daytrade long-only: outer pierce close[2]<BB lower[2] then close cross_above mid + LL/HL3 RSI<50; exit BB upper.",
   "hypers": {
-    "bb_std": 2.5,
-    "div_lookback": 5,
-    "rsi_os": 40
+    "pierce_lag": 2,
+    "div_lookback": 3,
+    "rsi_os": 50
   },
   "last_windows": [
     {
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "-3.51%",
-      "profit_factor": "1.15",
-      "trades": 42,
+      "total_return": "+0.00%",
+      "profit_factor": "N/A",
+      "trades": 0,
       "benchmark": "+1.79%",
-      "trades_per_day": 1.4
+      "trades_per_day": 0
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "-7.48%",
-      "profit_factor": "0.67",
-      "trades": 45,
+      "total_return": "+0.00%",
+      "profit_factor": "N/A",
+      "trades": 0,
       "benchmark": "-17.77%",
-      "trades_per_day": 1.5
+      "trades_per_day": 0
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "-4.75%",
-      "profit_factor": "0.97",
-      "trades": 47,
+      "total_return": "+0.00%",
+      "profit_factor": "N/A",
+      "trades": 0,
       "benchmark": "-4.56%",
-      "trades_per_day": 1.57
+      "trades_per_day": 0
     }
   ],
   "last_verdict": "FAIL",
-  "consecutive_fails": 68,
+  "consecutive_fails": 69,
   "deployed_slug": null,
   "deploy_status": "none",
-  "next_action": "BB 2.5σ prior close<lower then close cross_above mid + LL/HL5 RSI<40; exit mid — v69 백테스트.",
-  "failed_slug": "daytrade-bb-rsi-div-v68",
-  "updated_at": "2026-07-30T03:31:38Z"
+  "next_action": "outer pierce close[2]<lower[2] then mid reclaim + LL/HL3 RSI<50; exit upper — v70 백테스트 (v54-family, no-tpd bar).",
+  "failed_slug": "daytrade-bb-rsi-div-v69",
+  "updated_at": "2026-07-30T03:36:26Z"
 }
