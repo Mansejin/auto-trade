@@ -1,11 +1,11 @@
 {
-  "active_card": "daytrade-edge-15m-div-v1",
-  "slug": "daytrade-edge-15m-div-v1",
-  "hypothesis": "BTC daytrade: 15m hidden bull div (HL + RSI LL3) at BB lower → long; exit BB upper only. Hypers: div_lookback, bb_std, tf=15m.",
+  "active_card": "daytrade-edge-15m-div-v2",
+  "slug": "daytrade-edge-15m-div-v2",
+  "hypothesis": "BTC 15m daytrade: develop from v1 — two-sided OR classic+hidden div @ BB outer; exit upper-primary. Hypers <=3.",
   "hypers": {
     "tf": "15m",
-    "div_lookback": 3,
-    "exit": "bb_upper_only"
+    "family": "div_bb_outer",
+    "exit": "bb_upper_primary"
   },
   "last_windows": [
     {
@@ -42,10 +42,9 @@
   "last_verdict": "PASS",
   "consecutive_fails": 0,
   "deployed_slug": null,
-  "deploy_status": "failed",
-  "deploy_error": "AUTO_TRADE_BOT_SSH_KEY unset",
-  "next_action": "FREEZE daytrade-edge-15m-div-v1. Retry deploy when AUTO_TRADE_BOT_SSH_KEY present. Live bleed → two-sided 15m div OR classic+hidden OR.",
+  "deploy_status": "skipped_no_deploy",
+  "next_action": "Encode daytrade-edge-15m-div-v2 sibling (two-sided OR classic+hidden). No SSH deploy. Keep v1 frozen.",
   "failed_slug": null,
   "fail_mode": null,
-  "updated_at": "2026-07-30T03:54:00Z"
+  "updated_at": "2026-07-30T04:00:28Z"
 }

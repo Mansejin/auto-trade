@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T03:54:00Z",
+  "updated_at": "2026-07-30T04:00:28Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
@@ -19,7 +19,9 @@
     "leave-OS / RSI hysteresis-only line on 5m",
     "Loosen entry to chase trades/day after near-miss",
     "Invent daily≥5 trades gate (removed)",
-    "Re-run same encoding with new slug only"
+    "Re-run same encoding with new slug only",
+    "SSH / deploy-strategy-to-bot from Cloud automation",
+    "Overwrite daytrade-edge-15m-div-v1.json"
   ],
   "exhausted_lines": [
     "5m long-only BB+RSI leave-OS / reclaim / RSI-signal chop (v42–v70 cluster)"
@@ -45,14 +47,17 @@
     "two-sided or bear-window short (W1 still soft; W2/W3 worked long-only)",
     "classic+hidden OR on 15m if live sparse",
     "one volatility/ADX/ATR gate as a hyper (not RSI nudge)",
-    "retry deploy when SSH key available"
+    "two-sided / bear-window short on 15m div family",
+    "classic+hidden OR entry on 15m (cut sparsity)",
+    "one ATR/ADX gate hyper (not RSI nudge)"
   ],
   "lessons": [
     "High WR + PF≈1.0–1.2 + large Total Fees = FEE_BLEED → never loosen entry; lengthen exit or raise TF or stricter pattern",
     "A near-pass + sparse (v35) → do not scrape for frequency; change TF/session/two-sided",
     "0 trades = broken/over-strict encoding → change pattern family, not ±1 hyper",
     "W2 large down-bench + long-only MR often REGIME_LONG_BLEED → add short or risk-off",
-    "15m TF jump on v35-family + drop RSI early-exit cleared A–D; 5m leave-OS line never did"
+    "15m TF jump on v35-family + drop RSI early-exit cleared A–D; 5m leave-OS line never did",
+    "Cloud automation cannot use AUTO_TRADE_BOT_SSH_KEY reliably — develop-only; human deploys locally"
   ],
-  "next_priority": "FREEZE daytrade-edge-15m-div-v1; retry bot deploy when AUTO_TRADE_BOT_SSH_KEY present. Do not encode new card until deploy succeeds or live evidence demands two-sided 15m."
+  "next_priority": "Develop sibling daytrade-edge-15m-div-v2: ONE axis — prefer two-sided 15m div OR classic+hidden OR. No deploy. Keep v1 frozen."
 }
