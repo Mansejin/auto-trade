@@ -233,3 +233,17 @@ Div ATR SCALP:
 ================================================================================
 END OF BRIEFING
 ================================================================================
+
+--------------------------------------------------------------------------------
+11. UPDATE 2026-07-30 ? Policy C OOS (pre-sample) + SCALP stopped
+--------------------------------------------------------------------------------
+SCALP LIVE: OFF. bitget-futures-bot stopped (compose profile scalp). CORE Policy C only.
+
+Policy C OOS effective 2018-04-12 ¡æ 2021-07-24 (25 segments, frozen map):
+  Policy C return +387.4% / MDD -36.7%
+  BTC hold aligned +393.9% / MDD -66.6%
+  beats_bh_return_aligned = false
+  beats_bh_mdd_aligned = true
+Docs: docs/research/policyC-oos-presample-2018-2021.md
+JSON: reports/bt-policyC-oos-presample-20260730_132503.json
+

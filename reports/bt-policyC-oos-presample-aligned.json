@@ -1,0 +1,32 @@
+{
+  "window": {
+    "start": "2017-09-01",
+    "end": "2021-07-26"
+  },
+  "note": "OOS before 5y Policy C selection sample. Map frozen \u2014 no retune.",
+  "map": {
+    "bull": "strategies/regime-bull-trend-4h-v2.json",
+    "transition": "strategies/regime-bull-trend-4h-v2.json",
+    "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+    "sideways": "strategies/regime-sideways-mr-4h-v5.json"
+  },
+  "n_segments": 25,
+  "n_segments_ok": 25,
+  "policyC_multiple": 4.8742,
+  "policyC_return_pct": 387.42,
+  "policyC_mdd_pct": -36.67,
+  "bh_multiple": 9.9493,
+  "bh_return_pct": 894.93,
+  "bh_mdd_pct": -86.81,
+  "beats_bh_return": false,
+  "aligned_window": {
+    "start": "2018-04-12",
+    "end": "2021-07-24",
+    "note": "SMA200 warmup \u2192 first labeled segment"
+  },
+  "bh_aligned_multiple": 4.9393,
+  "bh_aligned_return_pct": 393.93,
+  "bh_aligned_mdd_pct": -66.55,
+  "beats_bh_return_aligned": false,
+  "beats_bh_mdd_aligned": true
+}
