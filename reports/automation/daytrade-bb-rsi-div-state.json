@@ -1,9 +1,9 @@
 {
-  "active_card": "daytrade-edge-15m-div-atr-adx-hold-v1",
-  "slug": "daytrade-edge-15m-div-atr-adx-hold-v1",
-  "hypothesis": "BTC 15m classic+hidden OR (HL/LL3 RSI) @ BB lower with ADX<25 and ATR expanding (atr14 > atr offset 3) → long; exit BB upper only; take_profit null (upper-primary hold).",
+  "active_card": "daytrade-edge-30m-div-atr-adx-v1",
+  "slug": "daytrade-edge-30m-div-atr-adx-v1",
+  "hypothesis": "BTC 30m classic+hidden OR (HL/LL3 RSI) @ BB lower with ADX<25 and ATR expanding (atr14 > atr offset 3) → long; exit BB upper only.",
   "hypers": {
-    "tf": "15m",
+    "tf": "30m",
     "atr_expand_lookback": 3,
     "adx_max": 25
   },
@@ -12,39 +12,39 @@
       "label": "w1",
       "start": "2026-06-30",
       "end": "2026-07-29",
-      "total_return": "-0.04%",
-      "profit_factor": "1.20",
-      "trades": 2,
-      "benchmark": "+1.85%",
-      "trades_per_day": 0.07
+      "total_return": "-0.90%",
+      "profit_factor": "0.00",
+      "trades": 1,
+      "benchmark": "+2.16%",
+      "trades_per_day": 0.03
     },
     {
       "label": "w2",
       "start": "2026-05-31",
       "end": "2026-06-29",
-      "total_return": "+1.30%",
-      "profit_factor": "∞",
-      "trades": 1,
-      "benchmark": "-17.47%",
-      "trades_per_day": 0.03
+      "total_return": "+0.00%",
+      "profit_factor": "N/A",
+      "trades": 0,
+      "benchmark": "-18.03%",
+      "trades_per_day": 0.00
     },
     {
       "label": "w3",
       "start": "2026-05-01",
       "end": "2026-05-30",
-      "total_return": "+1.33%",
-      "profit_factor": "∞",
-      "trades": 2,
-      "benchmark": "-4.49%",
-      "trades_per_day": 0.07
+      "total_return": "+0.00%",
+      "profit_factor": "N/A",
+      "trades": 0,
+      "benchmark": "-4.52%",
+      "trades_per_day": 0.00
     }
   ],
-  "last_verdict": "PASS",
-  "consecutive_fails": 0,
+  "last_verdict": "FAIL",
+  "consecutive_fails": 1,
   "deployed_slug": null,
-  "deploy_status": "skipped_no_deploy",
-  "next_action": "Encode daytrade-edge-30m-div-atr-adx-v1: same ADX<25 + ATR expand + classic+hidden OR @ BB lower → BB upper on 30m TF. Keep promoted cards frozen. No SSH.",
-  "failed_slug": null,
-  "fail_mode": "PASS",
-  "updated_at": "2026-07-30T04:34:30Z"
+  "deploy_status": "none",
+  "next_action": "Encode daytrade-edge-30m-div-adx-v1: ADX<25 + classic+hidden OR @ BB lower → BB upper on 30m (drop ATR gate to cut sparsity). Keep promoted cards frozen. No SSH.",
+  "failed_slug": "daytrade-edge-30m-div-atr-adx-v1",
+  "fail_mode": "SPARSE_ZERO",
+  "updated_at": "2026-07-30T04:38:09Z"
 }

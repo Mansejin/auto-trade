@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "updated_at": "2026-07-30T04:34:30Z",
+  "updated_at": "2026-07-30T04:38:09Z",
   "goal": "BTC daytrade edge via Upbit toolkit JSON. Promote when A–D pass. Learn from every FAIL.",
   "open_directions": true,
   "allowed_slug_prefix": "daytrade-",
-  "cards_tried": 81,
-  "last_slug": "daytrade-edge-15m-div-atr-adx-hold-v1",
-  "consecutive_fails": 0,
+  "cards_tried": 82,
+  "last_slug": "daytrade-edge-30m-div-atr-adx-v1",
+  "consecutive_fails": 1,
   "failure_mode_counts": {
     "FEE_BLEED": 28,
-    "SPARSE_ZERO": 15,
+    "SPARSE_ZERO": 16,
     "A_FAIL": 45,
     "WORST_BLEED": 24,
     "REGIME_LONG_BLEED": 8
@@ -101,7 +101,7 @@
     "PROMOTED: 15m ATR expand + classic+hidden OR @ BB lower → upper (daytrade-edge-15m-div-atr-or-v1)",
     "PROMOTED: 15m ADX<25 + ATR expand + classic+hidden OR @ BB lower → upper (daytrade-edge-15m-div-atr-adx-v1)",
     "PROMOTED: 15m atr-adx upper-primary hold take_profit null (daytrade-edge-15m-div-atr-adx-hold-v1)",
-    "TF jump around 15m: 30m same atr-adx classic+hidden OR upper-only"
+    "30m ADX-only (drop ATR) classic+hidden OR upper-only to cut sparsity after atr-adx SPARSE_ZERO"
   ],
   "lessons": [
     "High WR + PF≈1.0–1.2 + large Total Fees = FEE_BLEED → never loosen entry; lengthen exit or raise TF or stricter pattern",
@@ -118,7 +118,8 @@
     "ATR expanding (atr > atr offset 3) on hidden-bull cleared A–D; sparse 1–2 trades/window; W1 −0.21% mirrors v1 — next densify via classic+hidden OR + same ATR expand",
     "ATR expand + classic+hidden OR densified vs atr-v2 and cleared A–D; W1 −1.14% mirrors bare v2 — next ADX<25 on this denser card",
     "ADX<25 on atr-or cut W1 −1.14%→−0.04% and kept A–D (PF1.20 on W1); sparse 2/1/2 — next upper-primary hold on this card",
-    "take_profit null on atr-adx matched atr-adx nets (TP never fired); skip more hold scrapes — next TF jump 30m same atr-adx gates"
+    "take_profit null on atr-adx matched atr-adx nets (TP never fired); skip more hold scrapes — next TF jump 30m same atr-adx gates",
+    "30m atr-adx classic+hidden OR → SPARSE_ZERO (W2/W3 0 trades; W1 1×SL −0.90%); drop ATR next, keep ADX+OR on 30m"
   ],
-  "next_priority": "Encode daytrade-edge-30m-div-atr-adx-v1: ADX<25 + ATR expand + classic+hidden OR @ BB lower → BB upper on 30m TF. No deploy. Keep promoted cards frozen."
+  "next_priority": "Encode daytrade-edge-30m-div-adx-v1: ADX<25 + classic+hidden OR @ BB lower → BB upper on 30m (drop ATR). No deploy. Keep promoted cards frozen."
 }

@@ -1,0 +1,100 @@
+# section: strategy
+name,Daytrade Edge 30m Div ATR ADX v1
+market,KRW-BTC
+timeframe,30m
+stop_loss_pct,0.8
+take_profit_pct,2.5
+indicators,"rsi14(rsi, signal_period=9, signal_type=EMA, period=14), bb20(bollinger_bands, period=20, multiplier=2.0), atr14(atr, period=14), adx14(adx, period=14)"
+
+# section: disclaimer
+notice,Backtesting results are based on historical data and do not guarantee that the same or similar investment performance will be achieved in the future or in actual trading.
+
+# section: performance
+metric,value
+period,2026-05-31 ~ 2026-06-29 (UTC)
+initial_capital,1000000 KRW
+trading_bars,1393
+warmup_bars,29
+benchmark_pct,-18.0284
+total_return_pct,+0.0000
+cagr_pct,+0.0000
+mdd_pct,0.0000
+sharpe_portfolio,0.0000
+sharpe_trade,0.0000
+trades,0
+win_rate_before_fees_pct,N/A (0 executed trades)
+profit_factor_before_fees,N/A (0 executed trades)
+sl_count,0
+tp_count,0
+sell_count,0
+final_bar_count,0
+total_fee,0.0000
+
+# section: trades
+entry_dt,entry_price,exit_dt,exit_price,qty,pnl_pct,pnl_abs,exit_reason
+
+# section: signals
+timestamp,type
+2026-05-31 00:30:00 UTC,sell
+2026-05-31 01:30:00 UTC,sell
+2026-06-07 00:00:00 UTC,sell
+2026-06-07 01:30:00 UTC,sell
+2026-06-07 02:00:00 UTC,sell
+2026-06-07 03:00:00 UTC,sell
+2026-06-07 03:30:00 UTC,sell
+2026-06-07 04:00:00 UTC,sell
+2026-06-07 09:00:00 UTC,sell
+2026-06-07 22:30:00 UTC,sell
+2026-06-07 23:00:00 UTC,sell
+2026-06-07 23:30:00 UTC,sell
+2026-06-08 01:00:00 UTC,sell
+2026-06-08 15:00:00 UTC,sell
+2026-06-10 14:00:00 UTC,sell
+2026-06-10 14:30:00 UTC,sell
+2026-06-10 15:00:00 UTC,sell
+2026-06-10 15:30:00 UTC,sell
+2026-06-10 16:00:00 UTC,sell
+2026-06-11 04:00:00 UTC,sell
+2026-06-11 18:00:00 UTC,sell
+2026-06-12 11:30:00 UTC,sell
+2026-06-12 15:30:00 UTC,sell
+2026-06-13 11:30:00 UTC,sell
+2026-06-13 13:00:00 UTC,sell
+2026-06-13 13:30:00 UTC,sell
+2026-06-13 22:00:00 UTC,sell
+2026-06-13 22:30:00 UTC,sell
+2026-06-14 22:00:00 UTC,sell
+2026-06-14 22:30:00 UTC,sell
+2026-06-14 23:00:00 UTC,sell
+2026-06-14 23:30:00 UTC,sell
+2026-06-15 00:00:00 UTC,sell
+2026-06-15 11:30:00 UTC,sell
+2026-06-15 12:00:00 UTC,sell
+2026-06-15 12:30:00 UTC,sell
+2026-06-15 13:00:00 UTC,sell
+2026-06-15 13:30:00 UTC,sell
+2026-06-15 16:00:00 UTC,sell
+2026-06-16 09:00:00 UTC,sell
+2026-06-17 02:00:00 UTC,sell
+2026-06-17 02:30:00 UTC,sell
+2026-06-17 16:30:00 UTC,sell
+2026-06-19 14:00:00 UTC,sell
+2026-06-19 14:30:00 UTC,sell
+2026-06-19 15:00:00 UTC,sell
+2026-06-20 00:00:00 UTC,sell
+2026-06-20 00:30:00 UTC,sell
+2026-06-20 15:30:00 UTC,sell
+2026-06-22 01:30:00 UTC,sell
+2026-06-22 12:00:00 UTC,sell
+2026-06-22 12:30:00 UTC,sell
+2026-06-22 13:00:00 UTC,sell
+2026-06-22 14:00:00 UTC,sell
+2026-06-24 00:30:00 UTC,sell
+2026-06-24 01:00:00 UTC,sell
+2026-06-24 12:00:00 UTC,sell
+2026-06-25 05:30:00 UTC,sell
+2026-06-25 06:00:00 UTC,sell
+2026-06-25 06:30:00 UTC,sell
+2026-06-25 07:00:00 UTC,sell
+2026-06-27 15:30:00 UTC,sell
+2026-06-27 16:00:00 UTC,sell
