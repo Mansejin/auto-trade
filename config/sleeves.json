@@ -16,7 +16,13 @@
       "notes": "Upbit hosts 장타 only; Bitget hosts 단타 only — keeps 빗겟:업비트 5:5."
     },
     "frozen_by": "human_2026-07-30",
-    "notes": "Frozen 장타50 / 단타50. Do not auto-rebalance from a single month of PnL."
+    "notes": "Frozen 장타50 / 단타50 intent. SCALP LIVE off — seed Upbit-only until total≥500k KRW and a scalp card re-passes. No rebalance below 500k."
+  },
+  "seed_policy": {
+    "deposit_venue": "upbit_only",
+    "bitget": "ignore_dust_while_scalp_stopped",
+    "rebalance_min_total_krw": 500000,
+    "updated": "2026-07-31"
   },
   "venues": {
     "core": {

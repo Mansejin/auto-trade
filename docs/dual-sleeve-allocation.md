@@ -1,57 +1,37 @@
 # Dual-sleeve capital allocation (장타 CORE + 단타 SCALP)
 
 > Intent: **split capital**, not replace Policy C.  
-> Config source of truth: [`config/sleeves.json`](../config/sleeves.json)  
-> SCALP live map: [`config/scalp-live-map.json`](../config/scalp-live-map.json) · [`docs/scalp-live-playbook.md`](scalp-live-playbook.md)
+> Config: [`config/sleeves.json`](../config/sleeves.json) · SCALP map: [`config/scalp-live-map.json`](../config/scalp-live-map.json)
 
-## Split (human-frozen **2026-07-30**: 장타 5 / 단타 5)
+## Live posture (2026-07-31)
 
-| Sleeve | 한글 | Venue | Role | Capital |
-|--------|------|-------|------|---------|
-| **CORE** | 장타 | Upbit spot (`upbit-paper-bot`) | Policy C swing / MR | **50%** |
-| **SCALP** | 단타 | Bitget UTA futures (Freqtrade) | Regime scalp map | **50%** |
+| Sleeve | Venue | LIVE | Capital handling |
+|--------|-------|------|------------------|
+| **CORE 장타** | Upbit | **ON** (Policy C) | **Seed here** |
+| **SCALP 단타** | Bitget | **OFF / cash** | Ignore dust; do not fund |
 
-**빗겟:업비트 = 5:5** because each sleeve owns one venue.
+Intent weights remain 50:50 for when SCALP is later re-enabled. Until then treat the book as **Upbit-only CORE**.
 
-Do not auto-tune weights from one month of live PnL.
+## Seed policy (simple)
 
-```mermaid
-flowchart LR
-  Capital --> CORE["장타 50% Upbit"]
-  Capital --> SCALP["단타 50% Bitget"]
-  CORE --> PC["Policy C map"]
-  PC --> Bull["bull 4h-v2"]
-  PC --> Bear["bear m5-v6"]
-  PC --> Side["sideways Williams / v5"]
-  SCALP --> BL["bear: DaytradeEdge10mDivAtrV1"]
-  SCALP --> SS["side: SidewaysEdge15mBbFadeV5"]
-  SCALP --> BuS["bull/short: empty → automation"]
-```
+1. New deposits → **Upbit only**.
+2. Do not TRX-bridge to Bitget while SCALP is stopped.
+3. No rebalance if total &lt; **500,000 KRW** (`REBALANCE_MIN_TOTAL_KRW`).
+4. Bitget leftover USDT/TRX = ignore until a scalp card is promoted again.
 
-## Sideways separation (required)
+## Split (frozen intent)
 
-| Sleeve | Strategy | Notes |
-|--------|----------|-------|
-| CORE | `regime-sideways-mr-1h-williams-v1` (dwell≥7) else `…-4h-v5` | 장타 MR |
-| SCALP | `SidewaysEdge15mBbFadeV5` | LIVE 단타; prior `SidewaysScalp15mBbV1` falsified |
+| Sleeve | Venue | Role | Intent % |
+|--------|-------|------|----------|
+| CORE | Upbit spot | Policy C | 50 |
+| SCALP | Bitget UTA | cash until re-promotion | 50 |
 
-## Bear separation
+## Weekly observe
 
-| Sleeve | Strategy | Status |
-|--------|----------|--------|
-| CORE | `m5-v6` long-biased 1h | LIVE 장타 |
-| SCALP long | `DaytradeEdge10mDivAtrV1` | LIVE 단타 (promoted edge) |
-| SCALP short | — | empty — automation hunt (no mirrors) |
+See [`docs/ops/weekly-core-obs.md`](ops/weekly-core-obs.md) — regime / path / bot health only. No map retune.
 
-## Ops rules
+## Policy C evidence (short)
 
-1. CORE and SCALP never share a position book.
-2. Promoting a scalp never edits Policy C unless explicitly requested.
-3. Premium / kimchi overlay stays on CORE until SCALP has its own contract.
-4. Empty scalp slots → that capital stays cash in the SCALP wallet.
-
-## Status helper
-
-```bash
-python scripts/sleeve_status.py
-```
+- In-sample fair race (2021–26): strong vs hold on return **and** MDD.
+- OOS presample (2018–21 aligned): return ≈ hold; **MDD still better**.
+- Fee stress 2×: see `docs/research/policyC-fee-stress-2x.md` (after script run).
