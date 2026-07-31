@@ -9,6 +9,7 @@ freqtrade-research/user_data/backtest_results/
 freqtrade-research/user_data/plot/
 freqtrade-research/user_data/notebooks/
 cache/
+strategies/_eth_policyC_xfer/
 reports/ae12-collect/*.jsonl
 reports/ae12-collect/event-study-status.json
 reports/ae14-paper/*.jsonl
