@@ -622,7 +622,10 @@ def _basename(path: str | None) -> str:
 
 
 def notify_regime_action(env: dict[str, str], rec: dict[str, Any]) -> None:
-    """Telegram ping for switched / position_skip / dwell_block only."""
+    """Telegram ping for switched / position_skip / dwell_block only.
+
+    Dedupes skip/dwell to once per key per ~20h so cron does not spam.
+    """
     action = str(rec.get("action") or "")
     if action not in ("switched", "position_skip", "dwell_block"):
         return
@@ -630,13 +633,36 @@ def notify_regime_action(env: dict[str, str], rec: dict[str, Any]) -> None:
     chat = (env.get("TELEGRAM_CHAT_ID") or os.environ.get("TELEGRAM_CHAT_ID") or "").strip()
     if not token or not chat:
         return
+
+    guard = rec.get("guard") if isinstance(rec.get("guard"), dict) else {}
+    reason = rec.get("reason") or guard.get("reason") or ""
+    dedupe_key = "|".join(
+        [
+            action,
+            str(rec.get("old") or ""),
+            str(rec.get("new") or ""),
+            str(reason),
+        ]
+    )
+    stamp_path = LOG_FILE.parent / "regime-notify-last.json"
+    if action in ("position_skip", "dwell_block"):
+        try:
+            prev = json.loads(stamp_path.read_text(encoding="utf-8")) if stamp_path.exists() else {}
+        except Exception:
+            prev = {}
+        if (
+            prev.get("key") == dedupe_key
+            and isinstance(prev.get("ts"), (int, float))
+            and (time.time() - float(prev["ts"])) < 20 * 3600
+        ):
+            print("telegram notify skipped (dedupe)")
+            return
+
     labels = {
         "switched": "전환됨",
         "position_skip": "포지션 보류",
         "dwell_block": "드웰 보류",
     }
-    guard = rec.get("guard") if isinstance(rec.get("guard"), dict) else {}
-    reason = rec.get("reason") or guard.get("reason") or ""
     lines = [
         "======= 레짐 스위치 =======",
         f"액션    {labels.get(action, action)}",
@@ -658,9 +684,15 @@ def notify_regime_action(env: dict[str, str], rec: dict[str, Any]) -> None:
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
             resp.read()
+        try:
+            stamp_path.write_text(
+                json.dumps({"key": dedupe_key, "ts": int(time.time())}, ensure_ascii=False),
+                encoding="utf-8",
+            )
+        except OSError:
+            pass
     except Exception as e:
-        print(f"warn: telegram notify failed: {e}")
-
+        print(f"warn: telegram notify failed: {type(e).__name__}")
 
 if __name__ == "__main__":
     main()

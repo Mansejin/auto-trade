@@ -499,6 +499,26 @@ a.ghost-btn.link-btn {
   background: var(--bg);
 }
 
+.tick-more {
+  display: none;
+  align-items: center;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-mute);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tick-more:hover {
+  color: #fff;
+  background: var(--bg-hover);
+}
+
 @media (max-width: 1100px) {
   .bottom {
     grid-template-columns: 1fr;
@@ -534,26 +554,6 @@ a.ghost-btn.link-btn {
     max-width: none;
     flex: 1 1 auto;
   }
-}
-
-.tick-more {
-  display: none;
-  align-items: center;
-  border: 0;
-  border-left: 1px solid var(--line);
-  background: transparent;
-  color: var(--text-mute);
-  font: inherit;
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 0.4rem 0.75rem;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.tick-more:hover {
-  color: #fff;
-  background: var(--bg-hover);
 }
 
 .panel {

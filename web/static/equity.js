@@ -33,7 +33,10 @@
 
   function toChartTime(ts) {
     const s = String(ts || "");
-    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+      const d = Date.parse(s + "T00:00:00Z");
+      return Number.isNaN(d) ? null : Math.floor(d / 1000);
+    }
     const d = new Date(s);
     if (Number.isNaN(d.getTime())) return null;
     return Math.floor(d.getTime() / 1000);

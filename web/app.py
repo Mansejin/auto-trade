@@ -89,7 +89,9 @@ def _authorized(token: str | None) -> bool:
     return secrets.compare_digest(token, TOKEN)
 
 
-def _set_auth_cookie(resp: Response, value: str) -> None:
+def _set_auth_cookie(resp: Response, value: str, *, secure: bool | None = None) -> None:
+    if secure is None:
+        secure = bool(BASE_PATH)
     resp.set_cookie(
         COOKIE_NAME,
         value,
@@ -97,7 +99,7 @@ def _set_auth_cookie(resp: Response, value: str) -> None:
         samesite="lax",
         max_age=COOKIE_MAX_AGE,
         path=BASE_PATH or "/",
-        secure=bool(BASE_PATH),
+        secure=secure,
     )
 
 
@@ -281,7 +283,9 @@ def index(
     if _authorized(desk_token) or _authorized(request.query_params.get("token")):
         if request.query_params.get("token") and not desk_token:
             resp = RedirectResponse(_p("/"), status_code=302)
-            _set_auth_cookie(resp, request.query_params.get("token") or "")
+            xf = (request.headers.get("x-forwarded-proto") or "").split(",")[0].strip()
+            secure = request.url.scheme == "https" or xf == "https"
+            _set_auth_cookie(resp, request.query_params.get("token") or "", secure=secure)
             return resp
         return FileResponse(STATIC / "index.html")
     return FileResponse(STATIC / "login.html")
@@ -292,9 +296,14 @@ def equity_page(
     desk_token: str | None = Cookie(default=None, alias=COOKIE_NAME),
 ) -> Response:
     if _authorized(desk_token) or _authorized(request.query_params.get("token")):
+        if request.query_params.get("token") and not desk_token:
+            resp = RedirectResponse(_p("/equity"), status_code=302)
+            xf = (request.headers.get("x-forwarded-proto") or "").split(",")[0].strip()
+            secure = request.url.scheme == "https" or xf == "https"
+            _set_auth_cookie(resp, request.query_params.get("token") or "", secure=secure)
+            return resp
         return FileResponse(STATIC / "equity.html")
     return FileResponse(STATIC / "login.html")
-
 
 def login(request: Request, token: str = Form(...)) -> Response:
     if not _authorized(token.strip()):
@@ -512,34 +521,21 @@ def _mark_upbit_equity(status: dict[str, Any], state: dict[str, Any]) -> float |
     return float(cash) + qty * float(price)
 
 
-def _read_equity_history() -> list[dict[str, Any]]:
-    if not EQUITY_PATH.exists():
-        return []
-    out: list[dict[str, Any]] = []
-    try:
-        with EQUITY_PATH.open("r", encoding="utf-8", errors="ignore") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    row = json.loads(line)
-                except Exception:
-                    continue
-                if row.get("equity") is None:
-                    continue
-                out.append(row)
-    except Exception:
-        return []
-    return out
-
-
 def _maybe_sample_equity(status: dict[str, Any], state: dict[str, Any]) -> None:
     eq = _mark_upbit_equity(status, state)
     if eq is None:
         return
     now = time.time()
-    last = _last_jsonl(EQUITY_PATH)
+    # Prefer LOG_DIR; fall back to /tmp if logs are mounted read-only (desk compose).
+    paths = [EQUITY_PATH, Path("/tmp/equity-history.jsonl")]
+    last: dict[str, Any] = {}
+    active = EQUITY_PATH
+    for path in paths:
+        hit = _last_jsonl(path)
+        if hit:
+            last = hit
+            active = path
+            break
     if last:
         ts = _parse_iso_ts(str(last.get("ts") or ""))
         if ts is not None and (now - ts) < EQUITY_SAMPLE_SEC:
@@ -560,13 +556,40 @@ def _maybe_sample_equity(status: dict[str, Any], state: dict[str, Any]) -> None:
         "bitget_usdt": bg.get("cash"),
         "source": "sample",
     }
-    try:
-        EQUITY_PATH.parent.mkdir(parents=True, exist_ok=True)
-        with EQUITY_PATH.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(point, ensure_ascii=False) + "\n")
-    except Exception:
-        pass
+    payload = json.dumps(point, ensure_ascii=False) + "\n"
+    for path in paths:
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("a", encoding="utf-8") as f:
+                f.write(payload)
+            return
+        except Exception:
+            continue
 
+
+def _read_equity_history() -> list[dict[str, Any]]:
+    for path in (EQUITY_PATH, Path("/tmp/equity-history.jsonl")):
+        if not path.exists():
+            continue
+        out: list[dict[str, Any]] = []
+        try:
+            with path.open("r", encoding="utf-8", errors="ignore") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        row = json.loads(line)
+                    except Exception:
+                        continue
+                    if row.get("equity") is None:
+                        continue
+                    out.append(row)
+        except Exception:
+            continue
+        if out:
+            return out
+    return []
 
 def _load_bitget() -> dict[str, Any]:
     bitget_state = _load_json(BITGET_STATE_PATH)
@@ -799,11 +822,13 @@ def api_equity(
                 p["bh_equity"] = round(start_eq * (float(px) / start_px), 2)
 
     sum_bot = equity_summary(history)
-    bh_points = [{"equity": p["bh_equity"]} for p in history if p.get("bh_equity") is not None]
-    sum_bh = equity_summary(bh_points) if len(bh_points) >= 2 else {"n": 0}
+    paired = [p for p in history if p.get("bh_equity") is not None]
+    # Alpha only on overlapping bot+BH points so windows match.
+    sum_bh = equity_summary([{"equity": p["bh_equity"]} for p in paired]) if len(paired) >= 2 else {"n": 0}
+    sum_bot_vs_bh = equity_summary(paired) if len(paired) >= 2 else sum_bot
     alpha = None
-    if sum_bot.get("n") and sum_bh.get("n"):
-        alpha = round(float(sum_bot["ret_pct"]) - float(sum_bh["ret_pct"]), 2)
+    if sum_bot_vs_bh.get("n") and sum_bh.get("n"):
+        alpha = round(float(sum_bot_vs_bh["ret_pct"]) - float(sum_bh["ret_pct"]), 2)
 
     bg = _load_bitget()
     return {
