@@ -1,13 +1,13 @@
 # Dual-sleeve capital allocation (장타 CORE + 단타 SCALP)
 
-> Intent: **split capital**. CORE = famous-rule map (Faber / Wilder / cash).  
-> Config: [`config/sleeves.json`](../config/sleeves.json) · Mount: [`regime-famous-mount.md`](regime-famous-mount.md) · SCALP: [`config/scalp-live-map.json`](../config/scalp-live-map.json)
+> Intent: **split capital**, not replace Policy C.  
+> Config: [`config/sleeves.json`](../config/sleeves.json) · SCALP map: [`config/scalp-live-map.json`](../config/scalp-live-map.json) · Race: [`research/famous-vs-policyC-race.md`](research/famous-vs-policyC-race.md)
 
 ## Live posture (2026-07-31)
 
 | Sleeve | Venue | LIVE | Capital handling |
 |--------|-------|------|------------------|
-| **CORE 장타** | Upbit | **ON** (famous Faber/Wilder/cash) | **Seed here** |
+| **CORE 장타** | Upbit | **ON** (Policy C) | **Seed here** |
 | **SCALP 단타** | Bitget | **OFF / cash** | Ignore dust; do not fund |
 
 Intent weights remain 50:50 for when SCALP is later re-enabled. Until then treat the book as **Upbit-only CORE**.
@@ -23,7 +23,7 @@ Intent weights remain 50:50 for when SCALP is later re-enabled. Until then treat
 
 | Sleeve | Venue | Role | Intent % |
 |--------|-------|------|----------|
-| CORE | Upbit spot | famous Faber/Wilder/cash | 50 |
+| CORE | Upbit spot | Policy C | 50 |
 | SCALP | Bitget UTA | cash until re-promotion | 50 |
 
 ## Weekly observe

@@ -37,16 +37,15 @@ MARKET = "KRW-BTC"
 BTC_DUST = float(os.environ.get("BTC_POSITION_DUST", "0.00008"))
 MIN_DWELL_HOURS = float(os.environ.get("MIN_DWELL_HOURS", "24"))
 
-# Famous-rule mount (2026-07-31): textbook authors, not random GitHub hyperopt bots.
-# Faber (GTAA 10-mo SMA) / Wilder RSI / risk-off cash. SCALP stays off.
+# Policy C restored 2026-07-31 after famous vs PC race (PC return >> famous both windows).
 POLICY = {
-    "bull": "famous-faber-10mo-sma-1d.json",
-    "transition": "famous-faber-10mo-sma-1d.json",
-    "bear": "famous-cash-flat-1d.json",
-    "sideways": "famous-wilder-rsi-mr-1d.json",
+    "bull": "regime-bull-trend-4h-v2.json",
+    "transition": "regime-bull-trend-4h-v2.json",
+    "bear": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+    "sideways": "regime-sideways-mr-1h-williams-v1.json",
 }
 SIDEWAYS_WILLIAMS_MIN_DWELL = int(os.environ.get("SIDEWAYS_WILLIAMS_MIN_DWELL", "7"))
-SIDEWAYS_FALLBACK = "famous-wilder-rsi-mr-1d.json"
+SIDEWAYS_FALLBACK = "regime-sideways-mr-4h-v5.json"
 
 
 def log_line(msg: str) -> None:
@@ -200,13 +199,12 @@ def classify(candles: list[dict]) -> dict:
         else:
             break
 
-    # Sideways dwell gate kept for log continuity; primary == fallback (Wilder).
     if regime == "sideways" and sideways_dwell < SIDEWAYS_WILLIAMS_MIN_DWELL:
         strat_file = SIDEWAYS_FALLBACK
-        sideways_gate = "wilder_early"
+        sideways_gate = "fallback_v5_dwell"
     else:
         strat_file = POLICY[regime]
-        sideways_gate = "wilder" if regime == "sideways" else "n/a"
+        sideways_gate = "williams" if regime == "sideways" else "n/a"
 
     return {
         "date": closed[i]["candle_date_time_utc"][:10],
@@ -594,7 +592,7 @@ def main() -> None:
         "action": rec.get("action"),
         "bar": info.get("bar"),
         "engine": "v2",
-        "policy": "famous_faber_wilder_cash",
+        "policy": "C_williams_sideways_dwell7",
     }
     try:
         REGIME_CURRENT.write_text(

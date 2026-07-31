@@ -1,4 +1,6 @@
-# CORE mount: famous textbook rules
+# CORE mount: famous textbook rules (ARCHIVED)
+
+> **2026-07-31:** Fair race lost to Policy C — see [`research/famous-vs-policyC-race.md`](research/famous-vs-policyC-race.md). CORE restored to Policy C. Files kept for research only.
 
 Not GitHub hyperopt bots — authors with decades of published rules.
 

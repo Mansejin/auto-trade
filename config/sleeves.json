@@ -1,7 +1,7 @@
 {
   "version": 3,
   "updated": "2026-07-31",
-  "intent": "장타(CORE) 50% Upbit + 단타(SCALP) 50% Bitget. Venue split equals sleeve split (5:5). CORE = famous Faber/Wilder/cash mount.",
+  "intent": "장타(CORE) 50% Upbit + 단타(SCALP) 50% Bitget. Venue split equals sleeve split (5:5). CORE = Policy C (famous race lost).",
   "weights": {
     "core_pct": 50,
     "scalp_pct": 50,
@@ -30,7 +30,7 @@
       "venue": "upbit_spot",
       "bot": "upbit-paper-bot",
       "capital_pct": 50,
-      "role": "swing / famous-rule regime map - one STRATEGY_PATH at a time"
+      "role": "swing / regime Policy C - one STRATEGY_PATH at a time"
     },
     "scalp": {
       "label": "단타",
@@ -44,10 +44,9 @@
   "regimes": {
     "bull": {
       "core": {
-        "strategy": "famous-faber-10mo-sma-1d.json",
+        "strategy": "regime-bull-trend-4h-v2.json",
         "sleeve": "swing",
-        "status": "live_famous",
-        "notes": "Meb Faber SMA200 daily timing (10-mo proxy)."
+        "status": "live_policy_c"
       },
       "scalp": {
         "strategy": null,
@@ -57,9 +56,9 @@
     },
     "transition": {
       "core": {
-        "strategy": "famous-faber-10mo-sma-1d.json",
+        "strategy": "regime-bull-trend-4h-v2.json",
         "sleeve": "swing",
-        "status": "live_famous"
+        "status": "live_policy_c"
       },
       "scalp": {
         "strategy": null,
@@ -69,10 +68,10 @@
     },
     "bear": {
       "core": {
-        "strategy": "famous-cash-flat-1d.json",
-        "sleeve": "risk_off",
-        "status": "live_famous",
-        "notes": "Cash flat — spot CORE cannot short."
+        "strategy": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+        "sleeve": "swing",
+        "status": "live_policy_c",
+        "notes": "Long-biased Upbit swing — keep even when scalp short exists."
       },
       "scalp": {
         "strategy": null,
@@ -97,11 +96,12 @@
     },
     "sideways": {
       "core": {
-        "strategy": "famous-wilder-rsi-mr-1d.json",
-        "fallback": "famous-wilder-rsi-mr-1d.json",
+        "strategy": "regime-sideways-mr-1h-williams-v1.json",
+        "fallback": "regime-sideways-mr-4h-v5.json",
         "sleeve": "swing_mr",
-        "status": "live_famous",
-        "notes": "Wilder RSI 30/70 daily MR."
+        "status": "live_policy_c",
+        "dwell_gate": "SIDEWAYS_WILLIAMS_MIN_DWELL>=7 else fallback v5",
+        "notes": "Williams 1h is 장타 MR - not the scalp sleeve."
       },
       "scalp": {
         "strategy": null,
@@ -114,7 +114,7 @@
   },
   "ops_rules": [
     "Never point upbit-paper-bot STRATEGY_PATH at a Freqtrade/Bitget strategy.",
-    "Never auto-replace CORE famous-rule map when promoting a scalp.",
+    "Never auto-replace CORE Policy C map when promoting a scalp.",
     "장타 capital stays on Upbit; 단타 capital stays on Bitget (maintains 5:5 venues).",
     "Promote scalp short only after multi-window falsification pass + human approve.",
     "Open position on CORE blocks CORE switch only; SCALP bot is independent.",
