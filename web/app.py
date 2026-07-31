@@ -7,7 +7,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -15,12 +15,16 @@ from fastapi import Cookie, Depends, FastAPI, Form, HTTPException, Request, Resp
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
+from equity_curve import equity_curve_from_trades, equity_summary
+
 LOG_DIR = Path(os.getenv("LOG_DIR", "/app/logs"))
 STATE_PATH = Path(os.getenv("STATE_PATH", "/app/data/state.json"))
 RISK_PATH = Path(os.getenv("RISK_PATH", "/app/data/risk.json"))
 REGIME_PATH = Path(os.getenv("REGIME_PATH", str(LOG_DIR / "regime-current.json")))
 BITGET_STATE_PATH = Path(os.getenv("BITGET_STATE_PATH", "/app/data/bitget_state.json"))
 BITGET_LOG_DIR = Path(os.getenv("BITGET_LOG_DIR", "/app/logs/bitget"))
+EQUITY_PATH = Path(os.getenv("EQUITY_PATH", str(LOG_DIR / "equity-history.jsonl")))
+EQUITY_SAMPLE_SEC = int(os.getenv("EQUITY_SAMPLE_SEC", "300"))
 # Host compose usually mounts repo config → /app/config; local fallback = repo config/
 _CFG = Path(os.getenv("CONFIG_DIR", "/app/config"))
 if not _CFG.is_dir():
@@ -283,6 +287,15 @@ def index(
     return FileResponse(STATIC / "login.html")
 
 
+def equity_page(
+    request: Request,
+    desk_token: str | None = Cookie(default=None, alias=COOKIE_NAME),
+) -> Response:
+    if _authorized(desk_token) or _authorized(request.query_params.get("token")):
+        return FileResponse(STATIC / "equity.html")
+    return FileResponse(STATIC / "login.html")
+
+
 def login(request: Request, token: str = Form(...)) -> Response:
     if not _authorized(token.strip()):
         return RedirectResponse(_p("/?e=1"), status_code=303)
@@ -411,6 +424,78 @@ def _load_sleeves(regime_code: str | None) -> dict[str, Any]:
     }
 
 
+def _mark_upbit_equity(status: dict[str, Any], state: dict[str, Any]) -> float | None:
+    price = status.get("price")
+    if price is None:
+        return None
+    cash = status.get("krw")
+    if cash is None:
+        cash = status.get("cash")
+    if cash is None:
+        cash = state.get("cash")
+    if cash is None:
+        return None
+    pos = status.get("position") or state.get("position") or {}
+    qty = float(pos.get("qty") or 0) if isinstance(pos, dict) else 0.0
+    return float(cash) + qty * float(price)
+
+
+def _read_equity_history() -> list[dict[str, Any]]:
+    if not EQUITY_PATH.exists():
+        return []
+    out: list[dict[str, Any]] = []
+    try:
+        with EQUITY_PATH.open("r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except Exception:
+                    continue
+                if row.get("equity") is None:
+                    continue
+                out.append(row)
+    except Exception:
+        return []
+    return out
+
+
+def _maybe_sample_equity(status: dict[str, Any], state: dict[str, Any]) -> None:
+    eq = _mark_upbit_equity(status, state)
+    if eq is None:
+        return
+    now = time.time()
+    last = _last_jsonl(EQUITY_PATH)
+    if last:
+        ts = _parse_iso_ts(str(last.get("ts") or ""))
+        if ts is not None and (now - ts) < EQUITY_SAMPLE_SEC:
+            return
+        try:
+            if abs(float(last.get("equity")) - eq) < 1 and ts is not None and (now - ts) < EQUITY_SAMPLE_SEC * 2:
+                return
+        except Exception:
+            pass
+    pos = status.get("position") or state.get("position") or {}
+    bg = _load_bitget()
+    point = {
+        "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
+        "equity": round(eq, 2),
+        "cash": status.get("krw") if status.get("krw") is not None else state.get("cash"),
+        "price": status.get("price"),
+        "qty": float(pos.get("qty") or 0) if isinstance(pos, dict) else 0.0,
+        "bitget_usdt": bg.get("cash"),
+        "source": "sample",
+    }
+    try:
+        EQUITY_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with EQUITY_PATH.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(point, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 def _load_bitget() -> dict[str, Any]:
     bitget_state = _load_json(BITGET_STATE_PATH)
     bitget_status = _load_json(BITGET_LOG_DIR / "status.json")
@@ -476,6 +561,8 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
     if risk:
         status["risk"] = {**(status.get("risk") or {}), **risk}
 
+    _maybe_sample_equity(status, state)
+
     trades = state.get("trades") or []
     recent = trades[-8:] if isinstance(trades, list) else []
 
@@ -525,6 +612,75 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
     }
 
 
+def api_equity(_: None = Depends(require_auth)) -> dict[str, Any]:
+    status = _load_json(LOG_DIR / "status.json")
+    state = _load_json(STATE_PATH)
+    if not status:
+        status = {
+            "krw": state.get("cash"),
+            "cash": state.get("cash"),
+            "position": state.get("position"),
+            "market": state.get("market"),
+            "price": None,
+        }
+    _maybe_sample_equity(status, state)
+
+    history = _read_equity_history()
+    market = str(status.get("market") or state.get("market") or "KRW-BTC")
+    source = "history"
+
+    if len(history) < 2:
+        trades = state.get("trades") or []
+        if not isinstance(trades, list):
+            trades = []
+        end_cash = status.get("krw")
+        if end_cash is None:
+            end_cash = status.get("cash")
+        if end_cash is None:
+            end_cash = state.get("cash") or 0
+        pos = status.get("position") or state.get("position") or {}
+        end_qty = float(pos.get("qty") or 0) if isinstance(pos, dict) else 0.0
+        try:
+            candles = _fetch_upbit_candles(market, "1d", count=200)
+            daily = [(int(c["time"]), float(c["close"])) for c in candles]
+            rebuilt = equity_curve_from_trades(
+                trades, daily, float(end_cash), end_qty, parse_iso_ts=_parse_iso_ts
+            )
+            if rebuilt:
+                history = rebuilt
+                source = "trades_mtm"
+                # keep live sample on the tip if we have a mark
+                tip = _mark_upbit_equity(status, state)
+                if tip is not None:
+                    history.append(
+                        {
+                            "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
+                            "equity": round(tip, 2),
+                            "source": "live",
+                        }
+                    )
+        except Exception as e:
+            return {
+                "ok": False,
+                "error": f"equity rebuild failed: {e}",
+                "points": history,
+                "summary": equity_summary(history),
+                "source": source,
+                "market": market,
+            }
+
+    bg = _load_bitget()
+    return {
+        "ok": True,
+        "market": market,
+        "source": source,
+        "points": history,
+        "summary": equity_summary(history),
+        "bitget_usdt": bg.get("cash"),
+        "scalp_running": bool(bg.get("running")),
+    }
+
+
 def api_candles(_: None = Depends(require_auth)) -> dict[str, Any]:
     status = _load_json(LOG_DIR / "status.json")
     state = _load_json(STATE_PATH)
@@ -548,18 +704,22 @@ def api_candles(_: None = Depends(require_auth)) -> dict[str, Any]:
 
 app.add_api_route(_p("/healthz"), healthz, methods=["GET"])
 app.add_api_route(_p("/"), index, methods=["GET"], response_class=HTMLResponse)
+app.add_api_route(_p("/equity"), equity_page, methods=["GET"], response_class=HTMLResponse)
 app.add_api_route(_p("/login"), login, methods=["POST"])
 app.add_api_route(_p("/logout"), logout, methods=["POST"])
 app.add_api_route(_p("/api/status"), api_status, methods=["GET"])
 app.add_api_route(_p("/api/candles"), api_candles, methods=["GET"])
+app.add_api_route(_p("/api/equity"), api_equity, methods=["GET"])
 
 if BASE_PATH:
     app.add_api_route("/healthz", healthz, methods=["GET"])
     app.add_api_route("/", index, methods=["GET"], response_class=HTMLResponse)
+    app.add_api_route("/equity", equity_page, methods=["GET"], response_class=HTMLResponse)
     app.add_api_route("/login", login, methods=["POST"])
     app.add_api_route("/logout", logout, methods=["POST"])
     app.add_api_route("/api/status", api_status, methods=["GET"])
     app.add_api_route("/api/candles", api_candles, methods=["GET"])
+    app.add_api_route("/api/equity", api_equity, methods=["GET"])
     app.mount(_p("/static"), StaticFiles(directory=str(STATIC)), name="static_base")
     app.mount("/static", StaticFiles(directory=str(STATIC)), name="static_root")
 else:

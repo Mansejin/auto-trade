@@ -336,6 +336,64 @@ body {
   color: #fff;
 }
 
+a.ghost-btn.link-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.equity-desk {
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+}
+
+.equity-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+}
+
+.equity-stats .stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.7rem 1.1rem;
+  border-right: 1px solid var(--line);
+  min-width: 7rem;
+}
+
+.equity-stats .stat .k {
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--text-mute);
+}
+
+.equity-stats .stat .v {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.equity-stats .stat .v.ok {
+  color: var(--green);
+}
+
+.equity-stats .stat .v.warn {
+  color: var(--amber);
+}
+
+.equity-plane .chart-host {
+  height: clamp(460px, 68vh, 820px);
+}
+
+.equity-foot {
+  margin: 0;
+  padding: 0.65rem 1rem 1rem;
+  font-size: 0.78rem;
+  background: var(--bg);
+}
+
 .chart-toggle {
   display: inline-flex;
   border: 1px solid var(--line);

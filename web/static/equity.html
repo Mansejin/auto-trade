@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AUTO-TRADE · 자산 추이</title>
+  <script>
+    (function () {
+      var p = location.pathname;
+      var base = p.endsWith("/") ? p.replace(/equity\/?$/, "") : p.replace(/\/[^/]*$/, "/");
+      if (p.indexOf("/autotrade") === 0) base = "/autotrade/";
+      window.__DESK_BASE__ = base;
+      document.write('<base href="' + base + '">');
+    })();
+  </script>
+  <link rel="stylesheet" href="static/desk.css" />
+  <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+  <div class="desk equity-desk">
+    <header class="topbar">
+      <div class="brand-block">
+        <span class="logo-mark">AT</span>
+        <div>
+          <p class="eyebrow">AUTO-TRADE</p>
+          <h1 class="brand">자산 추이</h1>
+        </div>
+      </div>
+      <div class="top-meta">
+        <span id="freshness" class="freshness"><span class="pulse" id="pulse"></span><span id="fresh-text">갱신 대기</span></span>
+        <a class="ghost-btn link-btn" href="./">데스크</a>
+      </div>
+    </header>
+
+    <section class="equity-stats" aria-label="자산 요약">
+      <div class="stat"><span class="k">현재</span><span class="v" id="eq-end">—</span></div>
+      <div class="stat"><span class="k">시작</span><span class="v" id="eq-start">—</span></div>
+      <div class="stat"><span class="k">수익률</span><span class="v" id="eq-ret">—</span></div>
+      <div class="stat"><span class="k">MDD</span><span class="v" id="eq-mdd">—</span></div>
+      <div class="stat"><span class="k">고점</span><span class="v" id="eq-high">—</span></div>
+      <div class="stat"><span class="k">저점</span><span class="v" id="eq-low">—</span></div>
+    </section>
+
+    <section class="chart-plane equity-plane" aria-label="자산 곡선">
+      <div class="chart-toolbar">
+        <span id="chart-meta" class="chart-meta">—</span>
+        <span id="eq-source" class="chart-meta">—</span>
+      </div>
+      <div id="equity_chart" class="chart-host"></div>
+    </section>
+
+    <p class="equity-foot muted">
+      CORE(Upbit) 자산 곡선. desk 폴링 시 5분마다 스냅샷 저장 · 히스토리 없으면 체결+일봉으로 복원.
+      SCALP(Bitget)는 USDT만 참고 표시.
+    </p>
+  </div>
+  <script src="static/equity.js"></script>
+</body>
+</html>
