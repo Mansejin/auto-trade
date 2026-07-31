@@ -1,0 +1,30 @@
+{
+  "max_open_trades": 1,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 0.99,
+  "dry_run": true,
+  "dry_run_wallet": 1000,
+  "trading_mode": "futures",
+  "margin_mode": "isolated",
+  "exchange": {
+    "name": "bitget",
+    "key": "",
+    "secret": "",
+    "password": "",
+    "pair_whitelist": ["BTC/USDT:USDT"],
+    "pair_blacklist": []
+  },
+  "pairlists": [{ "method": "StaticPairList" }],
+  "timeframe": "15m",
+  "startup_candle_count": 220,
+  "stoploss": -0.005,
+  "trailing_stop": false,
+  "minimal_roi": { "0": 0.015 },
+  "use_exit_signal": false,
+  "fee": 0.0006,
+  "strategy": "CalEventSweepFadeR3V1",
+  "bot_name": "freqtrade-cal-event-sweep-r3-dry",
+  "initial_state": "running",
+  "internals": { "process_throttle_secs": 5 }
+}
