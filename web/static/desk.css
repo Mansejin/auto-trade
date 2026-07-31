@@ -612,6 +612,49 @@ a.ghost-btn.link-btn {
   line-height: 1.4;
 }
 
+.switch-hist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  max-height: 280px;
+  overflow: auto;
+}
+
+.switch-hist li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.switch-hist .sw-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.switch-hist .sw-action {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.switch-hist li.sw-switched .sw-action {
+  color: var(--green);
+}
+
+.switch-hist li.sw-skip .sw-action {
+  color: var(--amber);
+}
+
+.switch-hist .sw-mid {
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  word-break: break-all;
+}
+
 .trades {
   list-style: none;
   margin: 0;

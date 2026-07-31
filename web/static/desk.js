@@ -305,6 +305,57 @@
     }
   }
 
+  function renderSwitchHistory(rows) {
+    const ul = document.getElementById("switch-hist");
+    const empty = document.getElementById("switch-hist-empty");
+    if (!ul || !empty) return;
+    ul.innerHTML = "";
+    if (!rows || !rows.length) {
+      empty.classList.remove("hidden");
+      return;
+    }
+    empty.classList.add("hidden");
+    for (const r of rows) {
+      const li = document.createElement("li");
+      const action = String(r.action || "");
+      li.className =
+        action === "switched"
+          ? "sw-switched"
+          : action === "position_skip" || action === "dwell_block"
+            ? "sw-skip"
+            : "";
+
+      const top = document.createElement("div");
+      top.className = "sw-top";
+      const act = document.createElement("span");
+      act.className = "sw-action";
+      act.textContent = r.action_label || action || "—";
+      const when = document.createElement("span");
+      when.className = "muted";
+      when.textContent = String(r.ts || "").replace("T", " ").replace("Z", "").slice(0, 19);
+      top.append(act, when);
+
+      const mid = document.createElement("div");
+      mid.className = "sw-mid";
+      const regimeBit = r.regime_label || r.regime || "—";
+      const adx =
+        r.adx != null && !Number.isNaN(Number(r.adx)) ? ` ADX ${Number(r.adx).toFixed(0)}` : "";
+      const from = shortName(r.from);
+      const to = shortName(r.to);
+      const arrow = from && to && from !== to ? `${from} → ${to}` : to !== "—" ? to : from;
+      mid.textContent = `${regimeBit}${adx}${arrow && arrow !== "—" ? ` · ${arrow}` : ""}`;
+
+      li.append(top, mid);
+      if (r.reason) {
+        const note = document.createElement("div");
+        note.className = "sleeve-note";
+        note.textContent = String(r.reason);
+        li.append(note);
+      }
+      ul.appendChild(li);
+    }
+  }
+
   function renderTrades(rows) {
     const ul = document.getElementById("trades");
     const empty = document.getElementById("trades-empty");
@@ -429,6 +480,7 @@
     document.getElementById("bg-latest-text").textContent =
       bg.latest_text || (scalpCash ? "(SCALP 중지 · Bitget 로그 없음)" : "(상태 텍스트 없음)");
     renderSleeves(data);
+    renderSwitchHistory(data.switch_history || []);
     renderTrades(data.recent_trades || []);
 
     try {

@@ -369,8 +369,54 @@ def _load_switch() -> dict[str, Any] | None:
         "regime": row.get("regime"),
         "from": Path(str(row.get("old") or row.get("from") or "")).name or None,
         "to": Path(str(row.get("new") or row.get("to") or "")).name or None,
-        "reason": row.get("reason"),
+        "reason": row.get("reason")
+        or ((row.get("guard") or {}).get("reason") if isinstance(row.get("guard"), dict) else None),
     }
+
+
+def _load_switch_history(limit: int = 20) -> list[dict[str, Any]]:
+    """Interesting switch events newest-first. Skips routine noop unless file changed."""
+    path = LOG_DIR / "regime-switch.jsonl"
+    if not path.exists():
+        return []
+    interesting = {"switched", "position_skip", "dwell_block"}
+    rows: list[dict[str, Any]] = []
+    try:
+        with path.open("r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except Exception:
+                    continue
+                action = str(row.get("action") or "")
+                changed = bool(row.get("changed"))
+                if action not in interesting and not changed:
+                    continue
+                guard = row.get("guard") if isinstance(row.get("guard"), dict) else {}
+                rows.append(
+                    {
+                        "ts": row.get("ts_utc") or row.get("ts"),
+                        "action": action,
+                        "action_label": SWITCH_ACTION_KO.get(action, action or "—"),
+                        "regime": row.get("regime"),
+                        "regime_label": REGIME_KO.get(
+                            str(row.get("regime") or "").lower(), row.get("regime")
+                        ),
+                        "adx": row.get("adx"),
+                        "from": Path(str(row.get("old") or row.get("from") or "")).name or None,
+                        "to": Path(str(row.get("new") or row.get("to") or "")).name or None,
+                        "changed": changed,
+                        "dry_run": bool(row.get("dry_run")),
+                        "reason": row.get("reason") or guard.get("reason"),
+                    }
+                )
+    except Exception:
+        return []
+    rows.reverse()
+    return rows[: max(1, min(int(limit), 100))]
 
 
 def _basename(path_or_name: Any) -> str | None:
@@ -601,6 +647,7 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
         "status": status,
         "regime": regime,
         "switch": switch,
+        "switch_history": _load_switch_history(20),
         "sleeves": _load_sleeves(regime_code),
         "bitget": _load_bitget(),
         "recent_trades": recent,
