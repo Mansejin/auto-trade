@@ -25,9 +25,132 @@
   let lastCandleKey = "";
   let lastStatus = null;
 
-  function money(v) {
+  function money(v, quote) {
     if (v == null || Number.isNaN(Number(v))) return "—";
-    return `${Math.round(Number(v)).toLocaleString("ko-KR")}원`;
+    const q = String(quote || "KRW").toUpperCase();
+    const n = Number(v);
+    if (q === "KRW") {
+      return `${Math.round(n).toLocaleString("ko-KR")}원`;
+    }
+    const body = n.toLocaleString("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    });
+    return `${body} ${q}`;
+  }
+
+  function shortName(file) {
+    if (!file) return "—";
+    return String(file)
+      .replace(/^.*\//, "")
+      .replace(/\.json$/i, "");
+  }
+
+  function setText(id, text, className) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text;
+    if (className != null) el.className = className;
+  }
+
+  function renderSleeves(data) {
+    const root = document.getElementById("sleeves-panel");
+    if (!root) return;
+    const sleeves = data.sleeves || {};
+    const core = sleeves.core || {};
+    const scalp = sleeves.scalp || {};
+    const regime = data.regime || {};
+    const sw = data.switch || {};
+    const bg = data.bitget || {};
+    const scalpLive = Boolean(bg.running) && !String(scalp.status || "").includes("cash");
+
+    const rows = [
+      {
+        tag: "CORE",
+        label: core.label || "장타",
+        status: core.status_label || core.status || "—",
+        ok: String(core.status || "").includes("live"),
+        meta: [
+          core.venue || "upbit",
+          shortName(core.strategy || regime.selected_file || data.status?.strategy),
+        ]
+          .filter(Boolean)
+          .join(" · "),
+        note: core.notes || null,
+      },
+      {
+        tag: "SCALP",
+        label: scalp.label || "단타",
+        status: scalpLive
+          ? `가동 · ${shortName(bg.strategy) || "—"}`
+          : scalp.status_label || scalp.status || "중지 · cash",
+        ok: scalpLive,
+        meta: [scalp.venue || "bitget", bg.cash != null ? money(bg.cash, "USDT") : "USDT —"]
+          .filter(Boolean)
+          .join(" · "),
+        note: scalp.notes || null,
+      },
+    ];
+
+    root.innerHTML = "";
+    for (const row of rows) {
+      const card = document.createElement("div");
+      card.className = "sleeve-card" + (row.ok ? " on" : " off");
+      const head = document.createElement("div");
+      head.className = "sleeve-head";
+      const tag = document.createElement("span");
+      tag.className = "sleeve-tag";
+      tag.textContent = row.tag;
+      const st = document.createElement("span");
+      st.className = "sleeve-status";
+      st.textContent = row.status;
+      head.append(tag, st);
+      const title = document.createElement("div");
+      title.className = "sleeve-title";
+      title.textContent = row.label;
+      const meta = document.createElement("div");
+      meta.className = "sleeve-meta";
+      meta.textContent = row.meta;
+      card.append(head, title, meta);
+      if (row.note) {
+        const note = document.createElement("div");
+        note.className = "sleeve-note";
+        note.textContent = row.note;
+        card.append(note);
+      }
+      root.appendChild(card);
+    }
+
+    const swCard = document.createElement("div");
+    swCard.className = "switch-card";
+    const swHead = document.createElement("div");
+    swHead.className = "sleeve-head";
+    const swTag = document.createElement("span");
+    swTag.className = "sleeve-tag";
+    swTag.textContent = "SWITCH";
+    const swSt = document.createElement("span");
+    swSt.className =
+      "sleeve-status" +
+      (sw.action === "position_skip" || sw.action === "dwell_block" ? " warn" : "");
+    swSt.textContent = sw.action_label || sw.action || regime.action_label || "—";
+    swHead.append(swTag, swSt);
+    const swMeta = document.createElement("div");
+    swMeta.className = "sleeve-meta";
+    const parts = [
+      regime.policy ? `Policy ${String(regime.policy).replace(/^C_.*/, "C")}` : null,
+      regime.engine ? `engine ${regime.engine}` : null,
+      sw.from && sw.to ? `${shortName(sw.from)} → ${shortName(sw.to)}` : shortName(regime.selected_file),
+      sw.ts ? String(sw.ts).replace("T", " ").slice(0, 19) : regime.date || null,
+    ].filter(Boolean);
+    swMeta.textContent = parts.join(" · ") || "스위치 로그 없음";
+    swCard.append(swHead, swMeta);
+    if (sw.reason) {
+      const note = document.createElement("div");
+      note.className = "sleeve-note";
+      note.textContent = String(sw.reason);
+      swCard.append(note);
+    }
+    root.appendChild(swCard);
   }
 
   function qty(v) {
@@ -242,6 +365,7 @@
         regime.date ? `일자 ${regime.date}` : null,
         regime.selected_file ? `매핑 ${regime.selected_file}` : null,
         regime.engine ? `engine ${regime.engine}` : null,
+        regime.policy ? `policy ${regime.policy}` : null,
       ]
         .filter(Boolean)
         .join(" · ");
@@ -251,9 +375,30 @@
       regimeEl.title = "";
     }
 
+    const sleeves = data.sleeves || {};
+    const core = sleeves.core || {};
+    const scalp = sleeves.scalp || {};
+    const sw = data.switch || {};
+    const bg = data.bitget || {};
+
+    setText(
+      "m-core",
+      shortName(core.strategy || regime?.selected_file || s.strategy || s.strategy_file),
+      "v"
+    );
+    const scalpCash = String(scalp.status || "").includes("cash") || !bg.running;
+    setText(
+      "m-scalp",
+      scalpCash ? scalp.status_label || "중지 · cash" : shortName(bg.strategy) || "가동",
+      scalpCash ? "v muted-v" : "v ok"
+    );
+    const switchLabel = sw.action_label || regime?.action_label || "—";
+    const switchWarn = sw.action === "position_skip" || sw.action === "dwell_block";
+    setText("m-switch", switchLabel, switchWarn ? "v warn" : "v");
+
     const sig = SIGNAL_KO[s.signal] || s.signal || "—";
     document.getElementById("m-signal").textContent = sig;
-    document.getElementById("m-krw").textContent = money(s.krw);
+    document.getElementById("m-krw").textContent = money(s.krw ?? s.cash);
     if (s.position && s.position.qty) {
       document.getElementById("m-pos").textContent = `${qty(s.position.qty)} @ ${money(
         s.position.entry_price
@@ -261,7 +406,8 @@
     } else {
       document.getElementById("m-pos").textContent = "없음";
     }
-    document.getElementById("m-strategy").textContent = s.strategy || s.strategy_file || "—";
+    document.getElementById("m-bitget").textContent =
+      bg.cash != null ? money(bg.cash, "USDT") : scalpCash ? "cash" : "—";
 
     const riskEl = document.getElementById("m-risk");
     if (risk.trading_halted) {
@@ -280,6 +426,9 @@
     }
 
     document.getElementById("latest-text").textContent = data.latest_text || "(상태 텍스트 없음)";
+    document.getElementById("bg-latest-text").textContent =
+      bg.latest_text || (scalpCash ? "(SCALP 중지 · Bitget 로그 없음)" : "(상태 텍스트 없음)");
+    renderSleeves(data);
     renderTrades(data.recent_trades || []);
 
     try {

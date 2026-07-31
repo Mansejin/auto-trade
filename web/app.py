@@ -19,6 +19,14 @@ LOG_DIR = Path(os.getenv("LOG_DIR", "/app/logs"))
 STATE_PATH = Path(os.getenv("STATE_PATH", "/app/data/state.json"))
 RISK_PATH = Path(os.getenv("RISK_PATH", "/app/data/risk.json"))
 REGIME_PATH = Path(os.getenv("REGIME_PATH", str(LOG_DIR / "regime-current.json")))
+BITGET_STATE_PATH = Path(os.getenv("BITGET_STATE_PATH", "/app/data/bitget_state.json"))
+BITGET_LOG_DIR = Path(os.getenv("BITGET_LOG_DIR", "/app/logs/bitget"))
+# Host compose usually mounts repo config → /app/config; local fallback = repo config/
+_CFG = Path(os.getenv("CONFIG_DIR", "/app/config"))
+if not _CFG.is_dir():
+    _CFG = Path(__file__).resolve().parent.parent / "config"
+SLEEVES_PATH = Path(os.getenv("SLEEVES_PATH", str(_CFG / "sleeves.json")))
+SCALP_MAP_PATH = Path(os.getenv("SCALP_MAP_PATH", str(_CFG / "scalp-live-map.json")))
 TOKEN = os.getenv("DASHBOARD_TOKEN", "").strip()
 BASE_PATH = os.getenv("BASE_PATH", "").strip().rstrip("/")
 COOKIE_NAME = "desk_token"
@@ -29,6 +37,22 @@ REGIME_KO = {
     "bear": "하락",
     "sideways": "횡보",
     "transition": "전환",
+}
+
+SWITCH_ACTION_KO = {
+    "switched": "전환됨",
+    "position_skip": "포지션 보류",
+    "dwell_block": "드웰 보류",
+    "noop": "유지",
+    "dry_run": "드라이런",
+}
+
+SCALP_STATUS_KO = {
+    "stopped_cash": "중지 · cash",
+    "cash_stopped": "중지 · cash",
+    "empty_slot_cash": "빈 슬롯 · cash",
+    "live": "가동",
+    "live_policy_c": "Policy C",
 }
 
 STATIC = Path(__file__).resolve().parent / "static"
@@ -283,37 +307,142 @@ def logout() -> Response:
     return resp
 
 
+def _last_jsonl(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    try:
+        last = ""
+        with path.open("r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                if line.strip():
+                    last = line
+        return json.loads(last) if last else {}
+    except Exception:
+        return {}
+
+
 def _load_regime() -> dict[str, Any]:
     """Prefer logs/regime-current.json; fall back to last regime-switch.jsonl line."""
     regime = _load_json(REGIME_PATH)
     if regime.get("regime"):
         return regime
-    log_path = LOG_DIR / "regime-switch.jsonl"
-    if not log_path.exists():
+    row = _last_jsonl(LOG_DIR / "regime-switch.jsonl")
+    if not row:
         return {}
-    try:
-        last = ""
-        with log_path.open("r", encoding="utf-8", errors="ignore") as f:
-            for line in f:
-                if line.strip():
-                    last = line
-        if not last:
-            return {}
-        row = json.loads(last)
+    return {
+        "updated_at": row.get("ts_utc"),
+        "regime": row.get("regime"),
+        "adx": row.get("adx"),
+        "pdi": row.get("pdi"),
+        "mdi": row.get("mdi"),
+        "selected_file": Path(str(row.get("new") or "")).name or None,
+        "action": row.get("action"),
+        "reason": row.get("reason"),
+        "engine": "v2",
+        "policy": "C",
+        "source": "regime-switch.jsonl",
+    }
+
+
+def _load_switch() -> dict[str, Any] | None:
+    row = _last_jsonl(LOG_DIR / "regime-switch.jsonl")
+    if not row:
+        return None
+    action = str(row.get("action") or "") or None
+    return {
+        "action": action,
+        "action_label": SWITCH_ACTION_KO.get(action or "", action),
+        "ts": row.get("ts_utc") or row.get("ts"),
+        "regime": row.get("regime"),
+        "from": Path(str(row.get("old") or row.get("from") or "")).name or None,
+        "to": Path(str(row.get("new") or row.get("to") or "")).name or None,
+        "reason": row.get("reason"),
+    }
+
+
+def _basename(path_or_name: Any) -> str | None:
+    if not path_or_name:
+        return None
+    return Path(str(path_or_name)).name or None
+
+
+def _load_sleeves(regime_code: str | None) -> dict[str, Any]:
+    sleeves = _load_json(SLEEVES_PATH)
+    scalp_map = _load_json(SCALP_MAP_PATH)
+    weights = sleeves.get("weights") or {}
+    venues = sleeves.get("venues") or {}
+    regimes = sleeves.get("regimes") or {}
+    slot = regimes.get(regime_code or "") or {}
+    core_slot = slot.get("core") or {}
+    scalp_slot = slot.get("scalp") or {}
+    scalp_status = (
+        scalp_map.get("status")
+        or scalp_slot.get("status")
+        or "stopped_cash"
+    )
+    core_status = core_slot.get("status") or "live_policy_c"
+    return {
+        "ratio": weights.get("ratio") or "5:5",
+        "core_pct": weights.get("core_pct"),
+        "scalp_pct": weights.get("scalp_pct"),
+        "seed_policy": sleeves.get("seed_policy") or {},
+        "core": {
+            "label": (venues.get("core") or {}).get("label") or "장타",
+            "venue": (venues.get("core") or {}).get("venue") or "upbit_spot",
+            "bot": (venues.get("core") or {}).get("bot") or "upbit-paper-bot",
+            "status": core_status,
+            "status_label": SCALP_STATUS_KO.get(core_status, core_status),
+            "strategy": _basename(core_slot.get("strategy")),
+            "notes": core_slot.get("notes"),
+        },
+        "scalp": {
+            "label": (venues.get("scalp") or {}).get("label") or "단타",
+            "venue": (venues.get("scalp") or {}).get("venue") or "bitget_uta_futures",
+            "bot": scalp_map.get("bot")
+            or (venues.get("scalp") or {}).get("bot")
+            or "bitget-futures-bot",
+            "status": scalp_status,
+            "status_label": SCALP_STATUS_KO.get(scalp_status, scalp_status),
+            "strategy": _basename(scalp_slot.get("strategy") or (scalp_map.get("map") or {}).get(regime_code or "")),
+            "notes": scalp_slot.get("notes")
+            or ((scalp_map.get("switch_notes") or [None])[-1] if scalp_map else None),
+        },
+        "source": str(SLEEVES_PATH.name) if SLEEVES_PATH.exists() else None,
+    }
+
+
+def _load_bitget() -> dict[str, Any]:
+    bitget_state = _load_json(BITGET_STATE_PATH)
+    bitget_status = _load_json(BITGET_LOG_DIR / "status.json")
+    text_path = BITGET_LOG_DIR / "latest_status.txt"
+    latest_text = ""
+    if text_path.exists():
+        latest_text = text_path.read_text(encoding="utf-8", errors="ignore")[:8000]
+    if not bitget_state and not bitget_status:
         return {
-            "updated_at": row.get("ts_utc"),
-            "regime": row.get("regime"),
-            "adx": row.get("adx"),
-            "pdi": row.get("pdi"),
-            "mdi": row.get("mdi"),
-            "selected_file": Path(str(row.get("new") or "")).name or None,
-            "action": row.get("action"),
-            "engine": "v2",
-            "policy": "C",
-            "source": "regime-switch.jsonl",
+            "running": False,
+            "latest_text": latest_text,
+            "recent_trades": [],
         }
-    except Exception:
-        return {}
+    bs = bitget_status or {}
+    trades = bitget_state.get("trades") or []
+    cash = bs.get("cash")
+    if cash is None:
+        cash = bs.get("usdt")
+    if cash is None:
+        cash = bitget_state.get("cash")
+    return {
+        "running": True,
+        "exchange": "bitget",
+        "mode": bs.get("mode") or bitget_state.get("mode"),
+        "strategy": bs.get("strategy") or bitget_state.get("strategy"),
+        "market": bs.get("market") or bitget_state.get("market"),
+        "signal": bs.get("signal"),
+        "cash": cash,
+        "position": bs.get("position") or bitget_state.get("position"),
+        "latest_text": latest_text,
+        "recent_trades": trades[-8:] if isinstance(trades, list) else [],
+    }
 
 
 def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
@@ -357,8 +486,10 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
         tv_symbol = f"UPBIT:{base}KRW"
 
     regime_code = str(regime_raw.get("regime") or "").lower() or None
+    switch = _load_switch()
     regime = None
     if regime_code:
+        action = regime_raw.get("action") or (switch or {}).get("action")
         regime = {
             "code": regime_code,
             "label": REGIME_KO.get(regime_code, regime_code),
@@ -367,11 +498,12 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
             "adx": regime_raw.get("adx"),
             "pdi": regime_raw.get("pdi"),
             "mdi": regime_raw.get("mdi"),
-            "selected_file": regime_raw.get("selected_file")
-            or Path(str(regime_raw.get("strategy_path") or "")).name
-            or None,
+            "selected_file": _basename(regime_raw.get("selected_file"))
+            or _basename(regime_raw.get("strategy_path")),
             "engine": regime_raw.get("engine") or "v2",
             "policy": regime_raw.get("policy") or "C",
+            "action": action,
+            "action_label": SWITCH_ACTION_KO.get(str(action or ""), action),
         }
 
     return {
@@ -381,6 +513,9 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
         "base_path": BASE_PATH or "",
         "status": status,
         "regime": regime,
+        "switch": switch,
+        "sleeves": _load_sleeves(regime_code),
+        "bitget": _load_bitget(),
         "recent_trades": recent,
         "latest_text": latest_text,
         "tv_symbol": tv_symbol,
