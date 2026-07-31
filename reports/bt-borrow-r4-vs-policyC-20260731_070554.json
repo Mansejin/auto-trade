@@ -1,0 +1,2111 @@
+{
+  "card": "borrow-r4-trend-vol-map-v1",
+  "source": "quantsarahz/btcusdt-regime-multistrategy-trading style R1-R4",
+  "frozen": {
+    "adx_trend": 25.0,
+    "high_vol": "ATR14 > SMA20(ATR)",
+    "min_run_days": 3,
+    "map": {
+      "R1": "strategies/regime-bull-trend-4h-v2.json",
+      "R2": "strategies/regime-bull-trend-4h-v2.json",
+      "R3": "strategies/regime-sideways-mr-4h-v5.json",
+      "R4": "strategies/famous-cash-flat-1d.json"
+    }
+  },
+  "windows": {
+    "in_sample_5y": {
+      "policy_c": {
+        "name": "policy_c",
+        "return_pct": 425.93,
+        "multiple": 5.2593,
+        "mdd_pct": -32.22,
+        "bh_return_pct": 109.36,
+        "bh_mdd_pct": -74.13,
+        "n_ok": 36,
+        "n_segments": 36
+      },
+      "r4_borrow": {
+        "name": "r4_borrow",
+        "return_pct": 269.12,
+        "multiple": 3.6912,
+        "mdd_pct": -45.59,
+        "bh_return_pct": 109.36,
+        "bh_mdd_pct": -74.13,
+        "n_ok": 99,
+        "n_segments": 99
+      },
+      "verdict": {
+        "r4_beats_pc_return": false,
+        "r4_better_mdd": false,
+        "return_gap_pct_p": -156.81,
+        "mdd_gap_pct_p": -13.37
+      }
+    },
+    "oos_presample": {
+      "policy_c": {
+        "name": "policy_c",
+        "return_pct": 387.42,
+        "multiple": 4.8742,
+        "mdd_pct": -36.67,
+        "bh_return_pct": 393.93,
+        "bh_mdd_pct": -66.55,
+        "n_ok": 25,
+        "n_segments": 25
+      },
+      "r4_borrow": {
+        "name": "r4_borrow",
+        "return_pct": 17.97,
+        "multiple": 1.1797,
+        "mdd_pct": -36.72,
+        "bh_return_pct": 393.93,
+        "bh_mdd_pct": -66.55,
+        "n_ok": 59,
+        "n_segments": 59
+      },
+      "verdict": {
+        "r4_beats_pc_return": false,
+        "r4_better_mdd": false,
+        "return_gap_pct_p": -369.45,
+        "mdd_gap_pct_p": -0.05
+      }
+    }
+  },
+  "verdict": "FALSIFIED_VS_POLICY_C",
+  "detail": {
+    "in_sample_5y": {
+      "policy_c": {
+        "name": "policy_c",
+        "return_pct": 425.93,
+        "multiple": 5.2593,
+        "mdd_pct": -32.22,
+        "bh_return_pct": 109.36,
+        "bh_mdd_pct": -74.13,
+        "n_ok": 36,
+        "n_segments": 36
+      },
+      "r4_borrow": {
+        "name": "r4_borrow",
+        "return_pct": 269.12,
+        "multiple": 3.6912,
+        "mdd_pct": -45.59,
+        "bh_return_pct": 109.36,
+        "bh_mdd_pct": -74.13,
+        "n_ok": 99,
+        "n_segments": 99
+      },
+      "verdict": {
+        "r4_beats_pc_return": false,
+        "r4_better_mdd": false,
+        "return_gap_pct_p": -156.81,
+        "mdd_gap_pct_p": -13.37
+      },
+      "policy_c_segments": [
+        {
+          "start": "2021-07-27",
+          "end": "2021-09-30",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 66,
+          "toolkit_ret_pct": 4.52,
+          "end_eq": 1.0452
+        },
+        {
+          "start": "2021-10-01",
+          "end": "2021-12-03",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 64,
+          "toolkit_ret_pct": -3.48,
+          "end_eq": 1.0089
+        },
+        {
+          "start": "2021-12-04",
+          "end": "2022-01-17",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 45,
+          "toolkit_ret_pct": -8.37,
+          "end_eq": 0.9245
+        },
+        {
+          "start": "2022-01-18",
+          "end": "2022-03-08",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 50,
+          "toolkit_ret_pct": -4.36,
+          "end_eq": 0.8842
+        },
+        {
+          "start": "2022-03-09",
+          "end": "2022-05-08",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 61,
+          "toolkit_ret_pct": 9.22,
+          "end_eq": 0.9657
+        },
+        {
+          "start": "2022-05-09",
+          "end": "2022-09-29",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 144,
+          "toolkit_ret_pct": 1.22,
+          "end_eq": 0.9775
+        },
+        {
+          "start": "2022-09-30",
+          "end": "2022-11-07",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 39,
+          "toolkit_ret_pct": 3.22,
+          "end_eq": 1.0089
+        },
+        {
+          "start": "2022-11-08",
+          "end": "2023-01-10",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 64,
+          "toolkit_ret_pct": -2.51,
+          "end_eq": 0.9836
+        },
+        {
+          "start": "2023-01-11",
+          "end": "2023-02-17",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 38,
+          "toolkit_ret_pct": 15.31,
+          "end_eq": 1.1342
+        },
+        {
+          "start": "2023-02-18",
+          "end": "2023-05-03",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 75,
+          "toolkit_ret_pct": 21.4,
+          "end_eq": 1.377
+        },
+        {
+          "start": "2023-05-04",
+          "end": "2023-06-19",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 47,
+          "toolkit_ret_pct": 9.38,
+          "end_eq": 1.5061
+        },
+        {
+          "start": "2023-06-20",
+          "end": "2023-07-26",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 37,
+          "toolkit_ret_pct": -4.99,
+          "end_eq": 1.431
+        },
+        {
+          "start": "2023-07-27",
+          "end": "2023-10-02",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 68,
+          "toolkit_ret_pct": 1.86,
+          "end_eq": 1.4577
+        },
+        {
+          "start": "2023-10-03",
+          "end": "2023-10-26",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 24,
+          "toolkit_ret_pct": 25.5,
+          "end_eq": 1.8294
+        },
+        {
+          "start": "2023-10-27",
+          "end": "2024-01-03",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 69,
+          "toolkit_ret_pct": 16.32,
+          "end_eq": 2.128
+        },
+        {
+          "start": "2024-01-04",
+          "end": "2024-02-11",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 39,
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 2.128
+        },
+        {
+          "start": "2024-02-12",
+          "end": "2024-04-16",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 65,
+          "toolkit_ret_pct": 33.15,
+          "end_eq": 2.8334
+        },
+        {
+          "start": "2024-04-17",
+          "end": "2024-05-14",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 28,
+          "toolkit_ret_pct": -4.45,
+          "end_eq": 2.7074
+        },
+        {
+          "start": "2024-05-15",
+          "end": "2024-06-18",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 35,
+          "toolkit_ret_pct": 4.4,
+          "end_eq": 2.8264
+        },
+        {
+          "start": "2024-06-19",
+          "end": "2024-07-14",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 26,
+          "toolkit_ret_pct": 0.79,
+          "end_eq": 2.8488
+        },
+        {
+          "start": "2024-07-15",
+          "end": "2024-08-08",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 25,
+          "toolkit_ret_pct": -0.4,
+          "end_eq": 2.8374
+        },
+        {
+          "start": "2024-08-09",
+          "end": "2024-10-03",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 56,
+          "toolkit_ret_pct": -1.22,
+          "end_eq": 2.8027
+        },
+        {
+          "start": "2024-10-04",
+          "end": "2024-10-17",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 14,
+          "toolkit_ret_pct": 3.9,
+          "end_eq": 2.9119
+        },
+        {
+          "start": "2024-10-18",
+          "end": "2024-11-02",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 16,
+          "toolkit_ret_pct": 5.37,
+          "end_eq": 3.0684
+        },
+        {
+          "start": "2024-11-03",
+          "end": "2024-12-17",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 45,
+          "toolkit_ret_pct": 45.49,
+          "end_eq": 4.4642
+        },
+        {
+          "start": "2024-12-18",
+          "end": "2025-01-06",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 20,
+          "toolkit_ret_pct": 1.72,
+          "end_eq": 4.5412
+        },
+        {
+          "start": "2025-01-07",
+          "end": "2025-02-05",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 30,
+          "toolkit_ret_pct": 3.9,
+          "end_eq": 4.7181
+        },
+        {
+          "start": "2025-02-06",
+          "end": "2025-07-11",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 156,
+          "toolkit_ret_pct": 2.2,
+          "end_eq": 4.822
+        },
+        {
+          "start": "2025-07-12",
+          "end": "2025-11-03",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 115,
+          "toolkit_ret_pct": 1.12,
+          "end_eq": 4.8762
+        },
+        {
+          "start": "2025-11-04",
+          "end": "2025-11-26",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 23,
+          "toolkit_ret_pct": -4.34,
+          "end_eq": 4.6645
+        },
+        {
+          "start": "2025-11-27",
+          "end": "2026-01-03",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 38,
+          "toolkit_ret_pct": 1.07,
+          "end_eq": 4.7142
+        },
+        {
+          "start": "2026-01-04",
+          "end": "2026-01-19",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 16,
+          "toolkit_ret_pct": 3.08,
+          "end_eq": 4.8595
+        },
+        {
+          "start": "2026-01-20",
+          "end": "2026-03-23",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 63,
+          "toolkit_ret_pct": 6.56,
+          "end_eq": 5.1785
+        },
+        {
+          "start": "2026-03-24",
+          "end": "2026-04-21",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 29,
+          "toolkit_ret_pct": 1.19,
+          "end_eq": 5.24
+        },
+        {
+          "start": "2026-04-22",
+          "end": "2026-05-25",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 34,
+          "toolkit_ret_pct": -2.86,
+          "end_eq": 5.0899
+        },
+        {
+          "start": "2026-05-26",
+          "end": "2026-07-26",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 62,
+          "toolkit_ret_pct": 3.33,
+          "end_eq": 5.2593
+        }
+      ],
+      "r4_segments": [
+        {
+          "start": "2021-07-27",
+          "end": "2021-08-15",
+          "regime": "R2",
+          "days": 20,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 14.02,
+          "end_eq": 1.1402
+        },
+        {
+          "start": "2021-08-22",
+          "end": "2021-09-06",
+          "regime": "R1",
+          "days": 16,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 2.32,
+          "end_eq": 1.1667
+        },
+        {
+          "start": "2021-09-10",
+          "end": "2021-09-15",
+          "regime": "R4",
+          "days": 6,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.1667
+        },
+        {
+          "start": "2021-09-21",
+          "end": "2021-10-06",
+          "regime": "R4",
+          "days": 16,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.1667
+        },
+        {
+          "start": "2021-10-07",
+          "end": "2021-10-29",
+          "regime": "R2",
+          "days": 23,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 7.11,
+          "end_eq": 1.2496
+        },
+        {
+          "start": "2021-10-30",
+          "end": "2021-11-25",
+          "regime": "R1",
+          "days": 27,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.85,
+          "end_eq": 1.2603
+        },
+        {
+          "start": "2021-11-26",
+          "end": "2021-12-05",
+          "regime": "R4",
+          "days": 10,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.2603
+        },
+        {
+          "start": "2021-12-06",
+          "end": "2021-12-15",
+          "regime": "R2",
+          "days": 10,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.85,
+          "end_eq": 1.2369
+        },
+        {
+          "start": "2021-12-16",
+          "end": "2022-01-20",
+          "regime": "R1",
+          "days": 36,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.95,
+          "end_eq": 1.2128
+        },
+        {
+          "start": "2022-01-21",
+          "end": "2022-01-29",
+          "regime": "R2",
+          "days": 9,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -0.55,
+          "end_eq": 1.2061
+        },
+        {
+          "start": "2022-01-30",
+          "end": "2022-02-17",
+          "regime": "R1",
+          "days": 19,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 9.04,
+          "end_eq": 1.3152
+        },
+        {
+          "start": "2022-02-18",
+          "end": "2022-02-23",
+          "regime": "R3",
+          "days": 6,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": -2.6,
+          "end_eq": 1.281
+        },
+        {
+          "start": "2022-02-24",
+          "end": "2022-03-12",
+          "regime": "R4",
+          "days": 17,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.281
+        },
+        {
+          "start": "2022-03-13",
+          "end": "2022-05-07",
+          "regime": "R3",
+          "days": 56,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 9.22,
+          "end_eq": 1.3992
+        },
+        {
+          "start": "2022-05-11",
+          "end": "2022-05-22",
+          "regime": "R2",
+          "days": 12,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -6.64,
+          "end_eq": 1.3062
+        },
+        {
+          "start": "2022-05-23",
+          "end": "2022-06-12",
+          "regime": "R1",
+          "days": 21,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -10.02,
+          "end_eq": 1.1753
+        },
+        {
+          "start": "2022-06-13",
+          "end": "2022-06-24",
+          "regime": "R2",
+          "days": 12,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -0.81,
+          "end_eq": 1.1658
+        },
+        {
+          "start": "2022-06-25",
+          "end": "2022-07-18",
+          "regime": "R1",
+          "days": 24,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 9.66,
+          "end_eq": 1.2784
+        },
+        {
+          "start": "2022-07-31",
+          "end": "2022-08-13",
+          "regime": "R3",
+          "days": 14,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.2784
+        },
+        {
+          "start": "2022-08-14",
+          "end": "2022-08-21",
+          "regime": "R1",
+          "days": 8,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.2784
+        },
+        {
+          "start": "2022-08-22",
+          "end": "2022-08-28",
+          "regime": "R3",
+          "days": 7,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": -2.6,
+          "end_eq": 1.2452
+        },
+        {
+          "start": "2022-08-29",
+          "end": "2022-09-13",
+          "regime": "R1",
+          "days": 16,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 9.15,
+          "end_eq": 1.3591
+        },
+        {
+          "start": "2022-09-14",
+          "end": "2022-09-30",
+          "regime": "R4",
+          "days": 17,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.3591
+        },
+        {
+          "start": "2022-10-01",
+          "end": "2022-11-08",
+          "regime": "R3",
+          "days": 39,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 3.22,
+          "end_eq": 1.4028
+        },
+        {
+          "start": "2022-11-09",
+          "end": "2022-11-20",
+          "regime": "R2",
+          "days": 12,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -0.37,
+          "end_eq": 1.3977
+        },
+        {
+          "start": "2022-11-21",
+          "end": "2023-01-11",
+          "regime": "R1",
+          "days": 52,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.54,
+          "end_eq": 1.3761
+        },
+        {
+          "start": "2023-01-12",
+          "end": "2023-02-04",
+          "regime": "R2",
+          "days": 24,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 9.38,
+          "end_eq": 1.5052
+        },
+        {
+          "start": "2023-02-05",
+          "end": "2023-02-14",
+          "regime": "R1",
+          "days": 10,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -0.95,
+          "end_eq": 1.4908
+        },
+        {
+          "start": "2023-02-15",
+          "end": "2023-03-03",
+          "regime": "R2",
+          "days": 17,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.3,
+          "end_eq": 1.4714
+        },
+        {
+          "start": "2023-03-04",
+          "end": "2023-03-11",
+          "regime": "R1",
+          "days": 8,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.4714
+        },
+        {
+          "start": "2023-03-12",
+          "end": "2023-03-31",
+          "regime": "R2",
+          "days": 20,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 18.57,
+          "end_eq": 1.7447
+        },
+        {
+          "start": "2023-04-01",
+          "end": "2023-04-23",
+          "regime": "R1",
+          "days": 23,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 3.0,
+          "end_eq": 1.7971
+        },
+        {
+          "start": "2023-04-29",
+          "end": "2023-05-08",
+          "regime": "R4",
+          "days": 10,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.7971
+        },
+        {
+          "start": "2023-05-09",
+          "end": "2023-06-05",
+          "regime": "R3",
+          "days": 28,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 3.28,
+          "end_eq": 1.856
+        },
+        {
+          "start": "2023-06-06",
+          "end": "2023-06-13",
+          "regime": "R4",
+          "days": 8,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.856
+        },
+        {
+          "start": "2023-06-14",
+          "end": "2023-07-06",
+          "regime": "R2",
+          "days": 23,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 16.09,
+          "end_eq": 2.1546
+        },
+        {
+          "start": "2023-07-07",
+          "end": "2023-07-21",
+          "regime": "R1",
+          "days": 15,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -4.31,
+          "end_eq": 2.0618
+        },
+        {
+          "start": "2023-07-22",
+          "end": "2023-08-16",
+          "regime": "R3",
+          "days": 26,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.55,
+          "end_eq": 2.0731
+        },
+        {
+          "start": "2023-08-17",
+          "end": "2023-09-04",
+          "regime": "R2",
+          "days": 19,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -5.07,
+          "end_eq": 1.968
+        },
+        {
+          "start": "2023-09-16",
+          "end": "2023-10-01",
+          "regime": "R3",
+          "days": 16,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.66,
+          "end_eq": 1.9809
+        },
+        {
+          "start": "2023-10-06",
+          "end": "2023-10-12",
+          "regime": "R2",
+          "days": 7,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.03,
+          "end_eq": 1.9604
+        },
+        {
+          "start": "2023-10-18",
+          "end": "2023-11-05",
+          "regime": "R2",
+          "days": 19,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.9604
+        },
+        {
+          "start": "2023-11-09",
+          "end": "2023-11-24",
+          "regime": "R2",
+          "days": 16,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -5.28,
+          "end_eq": 1.8569
+        },
+        {
+          "start": "2023-11-25",
+          "end": "2023-12-03",
+          "regime": "R1",
+          "days": 9,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 4.47,
+          "end_eq": 1.9399
+        },
+        {
+          "start": "2023-12-04",
+          "end": "2023-12-22",
+          "regime": "R2",
+          "days": 19,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.12,
+          "end_eq": 1.9422
+        },
+        {
+          "start": "2023-12-26",
+          "end": "2024-01-02",
+          "regime": "R3",
+          "days": 8,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.9422
+        },
+        {
+          "start": "2024-01-03",
+          "end": "2024-01-19",
+          "regime": "R4",
+          "days": 17,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.9422
+        },
+        {
+          "start": "2024-01-20",
+          "end": "2024-02-13",
+          "regime": "R3",
+          "days": 25,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.9422
+        },
+        {
+          "start": "2024-02-14",
+          "end": "2024-02-21",
+          "regime": "R2",
+          "days": 8,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.9422
+        },
+        {
+          "start": "2024-02-26",
+          "end": "2024-03-27",
+          "regime": "R2",
+          "days": 31,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 38.37,
+          "end_eq": 2.6874
+        },
+        {
+          "start": "2024-03-28",
+          "end": "2024-04-04",
+          "regime": "R1",
+          "days": 8,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 2.6874
+        },
+        {
+          "start": "2024-04-05",
+          "end": "2024-04-16",
+          "regime": "R3",
+          "days": 12,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 2.6874
+        },
+        {
+          "start": "2024-04-17",
+          "end": "2024-04-25",
+          "regime": "R4",
+          "days": 9,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 2.6874
+        },
+        {
+          "start": "2024-05-01",
+          "end": "2024-05-10",
+          "regime": "R2",
+          "days": 10,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -0.14,
+          "end_eq": 2.6835
+        },
+        {
+          "start": "2024-05-14",
+          "end": "2024-06-23",
+          "regime": "R3",
+          "days": 41,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 3.48,
+          "end_eq": 2.7769
+        },
+        {
+          "start": "2024-06-24",
+          "end": "2024-07-31",
+          "regime": "R2",
+          "days": 38,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 10.64,
+          "end_eq": 3.0724
+        },
+        {
+          "start": "2024-08-06",
+          "end": "2024-08-17",
+          "regime": "R2",
+          "days": 12,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -3.28,
+          "end_eq": 2.9715
+        },
+        {
+          "start": "2024-08-18",
+          "end": "2024-08-24",
+          "regime": "R1",
+          "days": 7,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -0.22,
+          "end_eq": 2.9649
+        },
+        {
+          "start": "2024-08-25",
+          "end": "2024-09-03",
+          "regime": "R3",
+          "days": 10,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": -2.6,
+          "end_eq": 2.8879
+        },
+        {
+          "start": "2024-09-04",
+          "end": "2024-09-13",
+          "regime": "R1",
+          "days": 10,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 3.05,
+          "end_eq": 2.9759
+        },
+        {
+          "start": "2024-09-14",
+          "end": "2024-10-13",
+          "regime": "R3",
+          "days": 30,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 3.9,
+          "end_eq": 3.0918
+        },
+        {
+          "start": "2024-10-14",
+          "end": "2024-10-19",
+          "regime": "R4",
+          "days": 6,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 3.0918
+        },
+        {
+          "start": "2024-10-20",
+          "end": "2024-10-28",
+          "regime": "R1",
+          "days": 9,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 1.65,
+          "end_eq": 3.1429
+        },
+        {
+          "start": "2024-10-29",
+          "end": "2024-11-29",
+          "regime": "R2",
+          "days": 32,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 41.04,
+          "end_eq": 4.4327
+        },
+        {
+          "start": "2024-12-03",
+          "end": "2024-12-13",
+          "regime": "R2",
+          "days": 11,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 3.3,
+          "end_eq": 4.5791
+        },
+        {
+          "start": "2024-12-14",
+          "end": "2024-12-20",
+          "regime": "R1",
+          "days": 7,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.52,
+          "end_eq": 4.5094
+        },
+        {
+          "start": "2024-12-21",
+          "end": "2025-01-18",
+          "regime": "R3",
+          "days": 29,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 2.1,
+          "end_eq": 4.6041
+        },
+        {
+          "start": "2025-01-19",
+          "end": "2025-01-27",
+          "regime": "R4",
+          "days": 9,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.6041
+        },
+        {
+          "start": "2025-01-28",
+          "end": "2025-02-02",
+          "regime": "R3",
+          "days": 6,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.6041
+        },
+        {
+          "start": "2025-02-03",
+          "end": "2025-02-09",
+          "regime": "R4",
+          "days": 7,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.6041
+        },
+        {
+          "start": "2025-02-10",
+          "end": "2025-02-24",
+          "regime": "R1",
+          "days": 15,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -3.33,
+          "end_eq": 4.4506
+        },
+        {
+          "start": "2025-02-25",
+          "end": "2025-03-15",
+          "regime": "R2",
+          "days": 19,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -5.19,
+          "end_eq": 4.2195
+        },
+        {
+          "start": "2025-03-16",
+          "end": "2025-03-26",
+          "regime": "R1",
+          "days": 11,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 3.35,
+          "end_eq": 4.3609
+        },
+        {
+          "start": "2025-03-27",
+          "end": "2025-04-06",
+          "regime": "R3",
+          "days": 11,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.3609
+        },
+        {
+          "start": "2025-04-07",
+          "end": "2025-04-15",
+          "regime": "R4",
+          "days": 9,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.3609
+        },
+        {
+          "start": "2025-04-16",
+          "end": "2025-04-26",
+          "regime": "R3",
+          "days": 11,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.3609
+        },
+        {
+          "start": "2025-04-27",
+          "end": "2025-05-20",
+          "regime": "R1",
+          "days": 24,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 7.53,
+          "end_eq": 4.6893
+        },
+        {
+          "start": "2025-05-26",
+          "end": "2025-05-31",
+          "regime": "R1",
+          "days": 6,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.76,
+          "end_eq": 4.607
+        },
+        {
+          "start": "2025-06-01",
+          "end": "2025-06-21",
+          "regime": "R3",
+          "days": 21,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 2.55,
+          "end_eq": 4.7244
+        },
+        {
+          "start": "2025-06-22",
+          "end": "2025-06-27",
+          "regime": "R4",
+          "days": 6,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.7244
+        },
+        {
+          "start": "2025-06-28",
+          "end": "2025-07-10",
+          "regime": "R3",
+          "days": 13,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.7244
+        },
+        {
+          "start": "2025-07-14",
+          "end": "2025-07-26",
+          "regime": "R2",
+          "days": 13,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -3.89,
+          "end_eq": 4.5408
+        },
+        {
+          "start": "2025-07-27",
+          "end": "2025-08-03",
+          "regime": "R1",
+          "days": 8,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.5408
+        },
+        {
+          "start": "2025-08-04",
+          "end": "2025-08-13",
+          "regime": "R3",
+          "days": 10,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.5408
+        },
+        {
+          "start": "2025-08-14",
+          "end": "2025-08-20",
+          "regime": "R2",
+          "days": 7,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.5408
+        },
+        {
+          "start": "2025-08-21",
+          "end": "2025-09-05",
+          "regime": "R4",
+          "days": 16,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 4.5408
+        },
+        {
+          "start": "2025-09-06",
+          "end": "2025-10-02",
+          "regime": "R3",
+          "days": 27,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.86,
+          "end_eq": 4.58
+        },
+        {
+          "start": "2025-10-03",
+          "end": "2025-10-24",
+          "regime": "R2",
+          "days": 22,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -5.92,
+          "end_eq": 4.3087
+        },
+        {
+          "start": "2025-10-25",
+          "end": "2025-11-05",
+          "regime": "R3",
+          "days": 12,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": -2.66,
+          "end_eq": 4.1939
+        },
+        {
+          "start": "2025-11-06",
+          "end": "2025-11-28",
+          "regime": "R2",
+          "days": 23,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -3.22,
+          "end_eq": 4.0589
+        },
+        {
+          "start": "2025-11-29",
+          "end": "2026-01-08",
+          "regime": "R1",
+          "days": 41,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -6.64,
+          "end_eq": 3.7893
+        },
+        {
+          "start": "2026-01-13",
+          "end": "2026-01-20",
+          "regime": "R1",
+          "days": 8,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 3.7893
+        },
+        {
+          "start": "2026-01-29",
+          "end": "2026-02-17",
+          "regime": "R2",
+          "days": 20,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -4.13,
+          "end_eq": 3.6327
+        },
+        {
+          "start": "2026-02-18",
+          "end": "2026-03-19",
+          "regime": "R1",
+          "days": 30,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 1.87,
+          "end_eq": 3.7006
+        },
+        {
+          "start": "2026-03-20",
+          "end": "2026-04-25",
+          "regime": "R3",
+          "days": 37,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 1.19,
+          "end_eq": 3.7445
+        },
+        {
+          "start": "2026-04-26",
+          "end": "2026-05-18",
+          "regime": "R1",
+          "days": 23,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -2.31,
+          "end_eq": 3.6582
+        },
+        {
+          "start": "2026-05-19",
+          "end": "2026-05-31",
+          "regime": "R3",
+          "days": 13,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 2.24,
+          "end_eq": 3.7403
+        },
+        {
+          "start": "2026-06-01",
+          "end": "2026-06-18",
+          "regime": "R2",
+          "days": 18,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.3,
+          "end_eq": 3.7514
+        },
+        {
+          "start": "2026-06-19",
+          "end": "2026-07-26",
+          "regime": "R1",
+          "days": 38,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.6,
+          "end_eq": 3.6912
+        }
+      ]
+    },
+    "oos_presample": {
+      "policy_c": {
+        "name": "policy_c",
+        "return_pct": 387.42,
+        "multiple": 4.8742,
+        "mdd_pct": -36.67,
+        "bh_return_pct": 393.93,
+        "bh_mdd_pct": -66.55,
+        "n_ok": 25,
+        "n_segments": 25
+      },
+      "r4_borrow": {
+        "name": "r4_borrow",
+        "return_pct": 17.97,
+        "multiple": 1.1797,
+        "mdd_pct": -36.72,
+        "bh_return_pct": 393.93,
+        "bh_mdd_pct": -66.55,
+        "n_ok": 59,
+        "n_segments": 59
+      },
+      "verdict": {
+        "r4_beats_pc_return": false,
+        "r4_better_mdd": false,
+        "return_gap_pct_p": -369.45,
+        "mdd_gap_pct_p": -0.05
+      },
+      "policy_c_segments": [
+        {
+          "start": "2018-04-12",
+          "end": "2018-04-18",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 7,
+          "toolkit_ret_pct": -0.64,
+          "end_eq": 0.9936
+        },
+        {
+          "start": "2018-04-19",
+          "end": "2018-05-21",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 33,
+          "toolkit_ret_pct": -5.75,
+          "end_eq": 0.9365
+        },
+        {
+          "start": "2018-05-22",
+          "end": "2018-07-16",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 56,
+          "toolkit_ret_pct": -3.55,
+          "end_eq": 0.9033
+        },
+        {
+          "start": "2018-07-17",
+          "end": "2018-08-06",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 21,
+          "toolkit_ret_pct": -1.97,
+          "end_eq": 0.8855
+        },
+        {
+          "start": "2018-08-07",
+          "end": "2018-09-22",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 47,
+          "toolkit_ret_pct": -4.32,
+          "end_eq": 0.8473
+        },
+        {
+          "start": "2018-09-23",
+          "end": "2018-11-15",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 54,
+          "toolkit_ret_pct": -5.56,
+          "end_eq": 0.8002
+        },
+        {
+          "start": "2018-11-16",
+          "end": "2019-01-02",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 48,
+          "toolkit_ret_pct": -10.73,
+          "end_eq": 0.7143
+        },
+        {
+          "start": "2019-01-03",
+          "end": "2019-01-23",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 21,
+          "toolkit_ret_pct": -5.13,
+          "end_eq": 0.6777
+        },
+        {
+          "start": "2019-01-24",
+          "end": "2019-02-16",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 24,
+          "toolkit_ret_pct": -1.11,
+          "end_eq": 0.6701
+        },
+        {
+          "start": "2019-02-17",
+          "end": "2019-04-22",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 65,
+          "toolkit_ret_pct": 31.0,
+          "end_eq": 0.8779
+        },
+        {
+          "start": "2019-04-23",
+          "end": "2019-07-13",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 82,
+          "toolkit_ret_pct": 75.16,
+          "end_eq": 1.5376
+        },
+        {
+          "start": "2019-07-14",
+          "end": "2019-09-04",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 53,
+          "toolkit_ret_pct": 9.29,
+          "end_eq": 1.6805
+        },
+        {
+          "start": "2019-09-05",
+          "end": "2019-09-23",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 19,
+          "toolkit_ret_pct": 3.9,
+          "end_eq": 1.746
+        },
+        {
+          "start": "2019-09-24",
+          "end": "2019-11-20",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 58,
+          "toolkit_ret_pct": -1.88,
+          "end_eq": 1.7131
+        },
+        {
+          "start": "2019-11-21",
+          "end": "2020-01-08",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 49,
+          "toolkit_ret_pct": -2.0,
+          "end_eq": 1.6789
+        },
+        {
+          "start": "2020-01-09",
+          "end": "2020-04-10",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 93,
+          "toolkit_ret_pct": 23.96,
+          "end_eq": 2.0811
+        },
+        {
+          "start": "2020-04-11",
+          "end": "2020-04-29",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 19,
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 2.0811
+        },
+        {
+          "start": "2020-04-30",
+          "end": "2020-05-26",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 27,
+          "toolkit_ret_pct": 2.82,
+          "end_eq": 2.1398
+        },
+        {
+          "start": "2020-05-27",
+          "end": "2020-07-07",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 42,
+          "toolkit_ret_pct": -6.32,
+          "end_eq": 2.0045
+        },
+        {
+          "start": "2020-07-08",
+          "end": "2020-07-25",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 18,
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 2.0045
+        },
+        {
+          "start": "2020-07-26",
+          "end": "2020-09-24",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 61,
+          "toolkit_ret_pct": -2.17,
+          "end_eq": 1.961
+        },
+        {
+          "start": "2020-09-25",
+          "end": "2020-10-13",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 19,
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.961
+        },
+        {
+          "start": "2020-10-14",
+          "end": "2021-04-17",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 186,
+          "toolkit_ret_pct": 177.56,
+          "end_eq": 5.443
+        },
+        {
+          "start": "2021-04-18",
+          "end": "2021-06-21",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 65,
+          "toolkit_ret_pct": -7.12,
+          "end_eq": 5.0556
+        },
+        {
+          "start": "2021-06-22",
+          "end": "2021-07-24",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 33,
+          "toolkit_ret_pct": -3.59,
+          "end_eq": 4.8742
+        }
+      ],
+      "r4_segments": [
+        {
+          "start": "2018-04-12",
+          "end": "2018-04-24",
+          "regime": "R1",
+          "days": 13,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 24.26,
+          "end_eq": 1.2426
+        },
+        {
+          "start": "2018-04-30",
+          "end": "2018-05-10",
+          "regime": "R1",
+          "days": 11,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 3.96,
+          "end_eq": 1.2918
+        },
+        {
+          "start": "2018-05-11",
+          "end": "2018-05-16",
+          "regime": "R2",
+          "days": 6,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -10.1,
+          "end_eq": 1.1614
+        },
+        {
+          "start": "2018-05-17",
+          "end": "2018-06-21",
+          "regime": "R1",
+          "days": 36,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -8.69,
+          "end_eq": 1.0604
+        },
+        {
+          "start": "2018-06-27",
+          "end": "2018-07-17",
+          "regime": "R1",
+          "days": 21,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 8.08,
+          "end_eq": 1.1462
+        },
+        {
+          "start": "2018-07-18",
+          "end": "2018-08-16",
+          "regime": "R2",
+          "days": 30,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -4.95,
+          "end_eq": 1.0894
+        },
+        {
+          "start": "2018-08-17",
+          "end": "2018-08-23",
+          "regime": "R1",
+          "days": 7,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -7.22,
+          "end_eq": 1.0108
+        },
+        {
+          "start": "2018-08-24",
+          "end": "2018-10-14",
+          "regime": "R3",
+          "days": 52,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.69,
+          "end_eq": 1.0177
+        },
+        {
+          "start": "2018-10-18",
+          "end": "2018-11-13",
+          "regime": "R3",
+          "days": 27,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.36,
+          "end_eq": 1.0214
+        },
+        {
+          "start": "2018-11-18",
+          "end": "2018-12-09",
+          "regime": "R2",
+          "days": 22,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -9.52,
+          "end_eq": 0.9242
+        },
+        {
+          "start": "2018-12-10",
+          "end": "2018-12-30",
+          "regime": "R1",
+          "days": 21,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 5.42,
+          "end_eq": 0.9743
+        },
+        {
+          "start": "2018-12-31",
+          "end": "2019-01-29",
+          "regime": "R3",
+          "days": 30,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": -5.99,
+          "end_eq": 0.9159
+        },
+        {
+          "start": "2019-01-30",
+          "end": "2019-02-10",
+          "regime": "R1",
+          "days": 12,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 1.15,
+          "end_eq": 0.9264
+        },
+        {
+          "start": "2019-02-11",
+          "end": "2019-02-22",
+          "regime": "R3",
+          "days": 12,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 0.9264
+        },
+        {
+          "start": "2019-02-23",
+          "end": "2019-03-05",
+          "regime": "R2",
+          "days": 11,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.16,
+          "end_eq": 0.9157
+        },
+        {
+          "start": "2019-03-06",
+          "end": "2019-03-15",
+          "regime": "R3",
+          "days": 10,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 0.9157
+        },
+        {
+          "start": "2019-03-16",
+          "end": "2019-03-31",
+          "regime": "R1",
+          "days": 16,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 2.29,
+          "end_eq": 0.9367
+        },
+        {
+          "start": "2019-04-01",
+          "end": "2019-04-19",
+          "regime": "R2",
+          "days": 19,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.15,
+          "end_eq": 0.9259
+        },
+        {
+          "start": "2019-04-24",
+          "end": "2019-04-29",
+          "regime": "R2",
+          "days": 6,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 0.9259
+        },
+        {
+          "start": "2019-05-03",
+          "end": "2019-05-31",
+          "regime": "R2",
+          "days": 29,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 4.81,
+          "end_eq": 0.9704
+        },
+        {
+          "start": "2019-06-01",
+          "end": "2019-06-21",
+          "regime": "R1",
+          "days": 21,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 13.53,
+          "end_eq": 1.1017
+        },
+        {
+          "start": "2019-06-22",
+          "end": "2019-07-20",
+          "regime": "R2",
+          "days": 29,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -10.84,
+          "end_eq": 0.9823
+        },
+        {
+          "start": "2019-07-21",
+          "end": "2019-09-25",
+          "regime": "R3",
+          "days": 67,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 2.64,
+          "end_eq": 1.0082
+        },
+        {
+          "start": "2019-09-26",
+          "end": "2019-10-04",
+          "regime": "R2",
+          "days": 9,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.56,
+          "end_eq": 0.9925
+        },
+        {
+          "start": "2019-10-05",
+          "end": "2019-10-24",
+          "regime": "R1",
+          "days": 20,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -4.22,
+          "end_eq": 0.9506
+        },
+        {
+          "start": "2019-10-25",
+          "end": "2019-11-05",
+          "regime": "R2",
+          "days": 12,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 3.96,
+          "end_eq": 0.9883
+        },
+        {
+          "start": "2019-11-06",
+          "end": "2019-11-13",
+          "regime": "R1",
+          "days": 8,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -2.25,
+          "end_eq": 0.966
+        },
+        {
+          "start": "2019-11-14",
+          "end": "2019-11-23",
+          "regime": "R3",
+          "days": 10,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": -5.13,
+          "end_eq": 0.9165
+        },
+        {
+          "start": "2019-11-24",
+          "end": "2019-12-05",
+          "regime": "R2",
+          "days": 12,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -6.13,
+          "end_eq": 0.8603
+        },
+        {
+          "start": "2019-12-06",
+          "end": "2019-12-24",
+          "regime": "R1",
+          "days": 19,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.38,
+          "end_eq": 0.8636
+        },
+        {
+          "start": "2019-12-25",
+          "end": "2020-01-07",
+          "regime": "R3",
+          "days": 14,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 3.9,
+          "end_eq": 0.8973
+        },
+        {
+          "start": "2020-01-08",
+          "end": "2020-01-13",
+          "regime": "R4",
+          "days": 6,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 0.8973
+        },
+        {
+          "start": "2020-01-14",
+          "end": "2020-01-23",
+          "regime": "R2",
+          "days": 10,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 3.02,
+          "end_eq": 0.9244
+        },
+        {
+          "start": "2020-01-24",
+          "end": "2020-02-06",
+          "regime": "R1",
+          "days": 14,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 10.64,
+          "end_eq": 1.0228
+        },
+        {
+          "start": "2020-02-07",
+          "end": "2020-03-03",
+          "regime": "R2",
+          "days": 26,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -5.54,
+          "end_eq": 0.9661
+        },
+        {
+          "start": "2020-03-09",
+          "end": "2020-03-27",
+          "regime": "R2",
+          "days": 19,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 10.6,
+          "end_eq": 1.0685
+        },
+        {
+          "start": "2020-03-28",
+          "end": "2020-04-06",
+          "regime": "R1",
+          "days": 10,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.72,
+          "end_eq": 1.0762
+        },
+        {
+          "start": "2020-04-07",
+          "end": "2020-04-30",
+          "regime": "R3",
+          "days": 24,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.0762
+        },
+        {
+          "start": "2020-05-01",
+          "end": "2020-05-22",
+          "regime": "R2",
+          "days": 22,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 2.82,
+          "end_eq": 1.1065
+        },
+        {
+          "start": "2020-05-26",
+          "end": "2020-06-05",
+          "regime": "R3",
+          "days": 11,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.1065
+        },
+        {
+          "start": "2020-06-11",
+          "end": "2020-07-27",
+          "regime": "R3",
+          "days": 47,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": -2.04,
+          "end_eq": 1.0839
+        },
+        {
+          "start": "2020-07-28",
+          "end": "2020-08-15",
+          "regime": "R2",
+          "days": 19,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.25,
+          "end_eq": 1.0704
+        },
+        {
+          "start": "2020-08-16",
+          "end": "2020-09-02",
+          "regime": "R1",
+          "days": 18,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -0.98,
+          "end_eq": 1.0599
+        },
+        {
+          "start": "2020-09-03",
+          "end": "2020-09-17",
+          "regime": "R2",
+          "days": 15,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 3.7,
+          "end_eq": 1.0991
+        },
+        {
+          "start": "2020-09-18",
+          "end": "2020-10-20",
+          "regime": "R3",
+          "days": 33,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": -2.59,
+          "end_eq": 1.0706
+        },
+        {
+          "start": "2020-10-21",
+          "end": "2020-12-06",
+          "regime": "R2",
+          "days": 47,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 33.81,
+          "end_eq": 1.4325
+        },
+        {
+          "start": "2020-12-07",
+          "end": "2020-12-16",
+          "regime": "R1",
+          "days": 10,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 1.48,
+          "end_eq": 1.4538
+        },
+        {
+          "start": "2020-12-17",
+          "end": "2021-01-25",
+          "regime": "R2",
+          "days": 40,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -6.74,
+          "end_eq": 1.3559
+        },
+        {
+          "start": "2021-01-30",
+          "end": "2021-02-11",
+          "regime": "R3",
+          "days": 13,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.3559
+        },
+        {
+          "start": "2021-02-12",
+          "end": "2021-02-18",
+          "regime": "R1",
+          "days": 7,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.3559
+        },
+        {
+          "start": "2021-02-19",
+          "end": "2021-03-06",
+          "regime": "R2",
+          "days": 16,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -1.73,
+          "end_eq": 1.3324
+        },
+        {
+          "start": "2021-03-10",
+          "end": "2021-03-15",
+          "regime": "R1",
+          "days": 6,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.3324
+        },
+        {
+          "start": "2021-03-16",
+          "end": "2021-03-24",
+          "regime": "R2",
+          "days": 9,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -2.25,
+          "end_eq": 1.3024
+        },
+        {
+          "start": "2021-03-25",
+          "end": "2021-04-08",
+          "regime": "R3",
+          "days": 15,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.3024
+        },
+        {
+          "start": "2021-04-09",
+          "end": "2021-04-14",
+          "regime": "R4",
+          "days": 6,
+          "file": "strategies/famous-cash-flat-1d.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.3024
+        },
+        {
+          "start": "2021-04-22",
+          "end": "2021-05-01",
+          "regime": "R2",
+          "days": 10,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": 9.31,
+          "end_eq": 1.4237
+        },
+        {
+          "start": "2021-05-06",
+          "end": "2021-05-12",
+          "regime": "R3",
+          "days": 7,
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "toolkit_ret_pct": 0.0,
+          "end_eq": 1.4237
+        },
+        {
+          "start": "2021-05-17",
+          "end": "2021-05-30",
+          "regime": "R2",
+          "days": 14,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -9.0,
+          "end_eq": 1.2956
+        },
+        {
+          "start": "2021-05-31",
+          "end": "2021-07-24",
+          "regime": "R1",
+          "days": 55,
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "toolkit_ret_pct": -8.01,
+          "end_eq": 1.1919
+        }
+      ]
+    }
+  }
+}
