@@ -394,6 +394,28 @@ a.ghost-btn.link-btn {
   background: var(--bg);
 }
 
+.bh-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-soft);
+  user-select: none;
+}
+
+.bh-toggle input {
+  accent-color: var(--green);
+}
+
+.lg-bot {
+  color: var(--green);
+}
+
+.lg-bh {
+  color: var(--text-soft);
+}
+
 .chart-toggle {
   display: inline-flex;
   border: 1px solid var(--line);

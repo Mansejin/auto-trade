@@ -612,7 +612,11 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
     }
 
 
-def api_equity(_: None = Depends(require_auth)) -> dict[str, Any]:
+def api_equity(
+    _: None = Depends(require_auth),
+    range: str = "30d",
+    bh: int = 1,
+) -> dict[str, Any]:
     status = _load_json(LOG_DIR / "status.json")
     state = _load_json(STATE_PATH)
     if not status:
@@ -628,6 +632,9 @@ def api_equity(_: None = Depends(require_auth)) -> dict[str, Any]:
     history = _read_equity_history()
     market = str(status.get("market") or state.get("market") or "KRW-BTC")
     source = "history"
+    range_key = (range or "30d").strip().lower()
+    if range_key not in ("7d", "30d", "90d", "180d", "all"):
+        range_key = "30d"
 
     if len(history) < 2:
         trades = state.get("trades") or []
@@ -649,13 +656,13 @@ def api_equity(_: None = Depends(require_auth)) -> dict[str, Any]:
             if rebuilt:
                 history = rebuilt
                 source = "trades_mtm"
-                # keep live sample on the tip if we have a mark
                 tip = _mark_upbit_equity(status, state)
                 if tip is not None:
                     history.append(
                         {
                             "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
                             "equity": round(tip, 2),
+                            "price": status.get("price"),
                             "source": "live",
                         }
                     )
@@ -666,19 +673,81 @@ def api_equity(_: None = Depends(require_auth)) -> dict[str, Any]:
                 "points": history,
                 "summary": equity_summary(history),
                 "source": source,
+                "range": range_key,
                 "market": market,
             }
+
+    range_days = {"7d": 7, "30d": 30, "90d": 90, "180d": 180, "all": None}[range_key]
+    if range_days is not None and history:
+        cutoff = time.time() - range_days * 86400
+        filtered: list[dict[str, Any]] = []
+        for p in history:
+            raw_ts = str(p.get("ts") or "")
+            ts = _parse_iso_ts(raw_ts)
+            if ts is None and len(raw_ts) == 10:
+                ts = _parse_iso_ts(raw_ts + "T00:00:00+00:00")
+            if ts is None or ts >= cutoff:
+                filtered.append(p)
+        history = filtered or history[-1:]
+
+    bh_on = bool(int(bh))
+    if bh_on and len(history) >= 2:
+        price_by_day: dict[str, float] = {}
+        for p in history:
+            if p.get("price") is not None:
+                day = str(p.get("ts") or "")[:10]
+                if len(day) == 10:
+                    price_by_day[day] = float(p["price"])
+        try:
+            candles = _fetch_upbit_candles(market, "1d", count=200)
+            for c in candles:
+                day = datetime.fromtimestamp(int(c["time"]), tz=timezone.utc).strftime("%Y-%m-%d")
+                price_by_day.setdefault(day, float(c["close"]))
+        except Exception:
+            pass
+
+        start_eq = float(history[0]["equity"])
+        start_day = str(history[0].get("ts") or "")[:10]
+        start_px = price_by_day.get(start_day)
+        if start_px is None:
+            for day in sorted(price_by_day):
+                if day >= start_day:
+                    start_px = price_by_day[day]
+                    break
+        if start_px and start_px > 0:
+            for p in history:
+                day = str(p.get("ts") or "")[:10]
+                px = p.get("price")
+                if px is None:
+                    px = price_by_day.get(day)
+                if px is None:
+                    continue
+                p["bh_equity"] = round(start_eq * (float(px) / start_px), 2)
+
+    sum_bot = equity_summary(history)
+    bh_points = [{"equity": p["bh_equity"]} for p in history if p.get("bh_equity") is not None]
+    sum_bh = equity_summary(bh_points) if len(bh_points) >= 2 else {"n": 0}
+    alpha = None
+    if sum_bot.get("n") and sum_bh.get("n"):
+        alpha = round(float(sum_bot["ret_pct"]) - float(sum_bh["ret_pct"]), 2)
 
     bg = _load_bitget()
     return {
         "ok": True,
         "market": market,
         "source": source,
+        "range": range_key,
+        "bh": bh_on,
         "points": history,
-        "summary": equity_summary(history),
+        "summary": {
+            **sum_bot,
+            "bh_ret_pct": sum_bh.get("ret_pct"),
+            "alpha_pct": alpha,
+        },
         "bitget_usdt": bg.get("cash"),
         "scalp_running": bool(bg.get("running")),
     }
+
 
 
 def api_candles(_: None = Depends(require_auth)) -> dict[str, Any]:
