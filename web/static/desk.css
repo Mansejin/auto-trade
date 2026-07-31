@@ -512,7 +512,48 @@ a.ghost-btn.link-btn {
     order: 3;
     width: 100%;
     flex: 1 1 100%;
+    flex-wrap: wrap;
+    overflow: visible;
   }
+
+  .ticker-strip:not(.expanded) .tick-sec {
+    display: none;
+  }
+
+  .tick-more {
+    display: inline-flex;
+  }
+
+  .top-meta {
+    margin-left: 0;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .top-meta .freshness {
+    max-width: none;
+    flex: 1 1 auto;
+  }
+}
+
+.tick-more {
+  display: none;
+  align-items: center;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-mute);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tick-more:hover {
+  color: #fff;
+  background: var(--bg-hover);
 }
 
 .panel {

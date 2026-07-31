@@ -446,6 +446,12 @@
     const switchLabel = sw.action_label || regime?.action_label || "—";
     const switchWarn = sw.action === "position_skip" || sw.action === "dwell_block";
     setText("m-switch", switchLabel, switchWarn ? "v warn" : "v");
+    const switchEl = document.getElementById("m-switch");
+    if (switchEl) {
+      switchEl.title = [sw.reason, sw.from && sw.to ? `${shortName(sw.from)} → ${shortName(sw.to)}` : null, sw.ts]
+        .filter(Boolean)
+        .join(" · ");
+    }
 
     const sig = SIGNAL_KO[s.signal] || s.signal || "—";
     document.getElementById("m-signal").textContent = sig;
@@ -460,13 +466,50 @@
     document.getElementById("m-bitget").textContent =
       bg.cash != null ? money(bg.cash, "USDT") : scalpCash ? "cash" : "—";
 
+    const xfer = data.transfer || null;
+    const xferEl = document.getElementById("m-xfer");
+    const xferTick = document.getElementById("tick-xfer");
+    if (xferEl) {
+      if (xfer && xfer.code) {
+        xferEl.textContent = String(xfer.code);
+        xferEl.className = "v warn";
+        xferEl.title = [
+          xfer.direction,
+          xfer.coin && xfer.amount != null ? `${xfer.coin} ${xfer.amount}` : null,
+          xfer.detail,
+          xfer.created_at,
+        ]
+          .filter(Boolean)
+          .join(" · ");
+        if (xferTick) xferTick.classList.add("tick-pri");
+      } else {
+        xferEl.textContent = "없음";
+        xferEl.className = "v muted-v";
+        xferEl.title = "";
+        if (xferTick) xferTick.classList.remove("tick-pri");
+      }
+    }
+
     const riskEl = document.getElementById("m-risk");
     if (risk.trading_halted) {
+      const why = String(risk.halt_reason || "").trim();
       riskEl.textContent = risk.halt_buys_only ? "매수중단" : "전면중단";
+      if (why && why.length <= 18) riskEl.textContent += ` · ${why}`;
       riskEl.className = "v warn";
+      riskEl.title = [
+        why || null,
+        risk.consecutive_errors != null ? `연속오류 ${risk.consecutive_errors}` : null,
+        risk.day_start_equity != null ? `일초 자산 ${Math.round(Number(risk.day_start_equity)).toLocaleString("ko-KR")}` : null,
+      ]
+        .filter(Boolean)
+        .join(" · ");
     } else {
       riskEl.textContent = "정상";
       riskEl.className = "v ok";
+      riskEl.title =
+        risk.day_start_equity != null
+          ? `일초 자산 ${Math.round(Number(risk.day_start_equity)).toLocaleString("ko-KR")}`
+          : "";
     }
 
     if (data.stale) {
@@ -506,6 +549,16 @@
     destroyUpbitChart();
     setChartMode("tv");
   });
+
+  const tickerMore = document.getElementById("btn-ticker-more");
+  const tickerStrip = document.querySelector(".ticker-strip");
+  if (tickerMore && tickerStrip) {
+    tickerMore.addEventListener("click", () => {
+      const open = tickerStrip.classList.toggle("expanded");
+      tickerMore.setAttribute("aria-expanded", open ? "true" : "false");
+      tickerMore.textContent = open ? "접기" : "더보기";
+    });
+  }
 
   syncToggleUi();
   loop();

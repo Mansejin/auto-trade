@@ -573,6 +573,11 @@ def main() -> None:
                 print(logs)
                 print(f"switched {current} -> {target_path}")
 
+    if rec.get("action") == "dwell_block" and rec.get("dwell_age_hours") is not None:
+        rec["reason"] = (
+            f"dwell {rec['dwell_age_hours']}h < {MIN_DWELL_HOURS}h"
+        )
+
     LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 
     snapshot = {
@@ -606,6 +611,55 @@ def main() -> None:
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
     except OSError as e:
         print(f"warn: could not append {LOG_FILE}: {e}")
+
+    notify_regime_action(env, rec)
+
+
+def _basename(path: str | None) -> str:
+    if not path:
+        return "—"
+    return Path(path).name
+
+
+def notify_regime_action(env: dict[str, str], rec: dict[str, Any]) -> None:
+    """Telegram ping for switched / position_skip / dwell_block only."""
+    action = str(rec.get("action") or "")
+    if action not in ("switched", "position_skip", "dwell_block"):
+        return
+    token = (env.get("TELEGRAM_BOT_TOKEN") or os.environ.get("TELEGRAM_BOT_TOKEN") or "").strip()
+    chat = (env.get("TELEGRAM_CHAT_ID") or os.environ.get("TELEGRAM_CHAT_ID") or "").strip()
+    if not token or not chat:
+        return
+    labels = {
+        "switched": "전환됨",
+        "position_skip": "포지션 보류",
+        "dwell_block": "드웰 보류",
+    }
+    guard = rec.get("guard") if isinstance(rec.get("guard"), dict) else {}
+    reason = rec.get("reason") or guard.get("reason") or ""
+    lines = [
+        "======= 레짐 스위치 =======",
+        f"액션    {labels.get(action, action)}",
+        f"레짐    {rec.get('regime')} · ADX {rec.get('adx')}",
+        f"변경    {_basename(rec.get('old'))} → {_basename(rec.get('new'))}",
+    ]
+    if reason:
+        lines.append(f"사유    {reason}")
+    lines.append(f"시각    {rec.get('ts_utc')}")
+    body = urllib.parse.urlencode(
+        {"chat_id": chat, "text": "\n".join(lines)}
+    ).encode()
+    req = urllib.request.Request(
+        f"https://api.telegram.org/bot{token}/sendMessage",
+        data=body,
+        method="POST",
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            resp.read()
+    except Exception as e:
+        print(f"warn: telegram notify failed: {e}")
 
 
 if __name__ == "__main__":

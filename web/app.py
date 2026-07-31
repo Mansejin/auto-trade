@@ -362,6 +362,11 @@ def _load_switch() -> dict[str, Any] | None:
     if not row:
         return None
     action = str(row.get("action") or "") or None
+    guard = row.get("guard") if isinstance(row.get("guard"), dict) else {}
+    reason = row.get("reason") or guard.get("reason")
+    if not reason and action == "dwell_block":
+        age = row.get("dwell_age_hours")
+        reason = f"dwell {age}h < min" if age is not None else "dwell min not met"
     return {
         "action": action,
         "action_label": SWITCH_ACTION_KO.get(action or "", action),
@@ -369,8 +374,25 @@ def _load_switch() -> dict[str, Any] | None:
         "regime": row.get("regime"),
         "from": Path(str(row.get("old") or row.get("from") or "")).name or None,
         "to": Path(str(row.get("new") or row.get("to") or "")).name or None,
-        "reason": row.get("reason")
-        or ((row.get("guard") or {}).get("reason") if isinstance(row.get("guard"), dict) else None),
+        "reason": reason,
+        "dwell_age_hours": row.get("dwell_age_hours"),
+    }
+
+
+def _load_transfer_pending() -> dict[str, Any] | None:
+    """Optional pending transfer approve request beside state.json."""
+    path = Path(os.getenv("TRANSFER_PENDING_PATH", str(STATE_PATH.parent / "transfer_pending.json")))
+    raw = _load_json(path)
+    if not raw or str(raw.get("status") or "pending") != "pending":
+        return None
+    return {
+        "code": raw.get("code"),
+        "direction": raw.get("direction"),
+        "coin": raw.get("coin"),
+        "amount": raw.get("amount"),
+        "created_at": raw.get("created_at") or raw.get("ts") or raw.get("requested_at"),
+        "detail": raw.get("detail"),
+        "expires_at": raw.get("expires_at"),
     }
 
 
@@ -396,6 +418,10 @@ def _load_switch_history(limit: int = 20) -> list[dict[str, Any]]:
                 if action not in interesting and not changed:
                     continue
                 guard = row.get("guard") if isinstance(row.get("guard"), dict) else {}
+                reason = row.get("reason") or guard.get("reason")
+                if not reason and action == "dwell_block":
+                    age = row.get("dwell_age_hours")
+                    reason = f"dwell {age}h < min" if age is not None else "dwell min not met"
                 rows.append(
                     {
                         "ts": row.get("ts_utc") or row.get("ts"),
@@ -410,7 +436,7 @@ def _load_switch_history(limit: int = 20) -> list[dict[str, Any]]:
                         "to": Path(str(row.get("new") or row.get("to") or "")).name or None,
                         "changed": changed,
                         "dry_run": bool(row.get("dry_run")),
-                        "reason": row.get("reason") or guard.get("reason"),
+                        "reason": reason,
                     }
                 )
     except Exception:
@@ -648,6 +674,7 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
         "regime": regime,
         "switch": switch,
         "switch_history": _load_switch_history(20),
+        "transfer": _load_transfer_pending(),
         "sleeves": _load_sleeves(regime_code),
         "bitget": _load_bitget(),
         "recent_trades": recent,
