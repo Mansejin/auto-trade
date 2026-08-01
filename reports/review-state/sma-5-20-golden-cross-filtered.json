@@ -1,0 +1,136 @@
+{
+  "_": "AI cheatsheet — read THIS only for report/revise. Prefer over raw CSVs unless detail needed.",
+  "slug": "sma-5-20-golden-cross-filtered",
+  "base": "sma-5-20-golden-cross",
+  "file": "strategies/sma-5-20-golden-cross-filtered.json",
+  "csv": {
+    "f": "reports/sma-5-20-golden-cross-filtered-20260727_161528.csv",
+    "b": "reports/sma-5-20-golden-cross-20260727_161536.csv"
+  },
+  "ctx": {
+    "mkt": "KRW-BTC",
+    "tf": "1d",
+    "ex": "kr",
+    "period": "2025-07-26..2026-07-26",
+    "bars": 366,
+    "hyp": "GC+ADX/RSI/MACD/OBV → fewer false entries than plain GC",
+    "falsify": "WR not↑ vs base OR frequent SL(-5%) → reject filter-helps hyp"
+  },
+
+  "logic": {
+    "buy_AND": ["SMA5 cross↑ SMA20", "ADX>25", "RSI<70", "MACD>signal", "OBV>signal"],
+    "sell_OR": ["SMA5 cross↓ SMA20", "RSI>70"],
+    "risk": {"SL": 5, "TP": 15},
+    "inds": {
+      "ma_short": "SMA5",
+      "ma_long": "SMA20",
+      "adx14": "ADX14",
+      "rsi14": "RSI14",
+      "macd": "12/26/9",
+      "obv": "OBV+SMA10"
+    }
+  },
+
+  "scoreboard": {
+    "_cols": ["ret%", "bench%", "MDD%", "WR%", "n", "PF", "SL", "TP", "sell", "fee"],
+    "filt": [-4.08, -40.91, -13.15, 25.0, 4, 0.67, 2, 0, 1, 4037],
+    "base": [-17.10, -40.91, -21.40, 20.0, 10, 0.26, 4, 0, 5, 8967],
+    "delta_f_minus_b": {
+      "ret_pp": 13.02,
+      "mdd_pp": 8.25,
+      "wr_pp": 5.0,
+      "trades": -6,
+      "sl": -2
+    }
+  },
+
+  "trades_f": [
+    {"in": "2026-01-05", "out": "2026-01-15", "pnl": 7.38, "why": "sell"},
+    {"in": "2026-03-05", "out": "2026-03-07", "pnl": -5.00, "why": "SL"},
+    {"in": "2026-06-18", "out": "2026-06-24", "pnl": -5.00, "why": "SL"},
+    {"in": "2026-07-06", "out": "2026-07-26", "pnl": -0.63, "why": "final_bar"}
+  ],
+  "trades_b_only": [
+    {"in": "2025-08-11", "pnl": -2.82, "why": "sell"},
+    {"in": "2025-09-11", "pnl": -0.27, "why": "sell"},
+    {"in": "2025-10-02", "pnl": -5.00, "why": "SL"},
+    {"in": "2025-10-30", "pnl": -0.20, "why": "sell"},
+    {"in": "2025-12-05", "pnl": -5.00, "why": "SL"},
+    {"in": "2026-04-08", "pnl": 6.58, "why": "sell", "missed_win": true}
+  ],
+
+  "gap": {
+    "base_n": 10,
+    "filt_n": 4,
+    "blocked": 6,
+    "blocked_win": 1,
+    "blocked_nonwin": 5,
+    "blocked_dates": ["2025-08-11", "2025-09-11", "2025-10-02", "2025-10-30", "2025-12-05", "2026-04-08"],
+    "missed_win": {"in": "2026-04-08", "pnl": 6.58},
+    "note": "filters cut 5 losers + 1 winner; sample small (n=4)"
+  },
+
+  "diag": {
+    "sample": "n=4 → inconclusive alone; always compare to base",
+    "entry": "AND of 5 gates → sparse entries; 1 missed win (2026-04-08)",
+    "exit": "TP=0 both strats; exits via sell/SL/final_bar — TP=15 rarely reachable in this sample",
+    "sl": "filt SL 2/4=50%; base SL 4/10=40% — SL still dominant risk",
+    "hold": "best filt trade exited sell@+7.4% before TP15; early signal-exit vs TP gap",
+    "vs_bench": "both beat B&H(-40.9%) but absolute ret negative",
+    "hyp_status": "retained_weak — WR↑/ret↑/MDD↑improve vs base, but n small + SL heavy"
+  },
+
+  "levers": {
+    "_fmt": "key: cur | loosen→ | tighten→ | when",
+    "adx_gt": "25 | 20 | 30 | sparse entries / too many false GC",
+    "rsi_buy_lt": "70 | 80 | 60 | block overheated entries",
+    "rsi_sell_gt": "70 | 80 | 65 | early exits / hold longer",
+    "macd_gt_sig": "ON | OFF | ON | reclaim missed win / keep momentum gate",
+    "obv_gt_sig": "ON | OFF | ON | volume confirm on/off",
+    "SL%": "5 | 7 | 3 | SL rate high / tighten risk",
+    "TP%": "15 | 20 | 10 | TP never hit → try 10"
+  },
+
+  "next_candidates_precomputed": [
+    {
+      "id": "A",
+      "goal": "recover missed win + raise n",
+      "chg": ["adx_gt:25→20", "drop OBV gate"],
+      "why": "blocked 6; only 1 win missed; n=4 too small",
+      "risk": "may reintroduce losers (esp SL dates)"
+    },
+    {
+      "id": "B",
+      "goal": "cut SL rate",
+      "chg": ["adx_gt:25→30", "rsi_buy_lt:70→60"],
+      "why": "filt SL 50%; keep quality over quantity",
+      "risk": "n may fall further"
+    },
+    {
+      "id": "C",
+      "goal": "make TP reachable",
+      "chg": ["TP:15→10"],
+      "why": "TP=0; best sell +7.4% never hit 15",
+      "risk": "caps upside on strong trends"
+    }
+  ],
+
+  "revise_flow": [
+    "1 user: 보고 → fact report from this file",
+    "2 auto-propose A/B/C (or refreshed) after report",
+    "3 user approve → create-strategy -v2 → validate → backtest same period",
+    "4 update THIS file with new csv/metrics/gap/diag"
+  ],
+
+  "constraints": {
+    "no_live": true,
+    "no_recommend_invest": true,
+    "catalog_only": true,
+    "period_owner": "backtest skill defaults",
+    "cross_ops": "no literals on cross_above/below",
+    "next_slug": "sma-5-20-golden-cross-filtered-v2"
+  },
+
+  "auto_propose_after_report": true,
+  "updated_at": "2026-07-27T16:20:00Z"
+}
