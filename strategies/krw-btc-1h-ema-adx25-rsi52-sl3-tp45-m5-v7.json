@@ -1,0 +1,107 @@
+{
+  "name": "KRW-BTC 1h EMA ADX25 RSI52 SL3/TP4.5 m5-v7",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "1h",
+  "stop_loss": 3.0,
+  "take_profit": 4.5,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ma_short",
+      "params": {
+        "type": "EMA",
+        "period": 5
+      }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ma_long",
+      "params": {
+        "type": "EMA",
+        "period": 20
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    },
+    {
+      "type": "rsi",
+      "ref": "rsi14",
+      "params": {
+        "period": 14,
+        "signal_period": 9,
+        "signal_type": "EMA"
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ma_short.value"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "ma_long.value"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 25
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "rsi14.rsi"
+        },
+        "op": "lt",
+        "right": {
+          "type": "literal",
+          "value": 52
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ma_short.value"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "ma_long.value"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "rsi14.rsi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 70
+        }
+      }
+    ]
+  }
+}
