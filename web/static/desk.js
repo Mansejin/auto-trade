@@ -170,13 +170,14 @@
       dl = null;
       pairs = 0;
     };
+    const skipKeys = new Set(["시각", "모드"]);
     for (const line of lines) {
       const t = line.trim();
       if (!t) continue;
       if (/^[=\-]{3,}/.test(t) || /^----/.test(t)) {
         flush();
         const label = t.replace(/^[=\-\s]+|[=\-\s]+$/g, "").trim();
-        if (label) {
+        if (label && label !== "봇 상태") {
           const h = document.createElement("div");
           h.className = "status-section";
           h.textContent = label;
@@ -186,12 +187,14 @@
       }
       const m = t.match(/^([^:：]{1,24})\s*[:：]\s*(.+)$/);
       if (!m) continue;
+      const key = m[1].trim();
+      if (skipKeys.has(key)) continue;
       if (!dl) {
         dl = document.createElement("dl");
         dl.className = "status-kv";
       }
       const dt = document.createElement("dt");
-      dt.textContent = m[1].trim();
+      dt.textContent = key;
       const dd = document.createElement("dd");
       dd.textContent = m[2].trim();
       dl.append(dt, dd);
