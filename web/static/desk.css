@@ -1,33 +1,33 @@
-@font-face {
-  font-family: "에이투지체";
+﻿@font-face {
+  font-family: "?먯씠?ъ?泥?;
   src: url("fonts/a2z-regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "에이투지체";
+  font-family: "?먯씠?ъ?泥?;
   src: url("fonts/a2z-medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "에이투지체";
+  font-family: "?먯씠?ъ?泥?;
   src: url("fonts/a2z-semibold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "에이투지체";
+  font-family: "?먯씠?ъ?泥?;
   src: url("fonts/a2z-bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "에이투지체";
+  font-family: "?먯씠?ъ?泥?;
   src: url("fonts/a2z-extrabold.ttf") format("truetype");
   font-weight: 800;
   font-style: normal;
@@ -49,7 +49,7 @@
   --green: #26a69a;
   --red: #ef5350;
   --amber: #ff9800;
-  --font: "에이투지체", system-ui, sans-serif;
+  --font: "?먯씠?ъ?泥?, system-ui, sans-serif;
 }
 
 * {
@@ -69,7 +69,7 @@ body {
   display: none !important;
 }
 
-/* —— Login —— */
+/* ?붴?Login ?붴?*/
 .login-body {
   min-height: 100vh;
   display: grid;
@@ -183,7 +183,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* —— Desk —— */
+/* ?붴?Desk ?붴?*/
 .desk {
   min-height: 100vh;
   display: grid;
@@ -801,3 +801,4 @@ a.ghost-btn.link-btn {
   background: var(--amber);
   box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
 }
+

@@ -174,7 +174,11 @@ services:
       PORT: "8080"
     volumes:
       - ./data:/app/data:ro
-      - ./logs:/app/logs:ro
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+      - ./web/static:/app/static:ro
+      - ./web/app.py:/app/app.py:ro
+      - ./web/equity_curve.py:/app/equity_curve.py:ro
     networks:
       net:
         aliases:

@@ -1,7 +1,9 @@
 # NAS sync from Windows (pwsh 7). Avoids nested SSH/python quoting.
+# Fast path (default): tar/base64 sync only. Static is bind-mounted — no rebuild.
 # Usage:
-#   pwsh -NoProfile -File deploy/nas/sync-files.ps1 -Files web/static/index.html,web/static/desk.js
-#   pwsh -NoProfile -File deploy/nas/sync-files.ps1 -Files web/static/index.html -RebuildDesk
+#   pwsh -NoProfile -File deploy/nas/sync-files.ps1 -Files web/static/desk.js,web/static/desk.css
+#   pwsh -NoProfile -File deploy/nas/sync-files.ps1 -Files web/app.py -RestartDesk
+#   pwsh -NoProfile -File deploy/nas/sync-files.ps1 -Files web/Dockerfile -RebuildDesk
 
 [CmdletBinding()]
 param(
@@ -12,6 +14,10 @@ param(
 
     [string] $RemoteRoot = "/volume1/docker/p3f8c1a2",
 
+    # Restart container only (~2-5s). Use after app.py / equity_curve.py changes.
+    [switch] $RestartDesk,
+
+    # Full image rebuild (~40s+). Only for Dockerfile / requirements / rare bake.
     [switch] $RebuildDesk
 )
 
@@ -32,10 +38,28 @@ foreach ($f in $Files) {
 }
 if (-not $list) { throw "No files to sync" }
 
+function Invoke-RemoteShell([string] $ScriptBody, [string] $RemoteName) {
+    $local = Join-Path $env:TEMP $RemoteName
+    [IO.File]::WriteAllText($local, ($ScriptBody -replace "`r`n", "`n"))
+    $b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes((Get-Content -Raw $local)))
+    $writer = @'
+import sys, base64, os
+path = sys.argv[1]
+open(path, "wb").write(base64.b64decode(sys.stdin.buffer.read()))
+os.chmod(path, 0o755)
+print("wrote", path)
+'@
+    $wpath = Join-Path $env:TEMP "nas_write_sh.py"
+    [IO.File]::WriteAllText($wpath, ($writer -replace "`r`n", "`n"))
+    Get-Content -Raw $wpath | & ssh $HostAlias "cat > /tmp/nas_write_sh.py"
+    $remote = "/tmp/$RemoteName"
+    $b64 | & ssh $HostAlias "python3 /tmp/nas_write_sh.py $remote && sh $remote"
+}
+
 $tgz = Join-Path $env:TEMP ("autotrade-nas-sync-{0}.tgz" -f [guid]::NewGuid().ToString("n"))
+$sw = [Diagnostics.Stopwatch]::StartNew()
 try {
     Push-Location $repo
-    # paths relative to repo for tar members
     $rel = foreach ($abs in $list) {
         $abs.Substring($repo.Path.Length).TrimStart("\", "/") -replace "\\", "/"
     }
@@ -56,7 +80,6 @@ for m in members:
     print(" ", m.name)
 '@
     $extractPath = Join-Path $env:TEMP "nas_extract_once.py"
-    # UTF-8 no BOM
     [IO.File]::WriteAllText($extractPath, $extractPy.Replace("`r`n", "`n"))
 
     Get-Content -Raw -LiteralPath $extractPath | & ssh $HostAlias "cat > /tmp/nas_extract_once.py"
@@ -65,37 +88,30 @@ for m in members:
     $b64 = [Convert]::ToBase64String([IO.File]::ReadAllBytes($tgz))
     $b64 | & ssh $HostAlias "python3 /tmp/nas_extract_once.py $RemoteRoot"
     if ($LASTEXITCODE -ne 0) { throw "ssh extract failed" }
+    Write-Host ("sync {0:n1}s ({1} files)" -f $sw.Elapsed.TotalSeconds, $list.Count)
 
     if ($RebuildDesk) {
-        $rebuild = @'
+        Invoke-RemoteShell @'
 #!/bin/sh
 set -e
 cd /volume1/docker/p3f8c1a2
 sudo -n /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile tunnel up -d --build w3
-sleep 3
-curl -sS -o /dev/null -w "health=%{http_code}\n" http://127.0.0.1:18080/autotrade/healthz
-'@
-        $rebuildPath = Join-Path $env:TEMP "nas_rebuild_desk.sh"
-        [IO.File]::WriteAllText($rebuildPath, ($rebuild -replace "`r`n", "`n"))
-        $rb64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes((Get-Content -Raw $rebuildPath)))
-        $writeSh = @'
-import sys, base64, os
-open("/tmp/nas_rebuild_desk.sh", "wb").write(base64.b64decode(sys.stdin.buffer.read()))
-os.chmod("/tmp/nas_rebuild_desk.sh", 0o755)
-print("wrote rebuild")
-'@
-        $writeShPath = Join-Path $env:TEMP "nas_write_sh.py"
-        [IO.File]::WriteAllText($writeShPath, ($writeSh -replace "`r`n", "`n"))
-        Get-Content -Raw $writeShPath | & ssh $HostAlias "cat > /tmp/nas_write_sh.py"
-        $rb64 | & ssh $HostAlias "python3 /tmp/nas_write_sh.py && sh /tmp/nas_rebuild_desk.sh"
-        # curl can 000 while w3 is still starting; container up is enough
-        if ($LASTEXITCODE -ne 0) {
-            Write-Warning "rebuild script reported $LASTEXITCODE — verifying health once more"
-            & ssh $HostAlias "sleep 5; curl -sS -o /dev/null -w 'health=%{http_code}\n' http://127.0.0.1:18080/autotrade/healthz"
-        }
+sleep 4
+curl -sS -o /dev/null -w "health=%{http_code}\n" http://127.0.0.1:18080/autotrade/healthz || true
+'@ "nas_rebuild_desk.sh"
+        Write-Host ("rebuild done {0:n1}s" -f $sw.Elapsed.TotalSeconds)
     }
-
-    Write-Host "sync ok ($($list.Count) files)"
+    elseif ($RestartDesk) {
+        Invoke-RemoteShell @'
+#!/bin/sh
+set -e
+cd /volume1/docker/p3f8c1a2
+sudo -n /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml restart w3
+sleep 3
+curl -sS -o /dev/null -w "health=%{http_code}\n" http://127.0.0.1:18080/autotrade/healthz || true
+'@ "nas_restart_desk.sh"
+        Write-Host ("restart done {0:n1}s" -f $sw.Elapsed.TotalSeconds)
+    }
 }
 finally {
     Remove-Item -LiteralPath $tgz -Force -ErrorAction SilentlyContinue

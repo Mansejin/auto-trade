@@ -17,6 +17,21 @@ OCI VPS 대신 회사 NAS Docker에서 실행.
 3. Copy token → `.env` `CLOUDFLARE_TUNNEL_TOKEN=...`
 4. DNS: `autotrade-origin` CNAME → `xxxx.cfargotunnel.com` (Proxied)
 
+## Fast UI deploy (Windows → NAS)
+
+Static/code are bind-mounted into desk (`w3`). **Do not `--build` for CSS/JS tweaks.**
+
+```powershell
+# ~1-2s — static only
+pwsh -NoProfile -File deploy/nas/sync-files.ps1 -Files web/static/desk.js,web/static/desk.css
+
+# ~5s — after app.py change
+pwsh -NoProfile -File deploy/nas/sync-files.ps1 -Files web/app.py -RestartDesk
+
+# ~40s+ — Dockerfile / pip only
+pwsh -NoProfile -File deploy/nas/sync-files.ps1 -Files web/Dockerfile -RebuildDesk
+```
+
 ## Start
 
 ```bash
