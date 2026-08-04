@@ -1,0 +1,217 @@
+# Synology NAS deploy. Host folder + container names are opaque (see deploy/nas/name-map.local.md).
+# Usage:
+#   docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile tunnel up -d --build
+# Requires .env with LIVE keys + CLOUDFLARE_TUNNEL_TOKEN.
+# CF Tunnel ingress may target http://desk:8080 — keep network alias "desk" on w3.
+
+name: p3f8c1a2
+
+services:
+  w1:
+    build: .
+    image: p3f8c1a2-w1:latest
+    container_name: p3f8c1a2-w1
+    restart: unless-stopped
+    # Synology: no cpus/mem_limit; avoid read_only (shared-folder ACL quirks)
+    user: "0:0"
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+      PAPER: ${PAPER:-true}
+      STRATEGY_PATH: ${STRATEGY_PATH:-/app/strategies/sma_cross_btc.json}
+      STATE_PATH: ${STATE_PATH:-/app/data/state.json}
+      LOG_DIR: ${LOG_DIR:-/app/logs}
+      POLL_SECONDS: ${POLL_SECONDS:-300}
+      PAPER_CASH: ${PAPER_CASH:-1000000}
+      FEE_RATE: ${FEE_RATE:-0.0005}
+      ORDER_FRACTION: ${ORDER_FRACTION:-1.0}
+      MAX_ORDER_KRW: ${MAX_ORDER_KRW:-0}
+      MAX_DAILY_LOSS_KRW: ${MAX_DAILY_LOSS_KRW:-0}
+      MAX_CONSECUTIVE_ERRORS: ${MAX_CONSECUTIVE_ERRORS:-5}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      UPBIT_ACCESS_KEY: ${UPBIT_ACCESS_KEY:-}
+      UPBIT_SECRET_KEY: ${UPBIT_SECRET_KEY:-}
+      BITGET_API_KEY: ${BITGET_API_KEY:-}
+      BITGET_SECRET_KEY: ${BITGET_SECRET_KEY:-}
+      BITGET_PASSPHRASE: ${BITGET_PASSPHRASE:-}
+      BITGET_PAPER_TRADING: ${BITGET_PAPER_TRADING:-false}
+      LIVE_CONFIRM: ${LIVE_CONFIRM:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      TELEGRAM_COMMANDS: ${TELEGRAM_COMMANDS:-true}
+      EXCHANGE: ${EXCHANGE:-upbit}
+      TRANSFER_ENABLED: ${TRANSFER_ENABLED:-false}
+      TRANSFER_CONFIRM: ${TRANSFER_CONFIRM:-}
+      TRANSFER_MAX_AMOUNT: ${TRANSFER_MAX_AMOUNT:-0}
+      TRANSFER_TTL_SEC: ${TRANSFER_TTL_SEC:-600}
+      TRANSFER_DEFAULT_CHAIN: ${TRANSFER_DEFAULT_CHAIN:-TRC20}
+      TRANSFER_COOLDOWN_SEC: ${TRANSFER_COOLDOWN_SEC:-1800}
+      REBALANCE_ENABLED: ${REBALANCE_ENABLED:-false}
+      REBALANCE_TARGET: ${REBALANCE_TARGET:-0.5}
+      REBALANCE_BAND: ${REBALANCE_BAND:-0.12}
+      REBALANCE_ALERT_COOLDOWN_SEC: ${REBALANCE_ALERT_COOLDOWN_SEC:-3600}
+      REBALANCE_MIN_MOVE_KRW: ${REBALANCE_MIN_MOVE_KRW:-30000}
+    volumes:
+      - ./data:/app/data
+      - ./strategies:/app/strategies:ro
+      - ./logs:/app/logs
+    networks:
+      - net
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "from pathlib import Path; import time; p=Path('/app/logs/latest_status.txt'); assert p.exists() and time.time()-p.stat().st_mtime < 900",
+        ]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  w2:
+    build: .
+    image: p3f8c1a2-w2:latest
+    container_name: p3f8c1a2-w2
+    restart: unless-stopped
+    user: "0:0"
+    env_file:
+      - .env
+    environment:
+      TZ: Asia/Seoul
+      EXCHANGE: bitget
+      PAPER: ${BITGET_PAPER:-true}
+      STRATEGY_PATH: ${BITGET_STRATEGY_PATH:-/app/strategies/bitget_btc_usdt_sma.json}
+      STATE_PATH: ${BITGET_STATE_PATH:-/app/data/bitget_state.json}
+      LOG_DIR: ${BITGET_LOG_DIR:-/app/logs/bitget}
+      POLL_SECONDS: ${BITGET_POLL_SECONDS:-300}
+      PAPER_CASH: ${BITGET_PAPER_CASH:-1000}
+      FEE_RATE: ${FEE_RATE:-0.0005}
+      ORDER_FRACTION: ${BITGET_ORDER_FRACTION:-0.2}
+      MAX_ORDER_KRW: ${BITGET_MAX_ORDER_USDT:-50}
+      MAX_DAILY_LOSS_KRW: ${BITGET_MAX_DAILY_LOSS_USDT:-0}
+      MAX_CONSECUTIVE_ERRORS: ${MAX_CONSECUTIVE_ERRORS:-5}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      BITGET_API_KEY: ${BITGET_API_KEY:-}
+      BITGET_SECRET_KEY: ${BITGET_SECRET_KEY:-}
+      BITGET_PASSPHRASE: ${BITGET_PASSPHRASE:-}
+      BITGET_CATEGORY: ${BITGET_CATEGORY:-USDT-FUTURES}
+      BITGET_PRODUCT_TYPE: ${BITGET_PRODUCT_TYPE:-USDT-FUTURES}
+      BITGET_MARGIN_MODE: ${BITGET_MARGIN_MODE:-isolated}
+      BITGET_MARGIN_COIN: ${BITGET_MARGIN_COIN:-USDT}
+      BITGET_PAPER_TRADING: ${BITGET_PAPER_TRADING:-false}
+      LIVE_CONFIRM: ${LIVE_CONFIRM:-}
+      UPBIT_ACCESS_KEY: ${UPBIT_ACCESS_KEY:-}
+      UPBIT_SECRET_KEY: ${UPBIT_SECRET_KEY:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      TELEGRAM_COMMANDS: "false"
+      TRANSFER_ENABLED: ${TRANSFER_ENABLED:-false}
+      TRANSFER_CONFIRM: ${TRANSFER_CONFIRM:-}
+      TRANSFER_MAX_AMOUNT: ${TRANSFER_MAX_AMOUNT:-0}
+      TRANSFER_TTL_SEC: ${TRANSFER_TTL_SEC:-600}
+      TRANSFER_DEFAULT_CHAIN: ${TRANSFER_DEFAULT_CHAIN:-TRC20}
+      TRANSFER_COOLDOWN_SEC: ${TRANSFER_COOLDOWN_SEC:-1800}
+    volumes:
+      - ./data:/app/data
+      - ./strategies:/app/strategies:ro
+      - ./logs:/app/logs
+    networks:
+      - net
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "from pathlib import Path; import time; p=Path('/app/logs/bitget/latest_status.txt'); assert p.exists() and time.time()-p.stat().st_mtime < 900",
+        ]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  w3:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    image: p3f8c1a2-w3:latest
+    container_name: p3f8c1a2-w3
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    expose:
+      - "8080"
+    # LAN debug only (not public). Tunnel reaches w3 via docker network alias "desk".
+    ports:
+      - "127.0.0.1:18080:8080"
+    environment:
+      TZ: Asia/Seoul
+      LOG_DIR: /app/logs
+      STATE_PATH: /app/data/state.json
+      RISK_PATH: /app/data/risk.json
+      BITGET_STATE_PATH: /app/data/bitget_state.json
+      BITGET_LOG_DIR: /app/logs/bitget
+      DASHBOARD_TOKEN: ${DASHBOARD_TOKEN:-}
+      BASE_PATH: ${BASE_PATH:-/autotrade}
+      PORT: "8080"
+    volumes:
+      - ./data:/app/data:ro
+      - ./logs:/app/logs:ro
+    networks:
+      net:
+        aliases:
+          - desk
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=5)",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  w4:
+    image: cloudflare/cloudflared:latest
+    container_name: p3f8c1a2-w4
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:-}
+    depends_on:
+      - w3
+    networks:
+      - net
+    profiles:
+      - tunnel
+
+networks:
+  net:
+    name: p3f8c1a2-net
+    driver: bridge

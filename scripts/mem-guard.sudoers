@@ -1,0 +1,8 @@
+# Allow mem-guard to drop page caches only.
+# Install:
+#   sudo cp scripts/mem-guard.sudoers /etc/sudoers.d/mem-guard
+#   sudo chmod 440 /etc/sudoers.d/mem-guard
+#   sudo visudo -cf /etc/sudoers.d/mem-guard
+
+Cmnd_Alias DROP_CACHES = /usr/bin/tee /proc/sys/vm/drop_caches
+ubuntu ALL=(root) NOPASSWD: DROP_CACHES

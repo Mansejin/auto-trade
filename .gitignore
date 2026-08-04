@@ -1,7 +1,9 @@
-__pycache__/
+﻿__pycache__/
+*.pyc
 *.log
 .DS_Store
 .venv/
+venv/
 freqtrade-research/.venv/
 freqtrade-research/user_data/data/
 freqtrade-research/user_data/logs/
@@ -9,6 +11,8 @@ freqtrade-research/user_data/backtest_results/
 freqtrade-research/user_data/plot/
 freqtrade-research/user_data/notebooks/
 cache/
+data/
+logs/
 strategies/_eth_policyC_xfer/
 reports/ae12-collect/*.jsonl
 reports/ae12-collect/event-study-status.json
@@ -17,3 +21,6 @@ reports/ae14-paper/*.jsonl
 freqtrade-research/user_data/config.bitget-scalp.secrets.json
 .cursor/*
 !.cursor/environment.json
+.cursor/mcp.json
+*.tmp
+deploy/nas/name-map.local.md
