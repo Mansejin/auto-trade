@@ -170,49 +170,69 @@
     }
   }
 
-  function ensureTvChart(symbol, interval) {
-    if (typeof TradingView === "undefined" || !TradingView.widget) {
-      throw new Error("TradingView 스크립트 미로드");
+  function loadTradingView(onReady) {
+    if (typeof TradingView !== "undefined" && TradingView.widget) {
+      onReady();
+      return;
     }
-    const key = `${symbol}|${interval}`;
-    if (key === lastTvKey && tvWidget) return;
-    lastTvKey = key;
-    const el = document.getElementById("tv_chart");
-    if (!el) return;
-    // Destroy previous frame cleanly; never leave a naked iframe covering the page.
-    el.innerHTML = "";
-    tvWidget = new TradingView.widget({
-      autosize: true,
-      symbol,
-      interval: String(interval || "60"),
-      timezone: "Asia/Seoul",
-      theme: "dark",
-      style: "1",
-      locale: "kr",
-      toolbar_bg: "#131722",
-      enable_publishing: false,
-      hide_top_toolbar: false,
-      hide_legend: false,
-      allow_symbol_change: false,
-      save_image: false,
-      container_id: "tv_chart",
-      backgroundColor: "#131722",
-      gridColor: "rgba(42, 46, 57, 0.6)",
+    const existing = document.querySelector('script[data-desk-tv="1"]');
+    if (existing) {
+      existing.addEventListener("load", onReady);
+      return;
+    }
+    const s = document.createElement("script");
+    s.src = "https://s3.tradingview.com/tv.js";
+    s.async = true;
+    s.dataset.deskTv = "1";
+    s.onload = onReady;
+    s.onerror = () => {
+      setFreshness("stale", "차트 CDN 차단/실패");
+    };
+    document.head.appendChild(s);
+  }
+
+  function ensureTvChart(symbol, interval) {
+    loadTradingView(() => {
+      if (typeof TradingView === "undefined" || !TradingView.widget) {
+        return;
+      }
+      const key = `${symbol}|${interval}`;
+      if (key === lastTvKey && tvWidget) return;
+      lastTvKey = key;
+      const el = document.getElementById("tv_chart");
+      if (!el) return;
+      el.innerHTML = "";
+      try {
+        tvWidget = new TradingView.widget({
+          autosize: true,
+          symbol,
+          interval: String(interval || "60"),
+          timezone: "Asia/Seoul",
+          theme: "dark",
+          style: "1",
+          locale: "kr",
+          toolbar_bg: "#131722",
+          enable_publishing: false,
+          hide_top_toolbar: false,
+          hide_legend: false,
+          allow_symbol_change: false,
+          save_image: false,
+          container_id: "tv_chart",
+          backgroundColor: "#131722",
+          gridColor: "rgba(42, 46, 57, 0.6)",
+        });
+        tvBooted = true;
+      } catch (e) {
+        console.warn(e);
+        setFreshness("stale", `차트: ${e.message || e}`);
+      }
     });
-    tvBooted = true;
   }
 
   function updateCharts(data) {
     const symbol = data.tv_symbol || "UPBIT:BTCKRW";
     const interval = data.tv_interval || "60";
-    const meta = document.getElementById("chart-meta");
-    if (meta) meta.textContent = symbol;
-    try {
-      ensureTvChart(symbol, interval);
-    } catch (e) {
-      console.warn(e);
-      if (!tvBooted) setFreshness("stale", `차트: ${e.message || e}`);
-    }
+    ensureTvChart(symbol, interval);
   }
 
   function renderSwitchHistory(rows) {
