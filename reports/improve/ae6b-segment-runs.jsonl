@@ -1,0 +1,10 @@
+{"regime": "sideways", "start": "2024-01-04", "end": "2024-02-11", "days": 39, "control": null, "ret": 0.37, "bh": 11.97, "cagr": 3.64, "mdd": -2.94, "n": 1, "wr": 100.0, "pf": null, "ok": true}
+{"regime": "bear", "start": "2024-08-09", "end": "2024-10-03", "days": 56, "control": null, "ret": 0.15, "bh": -4.04, "cagr": 0.97, "mdd": -4.75, "n": 1, "wr": 100.0, "pf": null, "ok": true}
+{"regime": "sideways", "start": "2024-10-04", "end": "2024-10-17", "days": 14, "control": null, "ret": 0.0, "bh": 11.21, "cagr": 0.0, "mdd": 0.0, "n": 0, "wr": NaN, "pf": null, "ok": true}
+{"regime": "sideways", "start": "2025-01-07", "end": "2025-02-05", "days": 30, "control": null, "ret": 0.0, "bh": 2.95, "cagr": 0.0, "mdd": 0.0, "n": 0, "wr": NaN, "pf": null, "ok": true}
+{"regime": "bear", "start": "2025-11-27", "end": "2026-01-03", "days": 38, "control": null, "ret": 6.62, "bh": -4.04, "cagr": 88.24, "mdd": -3.35, "n": 3, "wr": 67.0, "pf": 3.2, "ok": true}
+{"regime": "bear", "start": "2026-01-20", "end": "2026-03-23", "days": 63, "control": null, "ret": -5.4, "bh": -25.4, "cagr": -27.9, "mdd": -7.6, "n": 3, "wr": 33.0, "pf": 0.13, "ok": true}
+{"regime": "sideways", "start": "2026-03-24", "end": "2026-04-21", "days": 29, "control": null, "ret": 1.19, "bh": 6.5, "cagr": 16.64, "mdd": -1.11, "n": 1, "wr": 100.0, "pf": null, "ok": true}
+{"regime": "bear", "start": "2026-05-26", "end": "2026-07-27", "days": 63, "control": null, "ret": 1.62, "bh": -16.56, "cagr": 9.94, "mdd": -3.1, "n": 3, "wr": 67.0, "pf": 1.64, "ok": true}
+{"regime": "bull", "start": "2025-07-12", "end": "2025-11-03", "days": 115, "control": "bull_control", "ret": -2.87, "bh": 1.6, "cagr": -8.9, "mdd": -4.46, "n": 5, "wr": 60.0, "pf": 0.43, "ok": true}
+{"regime": "bull", "start": "2023-10-31", "end": "2024-01-03", "days": 65, "control": "bull_control", "ret": 1.43, "bh": 29.88, "cagr": 8.41, "mdd": -0.75, "n": 1, "wr": 100.0, "pf": null, "ok": true}

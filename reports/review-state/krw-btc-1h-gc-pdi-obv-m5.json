@@ -1,0 +1,125 @@
+{
+  "_": "AI cheatsheet — read THIS only for report/revise.",
+  "slug": "krw-btc-1h-gc-pdi-obv-m5",
+  "file": "strategies/krw-btc-1h-gc-pdi-obv-m5.json",
+  "WINDOW": {
+    "candle_tf": "1h",
+    "tz": "UTC",
+    "start": "2026-01-26",
+    "end": "2026-07-26",
+    "label": "2026-01-26 00:00:00 UTC ~ 2026-07-26 00:00:00 UTC",
+    "how_chosen": "user monthly-target hyp needs multi-month sample; 6 months (longer than 1h default 3mo)",
+    "trading_bars": 4338,
+    "warmup_bars": 29
+  },
+  "RUNS": {
+    "v1": {
+      "csv": "reports/krw-btc-1h-gc-pdi-obv-m5-20260727_163933.csv",
+      "run_utc": "2026-07-27T16:39:33Z",
+      "run_kst": "2026-07-28 01:39:33 KST"
+    }
+  },
+  "ctx": {
+    "mkt": "KRW-BTC",
+    "tf": "1h",
+    "ex": "kr",
+    "user_target": "monthly +5%",
+    "hyp": "1h GC+PDI+OBV with SL2.5/TP4 produces enough trades that period return approaches compounded monthly +5%",
+    "falsify": "6mo total return < (1.05^6-1)≈+34.01% OR avg trades/month < 5",
+    "falsify_threshold_6mo_pct": 34.01
+  },
+  "logic": {
+    "buy_AND": [
+      "SMA5 cross↑ SMA20",
+      "PDI>MDI",
+      "RSI<70",
+      "OBV>signal"
+    ],
+    "sell_OR": [
+      "SMA5 cross↓ SMA20",
+      "RSI>70"
+    ],
+    "risk": {
+      "SL": 2.5,
+      "TP": 4
+    }
+  },
+  "scoreboard": {
+    "_cols": [
+      "ret%",
+      "bench%",
+      "CAGR%",
+      "MDD%",
+      "WR%",
+      "n",
+      "PF",
+      "SL",
+      "TP",
+      "sell",
+      "fee"
+    ],
+    "run": [
+      -7.26,
+      -26.37,
+      -14.11,
+      -9.37,
+      40.0,
+      81,
+      1.02,
+      5,
+      2,
+      74,
+      79254
+    ]
+  },
+  "freq": {
+    "months_in_window": 6,
+    "trades": 81,
+    "trades_per_month_approx": 13.5,
+    "by_entry_month_n": {
+      "2026-01": 3,
+      "2026-02": 8,
+      "2026-03": 19,
+      "2026-04": 16,
+      "2026-05": 14,
+      "2026-06": 11,
+      "2026-07": 10
+    }
+  },
+  "diag": {
+    "vs_daily_v3": "trade count 5/year → 81/6mo; frequency goal improved",
+    "vs_m5_target": "total -7.26% << +34.01% compounded-5%/mo threshold → falsified",
+    "exits": "sell-dominated 74/81; TP only 2 — TP4 rarely hit before signal exit",
+    "fees": "total fees 79254 on 1e6 capital — high turnover cost",
+    "hyp_status": "falsified_for_this_window"
+  },
+  "next_candidates_precomputed": [
+    {
+      "id": "H1",
+      "goal": "let winners reach TP",
+      "chg": [
+        "remove RSI sell OR raise rsi_sell to 80",
+        "or TP:4→3"
+      ],
+      "why": "sell 74 vs TP 2"
+    },
+    {
+      "id": "H2",
+      "goal": "cut fee drag",
+      "chg": [
+        "add ADX>20 to reduce whipsaw entries"
+      ],
+      "why": "81 trades, fees large, PF≈1"
+    },
+    {
+      "id": "H3",
+      "goal": "mean-reversion higher hit-rate",
+      "chg": [
+        "RSI cross_above 30 buy / cross-style via gt after lt setup; TF 1h"
+      ],
+      "why": "trend GC may not fit -26% bench regime"
+    }
+  ],
+  "auto_propose_after_report": true,
+  "updated_at": "2026-07-27T16:39:59Z"
+}

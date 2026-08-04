@@ -18,11 +18,14 @@ COPY web/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY web/app.py ./app.py
+COPY web/equity_curve.py ./equity_curve.py
 COPY web/static ./static
+RUN mkdir -p /app/config
+COPY config/sleeves.json config/scalp-live-map.json ./config/
 
 RUN useradd --create-home --uid 10002 web \
     && chown -R web:web /app
 
 USER web
 EXPOSE 8080
-CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8080} --forwarded-allow-ips="]
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8080}"]

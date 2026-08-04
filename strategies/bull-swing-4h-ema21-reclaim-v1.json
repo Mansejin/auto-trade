@@ -1,0 +1,73 @@
+{
+  "name": "Bull Swing 4h EMA21 Reclaim v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 10,
+  "take_profit": 40,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ema21",
+      "params": {
+        "type": "EMA",
+        "period": 21
+      }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ema50",
+      "params": {
+        "type": "EMA",
+        "period": 50
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "ema21.value" },
+        "op": "gt",
+        "right": { "type": "indicator", "ref": "ema50.value" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "adx14.adx" },
+        "op": "gte",
+        "right": { "type": "literal", "value": 20 }
+      },
+      {
+        "left": { "type": "indicator", "ref": "adx14.adx_pdi" },
+        "op": "gte",
+        "right": { "type": "indicator", "ref": "adx14.adx_mdi" }
+      },
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "cross_above",
+        "right": { "type": "indicator", "ref": "ema21.value" }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "cross_below",
+        "right": { "type": "indicator", "ref": "ema21.value" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "ema21.value" },
+        "op": "cross_below",
+        "right": { "type": "indicator", "ref": "ema50.value" }
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "updated_at": "2026-07-30T12:20:00Z",
+  "goal": "Fill empty Bitget SCALP short/bull slots. No long-MR mirrors. Promote only after 3-window pass.",
+  "open_directions": true,
+  "allowed_paths": [
+    "freqtrade-research/user_data/strategies/",
+    "freqtrade-research/user_data/config.bitget-*.json",
+    "reports/automation/"
+  ],
+  "cards_tried": 13,
+  "last_slug": "BearShortDivAtrV13",
+  "consecutive_fails": 13,
+  "failure_mode_counts": {
+    "FEE_BLEED": 8,
+    "SPARSE_ZERO": 3,
+    "A_FAIL": 10,
+    "MIRROR_TRANSFER_FAIL": 1
+  },
+  "banned_moves": [
+    "Mirror Upbit long daytrade-edge / BB+RSI long MR into short",
+    "RSI OS/OB threshold nudge only",
+    "Re-slug same BearShort breakdown/Donchian/Stoch fade encodings",
+    "Touch Policy C / Upbit STRATEGY_PATH"
+  ],
+  "exhausted_lines": [
+    "BTCUSDT short danta v1-v12 threshold/chop cluster",
+    "BearShortDivAtrV13 long-edge mirror"
+  ],
+  "promising_axes": [
+    "funding-crowding fade with full funding history",
+    "alt perpetual short (ETH/SOL) under BTC bear",
+    "liquidity sweep / stop-run fade (structure)",
+    "HTF bear + LTF failed reclaim + volume dry-up (new encoding, not Donchian retune)"
+  ],
+  "live_scalp_filled": {
+    "bear_long": "DaytradeEdge10mDivAtrV1",
+    "sideways_long": "SidewaysEdge15mBbFadeV5",
+    "bear_short": null,
+    "bull": null
+  },
+  "next_priority": "Wait for human open-direction pick OR try funding-crowding fade if funding history downloadable; never mirror."
+}

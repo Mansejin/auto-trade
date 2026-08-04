@@ -1,0 +1,124 @@
+{
+  "version": 3,
+  "updated": "2026-07-31",
+  "intent": "장타(CORE) 50% Upbit + 단타(SCALP) 50% Bitget. Venue split equals sleeve split (5:5). CORE = Policy C (famous race lost).",
+  "weights": {
+    "core_pct": 50,
+    "scalp_pct": 50,
+    "ratio": "5:5",
+    "labels": {
+      "core": "장타",
+      "scalp": "단타"
+    },
+    "venue_split": {
+      "upbit_pct": 50,
+      "bitget_pct": 50,
+      "notes": "Upbit hosts 장타 only; Bitget hosts 단타 only — keeps 빗겟:업비트 5:5."
+    },
+    "frozen_by": "human_2026-07-30",
+    "notes": "Frozen 장타50 / 단타50 intent. SCALP LIVE off — seed Upbit-only until total≥500k KRW and a scalp card re-passes. No rebalance below 500k."
+  },
+  "seed_policy": {
+    "deposit_venue": "upbit_only",
+    "bitget": "ignore_dust_while_scalp_stopped",
+    "rebalance_min_total_krw": 500000,
+    "updated": "2026-07-31"
+  },
+  "venues": {
+    "core": {
+      "label": "장타",
+      "venue": "upbit_spot",
+      "bot": "upbit-paper-bot",
+      "capital_pct": 50,
+      "role": "swing / regime Policy C - one STRATEGY_PATH at a time"
+    },
+    "scalp": {
+      "label": "단타",
+      "venue": "bitget_uta_futures",
+      "bot": "freqtrade-scalp",
+      "capital_pct": 50,
+      "role": "SCALP LIVE stopped (cash). Research/automation only until re-promotion.",
+      "live_map": "config/scalp-live-map.json"
+    }
+  },
+  "regimes": {
+    "bull": {
+      "core": {
+        "strategy": "regime-bull-trend-4h-v2.json",
+        "sleeve": "swing",
+        "status": "live_policy_c"
+      },
+      "scalp": {
+        "strategy": null,
+        "status": "empty_slot_cash",
+        "notes": "No bull daytrade survivor. Cash until short/long edge automation finds one."
+      }
+    },
+    "transition": {
+      "core": {
+        "strategy": "regime-bull-trend-4h-v2.json",
+        "sleeve": "swing",
+        "status": "live_policy_c"
+      },
+      "scalp": {
+        "strategy": null,
+        "status": "empty_slot_cash",
+        "notes": "Follow cash like bull scalp until a transition specialist exists."
+      }
+    },
+    "bear": {
+      "core": {
+        "strategy": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+        "sleeve": "swing",
+        "status": "live_policy_c",
+        "notes": "Long-biased Upbit swing — keep even when scalp short exists."
+      },
+      "scalp": {
+        "strategy": null,
+        "upbit_ref": "strategies/daytrade-edge-10m-div-atr-v1.json",
+        "status": "cash_stopped",
+        "notes": "2026-07-30: Div ATR LIVE stopped (2nd opinion — fee/slippage/15m drift). bot-bitget stopped. Short slot still open for research only.",
+        "candidates_falsified_short": [
+          "BearShortBreakdownVolV6",
+          "BearShortFailedReclaimV7",
+          "BearShortDiContinuationV8",
+          "BearShortDonchianV9",
+          "BearShortDailyDonchianV10",
+          "BearShortEmaCrossV11",
+          "BearShortStochFadeV12",
+          "BearShortDivAtrV13"
+        ],
+        "siblings_ready": [
+          "daytrade-edge-10m-div-v1",
+          "daytrade-edge-10m-div-adx-v1"
+        ]
+      }
+    },
+    "sideways": {
+      "core": {
+        "strategy": "regime-sideways-mr-1h-williams-v1.json",
+        "fallback": "regime-sideways-mr-4h-v5.json",
+        "sleeve": "swing_mr",
+        "status": "live_policy_c",
+        "dwell_gate": "SIDEWAYS_WILLIAMS_MIN_DWELL>=7 else fallback v5",
+        "notes": "Williams 1h is 장타 MR - not the scalp sleeve."
+      },
+      "scalp": {
+        "strategy": null,
+        "upbit_ref": "strategies/daytrade-edge-side-15m-bb-fade-v5.json",
+        "status": "cash_stopped",
+        "notes": "2026-07-30: SCALP sleeve fully cash; side fade parked with Div ATR stop.",
+        "falsified_prior": ["SidewaysScalp15mBbV1"]
+      }
+    }
+  },
+  "ops_rules": [
+    "Never point upbit-paper-bot STRATEGY_PATH at a Freqtrade/Bitget strategy.",
+    "Never auto-replace CORE Policy C map when promoting a scalp.",
+    "장타 capital stays on Upbit; 단타 capital stays on Bitget (maintains 5:5 venues).",
+    "Promote scalp short only after multi-window falsification pass + human approve.",
+    "Open position on CORE blocks CORE switch only; SCALP bot is independent.",
+    "Kimchi / premium overlay applies to CORE only until explicitly designed for SCALP.",
+    "Ban long-to-short mirrors as default short hunt (v13 falsified)."
+  ]
+}

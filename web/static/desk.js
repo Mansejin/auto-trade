@@ -9,8 +9,21 @@
     unknown: "—",
   };
 
+  const REGIME_CLASS = {
+    bull: "regime-bull",
+    bear: "regime-bear",
+    sideways: "regime-sideways",
+    transition: "regime-transition",
+  };
+
+  const CHART_KEY = "desk_chart_mode";
+  let chartMode = localStorage.getItem(CHART_KEY) || "upbit";
   let tvWidget = null;
   let lastTvKey = "";
+  let lwChart = null;
+  let lwSeries = null;
+  let lastCandleKey = "";
+  let lastStatus = null;
 
   function money(v, quote) {
     if (v == null || Number.isNaN(Number(v))) return "—";
@@ -19,28 +32,125 @@
     if (q === "KRW") {
       return `${Math.round(n).toLocaleString("ko-KR")}원`;
     }
-    const digits = 2;
     const body = n.toLocaleString("en-US", {
       minimumFractionDigits: 0,
-      maximumFractionDigits: digits,
+      maximumFractionDigits: 2,
     });
     return `${body} ${q}`;
   }
 
-  function cashValue(s) {
-    if (s.cash != null) return s.cash;
-    if (s.usdt != null) return s.usdt;
-    return s.krw;
+  function shortName(file) {
+    if (!file) return "—";
+    return String(file)
+      .replace(/^.*\//, "")
+      .replace(/\.json$/i, "");
   }
 
-  function quoteOf(s, data) {
-    return (
-      s.quote_currency ||
-      data.quote_currency ||
-      (String(s.exchange || data.exchange || "").toLowerCase() === "bitget"
-        ? "USDT"
-        : "KRW")
-    );
+  function setText(id, text, className) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text;
+    if (className != null) el.className = className;
+  }
+
+  function renderSleeves(data) {
+    const root = document.getElementById("sleeves-panel");
+    if (!root) return;
+    const sleeves = data.sleeves || {};
+    const core = sleeves.core || {};
+    const scalp = sleeves.scalp || {};
+    const regime = data.regime || {};
+    const sw = data.switch || {};
+    const bg = data.bitget || {};
+    const scalpLive = Boolean(bg.running) && !String(scalp.status || "").includes("cash");
+
+    const rows = [
+      {
+        tag: "CORE",
+        label: core.label || "장타",
+        status: core.status_label || core.status || "—",
+        ok: String(core.status || "").includes("live"),
+        meta: [
+          core.venue || "upbit",
+          shortName(core.strategy || regime.selected_file || data.status?.strategy),
+        ]
+          .filter(Boolean)
+          .join(" · "),
+        note: core.notes || null,
+      },
+      {
+        tag: "SCALP",
+        label: scalp.label || "단타",
+        status: scalpLive
+          ? `가동 · ${shortName(bg.strategy) || "—"}`
+          : scalp.status_label || scalp.status || "중지 · cash",
+        ok: scalpLive,
+        meta: [scalp.venue || "bitget", bg.cash != null ? money(bg.cash, "USDT") : "USDT —"]
+          .filter(Boolean)
+          .join(" · "),
+        note: scalp.notes || null,
+      },
+    ];
+
+    root.innerHTML = "";
+    for (const row of rows) {
+      const card = document.createElement("div");
+      card.className = "sleeve-card" + (row.ok ? " on" : " off");
+      const head = document.createElement("div");
+      head.className = "sleeve-head";
+      const tag = document.createElement("span");
+      tag.className = "sleeve-tag";
+      tag.textContent = row.tag;
+      const st = document.createElement("span");
+      st.className = "sleeve-status";
+      st.textContent = row.status;
+      head.append(tag, st);
+      const title = document.createElement("div");
+      title.className = "sleeve-title";
+      title.textContent = row.label;
+      const meta = document.createElement("div");
+      meta.className = "sleeve-meta";
+      meta.textContent = row.meta;
+      card.append(head, title, meta);
+      if (row.note) {
+        const note = document.createElement("div");
+        note.className = "sleeve-note";
+        note.textContent = row.note;
+        card.append(note);
+      }
+      root.appendChild(card);
+    }
+
+    const swCard = document.createElement("div");
+    swCard.className = "switch-card";
+    const swHead = document.createElement("div");
+    swHead.className = "sleeve-head";
+    const swTag = document.createElement("span");
+    swTag.className = "sleeve-tag";
+    swTag.textContent = "SWITCH";
+    const swSt = document.createElement("span");
+    swSt.className =
+      "sleeve-status" +
+      (sw.action === "position_skip" || sw.action === "dwell_block" ? " warn" : "");
+    swSt.textContent = sw.action_label || sw.action || regime.action_label || "—";
+    swHead.append(swTag, swSt);
+    const swMeta = document.createElement("div");
+    swMeta.className = "sleeve-meta";
+    const parts = [
+      regime.policy ? `Policy ${String(regime.policy).replace(/^C_.*/, "C")}` : null,
+      regime.engine ? `engine ${regime.engine}` : null,
+      sw.from && sw.to ? `${shortName(sw.from)} → ${shortName(sw.to)}` : shortName(regime.selected_file),
+      sw.ts ? String(sw.ts).replace("T", " ").slice(0, 19) : regime.date || null,
+    ].filter(Boolean);
+    swMeta.textContent = parts.join(" · ") || "스위치 로그 없음";
+    swCard.append(swHead, swMeta);
+    if (sw.reason) {
+      const note = document.createElement("div");
+      note.className = "sleeve-note";
+      note.textContent = String(sw.reason);
+      swCard.append(note);
+    }
+    root.appendChild(swCard);
   }
 
   function qty(v) {
@@ -60,39 +170,36 @@
     }
   }
 
-  function showChartError(msg) {
-    const el = document.getElementById("chart-error");
-    if (!msg) {
-      el.classList.add("hidden");
-      el.textContent = "";
-      return;
+  function syncToggleUi() {
+    document.getElementById("btn-upbit").classList.toggle("active", chartMode === "upbit");
+    document.getElementById("btn-tv").classList.toggle("active", chartMode === "tv");
+    document.getElementById("upbit_chart").classList.toggle("hidden", chartMode !== "upbit");
+    document.getElementById("tv_chart").classList.toggle("hidden", chartMode !== "tv");
+    document.querySelector(".chart-legend").classList.toggle("hidden", chartMode !== "upbit");
+  }
+
+  function setChartMode(mode) {
+    if (mode !== "upbit" && mode !== "tv") return;
+    chartMode = mode;
+    localStorage.setItem(CHART_KEY, mode);
+    syncToggleUi();
+    if (lastStatus) {
+      updateCharts(lastStatus).catch((e) => console.warn(e));
     }
-    el.textContent = msg;
-    el.classList.remove("hidden");
-  }
-
-  function waitFrame() {
-    return new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-  }
-
-  function hostHeight(el) {
-    return Math.max(el.clientHeight || 0, el.offsetHeight || 0, 420);
   }
 
   function ensureTvChart(symbol, interval) {
     if (typeof TradingView === "undefined" || !TradingView.widget) {
-      throw new Error("TradingView 스크립트를 불러오지 못했습니다. 광고차단/네트워크를 확인하세요.");
+      throw new Error("TradingView 스크립트 미로드");
     }
+    const key = `${symbol}|${interval}`;
+    if (key === lastTvKey && tvWidget) return;
+    lastTvKey = key;
     const el = document.getElementById("tv_chart");
     if (!el) return;
-    const key = `${symbol}|${interval}`;
-    if (key === lastTvKey && el.querySelector("iframe")) return;
-
-    lastTvKey = key;
     el.innerHTML = "";
     tvWidget = new TradingView.widget({
-      width: "100%",
-      height: hostHeight(el),
+      autosize: true,
       symbol,
       interval: String(interval || "60"),
       timezone: "Asia/Seoul",
@@ -111,9 +218,147 @@
     });
   }
 
-  function renderTrades(rows, quote, ulId, emptyId) {
-    const ul = document.getElementById(ulId || "trades");
-    const empty = document.getElementById(emptyId || "trades-empty");
+  function destroyUpbitChart() {
+    if (lwChart) {
+      lwChart.remove();
+      lwChart = null;
+      lwSeries = null;
+    }
+    lastCandleKey = "";
+  }
+
+  function ensureUpbitChart() {
+    if (typeof LightweightCharts === "undefined") {
+      throw new Error("업비트 차트 라이브러리 미로드");
+    }
+    const el = document.getElementById("upbit_chart");
+    if (!el) return null;
+    if (lwChart) return lwChart;
+    lwChart = LightweightCharts.createChart(el, {
+      autoSize: true,
+      layout: {
+        background: { color: "#131722" },
+        textColor: "#9598a1",
+        fontFamily: "에이투지체, system-ui, sans-serif",
+      },
+      grid: {
+        vertLines: { color: "rgba(42, 46, 57, 0.6)" },
+        horzLines: { color: "rgba(42, 46, 57, 0.6)" },
+      },
+      crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+      rightPriceScale: { borderColor: "#2a2e39" },
+      timeScale: {
+        borderColor: "#2a2e39",
+        timeVisible: true,
+        secondsVisible: false,
+      },
+    });
+    lwSeries = lwChart.addCandlestickSeries({
+      upColor: "#ef5350",
+      downColor: "#2962ff",
+      borderUpColor: "#ef5350",
+      borderDownColor: "#2962ff",
+      wickUpColor: "#ef5350",
+      wickDownColor: "#2962ff",
+    });
+    return lwChart;
+  }
+
+  async function refreshUpbitChart() {
+    const base = window.__DESK_BASE__ || "/";
+    const res = await fetch(base + "api/candles", { credentials: "same-origin" });
+    if (res.status === 401) {
+      location.href = base;
+      return;
+    }
+    if (!res.ok) throw new Error(`캔들 API ${res.status}`);
+    const data = await res.json();
+    const candles = data.candles || [];
+    const markers = data.markers || [];
+    const key = `${data.market}|${data.timeframe}|${candles.length}|${markers.length}|${
+      candles.length ? candles[candles.length - 1].time : 0
+    }`;
+
+    document.getElementById("chart-meta").textContent = `${data.market || "—"} · ${
+      data.timeframe || "—"
+    } · 봉 ${candles.length}`;
+
+    ensureUpbitChart();
+    if (!lwSeries) return;
+
+    if (key !== lastCandleKey) {
+      lwSeries.setData(candles);
+      lwSeries.setMarkers(markers);
+      if (lwChart) lwChart.timeScale().scrollToRealTime();
+      lastCandleKey = key;
+    } else {
+      lwSeries.setMarkers(markers);
+    }
+  }
+
+  async function updateCharts(data) {
+    if (chartMode === "tv") {
+      ensureTvChart(data.tv_symbol || "UPBIT:BTCKRW", data.tv_interval || "60");
+      document.getElementById("chart-meta").textContent = `${data.tv_symbol || "UPBIT:BTCKRW"} · TV`;
+    } else {
+      await refreshUpbitChart();
+    }
+  }
+
+  function renderSwitchHistory(rows) {
+    const ul = document.getElementById("switch-hist");
+    const empty = document.getElementById("switch-hist-empty");
+    if (!ul || !empty) return;
+    ul.innerHTML = "";
+    if (!rows || !rows.length) {
+      empty.classList.remove("hidden");
+      return;
+    }
+    empty.classList.add("hidden");
+    for (const r of rows) {
+      const li = document.createElement("li");
+      const action = String(r.action || "");
+      li.className =
+        action === "switched"
+          ? "sw-switched"
+          : action === "position_skip" || action === "dwell_block"
+            ? "sw-skip"
+            : "";
+
+      const top = document.createElement("div");
+      top.className = "sw-top";
+      const act = document.createElement("span");
+      act.className = "sw-action";
+      act.textContent = r.action_label || action || "—";
+      const when = document.createElement("span");
+      when.className = "muted";
+      when.textContent = String(r.ts || "").replace("T", " ").replace("Z", "").slice(0, 19);
+      top.append(act, when);
+
+      const mid = document.createElement("div");
+      mid.className = "sw-mid";
+      const regimeBit = r.regime_label || r.regime || "—";
+      const adx =
+        r.adx != null && !Number.isNaN(Number(r.adx)) ? ` ADX ${Number(r.adx).toFixed(0)}` : "";
+      const from = shortName(r.from);
+      const to = shortName(r.to);
+      const arrow = from && to && from !== to ? `${from} → ${to}` : to !== "—" ? to : from;
+      mid.textContent = `${regimeBit}${adx}${arrow && arrow !== "—" ? ` · ${arrow}` : ""}`;
+
+      li.append(top, mid);
+      if (r.reason) {
+        const note = document.createElement("div");
+        note.className = "sleeve-note";
+        note.textContent = String(r.reason);
+        li.append(note);
+      }
+      ul.appendChild(li);
+    }
+  }
+
+  function renderTrades(rows) {
+    const ul = document.getElementById("trades");
+    const empty = document.getElementById("trades-empty");
     ul.innerHTML = "";
     if (!rows || !rows.length) {
       empty.classList.remove("hidden");
@@ -127,7 +372,7 @@
       sideEl.className = side === "buy" ? "side-buy" : "side-sell";
       sideEl.textContent = side === "buy" ? "매수" : "매도";
       const mid = document.createElement("span");
-      mid.textContent = `${money(t.price, quote)} · ${qty(t.qty)}`;
+      mid.textContent = `${money(t.price)} · ${qty(t.qty)}`;
       const ts = document.createElement("span");
       ts.className = "muted";
       ts.textContent = String(t.ts || "").replace("T", " ").slice(0, 19);
@@ -136,14 +381,8 @@
     }
   }
 
-  function deskBase() {
-    if (window.__DESK_BASE__) return window.__DESK_BASE__;
-    const p = location.pathname || "/";
-    return p.indexOf("/autotrade") === 0 ? "/autotrade/" : "/";
-  }
-
   async function refresh() {
-    const base = deskBase();
+    const base = window.__DESK_BASE__ || "/";
     let res;
     try {
       res = await fetch(base + "api/status", { credentials: "same-origin" });
@@ -151,11 +390,12 @@
       throw new Error("상태 API 네트워크 오류");
     }
     if (res.status === 401) {
-      location.href = deskBase();
+      location.href = base;
       return;
     }
     if (!res.ok) throw new Error(`상태 API ${res.status}`);
     const data = await res.json();
+    lastStatus = data;
     const s = data.status || {};
     const risk = s.risk || {};
 
@@ -163,42 +403,113 @@
     modeEl.textContent = s.mode === "LIVE" ? "실주문" : s.mode === "PAPER" ? "모의" : s.mode || "—";
     modeEl.className = "pill" + (s.mode === "LIVE" ? " live" : "");
 
-    const quote = quoteOf(s, data);
-    const cashLabel = document.getElementById("m-cash-label");
-    if (cashLabel) cashLabel.textContent = quote === "KRW" ? "원화" : quote;
+    const regimeEl = document.getElementById("m-regime");
+    const regime = data.regime || null;
+    if (regime && regime.code) {
+      const adx =
+        regime.adx != null && !Number.isNaN(Number(regime.adx))
+          ? ` · ADX ${Number(regime.adx).toFixed(0)}`
+          : "";
+      regimeEl.textContent = `${regime.label || regime.code}${adx}`;
+      regimeEl.className = `v ${REGIME_CLASS[regime.code] || ""}`.trim();
+      regimeEl.title = [
+        regime.date ? `일자 ${regime.date}` : null,
+        regime.selected_file ? `매핑 ${regime.selected_file}` : null,
+        regime.engine ? `engine ${regime.engine}` : null,
+        regime.policy ? `policy ${regime.policy}` : null,
+      ]
+        .filter(Boolean)
+        .join(" · ");
+    } else {
+      regimeEl.textContent = "—";
+      regimeEl.className = "v";
+      regimeEl.title = "";
+    }
 
-    // Upbit
-    document.getElementById("m-signal").textContent = SIGNAL_KO[s.signal] || s.signal || "—";
-    document.getElementById("m-krw").textContent = money(cashValue(s), quote);
+    const sleeves = data.sleeves || {};
+    const core = sleeves.core || {};
+    const scalp = sleeves.scalp || {};
+    const sw = data.switch || {};
+    const bg = data.bitget || {};
+
+    setText(
+      "m-core",
+      shortName(core.strategy || regime?.selected_file || s.strategy || s.strategy_file),
+      "v"
+    );
+    const scalpCash = String(scalp.status || "").includes("cash") || !bg.running;
+    setText(
+      "m-scalp",
+      scalpCash ? scalp.status_label || "중지 · cash" : shortName(bg.strategy) || "가동",
+      scalpCash ? "v muted-v" : "v ok"
+    );
+    const switchLabel = sw.action_label || regime?.action_label || "—";
+    const switchWarn = sw.action === "position_skip" || sw.action === "dwell_block";
+    setText("m-switch", switchLabel, switchWarn ? "v warn" : "v");
+    const switchEl = document.getElementById("m-switch");
+    if (switchEl) {
+      switchEl.title = [sw.reason, sw.from && sw.to ? `${shortName(sw.from)} → ${shortName(sw.to)}` : null, sw.ts]
+        .filter(Boolean)
+        .join(" · ");
+    }
+
+    const sig = SIGNAL_KO[s.signal] || s.signal || "—";
+    document.getElementById("m-signal").textContent = sig;
+    document.getElementById("m-krw").textContent = money(s.krw ?? s.cash);
     if (s.position && s.position.qty) {
       document.getElementById("m-pos").textContent = `${qty(s.position.qty)} @ ${money(
-        s.position.entry_price,
-        quote
+        s.position.entry_price
       )}`;
     } else {
       document.getElementById("m-pos").textContent = "없음";
     }
+    document.getElementById("m-bitget").textContent =
+      bg.cash != null ? money(bg.cash, "USDT") : scalpCash ? "cash" : "—";
 
-    // Bitget
-    const bg = data.bitget || {};
-    document.getElementById("m-bitget").textContent = bg.cash != null ? money(bg.cash, "USDT") : "—";
-    document.getElementById("m-bg-signal").textContent = SIGNAL_KO[bg.signal] || bg.signal || "—";
-    if (bg.position && bg.position.qty) {
-      document.getElementById("m-bg-pos").textContent = `${qty(bg.position.qty)} @ ${money(
-        bg.position.entry_price,
-        "USDT"
-      )}`;
-    } else {
-      document.getElementById("m-bg-pos").textContent = "없음";
+    const xfer = data.transfer || null;
+    const xferEl = document.getElementById("m-xfer");
+    const xferTick = document.getElementById("tick-xfer");
+    if (xferEl) {
+      if (xfer && xfer.code) {
+        xferEl.textContent = String(xfer.code);
+        xferEl.className = "v warn";
+        xferEl.title = [
+          xfer.direction,
+          xfer.coin && xfer.amount != null ? `${xfer.coin} ${xfer.amount}` : null,
+          xfer.detail,
+          xfer.created_at,
+        ]
+          .filter(Boolean)
+          .join(" · ");
+        if (xferTick) xferTick.classList.add("tick-pri");
+      } else {
+        xferEl.textContent = "없음";
+        xferEl.className = "v muted-v";
+        xferEl.title = "";
+        if (xferTick) xferTick.classList.remove("tick-pri");
+      }
     }
 
     const riskEl = document.getElementById("m-risk");
     if (risk.trading_halted) {
+      const why = String(risk.halt_reason || "").trim();
       riskEl.textContent = risk.halt_buys_only ? "매수중단" : "전면중단";
+      if (why && why.length <= 18) riskEl.textContent += ` · ${why}`;
       riskEl.className = "v warn";
+      riskEl.title = [
+        why || null,
+        risk.consecutive_errors != null ? `연속오류 ${risk.consecutive_errors}` : null,
+        risk.day_start_equity != null ? `일초 자산 ${Math.round(Number(risk.day_start_equity)).toLocaleString("ko-KR")}` : null,
+      ]
+        .filter(Boolean)
+        .join(" · ");
     } else {
       riskEl.textContent = "정상";
       riskEl.className = "v ok";
+      riskEl.title =
+        risk.day_start_equity != null
+          ? `일초 자산 ${Math.round(Number(risk.day_start_equity)).toLocaleString("ko-KR")}`
+          : "";
     }
 
     if (data.stale) {
@@ -209,19 +520,17 @@
     }
 
     document.getElementById("latest-text").textContent = data.latest_text || "(상태 텍스트 없음)";
-    document.getElementById("bg-latest-text").textContent = bg.latest_text || "(상태 텍스트 없음)";
-    renderTrades(data.recent_trades || [], quote, "trades", "trades-empty");
-    renderTrades(bg.recent_trades || [], "USDT", "bg-trades", "bg-trades-empty");
-
-    const symbol = data.tv_symbol || "UPBIT:BTCKRW";
+    document.getElementById("bg-latest-text").textContent =
+      bg.latest_text || (scalpCash ? "(SCALP 중지 · Bitget 로그 없음)" : "(상태 텍스트 없음)");
+    renderSleeves(data);
+    renderSwitchHistory(data.switch_history || []);
+    renderTrades(data.recent_trades || []);
 
     try {
-      showChartError("");
-      await waitFrame();
-      ensureTvChart(symbol, data.tv_interval || "60");
+      await updateCharts(data);
     } catch (chartErr) {
       console.warn(chartErr);
-      showChartError(String(chartErr.message || chartErr));
+      setFreshness("stale", `차트: ${chartErr.message || chartErr}`);
     }
   }
 
@@ -235,5 +544,22 @@
     setTimeout(loop, 20000);
   }
 
+  document.getElementById("btn-upbit").addEventListener("click", () => setChartMode("upbit"));
+  document.getElementById("btn-tv").addEventListener("click", () => {
+    destroyUpbitChart();
+    setChartMode("tv");
+  });
+
+  const tickerMore = document.getElementById("btn-ticker-more");
+  const tickerStrip = document.querySelector(".ticker-strip");
+  if (tickerMore && tickerStrip) {
+    tickerMore.addEventListener("click", () => {
+      const open = tickerStrip.classList.toggle("expanded");
+      tickerMore.setAttribute("aria-expanded", open ? "true" : "false");
+      tickerMore.textContent = open ? "접기" : "더보기";
+    });
+  }
+
+  syncToggleUi();
   loop();
 })();

@@ -1,0 +1,79 @@
+# section: strategy
+name,Alpha AE10 MACD Trend Continuation 4h
+market,KRW-BTC
+timeframe,4h
+stop_loss_pct,5.0
+take_profit_pct,15.0
+indicators,"macd(macd, fast=12, slow=26, signal_period=9), adx14(adx, period=14)"
+
+# section: disclaimer
+notice,Backtesting results are based on historical data and do not guarantee that the same or similar investment performance will be achieved in the future or in actual trading.
+
+# section: performance
+metric,value
+period,2025-07-29 ~ 2026-01-29 (UTC)
+initial_capital,1000000 KRW
+trading_bars,1105
+warmup_bars,34
+benchmark_pct,-21.9457
+total_return_pct,-3.1042
+cagr_pct,-6.0638
+mdd_pct,-3.7189
+sharpe_portfolio,-1.9976
+sharpe_trade,-22.8326
+trades,3
+win_rate_before_fees_pct,0.00
+profit_factor_before_fees,0.000000
+sl_count,0
+tp_count,0
+sell_count,3
+final_bar_count,0
+total_fee,2939.0104
+
+# section: trades
+entry_dt,entry_price,exit_dt,exit_price,qty,pnl_pct,pnl_abs,exit_reason
+2025-08-13 20:00:00 UTC,166980000.00000000,2025-08-14 16:00:00 UTC,163935000.00000000,0.00598574,-1.8236,-19216.9639,sell
+2025-09-16 20:00:00 UTC,162109000.00000000,2025-09-17 20:00:00 UTC,161109000.00000000,0.00604712,-0.6169,-7024.3890,sell
+2025-09-18 04:00:00 UTC,162912000.00000000,2025-09-19 12:00:00 UTC,162271000.00000000,0.00597421,-0.3935,-4800.8244,sell
+
+# section: signals
+timestamp,type
+2025-07-30 04:00:00 UTC,sell
+2025-07-31 20:00:00 UTC,sell
+2025-08-08 20:00:00 UTC,sell
+2025-08-12 12:00:00 UTC,sell
+2025-08-13 20:00:00 UTC,buy
+2025-08-14 16:00:00 UTC,sell
+2025-08-24 20:00:00 UTC,sell
+2025-08-29 08:00:00 UTC,sell
+2025-09-01 04:00:00 UTC,sell
+2025-09-04 16:00:00 UTC,sell
+2025-09-06 00:00:00 UTC,sell
+2025-09-09 16:00:00 UTC,sell
+2025-09-13 16:00:00 UTC,sell
+2025-09-16 20:00:00 UTC,buy
+2025-09-17 20:00:00 UTC,sell
+2025-09-18 04:00:00 UTC,buy
+2025-09-19 12:00:00 UTC,sell
+2025-09-25 20:00:00 UTC,sell
+2025-10-05 16:00:00 UTC,sell
+2025-10-14 08:00:00 UTC,sell
+2025-10-22 04:00:00 UTC,sell
+2025-10-28 08:00:00 UTC,sell
+2025-11-03 04:00:00 UTC,sell
+2025-11-11 20:00:00 UTC,sell
+2025-11-17 20:00:00 UTC,sell
+2025-11-19 20:00:00 UTC,sell
+2025-11-21 00:00:00 UTC,sell
+2025-11-29 04:00:00 UTC,sell
+2025-12-05 08:00:00 UTC,sell
+2025-12-09 08:00:00 UTC,sell
+2025-12-11 04:00:00 UTC,sell
+2025-12-12 16:00:00 UTC,sell
+2025-12-19 00:00:00 UTC,sell
+2025-12-23 04:00:00 UTC,sell
+2025-12-26 16:00:00 UTC,sell
+2025-12-29 20:00:00 UTC,sell
+2026-01-06 20:00:00 UTC,sell
+2026-01-16 00:00:00 UTC,sell
+2026-01-25 12:00:00 UTC,sell

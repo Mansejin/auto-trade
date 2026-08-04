@@ -1,0 +1,58 @@
+{
+  "name": "Regime Bull SMA5/20 4h SL10/TP40 v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 10,
+  "take_profit": 40,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ma_short",
+      "params": {
+        "type": "SMA",
+        "period": 5
+      }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ma_long",
+      "params": {
+        "type": "SMA",
+        "period": 20
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ma_short.value"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "ma_long.value"
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ma_short.value"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "ma_long.value"
+        }
+      }
+    ]
+  }
+}

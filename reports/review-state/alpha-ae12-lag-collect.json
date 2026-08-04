@@ -1,0 +1,28 @@
+{
+  "id": "AE12",
+  "updated_at": "2026-07-29T05:26:00Z",
+  "lag_mdd": {
+    "verdict": "MATERIAL_for_sizing",
+    "risk_off_7d_median_mdd_pct": -5.445,
+    "risk_off_7d_worst_mdd_pct": -15.535,
+    "report": "reports/improve/20260729-ae12-lag-mdd.md",
+    "action": "keep MAX_ORDER_KRW / daily loss brakes; no SMA buffer without Policy re-backtest"
+  },
+  "forward_collect": {
+    "scripts": [
+      "scripts/ae12_forward_collect.py",
+      "scripts/ae12_event_study.py"
+    ],
+    "cron_hint": "*/30 * * * * python3 scripts/ae12_forward_collect.py",
+    "frozen_hypotheses": [
+      "H1 fundingRate<=-0.0002 → next-day KRW-BTC mean > baseline",
+      "H2 |imbalance|>=0.4 → next 1h signed move > baseline"
+    ],
+    "status": "collecting_H2_only",
+    "ae12b": {
+      "H1": "RETAINED_for_research",
+      "H2": "NOT_READY",
+      "report": "reports/improve/20260729-ae12b-event-study.md"
+    }
+  }
+}

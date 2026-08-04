@@ -1,0 +1,275 @@
+{
+  "range": {
+    "from": "2020-07-20",
+    "to": "2026-07-28",
+    "n": 2200
+  },
+  "segments": [
+    {
+      "start": "2021-07-25",
+      "end": "2021-09-30",
+      "regime": "transition",
+      "days": 68,
+      "ret_pct": 30.32
+    },
+    {
+      "start": "2021-10-01",
+      "end": "2021-12-03",
+      "regime": "bull",
+      "days": 64,
+      "ret_pct": 16.63
+    },
+    {
+      "start": "2021-12-04",
+      "end": "2022-01-17",
+      "regime": "transition",
+      "days": 45,
+      "ret_pct": -17.31
+    },
+    {
+      "start": "2022-01-18",
+      "end": "2022-03-08",
+      "regime": "bear",
+      "days": 50,
+      "ret_pct": -5.8
+    },
+    {
+      "start": "2022-03-09",
+      "end": "2022-05-08",
+      "regime": "sideways",
+      "days": 61,
+      "ret_pct": -13.19
+    },
+    {
+      "start": "2022-05-09",
+      "end": "2022-09-29",
+      "regime": "bear",
+      "days": 144,
+      "ret_pct": -31.63
+    },
+    {
+      "start": "2022-09-30",
+      "end": "2022-11-07",
+      "regime": "sideways",
+      "days": 39,
+      "ret_pct": 3.66
+    },
+    {
+      "start": "2022-11-08",
+      "end": "2023-01-10",
+      "regime": "bear",
+      "days": 64,
+      "ret_pct": -17.76
+    },
+    {
+      "start": "2023-01-11",
+      "end": "2023-02-17",
+      "regime": "transition",
+      "days": 38,
+      "ret_pct": 40.72
+    },
+    {
+      "start": "2023-02-18",
+      "end": "2023-05-03",
+      "regime": "bull",
+      "days": 75,
+      "ret_pct": 21.75
+    },
+    {
+      "start": "2023-05-04",
+      "end": "2023-06-19",
+      "regime": "sideways",
+      "days": 47,
+      "ret_pct": -9.04
+    },
+    {
+      "start": "2023-06-20",
+      "end": "2023-07-26",
+      "regime": "bull",
+      "days": 37,
+      "ret_pct": 2.63
+    },
+    {
+      "start": "2023-07-27",
+      "end": "2023-10-02",
+      "regime": "sideways",
+      "days": 68,
+      "ret_pct": -1.19
+    },
+    {
+      "start": "2023-10-03",
+      "end": "2023-10-26",
+      "regime": "transition",
+      "days": 24,
+      "ret_pct": 24.04
+    },
+    {
+      "start": "2023-10-27",
+      "end": "2024-01-03",
+      "regime": "bull",
+      "days": 69,
+      "ret_pct": 27.41
+    },
+    {
+      "start": "2024-01-04",
+      "end": "2024-02-11",
+      "regime": "sideways",
+      "days": 39,
+      "ret_pct": 9.67
+    },
+    {
+      "start": "2024-02-12",
+      "end": "2024-04-16",
+      "regime": "bull",
+      "days": 65,
+      "ret_pct": 42.68
+    },
+    {
+      "start": "2024-04-17",
+      "end": "2024-05-14",
+      "regime": "transition",
+      "days": 28,
+      "ret_pct": -5.38
+    },
+    {
+      "start": "2024-05-15",
+      "end": "2024-06-18",
+      "regime": "bull",
+      "days": 35,
+      "ret_pct": -0.5
+    },
+    {
+      "start": "2024-06-19",
+      "end": "2024-07-14",
+      "regime": "transition",
+      "days": 26,
+      "ret_pct": -6.69
+    },
+    {
+      "start": "2024-07-15",
+      "end": "2024-08-08",
+      "regime": "bull",
+      "days": 25,
+      "ret_pct": -5.23
+    },
+    {
+      "start": "2024-08-09",
+      "end": "2024-10-03",
+      "regime": "bear",
+      "days": 56,
+      "ret_pct": -3.62
+    },
+    {
+      "start": "2024-10-04",
+      "end": "2024-10-17",
+      "regime": "sideways",
+      "days": 14,
+      "ret_pct": 9.45
+    },
+    {
+      "start": "2024-10-18",
+      "end": "2024-11-02",
+      "regime": "transition",
+      "days": 16,
+      "ret_pct": 4.15
+    },
+    {
+      "start": "2024-11-03",
+      "end": "2024-12-17",
+      "regime": "bull",
+      "days": 45,
+      "ret_pct": 61.89
+    },
+    {
+      "start": "2024-12-18",
+      "end": "2025-01-06",
+      "regime": "transition",
+      "days": 20,
+      "ret_pct": 1.7
+    },
+    {
+      "start": "2025-01-07",
+      "end": "2025-02-05",
+      "regime": "sideways",
+      "days": 30,
+      "ret_pct": 4.6
+    },
+    {
+      "start": "2025-02-06",
+      "end": "2025-07-11",
+      "regime": "transition",
+      "days": 156,
+      "ret_pct": 4.51
+    },
+    {
+      "start": "2025-07-12",
+      "end": "2025-11-03",
+      "regime": "bull",
+      "days": 115,
+      "ret_pct": -0.69
+    },
+    {
+      "start": "2025-11-04",
+      "end": "2025-11-26",
+      "regime": "transition",
+      "days": 23,
+      "ret_pct": -11.45
+    },
+    {
+      "start": "2025-11-27",
+      "end": "2026-01-03",
+      "regime": "bear",
+      "days": 38,
+      "ret_pct": -4.28
+    },
+    {
+      "start": "2026-01-04",
+      "end": "2026-01-19",
+      "regime": "transition",
+      "days": 16,
+      "ret_pct": 3.49
+    },
+    {
+      "start": "2026-01-20",
+      "end": "2026-03-23",
+      "regime": "bear",
+      "days": 63,
+      "ret_pct": -20.18
+    },
+    {
+      "start": "2026-03-24",
+      "end": "2026-04-21",
+      "regime": "sideways",
+      "days": 29,
+      "ret_pct": 7.51
+    },
+    {
+      "start": "2026-04-22",
+      "end": "2026-05-25",
+      "regime": "transition",
+      "days": 34,
+      "ret_pct": -0.87
+    },
+    {
+      "start": "2026-05-26",
+      "end": "2026-07-28",
+      "regime": "bear",
+      "days": 64,
+      "ret_pct": -17.98
+    }
+  ],
+  "current": {
+    "date": "2026-07-28",
+    "regime": "bear",
+    "close": 92208000.0,
+    "sma50": 94570300.0,
+    "sma200": 106720745.0,
+    "adx": 27.19,
+    "pdi": 14.02,
+    "mdi": 29.93
+  },
+  "method": {
+    "version": "v2",
+    "min_run": 14
+  }
+}

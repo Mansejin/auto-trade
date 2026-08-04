@@ -1,0 +1,65 @@
+{
+  "name": "Mid Swing 4h EMA5/20 ADX23 RSI v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 4.0,
+  "take_profit": 12.0,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ma_short",
+      "params": { "type": "EMA", "period": 5 }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ma_long",
+      "params": { "type": "EMA", "period": 20 }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": { "period": 14 }
+    },
+    {
+      "type": "rsi",
+      "ref": "rsi14",
+      "params": { "period": 14, "signal_period": 9, "signal_type": "EMA" }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "ma_short.value" },
+        "op": "cross_above",
+        "right": { "type": "indicator", "ref": "ma_long.value" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "adx14.adx" },
+        "op": "gt",
+        "right": { "type": "literal", "value": 23 }
+      },
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "lt",
+        "right": { "type": "literal", "value": 60 }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "ma_short.value" },
+        "op": "cross_below",
+        "right": { "type": "indicator", "ref": "ma_long.value" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "gt",
+        "right": { "type": "literal", "value": 70 }
+      }
+    ]
+  }
+}

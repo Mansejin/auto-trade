@@ -1,0 +1,40 @@
+{
+  "name": "Regime Bull Trend 4h EMA8/21",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 10,
+  "take_profit": 40,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ma_short",
+      "params": { "type": "EMA", "period": 8 }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ma_long",
+      "params": { "type": "EMA", "period": 21 }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "ma_short.value" },
+        "op": "cross_above",
+        "right": { "type": "indicator", "ref": "ma_long.value" }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "ma_short.value" },
+        "op": "cross_below",
+        "right": { "type": "indicator", "ref": "ma_long.value" }
+      }
+    ]
+  }
+}

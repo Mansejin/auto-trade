@@ -1,0 +1,98 @@
+{
+  "_": "Strategy Audit Team policy — falsification-first. Blocks optimistic promotion.",
+  "version": "v1",
+  "role": "Independent critic. Prefer REJECT / HOLD over PROMOTE when uncertain.",
+  "non_goals": [
+    "Do not maximize in-sample return",
+    "Do not recommend assets, timing, or live orders",
+    "Do not soft-pass on narrative explanations"
+  ],
+  "verdicts": {
+    "REJECT": "Must not replace ACTIVE / must not be proposed for LIVE",
+    "HOLD": "Interesting research only; keep as alt, no LIVE change",
+    "PROMOTE_CANDIDATE": "May open PR as candidate; LIVE deploy still needs human approval",
+    "LIVE_OK_WITH_HUMAN": "Audit gates passed; human may deploy after reading report"
+  },
+  "gates": {
+    "G1_min_trades_primary": {
+      "desc": "Primary evaluation window must have enough trades (avoid 1-lucky-trade miracles)",
+      "window_key": "primary",
+      "min_trades": 8
+    },
+    "G2_holdout_not_collapse": {
+      "desc": "Holdout (never used for tuning) total return must not be deeply worse than baseline holdout by more than max_underperform_pp",
+      "window_key": "holdout",
+      "max_underperform_pp_vs_baseline": 8.0
+    },
+    "G3_early_oos": {
+      "desc": "Early OOS window must not be worse than baseline by more than max_underperform_pp",
+      "window_key": "early_oos",
+      "max_underperform_pp_vs_baseline": 6.0
+    },
+    "G4_no_shallow_bear_regression": {
+      "desc": "Known shallow-bear stress window must not be worse than baseline",
+      "window_key": "stress_shallow_bear",
+      "require_ge_baseline": true
+    },
+    "G5_complexity_tax": {
+      "desc": "More buy conditions / indicators require higher primary edge vs baseline",
+      "buy_conditions_soft_cap": 3,
+      "indicators_soft_cap": 4,
+      "extra_edge_pp_per_extra_condition": 2.0,
+      "extra_edge_pp_per_extra_indicator": 1.5
+    },
+    "G6_mdd_guard": {
+      "desc": "Primary MDD magnitude must not exceed baseline MDD magnitude by more than slack_pp",
+      "window_key": "primary",
+      "max_mdd_worse_pp_vs_baseline": 5.0
+    },
+    "G7_benchmark_honesty": {
+      "desc": "If strategy beats B&H on a window, require note; if loses to B&H on bullish window, do not call it 'consistent alpha'",
+      "forbid_claim_keys": ["guaranteed", "consistent profits", "will continue", "safe"]
+    },
+    "G8_multiple_testing_suspicion": {
+      "desc": "If candidate came from a large sweep (n_trials >= threshold), raise the bar: need holdout AND early_oos both >= baseline - half_slack",
+      "n_trials_threshold": 200,
+      "tight_underperform_pp": 3.0
+    }
+  },
+  "windows": {
+    "primary": {
+      "start": "2026-01-26",
+      "end": "2026-07-26",
+      "note": "Recent 6mo — operational relevance; NOT sacred"
+    },
+    "early_oos": {
+      "start": "2025-07-26",
+      "end": "2026-01-26",
+      "note": "Pre-primary OOS — falsify recent-fit"
+    },
+    "holdout": {
+      "start": "2024-11-03",
+      "end": "2025-04-24",
+      "note": "Frozen holdout — do not tune on this window"
+    },
+    "stress_shallow_bear": {
+      "start": "2024-08-09",
+      "end": "2024-10-03",
+      "note": "Known weak spot for aggressive 1h mean-reversion/bounce"
+    },
+    "stress_deep_bear": {
+      "start": "2026-01-20",
+      "end": "2026-03-23",
+      "note": "Deep decline stress"
+    }
+  },
+  "promotion_rules": {
+    "to_PROMOTE_CANDIDATE": ["G1", "G2", "G3", "G4", "G5", "G6"],
+    "to_LIVE_OK_WITH_HUMAN": ["G1", "G2", "G3", "G4", "G5", "G6", "G8"],
+    "hard_reject_if_any_fail": ["G1", "G4"]
+  },
+  "monthly_automation": {
+    "cron_hint_utc": "0 9 1 * *",
+    "require_audit_before_pr_claim": true,
+    "forbid_auto_live_deploy": true,
+    "max_param_edits_per_month": 2,
+    "must_write_report_to": "reports/audit/"
+  }
+}

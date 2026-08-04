@@ -1,0 +1,29 @@
+{
+  "_": "AE6b/AE7/AE7b alpha track — falsification log",
+  "updated_at": "2026-07-29T04:45:00Z",
+  "anti_overfit_rules": [
+    "no MFI/WR/ADX/SL/TP retune after AE6",
+    "AE6b uses pre-registered regime segments only",
+    "AE7 absolute threshold fixed before results",
+    "AE7b percentile fixed at 10%; threshold from train funding only"
+  ],
+  "results": {
+    "AE6b": {
+      "verdict": "FALSIFIED_for_promotion",
+      "report": "reports/improve/20260729-ae6b-regime-gate.md",
+      "note": "sparse signals; deep-bear PF 0.13"
+    },
+    "AE7": {
+      "verdict": "UNTESTABLE_in_env",
+      "report": "reports/improve/20260729-ae7-funding-event.md",
+      "note": "0 events at -0.05%; public funding history ~3m"
+    },
+    "AE7b": {
+      "verdict": "FALSIFIED",
+      "report": "reports/improve/20260729-ae7b-funding-percentile.md",
+      "holdout_mean_fwd_pct": -0.1901,
+      "holdout_baseline_mean_fwd_pct": -0.1334
+    }
+  },
+  "next": "AE8 — orthogonal idea; do not mine AE6/AE7 thresholds"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "AE13",
+  "updated_at": "2026-07-29T05:53:25Z",
+  "overall": "PARTIAL_RETAIN",
+  "H_rich_fade": "RETAINED_for_research",
+  "H_cheap_bounce": "FALSIFIED",
+  "train_rich_90pct": 0.004563296109377913,
+  "train_cheap_10pct": -0.0039805119590512915,
+  "promote": false,
+  "report": "reports/improve/20260729-ae13-upbit-premium.md",
+  "raw": "reports/improve/ae13-upbit-premium.json",
+  "script": "scripts/ae13_upbit_premium_study.py",
+  "anti_overfit": [
+    "train 70% percentiles only",
+    "no return-based threshold search",
+    "orthogonal to TA scrapes and funding"
+  ]
+}

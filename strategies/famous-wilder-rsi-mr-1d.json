@@ -1,0 +1,35 @@
+{
+  "name": "Famous Wilder RSI 30/70 MR 1d",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "1d",
+  "stop_loss": 12,
+  "take_profit": 24,
+  "indicators": [
+    {
+      "type": "rsi",
+      "ref": "rsi14",
+      "params": { "period": 14, "signal_period": 1, "signal_type": "SMA" }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "lt",
+        "right": { "type": "literal", "value": 30 }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "gt",
+        "right": { "type": "literal", "value": 70 }
+      }
+    ]
+  }
+}

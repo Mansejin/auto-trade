@@ -1,0 +1,135 @@
+{
+  "card": "mid-swing-4h-ema-adx-v1",
+  "note": "Shorter swing than Policy C map; no daily regime. Compare vs hold + always bull-v2.",
+  "windows": {
+    "in_sample_5y": {
+      "start": "2021-07-27",
+      "end": "2026-07-26",
+      "bh": {
+        "return_pct": 109.36,
+        "mdd_pct": -74.13
+      },
+      "mid_swing_v1": {
+        "return_pct": -21.6059,
+        "mdd_pct": -37.5655,
+        "trades": "99",
+        "csv": "mid-swing-4h-ema-adx-v1_2021-07-27_2026-07-26.csv",
+        "perf_keys": [
+          "period",
+          "initial_capital",
+          "trading_bars",
+          "warmup_bars",
+          "benchmark_pct",
+          "total_return_pct",
+          "cagr_pct",
+          "mdd_pct",
+          "sharpe_portfolio",
+          "sharpe_trade",
+          "trades",
+          "win_rate_before_fees_pct",
+          "profit_factor_before_fees",
+          "sl_count",
+          "tp_count",
+          "sell_count",
+          "final_bar_count",
+          "total_fee"
+        ]
+      },
+      "always_bull_v2": {
+        "return_pct": 435.0834,
+        "mdd_pct": -47.0221,
+        "trades": "292",
+        "csv": "regime-bull-trend-4h-v2_2021-07-27_2026-07-26.csv",
+        "perf_keys": [
+          "period",
+          "initial_capital",
+          "trading_bars",
+          "warmup_bars",
+          "benchmark_pct",
+          "total_return_pct",
+          "cagr_pct",
+          "mdd_pct",
+          "sharpe_portfolio",
+          "sharpe_trade",
+          "trades",
+          "win_rate_before_fees_pct",
+          "profit_factor_before_fees",
+          "sl_count",
+          "tp_count",
+          "sell_count",
+          "final_bar_count",
+          "total_fee"
+        ]
+      },
+      "verdict": {
+        "beats_bh_return": false,
+        "beats_bull_v2_return": false
+      }
+    },
+    "oos_presample": {
+      "start": "2018-04-12",
+      "end": "2021-07-24",
+      "bh": {
+        "return_pct": 393.93,
+        "mdd_pct": -66.55
+      },
+      "mid_swing_v1": {
+        "return_pct": -18.3798,
+        "mdd_pct": -34.7371,
+        "trades": "60",
+        "csv": "mid-swing-4h-ema-adx-v1_2018-04-12_2021-07-24.csv",
+        "perf_keys": [
+          "period",
+          "initial_capital",
+          "trading_bars",
+          "warmup_bars",
+          "benchmark_pct",
+          "total_return_pct",
+          "cagr_pct",
+          "mdd_pct",
+          "sharpe_portfolio",
+          "sharpe_trade",
+          "trades",
+          "win_rate_before_fees_pct",
+          "profit_factor_before_fees",
+          "sl_count",
+          "tp_count",
+          "sell_count",
+          "final_bar_count",
+          "total_fee"
+        ]
+      },
+      "always_bull_v2": {
+        "return_pct": 889.7032,
+        "mdd_pct": -30.2034,
+        "trades": "181",
+        "csv": "regime-bull-trend-4h-v2_2018-04-12_2021-07-24.csv",
+        "perf_keys": [
+          "period",
+          "initial_capital",
+          "trading_bars",
+          "warmup_bars",
+          "benchmark_pct",
+          "total_return_pct",
+          "cagr_pct",
+          "mdd_pct",
+          "sharpe_portfolio",
+          "sharpe_trade",
+          "trades",
+          "win_rate_before_fees_pct",
+          "profit_factor_before_fees",
+          "sl_count",
+          "tp_count",
+          "sell_count",
+          "final_bar_count",
+          "total_fee"
+        ]
+      },
+      "verdict": {
+        "beats_bh_return": false,
+        "beats_bull_v2_return": false
+      }
+    }
+  },
+  "verdict": "FALSIFIED_VS_HOLD"
+}

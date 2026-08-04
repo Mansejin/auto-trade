@@ -1,0 +1,43 @@
+{
+  "id": "AE7",
+  "source": "OKX BTC-USDT-SWAP funding-rate-history (Binance 451 in this env)",
+  "hypothesis": "When perpetual funding_rate <= -0.05%, next-day KRW-BTC close-to-close return has higher mean and hit-rate than same-period baseline",
+  "threshold_funding": -0.0005,
+  "holdout_start": "2026-01-01",
+  "funding_points": 273,
+  "funding_min": -7.81048412537e-05,
+  "funding_max": 0.0001,
+  "events_total": 0,
+  "train": {
+    "stats": {
+      "n": 0
+    },
+    "baseline": {
+      "n": 731,
+      "hit_rate": 0.5034,
+      "mean_fwd_1d_pct": 0.1306
+    }
+  },
+  "holdout": {
+    "stats": {
+      "n": 0
+    },
+    "baseline": {
+      "n": 208,
+      "hit_rate": 0.5,
+      "mean_fwd_1d_pct": -0.1325
+    }
+  },
+  "verdict": "FALSIFIED",
+  "falsified": true,
+  "reasons": [
+    "holdout_n_too_small=0"
+  ],
+  "anti_overfit": [
+    "threshold fixed at -0.05% before seeing results",
+    "holdout frozen at 2026-01-01",
+    "no threshold grid search",
+    "no strategy-JSON promotion path in this step"
+  ],
+  "limitations": "Fees/slippage ignored; OKX funding is proxy; UTC funding date alignment."
+}

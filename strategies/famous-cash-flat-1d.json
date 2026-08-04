@@ -1,0 +1,35 @@
+{
+  "name": "Famous Risk-Off Cash Flat 1d",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "1d",
+  "stop_loss": 50,
+  "take_profit": 50,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "sma2",
+      "params": { "type": "SMA", "period": 2 }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "lt",
+        "right": { "type": "literal", "value": 0 }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "gt",
+        "right": { "type": "literal", "value": 0 }
+      }
+    ]
+  }
+}

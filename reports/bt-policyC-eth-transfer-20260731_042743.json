@@ -1,0 +1,717 @@
+{
+  "market": "KRW-ETH",
+  "method": "policyC_map_on_ETH_regime_segments_toolkit_compound",
+  "src_map_btc_files": {
+    "bull": "strategies/regime-bull-trend-4h-v2.json",
+    "transition": "strategies/regime-bull-trend-4h-v2.json",
+    "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+    "sideways": "strategies/regime-sideways-mr-4h-v5.json"
+  },
+  "eth_strategy_dir": "strategies/_eth_policyC_xfer",
+  "windows": {
+    "in_sample_5y": {
+      "start": "2021-07-27",
+      "end": "2026-07-26",
+      "policy_c_eth": {
+        "return_pct": 47.87,
+        "multiple": 1.4787,
+        "mdd_pct": -50.61,
+        "bh_return_pct": 7.37,
+        "bh_mdd_pct": -77.38,
+        "beats_bh_return": true,
+        "better_mdd_than_bh": true,
+        "n_segments": 37,
+        "n_ok": 37
+      }
+    },
+    "oos_presample": {
+      "start": "2018-04-12",
+      "end": "2021-07-24",
+      "policy_c_eth": {
+        "return_pct": 615.32,
+        "multiple": 7.1532,
+        "mdd_pct": -48.56,
+        "bh_return_pct": 403.94,
+        "bh_mdd_pct": -89.5,
+        "beats_bh_return": true,
+        "better_mdd_than_bh": true,
+        "n_segments": 21,
+        "n_ok": 21
+      }
+    }
+  },
+  "detail": {
+    "in_sample_5y": {
+      "start": "2021-07-27",
+      "end": "2026-07-26",
+      "policy_c_eth": {
+        "return_pct": 47.87,
+        "multiple": 1.4787,
+        "mdd_pct": -50.61,
+        "bh_return_pct": 7.37,
+        "bh_mdd_pct": -77.38,
+        "beats_bh_return": true,
+        "better_mdd_than_bh": true,
+        "n_segments": 37,
+        "n_ok": 37
+      },
+      "segments": [
+        {
+          "start": "2021-07-27",
+          "end": "2021-08-10",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 15,
+          "toolkit_ret_pct": 15.33,
+          "strat_ret_pct": 15.33,
+          "end_eq": 1.1533,
+          "n_trades": 2
+        },
+        {
+          "start": "2021-08-11",
+          "end": "2021-12-04",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 116,
+          "toolkit_ret_pct": 28.84,
+          "strat_ret_pct": 28.84,
+          "end_eq": 1.486,
+          "n_trades": 19
+        },
+        {
+          "start": "2021-12-05",
+          "end": "2022-04-25",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 142,
+          "toolkit_ret_pct": -16.6,
+          "strat_ret_pct": -16.6,
+          "end_eq": 1.2393,
+          "n_trades": 23
+        },
+        {
+          "start": "2022-04-26",
+          "end": "2022-07-14",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 80,
+          "toolkit_ret_pct": -16.29,
+          "strat_ret_pct": -16.29,
+          "end_eq": 1.0374,
+          "n_trades": 15
+        },
+        {
+          "start": "2022-07-15",
+          "end": "2022-09-04",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 52,
+          "toolkit_ret_pct": 8.63,
+          "strat_ret_pct": 8.63,
+          "end_eq": 1.1269,
+          "n_trades": 7
+        },
+        {
+          "start": "2022-09-05",
+          "end": "2022-09-18",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 14,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.1269,
+          "n_trades": 0
+        },
+        {
+          "start": "2022-09-19",
+          "end": "2022-10-24",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 36,
+          "toolkit_ret_pct": -4.4,
+          "strat_ret_pct": -4.4,
+          "end_eq": 1.0773,
+          "n_trades": 7
+        },
+        {
+          "start": "2022-10-25",
+          "end": "2022-11-07",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 14,
+          "toolkit_ret_pct": -1.63,
+          "strat_ret_pct": -1.63,
+          "end_eq": 1.0598,
+          "n_trades": 2
+        },
+        {
+          "start": "2022-11-08",
+          "end": "2023-01-07",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 61,
+          "toolkit_ret_pct": 2.97,
+          "strat_ret_pct": 2.97,
+          "end_eq": 1.0913,
+          "n_trades": 3
+        },
+        {
+          "start": "2023-01-08",
+          "end": "2023-03-14",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 66,
+          "toolkit_ret_pct": 8.32,
+          "strat_ret_pct": 8.32,
+          "end_eq": 1.182,
+          "n_trades": 10
+        },
+        {
+          "start": "2023-03-15",
+          "end": "2023-04-30",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 47,
+          "toolkit_ret_pct": -0.05,
+          "strat_ret_pct": -0.05,
+          "end_eq": 1.1814,
+          "n_trades": 8
+        },
+        {
+          "start": "2023-05-01",
+          "end": "2023-06-20",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 51,
+          "toolkit_ret_pct": 2.38,
+          "strat_ret_pct": 2.38,
+          "end_eq": 1.2096,
+          "n_trades": 3
+        },
+        {
+          "start": "2023-06-21",
+          "end": "2023-07-06",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 16,
+          "toolkit_ret_pct": 1.38,
+          "strat_ret_pct": 1.38,
+          "end_eq": 1.2263,
+          "n_trades": 2
+        },
+        {
+          "start": "2023-07-07",
+          "end": "2023-08-17",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 42,
+          "toolkit_ret_pct": 2.48,
+          "strat_ret_pct": 2.48,
+          "end_eq": 1.2567,
+          "n_trades": 2
+        },
+        {
+          "start": "2023-08-18",
+          "end": "2023-08-31",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 14,
+          "toolkit_ret_pct": -0.66,
+          "strat_ret_pct": -0.66,
+          "end_eq": 1.2484,
+          "n_trades": 1
+        },
+        {
+          "start": "2023-09-01",
+          "end": "2023-10-22",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 52,
+          "toolkit_ret_pct": -2.43,
+          "strat_ret_pct": -2.43,
+          "end_eq": 1.2181,
+          "n_trades": 9
+        },
+        {
+          "start": "2023-10-23",
+          "end": "2023-11-17",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 26,
+          "toolkit_ret_pct": 3.82,
+          "strat_ret_pct": 3.82,
+          "end_eq": 1.2647,
+          "n_trades": 3
+        },
+        {
+          "start": "2023-11-18",
+          "end": "2024-03-18",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 122,
+          "toolkit_ret_pct": 98.2,
+          "strat_ret_pct": 98.2,
+          "end_eq": 2.5066,
+          "n_trades": 16
+        },
+        {
+          "start": "2024-03-19",
+          "end": "2024-05-19",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 62,
+          "toolkit_ret_pct": -6.84,
+          "strat_ret_pct": -6.84,
+          "end_eq": 2.3351,
+          "n_trades": 10
+        },
+        {
+          "start": "2024-05-20",
+          "end": "2024-06-16",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 28,
+          "toolkit_ret_pct": -3.68,
+          "strat_ret_pct": -3.68,
+          "end_eq": 2.2491,
+          "n_trades": 4
+        },
+        {
+          "start": "2024-06-17",
+          "end": "2024-08-07",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 52,
+          "toolkit_ret_pct": -0.69,
+          "strat_ret_pct": -0.69,
+          "end_eq": 2.2337,
+          "n_trades": 9
+        },
+        {
+          "start": "2024-08-08",
+          "end": "2024-11-07",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 92,
+          "toolkit_ret_pct": 0.73,
+          "strat_ret_pct": 0.73,
+          "end_eq": 2.2499,
+          "n_trades": 13
+        },
+        {
+          "start": "2024-11-08",
+          "end": "2025-03-08",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 121,
+          "toolkit_ret_pct": -32.54,
+          "strat_ret_pct": -32.54,
+          "end_eq": 1.5178,
+          "n_trades": 21
+        },
+        {
+          "start": "2025-03-09",
+          "end": "2025-05-08",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 61,
+          "toolkit_ret_pct": -9.7,
+          "strat_ret_pct": -9.7,
+          "end_eq": 1.3706,
+          "n_trades": 9
+        },
+        {
+          "start": "2025-05-09",
+          "end": "2025-06-15",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 38,
+          "toolkit_ret_pct": -4.7,
+          "strat_ret_pct": -4.7,
+          "end_eq": 1.3061,
+          "n_trades": 5
+        },
+        {
+          "start": "2025-06-16",
+          "end": "2025-07-16",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 31,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3061,
+          "n_trades": 0
+        },
+        {
+          "start": "2025-07-17",
+          "end": "2025-10-14",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 90,
+          "toolkit_ret_pct": 14.26,
+          "strat_ret_pct": 14.26,
+          "end_eq": 1.4923,
+          "n_trades": 14
+        },
+        {
+          "start": "2025-10-15",
+          "end": "2025-11-04",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 21,
+          "toolkit_ret_pct": -0.02,
+          "strat_ret_pct": -0.02,
+          "end_eq": 1.492,
+          "n_trades": 3
+        },
+        {
+          "start": "2025-11-05",
+          "end": "2025-12-10",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 36,
+          "toolkit_ret_pct": -1.34,
+          "strat_ret_pct": -1.34,
+          "end_eq": 1.472,
+          "n_trades": 5
+        },
+        {
+          "start": "2025-12-11",
+          "end": "2026-01-01",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 22,
+          "toolkit_ret_pct": -2.95,
+          "strat_ret_pct": -2.95,
+          "end_eq": 1.4285,
+          "n_trades": 4
+        },
+        {
+          "start": "2026-01-02",
+          "end": "2026-01-19",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 18,
+          "toolkit_ret_pct": 3.95,
+          "strat_ret_pct": 3.95,
+          "end_eq": 1.4849,
+          "n_trades": 1
+        },
+        {
+          "start": "2026-01-20",
+          "end": "2026-03-10",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 50,
+          "toolkit_ret_pct": 7.44,
+          "strat_ret_pct": 7.44,
+          "end_eq": 1.5953,
+          "n_trades": 7
+        },
+        {
+          "start": "2026-03-11",
+          "end": "2026-03-25",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 15,
+          "toolkit_ret_pct": 0.56,
+          "strat_ret_pct": 0.56,
+          "end_eq": 1.6041,
+          "n_trades": 1
+        },
+        {
+          "start": "2026-03-26",
+          "end": "2026-04-13",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 19,
+          "toolkit_ret_pct": 1.98,
+          "strat_ret_pct": 1.98,
+          "end_eq": 1.636,
+          "n_trades": 1
+        },
+        {
+          "start": "2026-04-14",
+          "end": "2026-05-14",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 31,
+          "toolkit_ret_pct": -5.54,
+          "strat_ret_pct": -5.54,
+          "end_eq": 1.5453,
+          "n_trades": 5
+        },
+        {
+          "start": "2026-05-15",
+          "end": "2026-07-01",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 48,
+          "toolkit_ret_pct": -3.21,
+          "strat_ret_pct": -3.21,
+          "end_eq": 1.4957,
+          "n_trades": 12
+        },
+        {
+          "start": "2026-07-02",
+          "end": "2026-07-26",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 25,
+          "toolkit_ret_pct": -1.14,
+          "strat_ret_pct": -1.14,
+          "end_eq": 1.4787,
+          "n_trades": 3
+        }
+      ]
+    },
+    "oos_presample": {
+      "start": "2018-04-12",
+      "end": "2021-07-24",
+      "policy_c_eth": {
+        "return_pct": 615.32,
+        "multiple": 7.1532,
+        "mdd_pct": -48.56,
+        "bh_return_pct": 403.94,
+        "bh_mdd_pct": -89.5,
+        "beats_bh_return": true,
+        "better_mdd_than_bh": true,
+        "n_segments": 21,
+        "n_ok": 21
+      },
+      "segments": [
+        {
+          "start": "2018-04-15",
+          "end": "2018-05-22",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 38,
+          "toolkit_ret_pct": -5.84,
+          "strat_ret_pct": -5.84,
+          "end_eq": 0.9416,
+          "n_trades": 6
+        },
+        {
+          "start": "2018-05-23",
+          "end": "2018-10-23",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 154,
+          "toolkit_ret_pct": -29.54,
+          "strat_ret_pct": -29.54,
+          "end_eq": 0.6635,
+          "n_trades": 29
+        },
+        {
+          "start": "2018-10-24",
+          "end": "2018-11-13",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 21,
+          "toolkit_ret_pct": 0.84,
+          "strat_ret_pct": 0.84,
+          "end_eq": 0.6691,
+          "n_trades": 1
+        },
+        {
+          "start": "2018-11-14",
+          "end": "2018-12-19",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 36,
+          "toolkit_ret_pct": -5.76,
+          "strat_ret_pct": -5.76,
+          "end_eq": 0.6306,
+          "n_trades": 5
+        },
+        {
+          "start": "2018-12-20",
+          "end": "2019-01-19",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 31,
+          "toolkit_ret_pct": 3.95,
+          "strat_ret_pct": 3.95,
+          "end_eq": 0.6555,
+          "n_trades": 3
+        },
+        {
+          "start": "2019-01-20",
+          "end": "2019-02-07",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 19,
+          "toolkit_ret_pct": 2.04,
+          "strat_ret_pct": 2.04,
+          "end_eq": 0.6689,
+          "n_trades": 3
+        },
+        {
+          "start": "2019-02-08",
+          "end": "2019-03-08",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 29,
+          "toolkit_ret_pct": 40.43,
+          "strat_ret_pct": 40.43,
+          "end_eq": 0.9393,
+          "n_trades": 2
+        },
+        {
+          "start": "2019-03-09",
+          "end": "2019-04-01",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 24,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 0.9393,
+          "n_trades": 0
+        },
+        {
+          "start": "2019-04-02",
+          "end": "2019-05-02",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 31,
+          "toolkit_ret_pct": -5.9,
+          "strat_ret_pct": -5.9,
+          "end_eq": 0.8839,
+          "n_trades": 4
+        },
+        {
+          "start": "2019-05-03",
+          "end": "2019-07-10",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 69,
+          "toolkit_ret_pct": 37.75,
+          "strat_ret_pct": 37.75,
+          "end_eq": 1.2175,
+          "n_trades": 14
+        },
+        {
+          "start": "2019-07-11",
+          "end": "2019-09-23",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 75,
+          "toolkit_ret_pct": -2.65,
+          "strat_ret_pct": -2.65,
+          "end_eq": 1.1853,
+          "n_trades": 14
+        },
+        {
+          "start": "2019-09-24",
+          "end": "2019-10-25",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 32,
+          "toolkit_ret_pct": -6.65,
+          "strat_ret_pct": -6.65,
+          "end_eq": 1.1065,
+          "n_trades": 7
+        },
+        {
+          "start": "2019-10-26",
+          "end": "2019-11-22",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 28,
+          "toolkit_ret_pct": -2.58,
+          "strat_ret_pct": -2.58,
+          "end_eq": 1.0779,
+          "n_trades": 1
+        },
+        {
+          "start": "2019-11-23",
+          "end": "2020-01-05",
+          "regime": "bear",
+          "file": "strategies/_eth_policyC_xfer/eth-krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 44,
+          "toolkit_ret_pct": -1.82,
+          "strat_ret_pct": -1.82,
+          "end_eq": 1.0583,
+          "n_trades": 4
+        },
+        {
+          "start": "2020-01-06",
+          "end": "2020-07-21",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 198,
+          "toolkit_ret_pct": 72.51,
+          "strat_ret_pct": 72.51,
+          "end_eq": 1.8257,
+          "n_trades": 36
+        },
+        {
+          "start": "2020-07-22",
+          "end": "2020-09-11",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 52,
+          "toolkit_ret_pct": 3.58,
+          "strat_ret_pct": 3.58,
+          "end_eq": 1.8911,
+          "n_trades": 5
+        },
+        {
+          "start": "2020-09-12",
+          "end": "2020-11-07",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 57,
+          "toolkit_ret_pct": -5.45,
+          "strat_ret_pct": -5.45,
+          "end_eq": 1.7881,
+          "n_trades": 2
+        },
+        {
+          "start": "2020-11-08",
+          "end": "2021-03-14",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 127,
+          "toolkit_ret_pct": 206.68,
+          "strat_ret_pct": 206.68,
+          "end_eq": 5.4837,
+          "n_trades": 19
+        },
+        {
+          "start": "2021-03-15",
+          "end": "2021-04-02",
+          "regime": "sideways",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-sideways-mr-4h-v5.json",
+          "days": 19,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 5.4837,
+          "n_trades": 0
+        },
+        {
+          "start": "2021-04-03",
+          "end": "2021-05-18",
+          "regime": "bull",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 46,
+          "toolkit_ret_pct": 35.38,
+          "strat_ret_pct": 35.38,
+          "end_eq": 7.4239,
+          "n_trades": 4
+        },
+        {
+          "start": "2021-05-19",
+          "end": "2021-07-24",
+          "regime": "transition",
+          "file": "strategies/_eth_policyC_xfer/eth-regime-bull-trend-4h-v2.json",
+          "days": 67,
+          "toolkit_ret_pct": -3.65,
+          "strat_ret_pct": -3.65,
+          "end_eq": 7.1532,
+          "n_trades": 9
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "period": "2021-07-27 ~ 2026-07-26",
+  "initial_krw": 10000000.0,
+  "mode": "lump_sum_no_dca",
+  "btc_bh_price": 1.0935937809685305,
+  "A_policyC_segment_chain": {
+    "source": "reports/five-year/policyC-5y-v2bull-v5sw-path.json",
+    "map": {
+      "bull": "strategies/regime-bull-trend-4h-v2.json",
+      "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "sideways": "strategies/regime-sideways-mr-4h-v5.json",
+      "transition": "strategies/regime-bull-trend-4h-v2.json"
+    },
+    "pnl_pct": 4.258455072527616,
+    "multiple": 5.258455072527616,
+    "mdd_segment_marks": -0.15414763633599993,
+    "mdd_note": "MDD from segment-end marks only; ignores intra-segment drawdowns",
+    "compound_pct_file": 425.85,
+    "bh_chain_pct_file": 87.46,
+    "n_segments": 36
+  },
+  "B_50_50_pm12_cd30": {
+    "final_equity": 17740648.002754755,
+    "multiple": 1.7740648002754755,
+    "pnl_pct": 0.7740648002754755,
+    "mdd": -0.4529395537606766,
+    "fees": 7451.607878872752,
+    "rebalances": 6,
+    "final_w_btc": 0.4330042734836079,
+    "contributed": 10000000.0
+  },
+  "C_80_20_pm10_cd14": {
+    "final_equity": 20529902.98298061,
+    "multiple": 2.052990298298061,
+    "pnl_pct": 1.0529902982980608,
+    "mdd": -0.6575791094801582,
+    "fees": 6303.866810021918,
+    "rebalances": 3,
+    "final_w_btc": 0.7480501328597787,
+    "contributed": 10000000.0
+  },
+  "D_100pct_btc_hold": {
+    "final_equity": 20925469.840780463,
+    "multiple": 2.092546984078046,
+    "pnl_pct": 1.0925469840780462,
+    "mdd": -0.7412748915887621,
+    "fees": 5000.0,
+    "rebalances": 0,
+    "final_w_btc": 1.0,
+    "contributed": 10000000.0
+  },
+  "C2_70_30_pm10_cd14": {
+    "final_equity": 20475099.844056755,
+    "multiple": 2.0475099844056754,
+    "pnl_pct": 1.0475099844056754,
+    "mdd": -0.5851942101611385,
+    "fees": 9465.6049319003,
+    "rebalances": 7,
+    "final_w_btc": 0.7048168606860356,
+    "contributed": 10000000.0
+  }
+}

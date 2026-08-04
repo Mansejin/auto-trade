@@ -1,0 +1,60 @@
+{
+  "id": "AE13",
+  "updated_at": "2026-07-29T05:53:25Z",
+  "definition": "premium = KRW-BTC/(USDT-BTC*KRW-USDT)-1",
+  "overlap_days": 783,
+  "series_n": 782,
+  "train_n": 547,
+  "holdout_days": 235,
+  "train_rich_90pct": 0.004563296109377913,
+  "train_cheap_10pct": -0.0039805119590512915,
+  "H_rich": {
+    "id": "H_rich_fade",
+    "events": 21,
+    "stats": {
+      "n": 21,
+      "hit_rate": 0.3333,
+      "mean_pct": -0.6349,
+      "median_pct": -0.4983
+    },
+    "baseline": {
+      "n": 221,
+      "hit_rate": 0.4932,
+      "mean_pct": -0.1395,
+      "median_pct": -0.0273
+    },
+    "verdict": "RETAINED_for_research",
+    "falsified": false,
+    "reasons": []
+  },
+  "H_cheap": {
+    "id": "H_cheap_bounce",
+    "events": 43,
+    "stats": {
+      "n": 43,
+      "hit_rate": 0.4419,
+      "mean_pct": -0.3059,
+      "median_pct": -0.2807
+    },
+    "baseline": {
+      "n": 214,
+      "hit_rate": 0.4953,
+      "mean_pct": -0.1447,
+      "median_pct": -0.023
+    },
+    "verdict": "FALSIFIED",
+    "falsified": true,
+    "reasons": [
+      "holdout_mean<=baseline_mean",
+      "holdout_hit<=baseline_hit"
+    ]
+  },
+  "overall": "PARTIAL_RETAIN",
+  "promote": false,
+  "anti_overfit": [
+    "train first 70% by time for percentiles only",
+    "holdout last 30% scored once",
+    "no return-based threshold search",
+    "orthogonal to AE6–AE11 TA and AE7/AE12 funding"
+  ]
+}

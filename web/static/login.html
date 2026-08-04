@@ -10,9 +10,7 @@
       var base = "/";
       if (p.indexOf("/autotrade") === 0) base = "/autotrade/";
       window.__DESK_BASE__ = base;
-      var el = document.createElement("base");
-      el.href = base;
-      document.head.insertBefore(el, document.head.firstChild);
+      document.write('<base href="' + base + '">');
     })();
   </script>
   <link rel="stylesheet" href="static/desk.css" />
@@ -29,7 +27,6 @@
       </div>
       <p class="lede">봇 현황을 보려면 로그인하세요.</p>
       <form class="login-form" method="post" action="login">
-        <input type="hidden" name="csrf" value="{{CSRF}}" />
         <label for="token">비밀번호</label>
         <input id="token" name="token" type="password" autocomplete="current-password" required autofocus />
         <button type="submit">로그인</button>

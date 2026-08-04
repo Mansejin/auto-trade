@@ -1,0 +1,24 @@
+{
+  "_": "AE9/AE10 trend-continuation falsification",
+  "updated_at": "2026-07-29T04:50:00Z",
+  "anti_overfit": [
+    "no oversold-bounce retunes",
+    "ADX>=25 and DI filter frozen before results",
+    "early/prior windows decide; primary-vs-BH not enough"
+  ],
+  "AE9": {
+    "slug": "alpha-ae9-trend-pullback-4h",
+    "verdict": "FALSIFIED",
+    "early_oos_pf": 0.52,
+    "prior_pf": 0.02,
+    "report": "reports/improve/20260729-ae9-trend-pullback.md"
+  },
+  "AE10": {
+    "slug": "alpha-ae10-macd-trend-4h",
+    "verdict": "FALSIFIED",
+    "early_oos_pf": 0.0,
+    "early_oos_wr": 0,
+    "report": "reports/improve/20260729-ae10-macd-trend.md"
+  },
+  "next": "AE11 — daily trend or structural inefficiency; avoid more 4h MACD/EMA variants"
+}

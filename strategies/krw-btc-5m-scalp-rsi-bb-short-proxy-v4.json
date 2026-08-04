@@ -1,0 +1,64 @@
+{
+  "name": "KRW-BTC 5m Scalp RSI BB Short proxy v4",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "5m",
+  "stop_loss": 0.3,
+  "take_profit": 0.8,
+  "indicators": [
+    {
+      "type": "rsi",
+      "ref": "rsi14",
+      "params": {
+        "period": 14,
+        "signal_period": 9,
+        "signal_type": "EMA"
+      }
+    },
+    {
+      "type": "bollinger_bands",
+      "ref": "bb20",
+      "params": {
+        "period": 20,
+        "multiplier": 2.0
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "gt",
+        "right": { "type": "literal", "value": 75 }
+      },
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "gt",
+        "right": { "type": "indicator", "ref": "bb20.bb_upper" }
+      },
+      {
+        "left": { "type": "indicator", "ref": "adx14.adx" },
+        "op": "lt",
+        "right": { "type": "literal", "value": 30 }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "indicator", "ref": "rsi14.rsi" },
+        "op": "lt",
+        "right": { "type": "literal", "value": 1 }
+      }
+    ]
+  }
+}

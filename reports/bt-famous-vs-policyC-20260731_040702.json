@@ -1,0 +1,1491 @@
+{
+  "method": "same_regime_segments_toolkit_compound",
+  "maps": {
+    "policy_c": {
+      "bull": "strategies/regime-bull-trend-4h-v2.json",
+      "transition": "strategies/regime-bull-trend-4h-v2.json",
+      "bear": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "sideways": "strategies/regime-sideways-mr-4h-v5.json"
+    },
+    "famous": {
+      "bull": "strategies/famous-faber-10mo-sma-1d.json",
+      "transition": "strategies/famous-faber-10mo-sma-1d.json",
+      "bear": "strategies/famous-cash-flat-1d.json",
+      "sideways": "strategies/famous-wilder-rsi-mr-1d.json"
+    }
+  },
+  "windows": {
+    "in_sample_5y": {
+      "start": "2021-07-27",
+      "end": "2026-07-26",
+      "policy_c": {
+        "name": "policy_c",
+        "return_pct": 425.93,
+        "multiple": 5.2593,
+        "mdd_pct": -32.22,
+        "bh_return_pct": 109.36,
+        "bh_mdd_pct": -74.13,
+        "n_segments": 36,
+        "n_ok": 36
+      },
+      "famous": {
+        "name": "famous",
+        "return_pct": 31.06,
+        "multiple": 1.3106,
+        "mdd_pct": -16.96,
+        "bh_return_pct": 109.36,
+        "bh_mdd_pct": -74.13,
+        "n_segments": 36,
+        "n_ok": 36
+      },
+      "verdict": {
+        "famous_beats_pc_return": false,
+        "famous_better_mdd": true,
+        "return_gap_pct_p": -394.87,
+        "mdd_gap_pct_p": 15.26
+      }
+    },
+    "oos_presample": {
+      "start": "2018-04-12",
+      "end": "2021-07-24",
+      "policy_c": {
+        "name": "policy_c",
+        "return_pct": 387.42,
+        "multiple": 4.8742,
+        "mdd_pct": -36.67,
+        "bh_return_pct": 393.93,
+        "bh_mdd_pct": -66.55,
+        "n_segments": 25,
+        "n_ok": 25
+      },
+      "famous": {
+        "name": "famous",
+        "return_pct": 6.05,
+        "multiple": 1.0605,
+        "mdd_pct": -16.84,
+        "bh_return_pct": 393.93,
+        "bh_mdd_pct": -66.55,
+        "n_segments": 25,
+        "n_ok": 25
+      },
+      "verdict": {
+        "famous_beats_pc_return": false,
+        "famous_better_mdd": true,
+        "return_gap_pct_p": -381.37,
+        "mdd_gap_pct_p": 19.83
+      }
+    }
+  },
+  "detail": {
+    "in_sample_5y": {
+      "start": "2021-07-27",
+      "end": "2026-07-26",
+      "policy_c": {
+        "name": "policy_c",
+        "return_pct": 425.93,
+        "multiple": 5.2593,
+        "mdd_pct": -32.22,
+        "bh_return_pct": 109.36,
+        "bh_mdd_pct": -74.13,
+        "n_segments": 36,
+        "n_ok": 36
+      },
+      "famous": {
+        "name": "famous",
+        "return_pct": 31.06,
+        "multiple": 1.3106,
+        "mdd_pct": -16.96,
+        "bh_return_pct": 109.36,
+        "bh_mdd_pct": -74.13,
+        "n_segments": 36,
+        "n_ok": 36
+      },
+      "verdict": {
+        "famous_beats_pc_return": false,
+        "famous_better_mdd": true,
+        "return_gap_pct_p": -394.87,
+        "mdd_gap_pct_p": 15.26
+      },
+      "policy_c_segments": [
+        {
+          "start": "2021-07-27",
+          "end": "2021-09-30",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 66,
+          "toolkit_ret_pct": 4.52,
+          "strat_ret_pct": 4.52,
+          "end_eq": 1.0452,
+          "n_trades": 9
+        },
+        {
+          "start": "2021-10-01",
+          "end": "2021-12-03",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 64,
+          "toolkit_ret_pct": -3.48,
+          "strat_ret_pct": -3.48,
+          "end_eq": 1.0089,
+          "n_trades": 9
+        },
+        {
+          "start": "2021-12-04",
+          "end": "2022-01-17",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 45,
+          "toolkit_ret_pct": -8.37,
+          "strat_ret_pct": -8.37,
+          "end_eq": 0.9245,
+          "n_trades": 7
+        },
+        {
+          "start": "2022-01-18",
+          "end": "2022-03-08",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 50,
+          "toolkit_ret_pct": -4.36,
+          "strat_ret_pct": -4.36,
+          "end_eq": 0.8842,
+          "n_trades": 9
+        },
+        {
+          "start": "2022-03-09",
+          "end": "2022-05-08",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 61,
+          "toolkit_ret_pct": 9.22,
+          "strat_ret_pct": 9.22,
+          "end_eq": 0.9657,
+          "n_trades": 3
+        },
+        {
+          "start": "2022-05-09",
+          "end": "2022-09-29",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 144,
+          "toolkit_ret_pct": 1.22,
+          "strat_ret_pct": 1.22,
+          "end_eq": 0.9775,
+          "n_trades": 21
+        },
+        {
+          "start": "2022-09-30",
+          "end": "2022-11-07",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 39,
+          "toolkit_ret_pct": 3.22,
+          "strat_ret_pct": 3.22,
+          "end_eq": 1.0089,
+          "n_trades": 1
+        },
+        {
+          "start": "2022-11-08",
+          "end": "2023-01-10",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 64,
+          "toolkit_ret_pct": -2.51,
+          "strat_ret_pct": -2.51,
+          "end_eq": 0.9836,
+          "n_trades": 4
+        },
+        {
+          "start": "2023-01-11",
+          "end": "2023-02-17",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 38,
+          "toolkit_ret_pct": 15.31,
+          "strat_ret_pct": 15.31,
+          "end_eq": 1.1342,
+          "n_trades": 5
+        },
+        {
+          "start": "2023-02-18",
+          "end": "2023-05-03",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 75,
+          "toolkit_ret_pct": 21.4,
+          "strat_ret_pct": 21.4,
+          "end_eq": 1.377,
+          "n_trades": 11
+        },
+        {
+          "start": "2023-05-04",
+          "end": "2023-06-19",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 47,
+          "toolkit_ret_pct": 9.38,
+          "strat_ret_pct": 9.38,
+          "end_eq": 1.5061,
+          "n_trades": 6
+        },
+        {
+          "start": "2023-06-20",
+          "end": "2023-07-26",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 37,
+          "toolkit_ret_pct": -4.99,
+          "strat_ret_pct": -4.99,
+          "end_eq": 1.431,
+          "n_trades": 7
+        },
+        {
+          "start": "2023-07-27",
+          "end": "2023-10-02",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 68,
+          "toolkit_ret_pct": 1.86,
+          "strat_ret_pct": 1.86,
+          "end_eq": 1.4577,
+          "n_trades": 3
+        },
+        {
+          "start": "2023-10-03",
+          "end": "2023-10-26",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 24,
+          "toolkit_ret_pct": 25.5,
+          "strat_ret_pct": 25.5,
+          "end_eq": 1.8294,
+          "n_trades": 2
+        },
+        {
+          "start": "2023-10-27",
+          "end": "2024-01-03",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 69,
+          "toolkit_ret_pct": 16.32,
+          "strat_ret_pct": 16.32,
+          "end_eq": 2.128,
+          "n_trades": 11
+        },
+        {
+          "start": "2024-01-04",
+          "end": "2024-02-11",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 39,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 2.128,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-02-12",
+          "end": "2024-04-16",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 65,
+          "toolkit_ret_pct": 33.15,
+          "strat_ret_pct": 33.15,
+          "end_eq": 2.8334,
+          "n_trades": 7
+        },
+        {
+          "start": "2024-04-17",
+          "end": "2024-05-14",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 28,
+          "toolkit_ret_pct": -4.45,
+          "strat_ret_pct": -4.45,
+          "end_eq": 2.7074,
+          "n_trades": 5
+        },
+        {
+          "start": "2024-05-15",
+          "end": "2024-06-18",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 35,
+          "toolkit_ret_pct": 4.4,
+          "strat_ret_pct": 4.4,
+          "end_eq": 2.8264,
+          "n_trades": 7
+        },
+        {
+          "start": "2024-06-19",
+          "end": "2024-07-14",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 26,
+          "toolkit_ret_pct": 0.79,
+          "strat_ret_pct": 0.79,
+          "end_eq": 2.8488,
+          "n_trades": 3
+        },
+        {
+          "start": "2024-07-15",
+          "end": "2024-08-08",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 25,
+          "toolkit_ret_pct": -0.4,
+          "strat_ret_pct": -0.4,
+          "end_eq": 2.8374,
+          "n_trades": 1
+        },
+        {
+          "start": "2024-08-09",
+          "end": "2024-10-03",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 56,
+          "toolkit_ret_pct": -1.22,
+          "strat_ret_pct": -1.22,
+          "end_eq": 2.8027,
+          "n_trades": 8
+        },
+        {
+          "start": "2024-10-04",
+          "end": "2024-10-17",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 14,
+          "toolkit_ret_pct": 3.9,
+          "strat_ret_pct": 3.9,
+          "end_eq": 2.9119,
+          "n_trades": 1
+        },
+        {
+          "start": "2024-10-18",
+          "end": "2024-11-02",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 16,
+          "toolkit_ret_pct": 5.37,
+          "strat_ret_pct": 5.37,
+          "end_eq": 3.0684,
+          "n_trades": 1
+        },
+        {
+          "start": "2024-11-03",
+          "end": "2024-12-17",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 45,
+          "toolkit_ret_pct": 45.49,
+          "strat_ret_pct": 45.49,
+          "end_eq": 4.4642,
+          "n_trades": 5
+        },
+        {
+          "start": "2024-12-18",
+          "end": "2025-01-06",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 20,
+          "toolkit_ret_pct": 1.72,
+          "strat_ret_pct": 1.72,
+          "end_eq": 4.5412,
+          "n_trades": 2
+        },
+        {
+          "start": "2025-01-07",
+          "end": "2025-02-05",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 30,
+          "toolkit_ret_pct": 3.9,
+          "strat_ret_pct": 3.9,
+          "end_eq": 4.7181,
+          "n_trades": 1
+        },
+        {
+          "start": "2025-02-06",
+          "end": "2025-07-11",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 156,
+          "toolkit_ret_pct": 2.2,
+          "strat_ret_pct": 2.2,
+          "end_eq": 4.822,
+          "n_trades": 27
+        },
+        {
+          "start": "2025-07-12",
+          "end": "2025-11-03",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 115,
+          "toolkit_ret_pct": 1.12,
+          "strat_ret_pct": 1.12,
+          "end_eq": 4.8762,
+          "n_trades": 20
+        },
+        {
+          "start": "2025-11-04",
+          "end": "2025-11-26",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 23,
+          "toolkit_ret_pct": -4.34,
+          "strat_ret_pct": -4.34,
+          "end_eq": 4.6645,
+          "n_trades": 3
+        },
+        {
+          "start": "2025-11-27",
+          "end": "2026-01-03",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 38,
+          "toolkit_ret_pct": 1.07,
+          "strat_ret_pct": 1.07,
+          "end_eq": 4.7142,
+          "n_trades": 5
+        },
+        {
+          "start": "2026-01-04",
+          "end": "2026-01-19",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 16,
+          "toolkit_ret_pct": 3.08,
+          "strat_ret_pct": 3.08,
+          "end_eq": 4.8595,
+          "n_trades": 1
+        },
+        {
+          "start": "2026-01-20",
+          "end": "2026-03-23",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 63,
+          "toolkit_ret_pct": 6.56,
+          "strat_ret_pct": 6.56,
+          "end_eq": 5.1785,
+          "n_trades": 12
+        },
+        {
+          "start": "2026-03-24",
+          "end": "2026-04-21",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 29,
+          "toolkit_ret_pct": 1.19,
+          "strat_ret_pct": 1.19,
+          "end_eq": 5.24,
+          "n_trades": 1
+        },
+        {
+          "start": "2026-04-22",
+          "end": "2026-05-25",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 34,
+          "toolkit_ret_pct": -2.86,
+          "strat_ret_pct": -2.86,
+          "end_eq": 5.0899,
+          "n_trades": 6
+        },
+        {
+          "start": "2026-05-26",
+          "end": "2026-07-26",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 62,
+          "toolkit_ret_pct": 3.33,
+          "strat_ret_pct": 3.33,
+          "end_eq": 5.2593,
+          "n_trades": 8
+        }
+      ],
+      "famous_segments": [
+        {
+          "start": "2021-07-27",
+          "end": "2021-09-30",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 66,
+          "toolkit_ret_pct": -9.09,
+          "strat_ret_pct": -9.09,
+          "end_eq": 0.9091,
+          "n_trades": 4
+        },
+        {
+          "start": "2021-10-01",
+          "end": "2021-12-03",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 64,
+          "toolkit_ret_pct": 16.52,
+          "strat_ret_pct": 16.52,
+          "end_eq": 1.0593,
+          "n_trades": 1
+        },
+        {
+          "start": "2021-12-04",
+          "end": "2022-01-17",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 45,
+          "toolkit_ret_pct": -0.75,
+          "strat_ret_pct": -0.75,
+          "end_eq": 1.0514,
+          "n_trades": 1
+        },
+        {
+          "start": "2022-01-18",
+          "end": "2022-03-08",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 50,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0514,
+          "n_trades": 0
+        },
+        {
+          "start": "2022-03-09",
+          "end": "2022-05-08",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 61,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0514,
+          "n_trades": 0
+        },
+        {
+          "start": "2022-05-09",
+          "end": "2022-09-29",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 144,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0514,
+          "n_trades": 0
+        },
+        {
+          "start": "2022-09-30",
+          "end": "2022-11-07",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 39,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0514,
+          "n_trades": 0
+        },
+        {
+          "start": "2022-11-08",
+          "end": "2023-01-10",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 64,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0514,
+          "n_trades": 0
+        },
+        {
+          "start": "2023-01-11",
+          "end": "2023-02-17",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 38,
+          "toolkit_ret_pct": 12.79,
+          "strat_ret_pct": 12.79,
+          "end_eq": 1.1858,
+          "n_trades": 1
+        },
+        {
+          "start": "2023-02-18",
+          "end": "2023-05-03",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 75,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.1858,
+          "n_trades": 0
+        },
+        {
+          "start": "2023-05-04",
+          "end": "2023-06-19",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 47,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.1858,
+          "n_trades": 0
+        },
+        {
+          "start": "2023-06-20",
+          "end": "2023-07-26",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 37,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.1858,
+          "n_trades": 0
+        },
+        {
+          "start": "2023-07-27",
+          "end": "2023-10-02",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 68,
+          "toolkit_ret_pct": -1.4,
+          "strat_ret_pct": -1.4,
+          "end_eq": 1.1692,
+          "n_trades": 1
+        },
+        {
+          "start": "2023-10-03",
+          "end": "2023-10-26",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 24,
+          "toolkit_ret_pct": 16.38,
+          "strat_ret_pct": 16.38,
+          "end_eq": 1.3607,
+          "n_trades": 3
+        },
+        {
+          "start": "2023-10-27",
+          "end": "2024-01-03",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 69,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3607,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-01-04",
+          "end": "2024-02-11",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 39,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3607,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-02-12",
+          "end": "2024-04-16",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 65,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3607,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-04-17",
+          "end": "2024-05-14",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 28,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3607,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-05-15",
+          "end": "2024-06-18",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 35,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3607,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-06-19",
+          "end": "2024-07-14",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 26,
+          "toolkit_ret_pct": -4.26,
+          "strat_ret_pct": -4.26,
+          "end_eq": 1.3027,
+          "n_trades": 1
+        },
+        {
+          "start": "2024-07-15",
+          "end": "2024-08-08",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 25,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3027,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-08-09",
+          "end": "2024-10-03",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 56,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3027,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-10-04",
+          "end": "2024-10-17",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 14,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3027,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-10-18",
+          "end": "2024-11-02",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 16,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3027,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-11-03",
+          "end": "2024-12-17",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 45,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3027,
+          "n_trades": 0
+        },
+        {
+          "start": "2024-12-18",
+          "end": "2025-01-06",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 20,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3027,
+          "n_trades": 0
+        },
+        {
+          "start": "2025-01-07",
+          "end": "2025-02-05",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 30,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3027,
+          "n_trades": 0
+        },
+        {
+          "start": "2025-02-06",
+          "end": "2025-07-11",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 156,
+          "toolkit_ret_pct": 5.56,
+          "strat_ret_pct": 5.56,
+          "end_eq": 1.375,
+          "n_trades": 5
+        },
+        {
+          "start": "2025-07-12",
+          "end": "2025-11-03",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 115,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.375,
+          "n_trades": 0
+        },
+        {
+          "start": "2025-11-04",
+          "end": "2025-11-26",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 23,
+          "toolkit_ret_pct": -4.68,
+          "strat_ret_pct": -4.68,
+          "end_eq": 1.3106,
+          "n_trades": 2
+        },
+        {
+          "start": "2025-11-27",
+          "end": "2026-01-03",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 38,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3106,
+          "n_trades": 0
+        },
+        {
+          "start": "2026-01-04",
+          "end": "2026-01-19",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 16,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3106,
+          "n_trades": 0
+        },
+        {
+          "start": "2026-01-20",
+          "end": "2026-03-23",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 63,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3106,
+          "n_trades": 0
+        },
+        {
+          "start": "2026-03-24",
+          "end": "2026-04-21",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 29,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3106,
+          "n_trades": 0
+        },
+        {
+          "start": "2026-04-22",
+          "end": "2026-05-25",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 34,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3106,
+          "n_trades": 0
+        },
+        {
+          "start": "2026-05-26",
+          "end": "2026-07-26",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 62,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.3106,
+          "n_trades": 0
+        }
+      ]
+    },
+    "oos_presample": {
+      "start": "2018-04-12",
+      "end": "2021-07-24",
+      "policy_c": {
+        "name": "policy_c",
+        "return_pct": 387.42,
+        "multiple": 4.8742,
+        "mdd_pct": -36.67,
+        "bh_return_pct": 393.93,
+        "bh_mdd_pct": -66.55,
+        "n_segments": 25,
+        "n_ok": 25
+      },
+      "famous": {
+        "name": "famous",
+        "return_pct": 6.05,
+        "multiple": 1.0605,
+        "mdd_pct": -16.84,
+        "bh_return_pct": 393.93,
+        "bh_mdd_pct": -66.55,
+        "n_segments": 25,
+        "n_ok": 25
+      },
+      "verdict": {
+        "famous_beats_pc_return": false,
+        "famous_better_mdd": true,
+        "return_gap_pct_p": -381.37,
+        "mdd_gap_pct_p": 19.83
+      },
+      "policy_c_segments": [
+        {
+          "start": "2018-04-12",
+          "end": "2018-04-18",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 7,
+          "toolkit_ret_pct": -0.64,
+          "strat_ret_pct": -0.64,
+          "end_eq": 0.9936,
+          "n_trades": 1
+        },
+        {
+          "start": "2018-04-19",
+          "end": "2018-05-21",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 33,
+          "toolkit_ret_pct": -5.75,
+          "strat_ret_pct": -5.75,
+          "end_eq": 0.9365,
+          "n_trades": 5
+        },
+        {
+          "start": "2018-05-22",
+          "end": "2018-07-16",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 56,
+          "toolkit_ret_pct": -3.55,
+          "strat_ret_pct": -3.55,
+          "end_eq": 0.9033,
+          "n_trades": 7
+        },
+        {
+          "start": "2018-07-17",
+          "end": "2018-08-06",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 21,
+          "toolkit_ret_pct": -1.97,
+          "strat_ret_pct": -1.97,
+          "end_eq": 0.8855,
+          "n_trades": 1
+        },
+        {
+          "start": "2018-08-07",
+          "end": "2018-09-22",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 47,
+          "toolkit_ret_pct": -4.32,
+          "strat_ret_pct": -4.32,
+          "end_eq": 0.8473,
+          "n_trades": 6
+        },
+        {
+          "start": "2018-09-23",
+          "end": "2018-11-15",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 54,
+          "toolkit_ret_pct": -5.56,
+          "strat_ret_pct": -5.56,
+          "end_eq": 0.8002,
+          "n_trades": 3
+        },
+        {
+          "start": "2018-11-16",
+          "end": "2019-01-02",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 48,
+          "toolkit_ret_pct": -10.73,
+          "strat_ret_pct": -10.73,
+          "end_eq": 0.7143,
+          "n_trades": 9
+        },
+        {
+          "start": "2019-01-03",
+          "end": "2019-01-23",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 21,
+          "toolkit_ret_pct": -5.13,
+          "strat_ret_pct": -5.13,
+          "end_eq": 0.6777,
+          "n_trades": 2
+        },
+        {
+          "start": "2019-01-24",
+          "end": "2019-02-16",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 24,
+          "toolkit_ret_pct": -1.11,
+          "strat_ret_pct": -1.11,
+          "end_eq": 0.6701,
+          "n_trades": 3
+        },
+        {
+          "start": "2019-02-17",
+          "end": "2019-04-22",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 65,
+          "toolkit_ret_pct": 31.0,
+          "strat_ret_pct": 31.0,
+          "end_eq": 0.8779,
+          "n_trades": 9
+        },
+        {
+          "start": "2019-04-23",
+          "end": "2019-07-13",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 82,
+          "toolkit_ret_pct": 75.16,
+          "strat_ret_pct": 75.16,
+          "end_eq": 1.5376,
+          "n_trades": 11
+        },
+        {
+          "start": "2019-07-14",
+          "end": "2019-09-04",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 53,
+          "toolkit_ret_pct": 9.29,
+          "strat_ret_pct": 9.29,
+          "end_eq": 1.6805,
+          "n_trades": 7
+        },
+        {
+          "start": "2019-09-05",
+          "end": "2019-09-23",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 19,
+          "toolkit_ret_pct": 3.9,
+          "strat_ret_pct": 3.9,
+          "end_eq": 1.746,
+          "n_trades": 1
+        },
+        {
+          "start": "2019-09-24",
+          "end": "2019-11-20",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 58,
+          "toolkit_ret_pct": -1.88,
+          "strat_ret_pct": -1.88,
+          "end_eq": 1.7131,
+          "n_trades": 11
+        },
+        {
+          "start": "2019-11-21",
+          "end": "2020-01-08",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 49,
+          "toolkit_ret_pct": -2.0,
+          "strat_ret_pct": -2.0,
+          "end_eq": 1.6789,
+          "n_trades": 3
+        },
+        {
+          "start": "2020-01-09",
+          "end": "2020-04-10",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 93,
+          "toolkit_ret_pct": 23.96,
+          "strat_ret_pct": 23.96,
+          "end_eq": 2.0811,
+          "n_trades": 13
+        },
+        {
+          "start": "2020-04-11",
+          "end": "2020-04-29",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 19,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 2.0811,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-04-30",
+          "end": "2020-05-26",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 27,
+          "toolkit_ret_pct": 2.82,
+          "strat_ret_pct": 2.82,
+          "end_eq": 2.1398,
+          "n_trades": 2
+        },
+        {
+          "start": "2020-05-27",
+          "end": "2020-07-07",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 42,
+          "toolkit_ret_pct": -6.32,
+          "strat_ret_pct": -6.32,
+          "end_eq": 2.0045,
+          "n_trades": 10
+        },
+        {
+          "start": "2020-07-08",
+          "end": "2020-07-25",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 18,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 2.0045,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-07-26",
+          "end": "2020-09-24",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 61,
+          "toolkit_ret_pct": -2.17,
+          "strat_ret_pct": -2.17,
+          "end_eq": 1.961,
+          "n_trades": 11
+        },
+        {
+          "start": "2020-09-25",
+          "end": "2020-10-13",
+          "regime": "sideways",
+          "file": "strategies/regime-sideways-mr-4h-v5.json",
+          "days": 19,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.961,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-10-14",
+          "end": "2021-04-17",
+          "regime": "bull",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 186,
+          "toolkit_ret_pct": 177.56,
+          "strat_ret_pct": 177.56,
+          "end_eq": 5.443,
+          "n_trades": 22
+        },
+        {
+          "start": "2021-04-18",
+          "end": "2021-06-21",
+          "regime": "transition",
+          "file": "strategies/regime-bull-trend-4h-v2.json",
+          "days": 65,
+          "toolkit_ret_pct": -7.12,
+          "strat_ret_pct": -7.12,
+          "end_eq": 5.0556,
+          "n_trades": 10
+        },
+        {
+          "start": "2021-06-22",
+          "end": "2021-07-24",
+          "regime": "bear",
+          "file": "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+          "days": 33,
+          "toolkit_ret_pct": -3.59,
+          "strat_ret_pct": -3.59,
+          "end_eq": 4.8742,
+          "n_trades": 2
+        }
+      ],
+      "famous_segments": [
+        {
+          "start": "2018-04-12",
+          "end": "2018-04-18",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 7,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0,
+          "n_trades": 0
+        },
+        {
+          "start": "2018-04-19",
+          "end": "2018-05-21",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 33,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0,
+          "n_trades": 0
+        },
+        {
+          "start": "2018-05-22",
+          "end": "2018-07-16",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 56,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0,
+          "n_trades": 0
+        },
+        {
+          "start": "2018-07-17",
+          "end": "2018-08-06",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 21,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0,
+          "n_trades": 0
+        },
+        {
+          "start": "2018-08-07",
+          "end": "2018-09-22",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 47,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0,
+          "n_trades": 0
+        },
+        {
+          "start": "2018-09-23",
+          "end": "2018-11-15",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 54,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0,
+          "n_trades": 0
+        },
+        {
+          "start": "2018-11-16",
+          "end": "2019-01-02",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 48,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0,
+          "n_trades": 0
+        },
+        {
+          "start": "2019-01-03",
+          "end": "2019-01-23",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 21,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0,
+          "n_trades": 0
+        },
+        {
+          "start": "2019-01-24",
+          "end": "2019-02-16",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 24,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0,
+          "n_trades": 0
+        },
+        {
+          "start": "2019-02-17",
+          "end": "2019-04-22",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 65,
+          "toolkit_ret_pct": 15.15,
+          "strat_ret_pct": 15.15,
+          "end_eq": 1.1515,
+          "n_trades": 1
+        },
+        {
+          "start": "2019-04-23",
+          "end": "2019-07-13",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 82,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.1515,
+          "n_trades": 0
+        },
+        {
+          "start": "2019-07-14",
+          "end": "2019-09-04",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 53,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.1515,
+          "n_trades": 0
+        },
+        {
+          "start": "2019-09-05",
+          "end": "2019-09-23",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 19,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.1515,
+          "n_trades": 0
+        },
+        {
+          "start": "2019-09-24",
+          "end": "2019-11-20",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 58,
+          "toolkit_ret_pct": -1.41,
+          "strat_ret_pct": -1.41,
+          "end_eq": 1.1353,
+          "n_trades": 2
+        },
+        {
+          "start": "2019-11-21",
+          "end": "2020-01-08",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 49,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.1353,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-01-09",
+          "end": "2020-04-10",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 93,
+          "toolkit_ret_pct": -6.59,
+          "strat_ret_pct": -6.59,
+          "end_eq": 1.0605,
+          "n_trades": 1
+        },
+        {
+          "start": "2020-04-11",
+          "end": "2020-04-29",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 19,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0605,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-04-30",
+          "end": "2020-05-26",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 27,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0605,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-05-27",
+          "end": "2020-07-07",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 42,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0605,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-07-08",
+          "end": "2020-07-25",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 18,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0605,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-07-26",
+          "end": "2020-09-24",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 61,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0605,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-09-25",
+          "end": "2020-10-13",
+          "regime": "sideways",
+          "file": "strategies/famous-wilder-rsi-mr-1d.json",
+          "days": 19,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0605,
+          "n_trades": 0
+        },
+        {
+          "start": "2020-10-14",
+          "end": "2021-04-17",
+          "regime": "bull",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 186,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0605,
+          "n_trades": 0
+        },
+        {
+          "start": "2021-04-18",
+          "end": "2021-06-21",
+          "regime": "transition",
+          "file": "strategies/famous-faber-10mo-sma-1d.json",
+          "days": 65,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0605,
+          "n_trades": 0
+        },
+        {
+          "start": "2021-06-22",
+          "end": "2021-07-24",
+          "regime": "bear",
+          "file": "strategies/famous-cash-flat-1d.json",
+          "days": 33,
+          "toolkit_ret_pct": 0.0,
+          "strat_ret_pct": 0.0,
+          "end_eq": 1.0605,
+          "n_trades": 0
+        }
+      ]
+    }
+  }
+}

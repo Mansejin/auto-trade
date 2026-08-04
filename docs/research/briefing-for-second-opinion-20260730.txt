@@ -1,0 +1,249 @@
+================================================================================
+AUTO-TRADE 전략·운용 브리핑 (제3자 / 제미나이 2차 의견용)
+작성일: 2026-07-30 (KST)
+목적: 현재 라이브 구성과 백테스트 근거를 한 파일에 모아, 과적합·의미 여부를
+      외부 모델이 독립적으로 평가할 수 있게 함.
+투자 조언 아님. 과거 백테스트 ≠ 미래 수익.
+================================================================================
+
+--------------------------------------------------------------------------------
+0. 한 줄 요약
+--------------------------------------------------------------------------------
+- 자본 의도: 장타(CORE) 50% Upbit + 단타(SCALP) 50% Bitget.
+- 장타: Regime Policy C (일봉 레짐 → 전문 전략 JSON 1개).
+- 단타: bear만 DaytradeEdge Div+ATR (연구 10m → Bitget 라이브 15m);
+        sideways는 BB fade 후보; bull/transition 단타는 cash.
+- 실거래 서버: Oracle VPS Docker (upbit-paper-bot, bitget-futures-bot).
+- 현재 총자산 매우 작음(~4만원 규모). 50만원 미만은 TRX 리밸런스 스킵.
+- 내부 1차 평가: Policy C는 상대적 의미 있음(과적합 중간).
+  Div ATR 단타는 방어용·조건부(과적합 높음). 시드 확보가 우선.
+
+
+--------------------------------------------------------------------------------
+1. 운용 프레임 (Dual sleeve)
+--------------------------------------------------------------------------------
+의도 문서: config/sleeves.json v3, docs/dual-sleeve-allocation.md
+
+| Sleeve | 비중 | 거래소 | 봇 | 역할 |
+|--------|------|--------|-----|------|
+| CORE 장타 | 50% | Upbit spot KRW-BTC | upbit-paper-bot | Policy C 레짐 스위치 |
+| SCALP 단타 | 50% | Bitget UTA USDT-M | bitget-futures-bot | 레짐별 단타 / cash |
+
+Venue 5:5 = sleeve 5:5 (장타는 Upbit만, 단타는 Bitget만).
+
+자본 규칙 (인간 확정 2026-07-30):
+- 총자산 < 500,000 KRW → 리밸런스(TRX 브릿지) 하지 않음 (수수료 아깝다).
+  env: REBALANCE_MIN_TOTAL_KRW=500000
+- 리밸런스 목표: Upbit share 50% ± 12%p (REBALANCE_TARGET=0.5, BAND=0.12)
+- 최소 이동액: REBALANCE_MIN_MOVE_KRW=50000 (단, 총액 50만 미만이면 제안 자체 스킵)
+- 레버리지: 봇이 레버를 올리지 않음. 포지션 사이즈 ≈ 가용 USDT / 가격 → 사실상 1x 노출.
+  시드가 커지기 전 레버 상향은 비권장.
+
+
+--------------------------------------------------------------------------------
+2. 현재 라이브 상태 (Oracle, 2026-07-30 저녁 기준)
+--------------------------------------------------------------------------------
+호스트: ubuntu@129.225.205.185 (ssh Host auto-trade-bot)
+
+[Upbit CORE]
+- 컨테이너: upbit-paper-bot (healthy, LIVE)
+- 레짐 분류(닫힌 일봉): bear
+  (예: close < SMA200, SMA50 < SMA200, -DI > +DI, ADX≈28)
+- STRATEGY_PATH: krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json
+  ※ Policy C에서 bear 카드가 곧 m5-v6 임. "Policy C ≠ m5-v6"이 아님.
+- 일일 cron: 20 15 * * * scripts/run-regime-switch.sh
+- 잔고 스냅샷(대략): KRW ~19,399 + TRX ~12 (리밸런스 시도 중 매수 잔여) ;
+  포지션 없음(현금).
+
+[Bitget SCALP]
+- 컨테이너: bitget-futures-bot (healthy, LIVE)
+- 전략: Bitget SCALP DaytradeEdge Div ATR v1 (15m)
+  파일: strategies/bitget-scalp-div-atr-v1.json
+  BITGET_STRATEGY_PATH=/app/strategies/bitget-scalp-div-atr-v1.json
+- 마진: isolated, ORDER_FRACTION=1.0, 레버리지 명시 설정 없음 → ~1x
+- 잔고 스냅샷(대략): USDT ~9.83 ; 포지션 없음.
+
+[총자산]
+- 환산 합계 ~39,000 KRW 전후 (Upbit ~64% / Bitget ~36%)
+- 50만 미만 → 리밸런스 스킵 중.
+- 시드 목표(내부 가이드): 총 ≥50만 / 슬리브당 ≥~25만 부터 "의미 있는 칸".
+  단타가 수수료에 덜 치이려면 Bitget 대략 ≥100–150 USDT 권장 구간.
+
+
+--------------------------------------------------------------------------------
+3. Policy C (장타 CORE) — 규칙
+--------------------------------------------------------------------------------
+문서: docs/regime-auto-switch-playbook.md
+분류: 닫힌 일봉만 (scripts/remote_regime_switch.py / regime_select.py)
+
+레짐 규칙 v2:
+- sideways: ADX14 < 20
+- bull: ADX>=20 AND close>SMA200 AND SMA50>SMA200 AND +DI >= -DI
+- bear: ADX>=20 AND close<SMA200 AND SMA50<SMA200 AND close<SMA50 AND -DI > +DI
+- else: transition
+
+맵 (MUST):
+| Regime | Strategy file | TF |
+|--------|---------------|-----|
+| bull | regime-bull-trend-4h-v2.json | 4h |
+| transition | regime-bull-trend-4h-v2.json (의도적 매핑) | 4h |
+| bear | krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json | 1h |
+| sideways | regime-sideways-mr-4h-v5.json | 4h |
+
+Ops 가드:
+- 전환 후 24h dwell
+- 포지션 있으면 스위치 skip (자동 시장가 청산 없음)
+- 스위치 ≠ 전략 재설계; 월간 감사는 별도
+
+알려진 비용:
+- 레짐 래그: risk-off 전환 시 7일 BTC MDD 중앙값 ≈ -5.45%, 최악 ≈ -15.5%
+  (reports/improve/20260729-ae12-lag-mdd.md)
+
+
+--------------------------------------------------------------------------------
+4. Policy C — 백테스트 근거 (fair race)
+--------------------------------------------------------------------------------
+문서: docs/research/fair-race-policyC-vs-rebalance.md
+아티팩트: reports/bt-fair-race-continuous-20260730_121105.json
+창: 2021-07-27 → 2026-07-26, 일시금 10M KRW, DCA 없음
+방법: 세그먼트 toolkit BT를 일별 equity로 이어붙인 continuous curve
+      (마찰·슬리피지·체결 가정 있음 → 낙관 편향 가능)
+
+| ID | 전략 | Return | Multiple | MDD(daily) |
+|----|------|-------:|---------:|-----------:|
+| A | Policy C continuous | +425.8% | 5.26× | −32.2% |
+| B | 50:50 ±12%p cd30 | +77.4% | 1.77× | −45.3% |
+| C | 80:20 ±10%p cd14 | +105.3% | 2.05× | −65.8% |
+| D | 100% BTC hold | +109.3% | 2.09× | −74.1% |
+
+주장(연구 측): Policy C가 return·MDD 모두에서 hold/리밸런스 대비 우위.
+주의: daytrade-edge(단타)는 이 fair race에 포함되지 않음.
+
+
+--------------------------------------------------------------------------------
+5. 단타 SCALP — Div ATR (현재 LIVE)
+--------------------------------------------------------------------------------
+연구 JSON: strategies/daytrade-edge-10m-div-atr-v1.json (Upbit KRW-BTC, 10m)
+라이브 JSON: strategies/bitget-scalp-div-atr-v1.json (Bitget BTCUSDT, 15m)
+  ※ Bitget UTA 캔들에 10m 없음 → 15m 이식. 인코딩 드리프트 가능.
+
+아이디어 (롱 온리):
+- BB(20,2) 하단 근처 + RSI 다이버전스(classic 또는 hidden, lookback 3)
+- AND ATR이 3봉 전 대비 상승 (변동성 확대 필터)
+- 청산: close >= BB 상단 OR SL 0.8% OR TP 2.5%
+- 수수료 가정(연구): ~0.05–0.06%대; Bitget 라이브 fee_rate 설정 별도
+
+가설 성격:
+- "절대 수익 엔진"이 아니라
+  "베어/약세에서 BTC buy&hold 대비 덜 죽는 데이트레이드 방어"
+- bull 데이트레이드 풀백 시리즈(v1–v9)는 폐기; bull 단타 슬롯 = cash
+
+
+--------------------------------------------------------------------------------
+6. Div ATR — 대표 백테스트 수치 (Upbit toolkit, 10m)
+--------------------------------------------------------------------------------
+출처 CSV 예:
+- reports/daytrade-edge-10m-div-atr-v1-20260730_052420.csv  (베어성 1년)
+- reports/daytrade-edge-10m-div-atr-v1-20260730_052527.csv  (5년)
+- reports/daytrade-edge-10m-div-atr-v1-20260730_052605.csv  (강세 구간)
+
+| Period | Strategy ret | Benchmark (BTC) | MDD | Trades | WR(fee前) | PF(fee前) |
+|--------|-------------:|----------------:|----:|-------:|----------:|----------:|
+| 2025-07-29 ~ 2026-07-29 | +2.29% | −42.94% | −6.19% | 74 | 56.8% | 1.42 |
+| 2021-07-29 ~ 2026-07-29 | +9.91% | +100.44% | −14.34% | 353 | 54.1% | 1.37 |
+| 2023-10-01 ~ 2024-10-01 | −8.04% | +128.65% | −13.27% | 63 | 49.2% | 0.91 |
+
+해석:
+- 베어 해: hold 대비 크게 방어 (+2% vs −43%).
+- 5년·강세: hold를 크게 짐. 상시 가동 알파 아님.
+- 강세 구간 PF<1 → 레짐 게이트(bull=cash) 없으면 위험.
+
+Sideways 후보: daytrade-edge-side-15m-bb-fade-v5 (라이브 맵에 있으나
+현재 Oracle은 bear → div-atr만 가동).
+
+
+--------------------------------------------------------------------------------
+7. 기각·금지된 것 (중요 — 과적합 쇼핑 방지)
+--------------------------------------------------------------------------------
+- always-on m5-v6 alone: 5y sequential에서 falsified → Policy C로 대체
+- Bull daytrade pullback v1–v9
+- Long→short MIRRORs of daytrade-edge / BB-RSI MR (BearShort v1–v13, 특히 v13)
+- RSI 임계값만 살짝 바꾸는 넛지 리트라이
+- 동일 인코딩 새 slug만 바꿔 재실행
+- 단타 승격이 Policy C 맵을 자동으로 덮어쓰는 것 금지
+
+숏 슬롯: 비어 있음. funding fade / alt perps / liquidity sweep /
+HTF+failed reclaim 등 미러 아닌 축만 허용
+(docs/scalp-short-edge-automation-prompt.md).
+
+
+--------------------------------------------------------------------------------
+8. 내부 1차 평가 (Cursor 에이전트, 2026-07-30) — 반박용으로 제시
+--------------------------------------------------------------------------------
+Policy C:
+- 의미: 상대적으로 YES (테스트한 대안 대비).
+- 과적합: MEDIUM — 카드 hypers는 적지만 ADX20·TF 배정·transition→bull이
+  최근 5년에 fit되었을 수 있음. continuous equity도 세그먼트 BT 조립.
+- 성격: 성배가 아니라 "레짐별 전문 카드 포트폴리오 규칙".
+
+Div ATR SCALP:
+- 의미: WEAK / CONDITIONAL — 베어 방어용. 자산 증식 엔진 아님.
+- 과적합: HIGH — 다수 데이트레이드 후보 중 생존자(survivorship),
+  10m→15m 이식, 타이트 SL+수수료 민감.
+- LIVE 정당화: bear에만 켜고 bull cash — 이 게이트가 없으면 연구 수치상 위험.
+
+운용 프레임 전체:
+- 지금 시드 규모에서는 기대 알파보다 "규율·자동화 학습"에 가깝다.
+- 시드(총≥50만) 모은 뒤 5:5·실전 추적하는 판단과 정합.
+
+
+--------------------------------------------------------------------------------
+9. 제미나이에게 부탁하고 싶은 질문 (복붙용)
+--------------------------------------------------------------------------------
+1) 위 근거만 놓고 Policy C를 "실거래할 만한 규칙"으로 볼 수 있는가?
+   과적합·조립 바이어스·레짐 래그를 감안하면 신뢰 구간을 어떻게 보나?
+2) Div ATR을 bear-only 단타 슬리브로 두는 것이 합리적인가,
+   아니면 cash만 두는 편이 나은가?
+3) 총자산 <50만원에서 리밸런스/레버를 하지 않는 운영이 타당한가?
+4) 추가로 필요한 기각 테스트( walk-forward, fee stress, Bitget 15m 재검증 등)
+   우선순위를 제안해 달라.
+5) 동의하지 않는 내부 1차 평가(섹션 8)가 있으면 구체적으로 반박해 달라.
+
+
+--------------------------------------------------------------------------------
+10. 주요 파일 경로 (레포 Mansejin/auto-trade)
+--------------------------------------------------------------------------------
+- config/sleeves.json
+- config/scalp-live-map.json
+- docs/dual-sleeve-allocation.md
+- docs/regime-auto-switch-playbook.md
+- docs/scalp-live-playbook.md
+- docs/research/fair-race-policyC-vs-rebalance.md
+- docs/research/regime-daytrade-edge-pack-frozen.md
+- strategies/daytrade-edge-10m-div-atr-v1.json
+- strategies/bitget-scalp-div-atr-v1.json
+- strategies/regime-bull-trend-4h-v2.json
+- strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json
+- strategies/regime-sideways-mr-4h-v5.json
+- reports/bt-fair-race-continuous-20260730_121105.json
+- reports/daytrade-edge-10m-div-atr-v1-20260730_052420.csv
+- reports/daytrade-edge-10m-div-atr-v1-20260730_052527.csv
+- reports/daytrade-edge-10m-div-atr-v1-20260730_052605.csv
+
+================================================================================
+END OF BRIEFING
+================================================================================
+
+--------------------------------------------------------------------------------
+11. UPDATE 2026-07-30 ? Policy C OOS (pre-sample) + SCALP stopped
+--------------------------------------------------------------------------------
+SCALP LIVE: OFF. bitget-futures-bot stopped (compose profile scalp). CORE Policy C only.
+
+Policy C OOS effective 2018-04-12 �� 2021-07-24 (25 segments, frozen map):
+  Policy C return +387.4% / MDD -36.7%
+  BTC hold aligned +393.9% / MDD -66.6%
+  beats_bh_return_aligned = false
+  beats_bh_mdd_aligned = true
+Docs: docs/research/policyC-oos-presample-2018-2021.md
+JSON: reports/bt-policyC-oos-presample-20260730_132503.json
+

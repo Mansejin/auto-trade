@@ -1,0 +1,121 @@
+﻿
+
+===== bb-reclaim-v2 | SW1 2025-06-05~2025-07-13 =====
+Period      2025-06-05 ~ 2025-07-13 (UTC) (trading bars: 909, warmup bars: 29)
+Benchmark   +9.89%
+Total Return +2.07%
+MDD         -0.67%
+Sharpe      73.05  (Rf=0, trades / position holding periods only)
+Trades      4  Win Rate 100% (before fees)
+Profit Factor  ∞ (before fees)
+SL 0 / TP 0 / sell 4 / final_bar 0
+
+===== bb-reclaim-v2 | SW2 2025-08-20~2025-10-02 =====
+Period      2025-08-20 ~ 2025-10-02 (UTC) (trading bars: 1033, warmup bars: 29)
+Benchmark   +5.68%
+Total Return +1.11%
+MDD         -2.35%
+Sharpe      6.27  (Rf=0, trades / position holding periods only)
+Trades      10  Win Rate 80% (before fees)
+Profit Factor  1.83 (before fees)
+SL 0 / TP 1 / sell 9 / final_bar 0
+
+===== bb-reclaim-v2 | SW3 2026-03-24~2026-04-22 =====
+Period      2026-03-24 ~ 2026-04-22 (UTC) (trading bars: 693, warmup bars: 29)
+Benchmark   +7.14%
+Total Return -1.23%
+MDD         -1.69%
+Sharpe      -14.16  (Rf=0, trades / position holding periods only)
+Trades      2  Win Rate 50% (before fees)
+Profit Factor  0.29 (before fees)
+SL 0 / TP 0 / sell 2 / final_bar 0
+
+===== stochrsi-v2 | SW1 2025-06-05~2025-07-13 =====
+Period      2025-06-05 ~ 2025-07-13 (UTC) (trading bars: 909, warmup bars: 31)
+Benchmark   +9.89%
+Total Return +0.45%
+MDD         -1.31%
+Sharpe      17.42  (Rf=0, trades / position holding periods only)
+Trades      15  Win Rate 60% (before fees)
+Profit Factor  2.82 (before fees)
+SL 0 / TP 0 / sell 15 / final_bar 0
+
+===== stochrsi-v2 | SW2 2025-08-20~2025-10-02 =====
+Period      2025-08-20 ~ 2025-10-02 (UTC) (trading bars: 1033, warmup bars: 31)
+Benchmark   +5.68%
+Total Return -3.62%
+MDD         -4.05%
+Sharpe      -5.67  (Rf=0, trades / position holding periods only)
+Trades      25  Win Rate 48% (before fees)
+Profit Factor  0.74 (before fees)
+SL 0 / TP 0 / sell 25 / final_bar 0
+
+===== stochrsi-v2 | SW3 2026-03-24~2026-04-22 =====
+Period      2026-03-24 ~ 2026-04-22 (UTC) (trading bars: 693, warmup bars: 31)
+Benchmark   +7.14%
+Total Return +0.51%
+MDD         -2.05%
+Sharpe      7.83  (Rf=0, trades / position holding periods only)
+Trades      9  Win Rate 56% (before fees)
+Profit Factor  1.53 (before fees)
+SL 0 / TP 0 / sell 8 / final_bar 1
+
+===== adx-switch-v1 | SW1 2025-06-05~2025-07-13 =====
+Period      2025-06-05 ~ 2025-07-13 (UTC) (trading bars: 909, warmup bars: 29)
+Benchmark   +9.89%
+Total Return +2.65%
+MDD         -0.38%
+Sharpe      53.41  (Rf=0, trades / position holding periods only)
+Trades      4  Win Rate 75% (before fees)
+Profit Factor  50.42 (before fees)
+SL 0 / TP 0 / sell 4 / final_bar 0
+
+===== adx-switch-v1 | SW2 2025-08-20~2025-10-02 =====
+Period      2025-08-20 ~ 2025-10-02 (UTC) (trading bars: 1033, warmup bars: 29)
+Benchmark   +5.68%
+Total Return +1.16%
+MDD         -2.69%
+Sharpe      11.46  (Rf=0, trades / position holding periods only)
+Trades      8  Win Rate 62% (before fees)
+Profit Factor  1.89 (before fees)
+SL 0 / TP 0 / sell 8 / final_bar 0
+
+===== adx-switch-v1 | SW3 2026-03-24~2026-04-22 =====
+Period      2026-03-24 ~ 2026-04-22 (UTC) (trading bars: 693, warmup bars: 29)
+Benchmark   +7.14%
+Total Return -1.23%
+MDD         -1.55%
+Sharpe      -60.28  (Rf=0, trades / position holding periods only)
+Trades      2  Win Rate 0% (before fees)
+Profit Factor  0.00 (before fees)
+SL 0 / TP 0 / sell 2 / final_bar 0
+
+===== policyC-v5-4h | SW1 2025-06-05~2025-07-13 =====
+Period      2025-06-05 ~ 2025-07-13 (UTC) (trading bars: 229, warmup bars: 29)
+Benchmark   +10.52%
+Total Return +2.55%
+MDD         -0.32%
+Sharpe      0.00  (Rf=0, trades / position holding periods only)
+Trades      1  Win Rate 100% (before fees)
+Profit Factor  ∞ (before fees)
+SL 0 / TP 0 / sell 1 / final_bar 0
+
+===== policyC-v5-4h | SW2 2025-08-20~2025-10-02 =====
+Period      2025-08-20 ~ 2025-10-02 (UTC) (trading bars: 259, warmup bars: 29)
+Benchmark   +6.02%
+Total Return +0.86%
+MDD         -0.85%
+Sharpe      0.00  (Rf=0, trades / position holding periods only)
+Trades      1  Win Rate 100% (before fees)
+Profit Factor  ∞ (before fees)
+SL 0 / TP 0 / sell 1 / final_bar 0
+
+===== policyC-v5-4h | SW3 2026-03-24~2026-04-22 =====
+Period      2026-03-24 ~ 2026-04-22 (UTC) (trading bars: 175, warmup bars: 29)
+Benchmark   +9.05%
+Total Return +1.19%
+MDD         -1.11%
+Sharpe      0.00  (Rf=0, trades / position holding periods only)
+Trades      1  Win Rate 100% (before fees)
+Profit Factor  ∞ (before fees)
+SL 0 / TP 0 / sell 1 / final_bar 0

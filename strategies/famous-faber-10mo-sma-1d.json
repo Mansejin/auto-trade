@@ -1,0 +1,35 @@
+{
+  "name": "Famous Faber SMA200 Timing 1d",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "1d",
+  "stop_loss": 35,
+  "take_profit": 150,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "sma200",
+      "params": { "type": "SMA", "period": 200 }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "cross_above",
+        "right": { "type": "indicator", "ref": "sma200.value" }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "cross_below",
+        "right": { "type": "indicator", "ref": "sma200.value" }
+      }
+    ]
+  }
+}

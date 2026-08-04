@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "updated": "2026-07-30",
+  "venue": "bitget_uta_futures",
+  "bot": "bitget-futures-bot",
+  "host": "nas",
+  "capital_pct": 50,
+  "status": "stopped_cash",
+  "fee": 0.0006,
+  "map": {
+    "bull": null,
+    "transition": null,
+    "bear": null,
+    "sideways": null
+  },
+  "switch_notes": [
+    "2026-07-30: Div ATR + all SCALP LIVE stopped after second-opinion (fee/slippage/TF-drift). Bear scalp = cash.",
+    "bot-bitget is compose profile 'scalp' — default `docker compose up -d` does NOT start it.",
+    "CORE Policy C on Upbit remains the only active LIVE sleeve until a scalp card re-passes falsification."
+  ],
+  "parked": {
+    "bear_was": "bitget-scalp-div-atr-v1",
+    "sideways_was": "SidewaysEdge15mBbFadeV5",
+    "reason": "Gemini+agent: Div ATR not worth fee risk as bear defense; cash dominates"
+  }
+}
