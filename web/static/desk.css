@@ -494,9 +494,14 @@ a.ghost-btn.link-btn {
 
 .bottom {
   display: grid;
-  grid-template-columns: 1fr 1.15fr 1fr;
+  grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr;
   gap: 0;
   background: var(--bg);
+}
+
+.panel-sleeves {
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
 }
 
 .tick-more {
@@ -519,9 +524,23 @@ a.ghost-btn.link-btn {
   background: var(--bg-hover);
 }
 
+@media (max-width: 1400px) {
+  .bottom {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .panel-sleeves {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 1100px) {
   .bottom {
     grid-template-columns: 1fr;
+  }
+
+  .panel-sleeves {
+    grid-column: auto;
   }
 
   .topbar {

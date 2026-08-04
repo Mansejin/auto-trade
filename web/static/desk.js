@@ -356,9 +356,10 @@
     }
   }
 
-  function renderTrades(rows) {
-    const ul = document.getElementById("trades");
-    const empty = document.getElementById("trades-empty");
+  function renderTrades(rows, quote, ulId, emptyId) {
+    const ul = document.getElementById(ulId || "trades");
+    const empty = document.getElementById(emptyId || "trades-empty");
+    if (!ul || !empty) return;
     ul.innerHTML = "";
     if (!rows || !rows.length) {
       empty.classList.remove("hidden");
@@ -372,7 +373,7 @@
       sideEl.className = side === "buy" ? "side-buy" : "side-sell";
       sideEl.textContent = side === "buy" ? "매수" : "매도";
       const mid = document.createElement("span");
-      mid.textContent = `${money(t.price)} · ${qty(t.qty)}`;
+      mid.textContent = `${money(t.price, quote)} · ${qty(t.qty)}`;
       const ts = document.createElement("span");
       ts.className = "muted";
       ts.textContent = String(t.ts || "").replace("T", " ").slice(0, 19);
@@ -465,6 +466,16 @@
     }
     document.getElementById("m-bitget").textContent =
       bg.cash != null ? money(bg.cash, "USDT") : scalpCash ? "cash" : "—";
+    const bgSig = document.getElementById("m-bg-signal");
+    if (bgSig) bgSig.textContent = SIGNAL_KO[bg.signal] || bg.signal || (scalpCash ? "중지" : "—");
+    const bgPos = document.getElementById("m-bg-pos");
+    if (bgPos) {
+      if (bg.position && bg.position.qty) {
+        bgPos.textContent = `${qty(bg.position.qty)} @ ${money(bg.position.entry_price, "USDT")}`;
+      } else {
+        bgPos.textContent = scalpCash ? "—" : "없음";
+      }
+    }
 
     const xfer = data.transfer || null;
     const xferEl = document.getElementById("m-xfer");
@@ -524,7 +535,8 @@
       bg.latest_text || (scalpCash ? "(SCALP 중지 · Bitget 로그 없음)" : "(상태 텍스트 없음)");
     renderSleeves(data);
     renderSwitchHistory(data.switch_history || []);
-    renderTrades(data.recent_trades || []);
+    renderTrades(data.recent_trades || [], "KRW", "trades", "trades-empty");
+    renderTrades(bg.recent_trades || [], "USDT", "bg-trades", "bg-trades-empty");
 
     try {
       await updateCharts(data);

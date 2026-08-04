@@ -9,40 +9,36 @@
 
 ## 요약
 
-Upbit 전용이던 대시보드를 **Upbit + Bitget 동시 표시**로 확장했다.  
-상단 티커·체결·상태 텍스트를 거래소별로 분리하고, USDT 잔고는 **소수 2자리**로 읽기 쉽게 맞췄다.
+Upbit 전용이던 대시보드를 **Upbit + Bitget 동시 표시**로 확장했고, Policy C **슬리브·스위치·자산** 패널을 같은 화면에 붙였다.  
+USDT 잔고는 **소수 2자리**. 모바일은 1차 틱만 보이고 **더보기**로 2차 틱(UB/BG 시그널·포지션 등)을 펼친다.
 
 ---
 
-## 1. 상단 티커 (듀얼 거래소)
-
-이전: 모드 / 시그널 / 원화 / 포지션 / (선택) Bitget 잔고 정도만 섞여 표시.
+## 1. 상단 티커 (듀얼 거래소 + 레짐)
 
 현재 (`index.html` ticker-strip):
 
 | 구역 | 항목 |
 |------|------|
-| Upbit | 시그널, 원화(현금), 포지션 |
-| Bitget | 시그널, USDT, 포지션 |
-| 공통 | 리스크(halt 등), 갱신 시각, 로그아웃 |
+| 1차 | 레짐, CORE, 스위치, 리스크 (+ 더보기) |
+| 2차 Upbit | UB시그널, 원화, UB포지션 |
+| 2차 Bitget | BG시그널, USDT, BG포지션 |
+| 기타 | SCALP, 이체(pending) |
 
-- Bitget 현금은 `status.json`의 `cash` / `usdt` 또는 `bitget_state.json`을 합쳐 API `bitget.cash`로 내려준다.
-- 라벨은 견적통화에 맞게 동작 (`KRW` ↔ `USDT`).
+- Bitget 현금은 API `bitget.cash` (`status.json` / `bitget_state.json` 병합).
 
 ---
 
-## 2. 하단 패널 분리
-
-이전: 체결 목록 + 상태 텍스트가 Upbit 중심 1~2패널.
-
-현재 4패널:
+## 2. 하단 패널
 
 1. **Upbit 체결** — `state.json` trades 최근 8건  
 2. **Bitget 체결** — `bitget_state.json` trades 최근 8건  
-3. **Upbit 상태** — `logs/latest_status.txt`  
-4. **Bitget 상태** — `logs/bitget/latest_status.txt`
+3. **슬리브 · 스위치** — `config/sleeves.json` + `regime-switch.jsonl` 이력  
+4. **Upbit 상태** — `logs/latest_status.txt`  
+5. **Bitget 상태** — `logs/bitget/latest_status.txt`  
 
-한 화면에서 양쪽 봇이 동시에 살아 있는지·무슨 시그널인지 바로 비교할 수 있다.
+자산 곡선은 상단 **자산** 링크 → `/equity`.
+
 
 ---
 

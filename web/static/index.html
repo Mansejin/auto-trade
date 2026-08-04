@@ -34,10 +34,12 @@
         <div class="tick tick-sec"><span class="k">SCALP</span><span class="v" id="m-scalp">—</span></div>
         <div class="tick tick-pri"><span class="k">스위치</span><span class="v" id="m-switch">—</span></div>
         <div class="tick sep tick-sec" aria-hidden="true"></div>
-        <div class="tick tick-sec"><span class="k">시그널</span><span class="v" id="m-signal">—</span></div>
+        <div class="tick tick-sec"><span class="k">UB시그널</span><span class="v" id="m-signal">—</span></div>
         <div class="tick tick-sec"><span class="k">원화</span><span class="v" id="m-krw">—</span></div>
-        <div class="tick tick-sec"><span class="k">포지션</span><span class="v" id="m-pos">—</span></div>
+        <div class="tick tick-sec"><span class="k">UB포지션</span><span class="v" id="m-pos">—</span></div>
+        <div class="tick tick-sec"><span class="k">BG시그널</span><span class="v" id="m-bg-signal">—</span></div>
         <div class="tick tick-sec"><span class="k">USDT</span><span class="v" id="m-bitget">—</span></div>
+        <div class="tick tick-sec"><span class="k">BG포지션</span><span class="v" id="m-bg-pos">—</span></div>
         <div class="tick tick-sec" id="tick-xfer"><span class="k">이체</span><span class="v" id="m-xfer">—</span></div>
         <div class="tick tick-pri"><span class="k">리스크</span><span class="v" id="m-risk">—</span></div>
         <button type="button" class="tick-more" id="btn-ticker-more" aria-expanded="false">더보기</button>
@@ -66,11 +68,16 @@
 
     <section class="bottom">
       <div class="panel">
-        <div class="panel-head">최근 체결</div>
+        <div class="panel-head">Upbit 체결</div>
         <ul class="trades" id="trades"></ul>
         <p class="muted empty" id="trades-empty">아직 기록된 체결이 없습니다.</p>
       </div>
       <div class="panel">
+        <div class="panel-head">Bitget 체결</div>
+        <ul class="trades" id="bg-trades"></ul>
+        <p class="muted empty" id="bg-trades-empty">아직 기록된 체결이 없습니다.</p>
+      </div>
+      <div class="panel panel-sleeves">
         <div class="panel-head">슬리브 · 스위치</div>
         <div id="sleeves-panel" class="sleeves" aria-live="polite"></div>
         <div class="panel-subhead">스위치 이력</div>
@@ -78,10 +85,12 @@
         <p class="muted empty" id="switch-hist-empty">의미 있는 스위치 이력이 없습니다.</p>
       </div>
       <div class="panel">
-        <div class="panel-head">상태 로그</div>
+        <div class="panel-head">Upbit 상태</div>
         <pre class="status-pre" id="latest-text">로딩…</pre>
-        <div class="panel-subhead">Bitget</div>
-        <pre class="status-pre status-pre-sm" id="bg-latest-text">—</pre>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Bitget 상태</div>
+        <pre class="status-pre" id="bg-latest-text">로딩…</pre>
       </div>
     </section>
   </div>
