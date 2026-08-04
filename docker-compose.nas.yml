@@ -1,13 +1,16 @@
-# Synology NAS deploy (saenggibu). No host TLS/edge — Cloudflare Tunnel exposes desk.
+# Synology NAS deploy. Host folder + container names are opaque (see deploy/nas/name-map.local.md).
 # Usage:
-#   docker compose -f docker-compose.nas.yml up -d --build
-# Requires .env with LIVE keys + CLOUDFLARE_TUNNEL_TOKEN (Zero Trust tunnel token).
-# Tunnel public hostname → http://desk:8080  (path /autotrade optional at CF)
+#   docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile tunnel up -d --build
+# Requires .env with LIVE keys + CLOUDFLARE_TUNNEL_TOKEN.
+# CF Tunnel ingress may target http://desk:8080 — keep network alias "desk" on w3.
+
+name: p3f8c1a2
 
 services:
-  bot:
+  w1:
     build: .
-    container_name: upbit-paper-bot
+    image: p3f8c1a2-w1:latest
+    container_name: p3f8c1a2-w1
     restart: unless-stopped
     # Synology: no cpus/mem_limit; avoid read_only (shared-folder ACL quirks)
     user: "0:0"
@@ -54,7 +57,7 @@ services:
       - ./strategies:/app/strategies:ro
       - ./logs:/app/logs
     networks:
-      - autotrade-net
+      - net
     healthcheck:
       test:
         [
@@ -73,9 +76,10 @@ services:
         max-size: "10m"
         max-file: "5"
 
-  bot-bitget:
+  w2:
     build: .
-    container_name: bitget-futures-bot
+    image: p3f8c1a2-w2:latest
+    container_name: p3f8c1a2-w2
     restart: unless-stopped
     user: "0:0"
     env_file:
@@ -120,7 +124,7 @@ services:
       - ./strategies:/app/strategies:ro
       - ./logs:/app/logs
     networks:
-      - autotrade-net
+      - net
     healthcheck:
       test:
         [
@@ -139,11 +143,12 @@ services:
         max-size: "10m"
         max-file: "5"
 
-  desk:
+  w3:
     build:
       context: .
       dockerfile: web/Dockerfile
-    container_name: upbit-desk
+    image: p3f8c1a2-w3:latest
+    container_name: p3f8c1a2-w3
     restart: unless-stopped
     read_only: true
     tmpfs:
@@ -154,7 +159,7 @@ services:
       - no-new-privileges:true
     expose:
       - "8080"
-    # LAN debug only (not public). Tunnel reaches desk via docker network.
+    # LAN debug only (not public). Tunnel reaches w3 via docker network alias "desk".
     ports:
       - "127.0.0.1:18080:8080"
     environment:
@@ -171,7 +176,9 @@ services:
       - ./data:/app/data:ro
       - ./logs:/app/logs:ro
     networks:
-      - autotrade-net
+      net:
+        aliases:
+          - desk
     healthcheck:
       test:
         [
@@ -190,20 +197,21 @@ services:
         max-size: "5m"
         max-file: "3"
 
-  cloudflared:
+  w4:
     image: cloudflare/cloudflared:latest
-    container_name: autotrade-tunnel
+    container_name: p3f8c1a2-w4
     restart: unless-stopped
     command: tunnel --no-autoupdate run
     environment:
       TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:-}
     depends_on:
-      - desk
+      - w3
     networks:
-      - autotrade-net
+      - net
     profiles:
       - tunnel
 
 networks:
-  autotrade-net:
+  net:
+    name: p3f8c1a2-net
     driver: bridge

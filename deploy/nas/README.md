@@ -4,9 +4,10 @@ OCI VPS 대신 회사 NAS Docker에서 실행.
 
 ## Layout
 
-- Host path: `/volume1/docker/auto-trade`
-- Compose: `docker-compose.nas.yml` (edge/LE 없음)
-- Public: Cloudflare Tunnel → `desk:8080`
+- Host path: `/volume1/docker/p3f8c1a2` (opaque; mapping only in local `name-map.local.md`)
+- Compose: `docker-compose.nas.yml` (edge/LE 없음), project `p3f8c1a2`
+- Containers: `p3f8c1a2-w1`…`w4` (CF Tunnel still resolves alias `desk` → w3)
+- Public: Cloudflare Tunnel → `http://desk:8080`
 - Worker `mansejin.com/autotrade` ORIGIN → tunnel hostname
 
 ## One-time Cloudflare
@@ -19,11 +20,14 @@ OCI VPS 대신 회사 NAS Docker에서 실행.
 ## Start
 
 ```bash
-cd /volume1/docker/auto-trade
-sudo docker compose -f docker-compose.nas.yml --profile tunnel up -d --build
-sudo docker compose -f docker-compose.nas.yml ps
+cd /volume1/docker/p3f8c1a2
+sudo docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile tunnel up -d --build
+sudo docker compose -p p3f8c1a2 -f docker-compose.nas.yml ps
 curl -sS http://127.0.0.1:18080/autotrade/healthz
 ```
+
+Name remapping helper (NAS): `deploy/nas/obfuscate-nas.sh`  
+Local-only map: `deploy/nas/name-map.local.md` (gitignored).
 
 SSH alias: `saenggibu-nas-local` (link-local). Tailscale host may refuse SSH.
 

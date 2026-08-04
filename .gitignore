@@ -10,3 +10,4 @@ logs/
 .env
 .cursor/mcp.json
 *.tmp
+deploy/nas/name-map.local.md
