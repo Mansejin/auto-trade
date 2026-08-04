@@ -153,6 +153,59 @@
     root.appendChild(swCard);
   }
 
+  function renderStatusBlock(elId, text) {
+    const root = document.getElementById(elId);
+    if (!root) return;
+    root.innerHTML = "";
+    const raw = String(text || "").trim();
+    if (!raw) {
+      root.innerHTML = '<p class="muted empty">상태 텍스트 없음</p>';
+      return;
+    }
+    const lines = raw.split(/\r?\n/);
+    let dl = null;
+    let pairs = 0;
+    const flush = () => {
+      if (dl && pairs) root.appendChild(dl);
+      dl = null;
+      pairs = 0;
+    };
+    for (const line of lines) {
+      const t = line.trim();
+      if (!t) continue;
+      if (/^[=\-]{3,}/.test(t) || /^----/.test(t)) {
+        flush();
+        const label = t.replace(/^[=\-\s]+|[=\-\s]+$/g, "").trim();
+        if (label) {
+          const h = document.createElement("div");
+          h.className = "status-section";
+          h.textContent = label;
+          root.appendChild(h);
+        }
+        continue;
+      }
+      const m = t.match(/^([^:：]{1,24})\s*[:：]\s*(.+)$/);
+      if (!m) continue;
+      if (!dl) {
+        dl = document.createElement("dl");
+        dl.className = "status-kv";
+      }
+      const dt = document.createElement("dt");
+      dt.textContent = m[1].trim();
+      const dd = document.createElement("dd");
+      dd.textContent = m[2].trim();
+      dl.append(dt, dd);
+      pairs += 1;
+    }
+    flush();
+    if (!root.childElementCount) {
+      const pre = document.createElement("pre");
+      pre.className = "status-pre";
+      pre.textContent = raw;
+      root.appendChild(pre);
+    }
+  }
+
   function qty(v) {
     if (v == null || Number.isNaN(Number(v))) return "—";
     return Number(v)
@@ -462,9 +515,11 @@
       setFreshness("ok", t || "최신");
     }
 
-    document.getElementById("latest-text").textContent = data.latest_text || "(상태 텍스트 없음)";
-    document.getElementById("bg-latest-text").textContent =
-      bg.latest_text || (scalpCash ? "(SCALP 중지 · Bitget 로그 없음)" : "(상태 텍스트 없음)");
+    renderStatusBlock("latest-status", data.latest_text || "");
+    renderStatusBlock(
+      "bg-latest-status",
+      bg.latest_text || (scalpCash ? "모드: SCALP 중지 · cash" : "")
+    );
     renderSleeves(data);
     renderSwitchHistory(data.switch_history || []);
     renderTrades(data.recent_trades || [], "KRW", "trades", "trades-empty");
