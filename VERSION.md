@@ -1,6 +1,6 @@
 # Auto-Trade Version Registry
 
-**App Version: 0.5.4** (2026-07-29)
+**App Version: 0.5.5** (2026-08-05)
 
 ---
 
@@ -15,13 +15,17 @@
 | **bot/signals** | 0.2.0 | 조건 그룹(AND/OR), cross_above/below, 15개 지표 |
 | **bot/telegram** | 0.3.0 | 알림 + 명령어(/이체, /리밸런스, /원화준비, /자산 등) |
 | **web/desk** | 0.3.0 | FastAPI 대시보드, TradingView 차트, Bitget 잔고 표시 |
-| **infra/docker** | 0.2.0 | 4 서비스(bot, bot-bitget, desk, edge), 보안 강화 컨테이너 |
-| **infra/cloudflare** | 0.1.0 | Worker 리버스 프록시(mansejin.com/autotrade) |
+| **infra/docker** | 0.3.0 | NAS compose(+tunnel) / VPS edge 병행, Synology ACL 대응 |
+| **infra/cloudflare** | 0.2.0 | Worker + Tunnel origin (`autotrade-origin.mansejin.com`) |
 | **strategies** | 0.2.0 | SMA 크로스 3종(Upbit BTC, Bitget BTCUSDT) |
 
 ---
 
 ## Changelog
+
+### v0.5.5 (2026-08-05)
+- ops: OCI VPS → 회사 NAS Docker 이전 (`docker-compose.nas.yml`, Cloudflare Tunnel)
+- docs: NAS IP allowlist / Synology volume notes (`deploy/nas/`)
 
 ### v0.5.4 (2026-07-29)
 - chore: official DietrichGebert/ponytail Cursor install (rules + skills)
