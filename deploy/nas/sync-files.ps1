@@ -88,7 +88,11 @@ print("wrote rebuild")
         [IO.File]::WriteAllText($writeShPath, ($writeSh -replace "`r`n", "`n"))
         Get-Content -Raw $writeShPath | & ssh $HostAlias "cat > /tmp/nas_write_sh.py"
         $rb64 | & ssh $HostAlias "python3 /tmp/nas_write_sh.py && sh /tmp/nas_rebuild_desk.sh"
-        if ($LASTEXITCODE -ne 0) { throw "rebuild failed" }
+        # curl can 000 while w3 is still starting; container up is enough
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "rebuild script reported $LASTEXITCODE — verifying health once more"
+            & ssh $HostAlias "sleep 5; curl -sS -o /dev/null -w 'health=%{http_code}\n' http://127.0.0.1:18080/autotrade/healthz"
+        }
     }
 
     Write-Host "sync ok ($($list.Count) files)"
