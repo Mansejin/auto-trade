@@ -262,30 +262,15 @@ body {
 
 .ticker-strip {
   display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.35rem;
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
   background: transparent;
   border: 0;
-}
-
-.tick-row {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  min-width: 0;
-}
-
-.tick-row-main {
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.tick-row-venues {
-  flex-wrap: wrap;
-  gap: 0.45rem;
 }
 
 .tick-venue {
@@ -314,7 +299,7 @@ body {
   border-right: 1px solid var(--line);
 }
 
-.tick-venue:last-child .tick-venue-label {
+.tick-venue:last-of-type .tick-venue-label {
   background: rgba(45, 212, 168, 0.1);
   color: #8aecd5;
 }
@@ -326,16 +311,14 @@ body {
   padding: 0.38rem 0.7rem;
   overflow: hidden;
   flex: 0 0 auto;
+  min-width: 4.2rem;
   background: var(--bg-chip);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
 }
 
-.tick-row-main > .tick {
-  min-width: 4.2rem;
-}
-
 .tick-venue > .tick {
+  min-width: 0;
   background: transparent;
   border: 0;
   border-right: 1px solid var(--line);
@@ -641,22 +624,17 @@ a.ghost-btn.link-btn {
     width: 100%;
     max-width: 100%;
     overflow-x: auto;
+    flex-wrap: nowrap;
   }
 
-  .ticker-strip:not(.expanded) .tick-row-main .tick-sec {
+  .ticker-strip:not(.expanded) > .tick-sec,
+  .ticker-strip:not(.expanded) > .tick-venue {
     display: none;
-  }
-
-  .ticker-strip:not(.expanded) .tick-row-venues {
-    display: none;
-  }
-
-  .ticker-strip.expanded .tick-row-venues {
-    display: flex;
   }
 
   .tick-more {
     display: inline-flex;
+    margin-left: auto;
   }
 
   .top-meta .freshness {
