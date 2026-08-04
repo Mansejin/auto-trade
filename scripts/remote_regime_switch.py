@@ -251,11 +251,21 @@ def set_strategy(filename: str) -> None:
 
 
 def restart_bot() -> str:
-    subprocess.run(["docker", "compose", "up", "-d"], cwd=str(ROOT), check=False)
-    subprocess.run(["docker", "compose", "restart", "bot"], cwd=str(ROOT), check=True)
+    # NAS/opaque compose: set COMPOSE_FILE, COMPOSE_PROJECT_NAME, BOT_COMPOSE_SERVICE, BOT_CONTAINER.
+    compose = ["docker", "compose"]
+    project = os.environ.get("COMPOSE_PROJECT_NAME", "").strip()
+    compose_file = os.environ.get("COMPOSE_FILE", "").strip()
+    service = os.environ.get("BOT_COMPOSE_SERVICE", "bot").strip() or "bot"
+    container = os.environ.get("BOT_CONTAINER", "upbit-paper-bot").strip() or "upbit-paper-bot"
+    if project:
+        compose += ["-p", project]
+    if compose_file:
+        compose += ["-f", compose_file]
+    subprocess.run(compose + ["up", "-d"], cwd=str(ROOT), check=False)
+    subprocess.run(compose + ["restart", service], cwd=str(ROOT), check=True)
     time.sleep(3)
     p = subprocess.run(
-        ["docker", "logs", "--tail", "25", "upbit-paper-bot"],
+        ["docker", "logs", "--tail", "25", container],
         capture_output=True,
         text=True,
     )

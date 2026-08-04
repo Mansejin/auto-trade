@@ -3,7 +3,7 @@
   "updated": "2026-07-30",
   "venue": "bitget_uta_futures",
   "bot": "bitget-futures-bot",
-  "host": "oracle",
+  "host": "nas",
   "capital_pct": 50,
   "status": "stopped_cash",
   "fee": 0.0006,
