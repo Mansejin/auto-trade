@@ -19,6 +19,7 @@
   let tvWidget = null;
   let lastTvKey = "";
   let lastStatus = null;
+  let tvBooted = false;
 
   function money(v, quote) {
     if (v == null || Number.isNaN(Number(v))) return "—";
@@ -178,6 +179,7 @@
     lastTvKey = key;
     const el = document.getElementById("tv_chart");
     if (!el) return;
+    // Destroy previous frame cleanly; never leave a naked iframe covering the page.
     el.innerHTML = "";
     tvWidget = new TradingView.widget({
       autosize: true,
@@ -197,12 +199,20 @@
       backgroundColor: "#131722",
       gridColor: "rgba(42, 46, 57, 0.6)",
     });
+    tvBooted = true;
   }
 
-  async function updateCharts(data) {
-    ensureTvChart(data.tv_symbol || "UPBIT:BTCKRW", data.tv_interval || "60");
+  function updateCharts(data) {
+    const symbol = data.tv_symbol || "UPBIT:BTCKRW";
+    const interval = data.tv_interval || "60";
     const meta = document.getElementById("chart-meta");
-    if (meta) meta.textContent = data.tv_symbol || "UPBIT:BTCKRW";
+    if (meta) meta.textContent = symbol;
+    try {
+      ensureTvChart(symbol, interval);
+    } catch (e) {
+      console.warn(e);
+      if (!tvBooted) setFreshness("stale", `차트: ${e.message || e}`);
+    }
   }
 
   function renderSwitchHistory(rows) {
@@ -439,13 +449,8 @@
     renderSwitchHistory(data.switch_history || []);
     renderTrades(data.recent_trades || [], "KRW", "trades", "trades-empty");
     renderTrades(bg.recent_trades || [], "USDT", "bg-trades", "bg-trades-empty");
-
-    try {
-      await updateCharts(data);
-    } catch (chartErr) {
-      console.warn(chartErr);
-      setFreshness("stale", `차트: ${chartErr.message || chartErr}`);
-    }
+    // Chart is sync and must not block/lock status refresh if TV script is slow.
+    updateCharts(data);
   }
 
   async function loop() {

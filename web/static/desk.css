@@ -204,7 +204,8 @@ body {
   background: var(--bg-elev);
   border-bottom: 1px solid var(--line);
   position: relative;
-  z-index: 2;
+  z-index: 5;
+  isolation: isolate;
 }
 
 .topbar .brand-block {
@@ -248,12 +249,20 @@ body {
 
 .ticker-strip {
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   min-width: 0;
-  overflow-x: auto;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 3px;
   background: var(--bg);
+  scrollbar-width: none;
+}
+
+.ticker-strip::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .tick {
@@ -455,6 +464,7 @@ a.ghost-btn.link-btn {
   position: relative;
   z-index: 1;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .chart-toolbar {
@@ -465,6 +475,8 @@ a.ghost-btn.link-btn {
   padding: 0.4rem 0.85rem;
   border-bottom: 1px solid var(--line);
   background: var(--bg);
+  position: relative;
+  z-index: 1;
 }
 
 .chart-meta {
@@ -474,9 +486,24 @@ a.ghost-btn.link-btn {
 }
 
 .chart-host {
-  height: clamp(420px, 62vh, 780px);
+  position: relative;
+  height: clamp(420px, 55vh, 720px);
   width: 100%;
   background: #131722;
+  overflow: hidden;
+  isolation: isolate;
+  z-index: 0;
+}
+
+#tv_chart > div,
+#tv_chart iframe {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
 }
 
 .bottom {
@@ -547,7 +574,7 @@ a.ghost-btn.link-btn {
   .ticker-strip {
     width: 100%;
     flex-wrap: wrap;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .ticker-strip:not(.expanded) .tick-sec {
