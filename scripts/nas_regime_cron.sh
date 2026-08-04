@@ -1,6 +1,6 @@
 #!/bin/sh
 # Daily Policy C regime switch for NAS opaque compose.
-# Synology Task Scheduler: run as root, daily ~09:10 KST after 1d bar close lean.
+# Synology Task Scheduler: run as root, daily 00:20 KST (after 1d bar close).
 set -e
 export AUTO_TRADE_ROOT=/volume1/docker/p3f8c1a2
 export COMPOSE_PROJECT_NAME=p3f8c1a2
