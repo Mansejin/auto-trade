@@ -21,6 +21,10 @@ reports/ae14-paper/*.jsonl
 freqtrade-research/user_data/config.bitget-scalp.secrets.json
 .cursor/*
 !.cursor/environment.json
+!.cursor/rules/
+!.cursor/rules/**
+!.cursor/skills/
+!.cursor/skills/**
 .cursor/mcp.json
 *.tmp
 deploy/nas/name-map.local.md

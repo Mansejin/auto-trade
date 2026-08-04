@@ -1,0 +1,28 @@
+---
+description: Windows shell rules — always pwsh 7, never nested-quote SSH one-liners
+alwaysApply: true
+---
+
+# PowerShell on Windows (auto-trade)
+
+Cursor/agent shell on this machine **must** use PowerShell 7 (`pwsh`), not Windows PowerShell 5.
+
+## Do
+
+- Prefer `pwsh -NoProfile -File path\to\script.ps1` or `python path\to\script.py`.
+- Put remote Python/shell bodies in a **local file**, then pipe with:  
+  `Get-Content -Raw .\script.py | ssh host "cat > /tmp/x.py && python3 /tmp/x.py"`
+- Binary/tar sync: write local `.tgz`, then base64-pipe into a remote **file** extractor (see `deploy/nas/sync-files.ps1`).
+- Use single-quoted PowerShell strings for remote command literals when needed:  
+  `ssh host 'python3 /tmp/x.py'`
+
+## Don't
+
+- Don't nest `python -c "..."` / `ssh "..."` / regex paren escapes inside one PowerShell double-quoted line.
+- Don't use `&&` assuming bash — in pwsh use `;` or separate calls (pwsh 7 supports `&&`, PS5 does not).
+- Don't invent inline heredocs for commit/`ssh` that re-enter PowerShell 5 parsing.
+
+## Helpers
+
+- NAS file sync: `pwsh -NoProfile -File deploy/nas/sync-files.ps1 -Files web/static/index.html,...`
+- Remote run script: `pwsh -NoProfile -File deploy/nas/run-remote.ps1 -ScriptPath .\tmp_job.py`
