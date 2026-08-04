@@ -16,13 +16,8 @@
     transition: "regime-transition",
   };
 
-  const CHART_KEY = "desk_chart_mode";
-  let chartMode = localStorage.getItem(CHART_KEY) || "upbit";
   let tvWidget = null;
   let lastTvKey = "";
-  let lwChart = null;
-  let lwSeries = null;
-  let lastCandleKey = "";
   let lastStatus = null;
 
   function money(v, quote) {
@@ -39,18 +34,22 @@
     return `${body} ${q}`;
   }
 
-  function shortName(file) {
+  function shortName(file, maxLen) {
     if (!file) return "—";
-    return String(file)
+    let s = String(file)
       .replace(/^.*\//, "")
       .replace(/\.json$/i, "");
+    const max = maxLen == null ? 20 : maxLen;
+    if (s.length > max) s = s.slice(0, Math.max(1, max - 1)) + "…";
+    return s;
   }
 
-  function setText(id, text, className) {
+  function setText(id, text, className, title) {
     const el = document.getElementById(id);
     if (!el) return;
     el.textContent = text;
     if (className != null) el.className = className;
+    if (title != null) el.title = title;
   }
 
   function renderSleeves(data) {
@@ -170,24 +169,6 @@
     }
   }
 
-  function syncToggleUi() {
-    document.getElementById("btn-upbit").classList.toggle("active", chartMode === "upbit");
-    document.getElementById("btn-tv").classList.toggle("active", chartMode === "tv");
-    document.getElementById("upbit_chart").classList.toggle("hidden", chartMode !== "upbit");
-    document.getElementById("tv_chart").classList.toggle("hidden", chartMode !== "tv");
-    document.querySelector(".chart-legend").classList.toggle("hidden", chartMode !== "upbit");
-  }
-
-  function setChartMode(mode) {
-    if (mode !== "upbit" && mode !== "tv") return;
-    chartMode = mode;
-    localStorage.setItem(CHART_KEY, mode);
-    syncToggleUi();
-    if (lastStatus) {
-      updateCharts(lastStatus).catch((e) => console.warn(e));
-    }
-  }
-
   function ensureTvChart(symbol, interval) {
     if (typeof TradingView === "undefined" || !TradingView.widget) {
       throw new Error("TradingView 스크립트 미로드");
@@ -218,91 +199,10 @@
     });
   }
 
-  function destroyUpbitChart() {
-    if (lwChart) {
-      lwChart.remove();
-      lwChart = null;
-      lwSeries = null;
-    }
-    lastCandleKey = "";
-  }
-
-  function ensureUpbitChart() {
-    if (typeof LightweightCharts === "undefined") {
-      throw new Error("업비트 차트 라이브러리 미로드");
-    }
-    const el = document.getElementById("upbit_chart");
-    if (!el) return null;
-    if (lwChart) return lwChart;
-    lwChart = LightweightCharts.createChart(el, {
-      autoSize: true,
-      layout: {
-        background: { color: "#131722" },
-        textColor: "#9598a1",
-        fontFamily: "에이투지체, system-ui, sans-serif",
-      },
-      grid: {
-        vertLines: { color: "rgba(42, 46, 57, 0.6)" },
-        horzLines: { color: "rgba(42, 46, 57, 0.6)" },
-      },
-      crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-      rightPriceScale: { borderColor: "#2a2e39" },
-      timeScale: {
-        borderColor: "#2a2e39",
-        timeVisible: true,
-        secondsVisible: false,
-      },
-    });
-    lwSeries = lwChart.addCandlestickSeries({
-      upColor: "#ef5350",
-      downColor: "#2962ff",
-      borderUpColor: "#ef5350",
-      borderDownColor: "#2962ff",
-      wickUpColor: "#ef5350",
-      wickDownColor: "#2962ff",
-    });
-    return lwChart;
-  }
-
-  async function refreshUpbitChart() {
-    const base = window.__DESK_BASE__ || "/";
-    const res = await fetch(base + "api/candles", { credentials: "same-origin" });
-    if (res.status === 401) {
-      location.href = base;
-      return;
-    }
-    if (!res.ok) throw new Error(`캔들 API ${res.status}`);
-    const data = await res.json();
-    const candles = data.candles || [];
-    const markers = data.markers || [];
-    const key = `${data.market}|${data.timeframe}|${candles.length}|${markers.length}|${
-      candles.length ? candles[candles.length - 1].time : 0
-    }`;
-
-    document.getElementById("chart-meta").textContent = `${data.market || "—"} · ${
-      data.timeframe || "—"
-    } · 봉 ${candles.length}`;
-
-    ensureUpbitChart();
-    if (!lwSeries) return;
-
-    if (key !== lastCandleKey) {
-      lwSeries.setData(candles);
-      lwSeries.setMarkers(markers);
-      if (lwChart) lwChart.timeScale().scrollToRealTime();
-      lastCandleKey = key;
-    } else {
-      lwSeries.setMarkers(markers);
-    }
-  }
-
   async function updateCharts(data) {
-    if (chartMode === "tv") {
-      ensureTvChart(data.tv_symbol || "UPBIT:BTCKRW", data.tv_interval || "60");
-      document.getElementById("chart-meta").textContent = `${data.tv_symbol || "UPBIT:BTCKRW"} · TV`;
-    } else {
-      await refreshUpbitChart();
-    }
+    ensureTvChart(data.tv_symbol || "UPBIT:BTCKRW", data.tv_interval || "60");
+    const meta = document.getElementById("chart-meta");
+    if (meta) meta.textContent = data.tv_symbol || "UPBIT:BTCKRW";
   }
 
   function renderSwitchHistory(rows) {
@@ -433,10 +333,12 @@
     const sw = data.switch || {};
     const bg = data.bitget || {};
 
+    const coreFull = core.strategy || regime?.selected_file || s.strategy || s.strategy_file || "";
     setText(
       "m-core",
-      shortName(core.strategy || regime?.selected_file || s.strategy || s.strategy_file),
-      "v"
+      shortName(coreFull),
+      "v",
+      String(coreFull).replace(/^.*\//, "").replace(/\.json$/i, "") || undefined
     );
     const scalpCash = String(scalp.status || "").includes("cash") || !bg.running;
     setText(
@@ -556,12 +458,6 @@
     setTimeout(loop, 20000);
   }
 
-  document.getElementById("btn-upbit").addEventListener("click", () => setChartMode("upbit"));
-  document.getElementById("btn-tv").addEventListener("click", () => {
-    destroyUpbitChart();
-    setChartMode("tv");
-  });
-
   const tickerMore = document.getElementById("btn-ticker-more");
   const tickerStrip = document.querySelector(".ticker-strip");
   if (tickerMore && tickerStrip) {
@@ -572,6 +468,5 @@
     });
   }
 
-  syncToggleUi();
   loop();
 })();

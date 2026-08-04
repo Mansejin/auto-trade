@@ -15,7 +15,6 @@
   </script>
   <link rel="stylesheet" href="static/desk.css" />
   <script src="https://s3.tradingview.com/tv.js"></script>
-  <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
 </head>
 <body>
   <div class="desk">
@@ -27,6 +26,13 @@
           <h1 class="brand">DESK</h1>
         </div>
         <span id="m-mode" class="pill">—</span>
+      </div>
+      <div class="top-meta">
+        <span id="freshness" class="freshness"><span class="pulse" id="pulse"></span><span id="fresh-text">갱신 대기</span></span>
+        <a class="ghost-btn link-btn" href="equity">자산</a>
+        <form method="post" action="logout">
+          <button class="ghost-btn" type="submit">로그아웃</button>
+        </form>
       </div>
       <div class="ticker-strip" aria-label="봇 상태">
         <div class="tick tick-pri"><span class="k">레짐</span><span class="v" id="m-regime">—</span></div>
@@ -44,26 +50,13 @@
         <div class="tick tick-pri"><span class="k">리스크</span><span class="v" id="m-risk">—</span></div>
         <button type="button" class="tick-more" id="btn-ticker-more" aria-expanded="false">더보기</button>
       </div>
-      <div class="top-meta">
-        <div class="chart-toggle" role="group" aria-label="차트 종류">
-          <button type="button" class="seg" data-chart="upbit" id="btn-upbit">업비트</button>
-          <button type="button" class="seg" data-chart="tv" id="btn-tv">TradingView</button>
-        </div>
-        <span id="freshness" class="freshness"><span class="pulse" id="pulse"></span><span id="fresh-text">갱신 대기</span></span>
-        <a class="ghost-btn link-btn" href="equity">자산</a>
-        <form method="post" action="logout">
-          <button class="ghost-btn" type="submit">로그아웃</button>
-        </form>
-      </div>
     </header>
 
     <section class="chart-plane" aria-label="차트">
       <div class="chart-toolbar">
         <span id="chart-meta" class="chart-meta">—</span>
-        <span class="chart-legend"><span class="lg-buy">▲ 매수</span><span class="lg-sell">▼ 매도</span></span>
       </div>
-      <div id="upbit_chart" class="chart-host"></div>
-      <div id="tv_chart" class="chart-host hidden"></div>
+      <div id="tv_chart" class="chart-host"></div>
     </section>
 
     <section class="bottom">
