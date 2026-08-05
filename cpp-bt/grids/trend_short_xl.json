@@ -1,0 +1,37 @@
+{
+  "base_strategy": "strategies/trend_short_v1.json",
+  "entry_modes": ["cloud_break", "di_cloud", "di_only"],
+  "adx_min": [15, 20, 25, 30, 35],
+  "rsi_max": [45, 50, 55, 60, 65],
+  "exits": [
+    {"stoploss": -0.008, "take_profit": 0.024},
+    {"stoploss": -0.010, "take_profit": 0.030},
+    {"stoploss": -0.010, "take_profit": 0.040},
+    {"stoploss": -0.012, "take_profit": 0.036},
+    {"stoploss": -0.015, "take_profit": 0.030},
+    {"stoploss": -0.015, "take_profit": 0.045},
+    {"stoploss": -0.015, "take_profit": 0.060},
+    {"stoploss": -0.020, "take_profit": 0.040},
+    {"stoploss": -0.020, "take_profit": 0.050},
+    {"stoploss": -0.020, "take_profit": 0.060},
+    {"stoploss": -0.020, "take_profit": 0.080},
+    {"stoploss": -0.025, "take_profit": 0.050},
+    {"stoploss": -0.025, "take_profit": 0.075},
+    {"stoploss": -0.030, "take_profit": 0.060},
+    {"stoploss": -0.030, "take_profit": 0.090},
+    {"stoploss": -0.040, "take_profit": 0.080},
+    {"stoploss": -0.040, "take_profit": 0.120}
+  ],
+  "trailing": [
+    {"enabled": false},
+    {"enabled": true, "trail_pos": 0.008, "trail_offset": 0.015},
+    {"enabled": true, "trail_pos": 0.010, "trail_offset": 0.020},
+    {"enabled": true, "trail_pos": 0.015, "trail_offset": 0.030},
+    {"enabled": true, "trail_pos": 0.020, "trail_offset": 0.040}
+  ],
+  "windows": [
+    {"name": "h1", "start": "2025-09-01", "end": "2026-02-04"},
+    {"name": "h2", "start": "2026-02-04", "end": "2026-08-05"}
+  ],
+  "criteria": {"min_pf": 1.2, "min_trades": 20}
+}

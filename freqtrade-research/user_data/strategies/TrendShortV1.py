@@ -22,15 +22,15 @@ class TrendShortV1(IStrategy):
     timeframe = "5m"
     startup_candle_count = 80
 
-    stoploss = -0.008
-    minimal_roi = {"0": 0.03}
+    stoploss = -0.03
+    minimal_roi = {"0": 0.09}
     trailing_stop = False
     use_exit_signal = False
     process_only_new_candles = True
 
-    entry_mode = "di_only"  # cloud_break | di_cloud | di_only
-    adx_min = 30
-    rsi_max = 60
+    entry_mode = "di_cloud"  # cloud_break | di_cloud | di_only
+    adx_min = 15
+    rsi_max = 55
 
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe["rsi"] = ta.RSI(dataframe, timeperiod=14)

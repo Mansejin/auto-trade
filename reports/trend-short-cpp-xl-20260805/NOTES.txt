@@ -1,0 +1,4 @@
+﻿cpp-bt XL grid (2635 combos, ~0.45s): 1 native hit (di_cloud adx15 SL3%/TP9%) with cpp PF h1=1.40/h2=1.21.
+FT cross-check of that hit: h1 PF=1.41/n27, h2 PF=1.11/n33 — FAILS PF>=1.2 both halves.
+Top-20 cpp candidates with n>=20 & cpp minPF>=1.05: 0/16 FT hits under same criteria.
+Best FT-ish mins sit ~1.10–1.18 on the weaker half. Short edge still unproven for LIVE under stated bar.

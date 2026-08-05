@@ -232,7 +232,9 @@ static int cmd_grid(const fs::path& root, const fs::path& grid_path, const fs::p
 
   fs::path out_dir = root / "reports";
   fs::create_directories(out_dir);
-  fs::path out = out_dir / "trend-short-wide-summary.json";
+  std::string out_name = "trend-short-grid-summary.json";
+  if (grid_path.has_stem()) out_name = grid_path.stem().string() + "-summary.json";
+  fs::path out = out_dir / out_name;
   std::ofstream(out) << summary.dump(2);
   std::printf("combos=%d hits=%d elapsed_ms=%.1f best=%s\n", combos, hits, ms,
               rows.empty() ? "-" : rows[0].tag.c_str());
