@@ -16,7 +16,7 @@ from __future__ import annotations
 import os
 import shutil
 import subprocess
-import time
+import tempfile
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
@@ -90,14 +90,28 @@ def _resolve_strat(strategy: Path | str) -> Path:
     return p
 
 
-def _find_new_csv(strat: Path, before: set[Path]) -> Path:
-    after = [p for p in (ROOT / "reports").glob("*.csv") if p.resolve() not in before]
-    if after:
-        return max(after, key=lambda p: p.stat().st_mtime)
-    cands = sorted((ROOT / "reports").glob(f"{strat.stem}-*.csv"), key=lambda p: p.stat().st_mtime)
-    if not cands:
-        raise FileNotFoundError(f"no CSV produced for {strat.name}")
-    return cands[-1]
+def _link_cache(work: Path) -> None:
+    """Share ROOT/cache into an isolated workdir (candle reuse under parallel runs)."""
+    src = ROOT / "cache"
+    src.mkdir(parents=True, exist_ok=True)
+    dst = work / "cache"
+    if dst.exists():
+        return
+    try:
+        os.symlink(src, dst, target_is_directory=True)
+        return
+    except OSError:
+        pass
+    # Windows directory junction (no admin)
+    subprocess.run(
+        ["cmd", "/c", "mklink", "/J", str(dst), str(src)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if not dst.exists():
+        # last resort: copy is too heavy; leave empty and accept cold fetch
+        dst.mkdir(parents=True, exist_ok=True)
 
 
 def run_backtest(
@@ -140,18 +154,29 @@ def run_backtest(
     if fee_rate is not None:
         cmd.extend(["--fee-rate", str(fee_rate)])
 
-    before = {p.resolve() for p in (ROOT / "reports").glob("*.csv")}
-    p = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
-    out = (p.stdout or "") + (p.stderr or "")
-    if p.returncode != 0 and "investment caution" in out.lower():
-        p = subprocess.run(cmd, cwd=ROOT, input="y\n", capture_output=True, text=True)
+    # Isolated cwd so parallel workers cannot steal each other's reports/*.csv
+    work_root = ROOT / "reports" / ".bt-work"
+    work_root.mkdir(parents=True, exist_ok=True)
+    work = Path(tempfile.mkdtemp(prefix="w_", dir=work_root))
+    try:
+        (work / "reports").mkdir()
+        _link_cache(work)
+        p = subprocess.run(cmd, cwd=work, capture_output=True, text=True)
         out = (p.stdout or "") + (p.stderr or "")
-    if p.returncode != 0:
-        raise RuntimeError(f"backtest failed {strat.name} {start}..{end}\n{out[-2000:]}")
-
-    time.sleep(0.05)
-    src = _find_new_csv(strat, before)
-    dest.write_bytes(src.read_bytes())
+        if p.returncode != 0 and "investment caution" in out.lower():
+            p = subprocess.run(cmd, cwd=work, input="y\n", capture_output=True, text=True)
+            out = (p.stdout or "") + (p.stderr or "")
+        if p.returncode != 0:
+            raise RuntimeError(f"backtest failed {strat.name} {start}..{end}\n{out[-2000:]}")
+        cands = list((work / "reports").glob(f"{strat.stem}-*.csv"))
+        if not cands:
+            cands = list((work / "reports").glob("*.csv"))
+        if not cands:
+            raise FileNotFoundError(f"no CSV produced for {strat.name}")
+        src = max(cands, key=lambda x: x.stat().st_mtime)
+        dest.write_bytes(src.read_bytes())
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
     return dest
 
 
