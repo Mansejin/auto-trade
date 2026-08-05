@@ -1,5 +1,6 @@
 build/
 data/*.ohlcv
+data/*.ftind
 *.obj
 *.exe
 *.ilk

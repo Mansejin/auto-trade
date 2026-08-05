@@ -82,6 +82,17 @@ static std::string tag_of(EntryMode mode, double adx, double rsi, const ExitCfg&
   return s;
 }
 
+static Series load_series(const fs::path& data_dir, const std::string& sym, const std::string& tf) {
+  fs::path ftind = data_dir / (sym + "-" + tf + ".ftind");
+  if (fs::exists(ftind)) return load_ftind(ftind.string());
+  return load_ohlcv((data_dir / (sym + "-" + tf + ".ohlcv")).string());
+}
+
+static Indicators resolve_ind(const Series& series, const StrategyCfg& cfg) {
+  if (series.has_ind) return series.ind;
+  return compute_indicators(series.bars, cfg.rsi_period, cfg.adx_period);
+}
+
 static int cmd_run(const fs::path& root, const fs::path& strat_path, const fs::path& data_dir,
                    const std::string& start, const std::string& end) {
   auto sj = read_json(strat_path);
@@ -90,10 +101,10 @@ static int cmd_run(const fs::path& root, const fs::path& strat_path, const fs::p
   auto tf = sj.value("timeframe", "5m");
   if (symbols.empty()) throw std::runtime_error("no symbols");
 
-  auto series = load_ohlcv((data_dir / (symbols[0] + "-" + tf + ".ohlcv")).string());
+  auto series = load_series(data_dir, symbols[0], tf);
   series.symbol = symbols[0];
   series.timeframe = tf;
-  auto ind = compute_indicators(series.bars, cfg.rsi_period, cfg.adx_period);
+  auto ind = resolve_ind(series, cfg);
   auto sig = entry_signals(series.bars, ind, cfg);
   int i0 = start.empty() ? 0 : find_ge(series.bars, parse_day_ms(start));
   int i1 = end.empty() ? (int)series.bars.size() : find_ge(series.bars, parse_day_ms(end));
@@ -102,8 +113,8 @@ static int cmd_run(const fs::path& root, const fs::path& strat_path, const fs::p
     return 2;
   }
   auto r = simulate_short(series.bars, sig, cfg.exit, cfg.fee, i0, i1);
-  std::printf("trades=%d pf=%.4f pnl_pct_sum=%.2f window=[%d,%d)\n", r.trades, r.profit_factor,
-              r.sum_pnl_pct, i0, i1);
+  std::printf("trades=%d pf=%.4f pnl_pct_sum=%.2f window=[%d,%d) ind=%s\n", r.trades, r.profit_factor,
+              r.sum_pnl_pct, i0, i1, series.has_ind ? "ftind" : "native");
   return 0;
 }
 
@@ -119,8 +130,8 @@ static int cmd_grid(const fs::path& root, const fs::path& grid_path, const fs::p
   auto symbols = sj.at("symbols").get<std::vector<std::string>>();
   auto tf = sj.value("timeframe", "5m");
 
-  auto series = load_ohlcv((data_dir / (symbols[0] + "-" + tf + ".ohlcv")).string());
-  auto ind = compute_indicators(series.bars, base.rsi_period, base.adx_period);
+  auto series = load_series(data_dir, symbols[0], tf);
+  auto ind = resolve_ind(series, base);
 
   struct Win {
     std::string name;
@@ -236,8 +247,8 @@ static int cmd_grid(const fs::path& root, const fs::path& grid_path, const fs::p
   if (grid_path.has_stem()) out_name = grid_path.stem().string() + "-summary.json";
   fs::path out = out_dir / out_name;
   std::ofstream(out) << summary.dump(2);
-  std::printf("combos=%d hits=%d elapsed_ms=%.1f best=%s\n", combos, hits, ms,
-              rows.empty() ? "-" : rows[0].tag.c_str());
+  std::printf("combos=%d hits=%d elapsed_ms=%.1f best=%s ind=%s\n", combos, hits, ms,
+              rows.empty() ? "-" : rows[0].tag.c_str(), series.has_ind ? "ftind" : "native");
   std::printf("wrote %s\n", out.string().c_str());
   return 0;
 }

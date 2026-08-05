@@ -3,6 +3,7 @@
 #include "bt/indicators.hpp"
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -148,7 +149,7 @@ inline SimResult simulate_short(const std::vector<Candle>& c, const std::vector<
     r.sum_pnl_pct += net * 100.0;
     if (net >= 0) r.win_abs += net;
     else r.loss_abs += -net;
-    i = j + 1;  // no overlap; next signal after exit bar
+    i = j + 1;  // next search starts after exit bar (matches skip_exit_bar reference)
   }
   if (r.loss_abs > 0) r.profit_factor = r.win_abs / r.loss_abs;
   else r.profit_factor = r.trades > 0 ? 99.0 : 0.0;

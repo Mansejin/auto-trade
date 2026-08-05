@@ -28,8 +28,17 @@ Paths in commands assume cwd = repo root; `grid` resolves `base_strategy` relati
 
 See `strategies/trend_short_v1.json`. Fields: `side`, `symbols[]`, `timeframe`, `fee`, `startup`, `entry.mode` (`cloud_break`|`di_cloud`|`di_only`), `exit.{stoploss,take_profit,trailing,...}`.
 
-## Notes
+## Data export
 
-- Shorts only for now (long = stub).
-- Indicators approximate TA-Lib / TrendShortV1; use for ranking, spot-check winners in FT before LIVE.
-- Funding not modeled.
+```powershell
+# OHLCV only (legacy)
+python cpp-bt/tools/export_ohlcv.py --symbol BTC_USDT_USDT --timeframe 5m
+# Preferred: TA-Lib indicators (Freqtrade-aligned entry)
+python cpp-bt/tools/export_ftind.py --symbol BTC_USDT_USDT --timeframe 5m
+```
+
+`cpp-bt` auto-prefers `data/*.ftind` over `*.ohlcv`.
+
+## Freqtrade cross-check
+
+Use **fixed stake** + `use_order_book: false` when comparing PF. Unlimited compounding changes PF even with the same trades. See `reports/trend-short-cpp-aligned-20260805/NOTES.txt`.

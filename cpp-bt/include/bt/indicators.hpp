@@ -1,5 +1,5 @@
 #pragma once
-#include "bt/candle.hpp"
+#include "bt/indicators.hpp"
 #include <cmath>
 #include <limits>
 #include <vector>
@@ -9,18 +9,7 @@ namespace bt {
 inline constexpr double NaN = std::numeric_limits<double>::quiet_NaN();
 inline bool is_nan(double x) { return std::isnan(x); }
 
-struct Indicators {
-  std::vector<double> rsi;
-  std::vector<double> adx;
-  std::vector<double> plus_di;
-  std::vector<double> minus_di;
-  std::vector<double> cloud1;
-  std::vector<double> cloud2;
-  std::vector<double> cloud_top;
-  std::vector<double> cloud_bot;
-};
-
-// Wilder RSI (TA-Lib compatible enough for ranking)
+// Wilder RSI (fallback when .ftind not used)
 inline std::vector<double> rsi_wilder(const std::vector<Candle>& c, int period) {
   const int n = (int)c.size();
   std::vector<double> out(n, NaN);
@@ -51,7 +40,6 @@ inline void dm_tr(const Candle& a, const Candle& b, double& plus_dm, double& min
   tr = std::max(b.high - b.low, std::max(std::abs(b.high - a.close), std::abs(b.low - a.close)));
 }
 
-// TA-Lib-style ADX / +DI / -DI
 inline void adx_di(const std::vector<Candle>& c, int period,
                    std::vector<double>& adx, std::vector<double>& pdi, std::vector<double>& mdi) {
   const int n = (int)c.size();

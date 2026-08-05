@@ -1,0 +1,11 @@
+﻿Alignment (2026-08-05):
+
+- cpp-bt loads TA-Lib indicators via .ftind (tools/export_ftind.py)
+- cpp sim matches pandas+talib reference: hit combo h1 32 trades / PF 1.397; h2 32 / 1.214
+- FT gap was mainly use_order_book=true + unlimited compounding distorting PF
+- FT validation (stake=100, orderbook off): h1 PF=1.44 n=27; h2 PF=1.20 n=33 — PASSES PF>=1.2 both halves
+- Residual: trade count 27/33 vs cpp 32/32 (FT engine timing); PF agree under fixed stake
+
+HIT params: entry=di_cloud, adx_min=15, SL=3%, TP=9%, no trailing
+Strategy file: freqtrade-research/user_data/strategies/TrendShortV1.py
+cpp strategy JSON: cpp-bt/strategies/trend_short_v1.json
