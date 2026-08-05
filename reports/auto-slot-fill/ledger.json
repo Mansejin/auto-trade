@@ -2066,6 +2066,68 @@
       },
       "at": "2026-08-05T21:12:35Z",
       "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "47dbea761e6815a3",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "cloud_break",
+        "adx_min": 12,
+        "rsi_max": 55,
+        "sl": -0.02,
+        "tp": 0.08,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 44,
+          "profit_factor": 1.034,
+          "profit_pct": 2.45
+        },
+        "h2": {
+          "trades": 37,
+          "profit_factor": 1.1062,
+          "profit_pct": 6.3
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T20:52:32Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "75e0cb0b785d34ef",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "cloud_break",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 22,
+          "profit_factor": 1.5057,
+          "profit_pct": 22.09
+        },
+        "h2": {
+          "trades": 27,
+          "profit_factor": 1.0929,
+          "profit_pct": 5.5
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T21:23:54Z",
+      "result": "cpp_miss"
     }
   ],
   "candidates": [
@@ -2616,10 +2678,10 @@
     "ok": true,
     "action": "ran",
     "slot": "scalp_bear_short",
-    "fingerprint": "01f6a2eaa38d1dd8",
+    "fingerprint": "75e0cb0b785d34ef",
     "result": "cpp_miss",
-    "cpp_min_pf": 1.1668,
-    "at": "2026-08-05T21:12:35Z"
+    "cpp_min_pf": 1.0929,
+    "at": "2026-08-05T21:23:54Z"
   },
   "notes": "Append-only tried[] keyed by fingerprint. Tick script skips fingerprints already present."
 }
