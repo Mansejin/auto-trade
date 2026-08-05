@@ -3,9 +3,7 @@
 from __future__ import annotations
 
 import json
-import subprocess
 import sys
-import time
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -14,6 +12,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts.bt_policyC_continuous_equity import parse_perf  # noqa: E402
 from scripts.bt_btc_cash_5050_rebalance import fetch_days, mdd, parse_d  # noqa: E402
+from scripts.toolkit_bt import run_backtest  # noqa: E402
 
 OUT = ROOT / "reports"
 CACHE = ROOT / "reports/five-year/segment-csv-cache-midswing"
@@ -28,35 +27,7 @@ WINDOWS = {
 
 
 def run_bt(strat: str, start: str, end: str) -> Path:
-    CACHE.mkdir(parents=True, exist_ok=True)
-    key = f"{Path(strat).stem}_{start}_{end}"
-    hit = list(CACHE.glob(f"{key}*.csv"))
-    if hit:
-        return hit[0]
-    before = {p.resolve() for p in (ROOT / "reports").glob("*.csv")}
-    cmd = [
-        "uvx",
-        "--from",
-        "git+https://github.com/upbit-official/upbit-strategy-toolkit.git",
-        "upbit-strategy-toolkit",
-        "backtest",
-        "run",
-        str(ROOT / strat),
-        "--start",
-        start,
-        "--end",
-        end,
-    ]
-    subprocess.run(cmd, cwd=ROOT, check=True)
-    time.sleep(0.5)
-    after = [p for p in (ROOT / "reports").glob("*.csv") if p.resolve() not in before]
-    stem = Path(strat).stem
-    src = max(after, key=lambda p: p.stat().st_mtime) if after else max(
-        (ROOT / "reports").glob(f"{stem}-*.csv"), key=lambda p: p.stat().st_mtime
-    )
-    dest = CACHE / f"{key}.csv"
-    dest.write_bytes(src.read_bytes())
-    return dest
+    return run_backtest(strat, start, end, cache_dir=CACHE)
 
 
 def bh_stats(start: date, end: date, by: dict) -> dict:

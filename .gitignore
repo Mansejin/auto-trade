@@ -11,6 +11,7 @@ freqtrade-research/user_data/backtest_results/
 freqtrade-research/user_data/plot/
 freqtrade-research/user_data/notebooks/
 cache/
+reports/bt-cache/
 data/
 logs/
 strategies/_eth_policyC_xfer/

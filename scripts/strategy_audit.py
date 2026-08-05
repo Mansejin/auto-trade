@@ -16,43 +16,50 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from scripts.toolkit_bt import run_backtest  # noqa: E402
+
 DEFAULT_POLICY = ROOT / "reports" / "review-state" / "audit-policy.json"
-TK = ROOT / ".agents" / "skills" / "backtest" / "scripts" / "upbit-strategy-toolkit.sh"
 
 
 def run_bt(strategy: Path, start: str, end: str) -> dict:
     e = "2026-07-26" if end > "2026-07-26" else end
-    cmd = ["bash", str(TK), "backtest", "run", str(strategy), "--start", start, "--end", e]
-    p = subprocess.run(cmd, capture_output=True, text=True)
-    text = (p.stdout or "") + "\n" + (p.stderr or "")
-    if p.returncode != 0 and "Total Return" not in text:
-        raise RuntimeError(f"backtest failed for {strategy.name} {start}..{end}: {text[-500:]}")
+    csv_path = run_backtest(strategy, start, e)
+    lines = csv_path.read_text(encoding="utf-8").splitlines()
+    in_perf = False
+    raw: dict[str, str] = {}
+    for line in lines:
+        if line.startswith("# section: performance"):
+            in_perf = True
+            continue
+        if in_perf and line.startswith("# section:"):
+            break
+        if not in_perf or line.startswith("metric") or not line.strip():
+            continue
+        k, v = line.split(",", 1)
+        raw[k] = v
 
-    def grab(prefix: str, idx: int) -> float | int | None:
-        for line in text.splitlines():
-            s = line.strip()
-            if s.startswith(prefix):
-                parts = s.split()
-                raw = parts[idx].replace("%", "").replace("+", "")
-                if raw in ("N/A",):
-                    return None
-                if prefix.startswith("Trades"):
-                    return int(raw)
-                return float(raw)
-        return None
+    def num(key: str) -> float | None:
+        v = raw.get(key)
+        if v is None or v.startswith("N/A"):
+            return None
+        try:
+            return float(v)
+        except ValueError:
+            return None
 
+    trades = num("trades")
     return {
-        "total_return_pct": grab("Total Return", 2),
-        "benchmark_pct": grab("Benchmark", 1),
-        "mdd_pct": grab("MDD", 1),
-        "trades": grab("Trades", 1),
-        "raw_ok": "Total Return" in text,
+        "total_return_pct": num("total_return_pct"),
+        "benchmark_pct": num("benchmark_pct"),
+        "mdd_pct": num("mdd_pct"),
+        "trades": int(trades) if trades is not None else None,
+        "raw_ok": "total_return_pct" in raw,
     }
 
 

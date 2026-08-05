@@ -13,13 +13,14 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
+import sys
 from calendar import monthrange
 from datetime import date, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TK = ROOT / ".agents" / "skills" / "backtest" / "scripts" / "upbit-strategy-toolkit.sh"
+sys.path.insert(0, str(ROOT))
+from scripts.toolkit_bt import run_backtest  # noqa: E402
 
 
 def add_months(d: date, months: int) -> date:
@@ -33,30 +34,40 @@ def parse_d(s: str) -> date:
     return datetime.strptime(s, "%Y-%m-%d").date()
 
 
+def _f(raw: dict[str, str], key: str) -> float | None:
+    v = raw.get(key)
+    if v is None or v.startswith("N/A"):
+        return None
+    try:
+        return float(v)
+    except ValueError:
+        return None
+
+
 def run_bt(strategy: Path, start: str, end: str) -> dict:
-    p = subprocess.run(
-        ["bash", str(TK), "backtest", "run", str(strategy), "--start", start, "--end", end],
-        capture_output=True,
-        text=True,
-    )
-    text = (p.stdout or "") + "\n" + (p.stderr or "")
-    out = {}
-    for line in text.splitlines():
-        t = line.strip()
-        if t.startswith("Total Return"):
-            out["ret"] = float(t.split()[2].replace("%", "").replace("+", ""))
-        elif t.startswith("Benchmark"):
-            out["bh"] = float(t.split()[1].replace("%", "").replace("+", ""))
-        elif t.startswith("CAGR"):
-            out["cagr"] = float(t.split()[1].replace("%", "").replace("+", ""))
-        elif t.startswith("MDD"):
-            out["mdd"] = float(t.split()[1].replace("%", "").replace("+", ""))
-        elif t.startswith("Trades"):
-            out["n"] = int(t.split()[1])
-        elif t.startswith("Profit Factor"):
-            raw = t.split()[2]
-            out["pf"] = None if raw in ("∞", "N/A") else float(raw)
-    out["ok"] = "ret" in out
+    csv_path = run_backtest(strategy, start, end)
+    lines = csv_path.read_text(encoding="utf-8").splitlines()
+    in_perf = False
+    raw: dict[str, str] = {}
+    for line in lines:
+        if line.startswith("# section: performance"):
+            in_perf = True
+            continue
+        if in_perf and line.startswith("# section:"):
+            break
+        if not in_perf or line.startswith("metric") or not line.strip():
+            continue
+        k, v = line.split(",", 1)
+        raw[k] = v
+    out: dict = {
+        "ret": _f(raw, "total_return_pct"),
+        "bh": _f(raw, "benchmark_pct"),
+        "cagr": _f(raw, "cagr_pct"),
+        "mdd": _f(raw, "mdd_pct"),
+        "n": int(_f(raw, "trades") or 0),
+        "pf": _f(raw, "profit_factor_before_fees"),
+    }
+    out["ok"] = out["ret"] is not None
     return out
 
 

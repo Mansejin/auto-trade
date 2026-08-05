@@ -24,8 +24,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-UVX_FROM = "git+https://github.com/upbit-official/upbit-strategy-toolkit.git"
-TOOL = ["uvx", "--from", UVX_FROM, "upbit-strategy-toolkit"]
+sys.path.insert(0, str(ROOT))
+from scripts.toolkit_bt import ensure_toolkit_cli  # noqa: E402
+
+TOOL: list[str] = []  # filled in main via ensure_toolkit_cli()
 
 
 def _run(argv: list[str], *, stdin: str | None = None) -> tuple[float, int, str]:
@@ -89,12 +91,15 @@ def main() -> int:
         help="Optional JSON report path (default reports/toolkit-profile-*.json)",
     )
     args = ap.parse_args()
+    global TOOL
+    TOOL = ensure_toolkit_cli()
     strat = args.strat if args.strat.is_absolute() else ROOT / args.strat
     if not strat.exists():
         print(f"missing strategy: {strat}", file=sys.stderr)
         return 1
 
     print("=== toolkit wall profile ===", flush=True)
+    print(f"cli={TOOL[0]}", flush=True)
     print(f"strat={strat.relative_to(ROOT)}  window={args.start}..{args.end}", flush=True)
 
     # 1) spawn floor
@@ -166,7 +171,7 @@ def main() -> int:
     print(f"  bt_warm total:                 {t_warm:8.3f}s", flush=True)
     print(
         "\nInterpretation: if I/O% or spawn% dominates, C++ strategy loops won't help much; "
-        "fix uvx reuse / candle cache / batching first.",
+        "fix local CLI reuse / CSV disk cache / batching first.",
         flush=True,
     )
 
