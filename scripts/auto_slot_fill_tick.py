@@ -7,18 +7,19 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
 from datetime import datetime, timezone
 from itertools import product
 from pathlib import Path
+from shutil import which
 
 ROOT = Path(__file__).resolve().parents[1]
 SLOTS = ROOT / "config" / "empty-strategy-slots.json"
 LEDGER = ROOT / "reports" / "auto-slot-fill" / "ledger.json"
 OUT = ROOT / "reports" / "auto-slot-fill"
-CPP = ROOT / "cpp-bt" / "build" / "cpp-bt.exe"
 DATA = ROOT / "cpp-bt" / "data"
 STRAT_TMP = OUT / "_tick_strat.json"
 FT = ROOT / "freqtrade-research"
@@ -26,6 +27,28 @@ CFG = FT / "user_data" / "config.bitget-rsi-ichi-check.json"
 FT_STRAT = FT / "user_data" / "strategies" / "TrendShortV1.py"
 
 WINDOWS = (("h1", "2025-09-01", "2026-02-04"), ("h2", "2026-02-04", "2026-08-05"))
+
+
+def _cpp_bin() -> Path:
+    win = ROOT / "cpp-bt" / "build" / "cpp-bt.exe"
+    nix = ROOT / "cpp-bt" / "build" / "cpp-bt"
+    if win.exists():
+        return win
+    return nix
+
+
+def _ft_python() -> Path:
+    for p in (FT / ".venv" / "Scripts" / "python.exe", FT / ".venv" / "bin" / "python"):
+        if p.exists():
+            return p
+    return Path(sys.executable)
+
+
+def _ft_cli() -> Path:
+    for p in (FT / ".venv" / "Scripts" / "freqtrade.exe", FT / ".venv" / "bin" / "freqtrade"):
+        if p.exists():
+            return p
+    raise SystemExit("freqtrade CLI missing under freqtrade-research/.venv")
 
 
 def utc_now() -> str:
@@ -50,9 +73,6 @@ def ensure_data(symbol: str, tf: str) -> Path:
     ftind = DATA / f"{symbol}-{tf}.ftind"
     if ftind.exists():
         return ftind
-    py = FT / ".venv" / "Scripts" / "python.exe"
-    if not py.exists():
-        py = Path(sys.executable)
     feather = (
         FT
         / "user_data"
@@ -64,7 +84,14 @@ def ensure_data(symbol: str, tf: str) -> Path:
     if not feather.exists():
         raise SystemExit(f"missing candles {feather}; download first")
     subprocess.run(
-        [str(py), str(ROOT / "cpp-bt" / "tools" / "export_ftind.py"), "--symbol", symbol, "--timeframe", tf],
+        [
+            str(_ft_python()),
+            str(ROOT / "cpp-bt" / "tools" / "export_ftind.py"),
+            "--symbol",
+            symbol,
+            "--timeframe",
+            tf,
+        ],
         cwd=ROOT,
         check=True,
     )
@@ -72,17 +99,29 @@ def ensure_data(symbol: str, tf: str) -> Path:
 
 
 def ensure_cpp() -> None:
-    if CPP.exists():
+    if _cpp_bin().exists():
         return
-    build = ROOT / "cpp-bt" / "scripts" / "build.ps1"
-    if not build.exists():
-        raise SystemExit("cpp-bt.exe missing and no build.ps1")
-    subprocess.run(
-        ["powershell", "-ExecutionPolicy", "Bypass", "-File", str(build)],
-        cwd=ROOT,
-        check=True,
-    )
-    if not CPP.exists():
+    build_dir = ROOT / "cpp-bt" / "build"
+    cmake_lists = ROOT / "cpp-bt" / "CMakeLists.txt"
+    build_ps1 = ROOT / "cpp-bt" / "scripts" / "build.ps1"
+    if cmake_lists.exists() and which("cmake"):
+        build_dir.mkdir(parents=True, exist_ok=True)
+        # Cloud Linux often has c++→clang without -lstdc++; prefer g++ when present.
+        env = os.environ.copy()
+        if which("g++"):
+            env["CXX"] = "g++"
+            env["CC"] = "gcc"
+        subprocess.run(["cmake", str(ROOT / "cpp-bt")], cwd=build_dir, check=True, env=env)
+        subprocess.run(["cmake", "--build", ".", "-j"], cwd=build_dir, check=True, env=env)
+    elif build_ps1.exists():
+        subprocess.run(
+            ["powershell", "-ExecutionPolicy", "Bypass", "-File", str(build_ps1)],
+            cwd=ROOT,
+            check=True,
+        )
+    else:
+        raise SystemExit("cpp-bt binary missing and no cmake/build.ps1")
+    if not _cpp_bin().exists():
         raise SystemExit("cpp-bt build failed")
 
 
@@ -199,7 +238,7 @@ def cpp_window(exp: dict, start: str, end: str) -> dict:
     write_strat(exp)
     p = subprocess.run(
         [
-            str(CPP),
+            str(_cpp_bin()),
             "run",
             "--strategy",
             str(STRAT_TMP),
@@ -257,7 +296,7 @@ def ft_window(start: str, end: str, exp: dict) -> dict:
         tr_ft = start.replace("-", "") + "-" + end.replace("-", "")
         p = subprocess.run(
             [
-                str(FT / ".venv" / "Scripts" / "freqtrade.exe"),
+                str(_ft_cli()),
                 "backtesting",
                 "--config",
                 str(CFG),
