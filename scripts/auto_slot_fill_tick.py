@@ -212,58 +212,64 @@ def cpp_window(exp: dict, start: str, end: str) -> dict:
 def ft_window(start: str, end: str, exp: dict) -> dict:
     """Fixed-stake FT confirm for short TrendShortV1-shaped params."""
     cfg = load_json(CFG)
-    cfg["fee"] = exp["fee"]
-    cfg["stake_amount"] = 100
-    cfg["dry_run_wallet"] = 1000
-    cfg["entry_pricing"]["use_order_book"] = False
-    cfg["exit_pricing"]["use_order_book"] = False
-    cfg["export"] = "none"
-    save_json(CFG, cfg)
+    orig_cfg = json.dumps(cfg, indent=2, ensure_ascii=False) + "\n"
+    orig_strat = FT_STRAT.read_text(encoding="utf-8")
+    try:
+        cfg["fee"] = exp["fee"]
+        cfg["stake_amount"] = 100
+        cfg["dry_run_wallet"] = 1000
+        cfg["entry_pricing"]["use_order_book"] = False
+        cfg["exit_pricing"]["use_order_book"] = False
+        cfg["export"] = "none"
+        save_json(CFG, cfg)
 
-    t = FT_STRAT.read_text(encoding="utf-8")
-    t = re.sub(r"stoploss = -0\.\d+", f"stoploss = {exp['sl']}", t, count=1)
-    t = re.sub(
-        r'minimal_roi = \{"0": 0\.\d+\}',
-        f'minimal_roi = {{"0": {exp["tp"]}}}',
-        t,
-        count=1,
-    )
-    t = re.sub(r'entry_mode = "[^"]+"', f'entry_mode = "{exp["mode"]}"', t, count=1)
-    t = re.sub(r"adx_min = \d+", f"adx_min = {int(exp['adx_min'])}", t, count=1)
-    t = re.sub(r"rsi_max = \d+", f"rsi_max = {int(exp['rsi_max'])}", t, count=1)
-    FT_STRAT.write_text(t, encoding="utf-8")
+        t = orig_strat
+        t = re.sub(r"stoploss = -0\.\d+", f"stoploss = {exp['sl']}", t, count=1)
+        t = re.sub(
+            r'minimal_roi = \{"0": 0\.\d+\}',
+            f'minimal_roi = {{"0": {exp["tp"]}}}',
+            t,
+            count=1,
+        )
+        t = re.sub(r'entry_mode = "[^"]+"', f'entry_mode = "{exp["mode"]}"', t, count=1)
+        t = re.sub(r"adx_min = \d+", f"adx_min = {int(exp['adx_min'])}", t, count=1)
+        t = re.sub(r"rsi_max = \d+", f"rsi_max = {int(exp['rsi_max'])}", t, count=1)
+        FT_STRAT.write_text(t, encoding="utf-8")
 
-    tr_ft = start.replace("-", "") + "-" + end.replace("-", "")
-    p = subprocess.run(
-        [
-            str(FT / ".venv" / "Scripts" / "freqtrade.exe"),
-            "backtesting",
-            "--config",
-            str(CFG),
-            "--strategy",
-            "TrendShortV1",
-            "--timerange",
-            tr_ft,
-            "--cache",
-            "none",
-            "--export",
-            "none",
-        ],
-        cwd=FT,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-    )
-    text = ((p.stdout or "") + "\n" + (p.stderr or "")).replace("│", "|")
-    out: dict = {"trades": 0, "profit_factor": None}
-    m = re.search(r"Total/Daily Avg Trades\s*\|\s*(\d+)", text)
-    if m:
-        out["trades"] = int(m.group(1))
-    m = re.search(r"Profit factor\s*\|\s*([0-9.]+|nan)", text)
-    if m and m.group(1) != "nan":
-        out["profit_factor"] = float(m.group(1))
-    return out
+        tr_ft = start.replace("-", "") + "-" + end.replace("-", "")
+        p = subprocess.run(
+            [
+                str(FT / ".venv" / "Scripts" / "freqtrade.exe"),
+                "backtesting",
+                "--config",
+                str(CFG),
+                "--strategy",
+                "TrendShortV1",
+                "--timerange",
+                tr_ft,
+                "--cache",
+                "none",
+                "--export",
+                "none",
+            ],
+            cwd=FT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        text = ((p.stdout or "") + "\n" + (p.stderr or "")).replace("│", "|")
+        out: dict = {"trades": 0, "profit_factor": None}
+        m = re.search(r"Total/Daily Avg Trades\s*\|\s*(\d+)", text)
+        if m:
+            out["trades"] = int(m.group(1))
+        m = re.search(r"Profit factor\s*\|\s*([0-9.]+|nan)", text)
+        if m and m.group(1) != "nan":
+            out["profit_factor"] = float(m.group(1))
+        return out
+    finally:
+        CFG.write_text(orig_cfg, encoding="utf-8")
+        FT_STRAT.write_text(orig_strat, encoding="utf-8")
 
 
 def passes(crit: dict, h1: dict, h2: dict) -> bool:
