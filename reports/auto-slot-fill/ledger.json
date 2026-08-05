@@ -1942,6 +1942,37 @@
       },
       "at": "2026-08-05T16:17:31Z",
       "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "6fc9f9ee3a414c11",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "cloud_break",
+        "adx_min": 12,
+        "rsi_max": 55,
+        "sl": -0.035,
+        "tp": 0.105,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 15,
+          "profit_factor": 1.9116,
+          "profit_pct": 29.7
+        },
+        "h2": {
+          "trades": 23,
+          "profit_factor": 1.1206,
+          "profit_pct": 6.98
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T19:34:15Z",
+      "result": "cpp_miss"
     }
   ],
   "candidates": [
@@ -2490,20 +2521,12 @@
   ],
   "last_tick": {
     "ok": true,
-    "action": "promote_review",
+    "action": "ran",
     "slot": "scalp_bear_short",
-    "fingerprint": "16dba43a38f9f882",
-    "status": "RESEARCH_KEEP",
-    "fee10_pass": false,
-    "fragile": [
-      "h2 PF only marginally >=1.2",
-      "fails at 10bps/side fee (cpp)",
-      "fails at 10bps/side fee (ft)",
-      "fails at 12bps/side fee (cpp)"
-    ],
-    "neighbor_pass": "2/7",
-    "quarters_pf_ge_1": 4,
-    "at": "2026-08-05T19:26:19Z"
+    "fingerprint": "6fc9f9ee3a414c11",
+    "result": "cpp_miss",
+    "cpp_min_pf": 1.1206,
+    "at": "2026-08-05T19:34:15Z"
   },
   "notes": "Append-only tried[] keyed by fingerprint. Tick script skips fingerprints already present."
 }
