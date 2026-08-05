@@ -26,5 +26,12 @@ Search (v2–v4, PF≥1.2 & n≥20 on both halves): **no hit**.
 - Plain RSI fade (no cloud): n large, PF ~0.63–0.67
 - Artifact: `reports/rsi-ichi-short-v3-20260805/search-summary.json`
 
+### Pivot: RSI+BB short (also true FT)
+`RsiBbScalpShortV5` — RSI>thr + close>BB upper + ADX gate, SL/ROI only.  
+54-config OOS search: **no hit**. Best min-half PF ~0.82 (`r70_lt30_sl0.4_tp1.2`).  
+Artifact: `reports/rsi-bb-short-v5-20260805/search-summary.json`
+
+Mean-reversion fade shorts struggle on this Bitget window (large BTC drawdown tape).
+
 ## Caveats
 Backtests omit full live friction; not a LIVE/Policy C promotion signal.

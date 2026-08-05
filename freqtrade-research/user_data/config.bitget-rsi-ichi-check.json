@@ -41,7 +41,7 @@
   "timeframe": "5m",
   "startup_candle_count": 80,
   "fee": 0.0006,
-  "strategy": "RsiIchiScalpShortV4",
+  "strategy": "RsiBbScalpShortV5",
   "bot_name": "freqtrade-rsi-ichi-check",
   "initial_state": "running",
   "internals": {
