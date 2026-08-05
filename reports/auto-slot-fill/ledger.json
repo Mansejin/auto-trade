@@ -1694,6 +1694,37 @@
       },
       "at": "2026-08-05T14:32:26Z",
       "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "fbfbae6832ff86eb",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_only",
+        "adx_min": 20,
+        "rsi_max": 60,
+        "sl": -0.02,
+        "tp": 0.08,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 50,
+          "profit_factor": 1.2407,
+          "profit_pct": 18.88
+        },
+        "h2": {
+          "trades": 57,
+          "profit_factor": 0.9402,
+          "profit_pct": -5.7
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T14:37:00Z",
+      "result": "cpp_miss"
     }
   ],
   "candidates": [
@@ -1786,10 +1817,10 @@
     "ok": true,
     "action": "ran",
     "slot": "scalp_bear_short",
-    "fingerprint": "665bced5d8cd5a9d",
+    "fingerprint": "fbfbae6832ff86eb",
     "result": "cpp_miss",
-    "cpp_min_pf": 1.0281,
-    "at": "2026-08-05T14:32:26Z"
+    "cpp_min_pf": 0.9402,
+    "at": "2026-08-05T14:37:00Z"
   },
   "notes": "Append-only tried[] keyed by fingerprint. Tick script skips fingerprints already present."
 }
