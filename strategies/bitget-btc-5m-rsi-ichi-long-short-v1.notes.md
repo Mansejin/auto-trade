@@ -35,6 +35,13 @@ Artifacts: `reports/rsi-ichi-pf-search-20260805/`, `scripts/_search_rsi_ichi_pf1
 - In-sample search over a large grid; user waived overfit concern for this pass — still not a LIVE promotion signal.
 - Do not mount to Policy C / CORE from this alone.
 
-## Files
-- `strategies/bitget-btc-5m-rsi-ichi-long-v1.json`
-- `strategies/bitget-btc-5m-rsi-ichi-short-proxy-v1.json`
+## Three-check follow-up (2026-08-05)
+
+| Check | Result |
+|---|---|
+| (1) OOS halves (toolkit) | Long PF≥1.2 on h1+h2. Short proxy **h1 PF 1.19** (misses 1.2). |
+| (2) Freqtrade true short | **Falsified** — PF 0.14–0.24, 19–52 trades. Proxy≠true short. |
+| (3) Long R:R fixed 0.5/1.0 | RSI22 + **cloud exit** still PF≥1.2 both halves; SL/TP-only or RSI≥25 falls under 1.2. |
+
+Detail: `reports/rsi-ichi-checks-20260805/SUMMARY.json`.
+FT strategies: `RsiIchiScalpLongV1.py`, `RsiIchiScalpShortV1.py`.
