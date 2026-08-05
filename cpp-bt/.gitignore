@@ -1,0 +1,6 @@
+build/
+data/*.ohlcv
+*.obj
+*.exe
+*.ilk
+*.pdb
