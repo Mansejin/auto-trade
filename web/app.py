@@ -16,6 +16,7 @@ from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from equity_curve import equity_curve_from_trades, equity_summary
+from condition_meters import build_condition_meters as _build_condition_meters
 
 LOG_DIR = Path(os.getenv("LOG_DIR", "/app/logs"))
 STATE_PATH = Path(os.getenv("STATE_PATH", "/app/data/state.json"))
@@ -64,6 +65,44 @@ app = FastAPI(title="Auto-Trade Desk", docs_url=None, redoc_url=None)
 
 _candle_cache: dict[str, tuple[float, list[dict[str, Any]]]] = {}
 _CANDLE_TTL = 45.0
+
+
+def _asset_ver() -> str:
+    try:
+        return str(int(max(
+            (STATIC / "desk.js").stat().st_mtime,
+            (STATIC / "desk.css").stat().st_mtime,
+        )))
+    except OSError:
+        return str(int(time.time()))
+
+
+def _page_html(name: str) -> HTMLResponse:
+    """Serve HTML with cache-bust query on static assets + no-store page cache."""
+    path = STATIC / name
+    text = path.read_text(encoding="utf-8")
+    ver = _asset_ver()
+    for asset in ("desk.css", "desk.js"):
+        text = text.replace(f"static/{asset}", f"static/{asset}?v={ver}")
+        text = text.replace(f'href="static/{asset}"', f'href="static/{asset}?v={ver}"')
+        text = text.replace(f'src="static/{asset}"', f'src="static/{asset}?v={ver}"')
+    return HTMLResponse(
+        text,
+        headers={
+            "Cache-Control": "no-store, max-age=0",
+            "Pragma": "no-cache",
+        },
+    )
+
+
+@app.middleware("http")
+async def _short_static_cache(request: Request, call_next):  # type: ignore[no-untyped-def]
+    resp = await call_next(request)
+    path = request.url.path
+    if path.endswith((".js", ".css")) or "/static/" in path:
+        # Cloudflare was caching desk assets 4h (cf HIT) → other PCs stuck on old broken UI.
+        resp.headers["Cache-Control"] = "public, max-age=60, must-revalidate"
+    return resp
 
 
 def _p(path: str) -> str:
@@ -287,8 +326,8 @@ def index(
             secure = request.url.scheme == "https" or xf == "https"
             _set_auth_cookie(resp, request.query_params.get("token") or "", secure=secure)
             return resp
-        return FileResponse(STATIC / "index.html")
-    return FileResponse(STATIC / "login.html")
+        return _page_html("index.html")
+    return _page_html("login.html")
 
 
 def equity_page(
@@ -302,8 +341,8 @@ def equity_page(
             secure = request.url.scheme == "https" or xf == "https"
             _set_auth_cookie(resp, request.query_params.get("token") or "", secure=secure)
             return resp
-        return FileResponse(STATIC / "equity.html")
-    return FileResponse(STATIC / "login.html")
+        return _page_html("equity.html")
+    return _page_html("login.html")
 
 def login(request: Request, token: str = Form(...)) -> Response:
     if not _authorized(token.strip()):
@@ -622,6 +661,7 @@ def _load_bitget() -> dict[str, Any]:
         "position": bs.get("position") or bitget_state.get("position"),
         "latest_text": latest_text,
         "recent_trades": trades[-8:] if isinstance(trades, list) else [],
+        "condition_meters": _build_condition_meters(bs),
     }
 
 
@@ -702,6 +742,7 @@ def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
         "bitget": _load_bitget(),
         "recent_trades": recent,
         "latest_text": latest_text,
+        "condition_meters": _build_condition_meters(status),
         "tv_symbol": tv_symbol,
         "tv_interval": _tf_to_tv(str(status.get("timeframe") or "60")),
         "market": market,

@@ -153,7 +153,7 @@
     root.appendChild(swCard);
   }
 
-  function renderStatusBlock(elId, text) {
+  function renderStatusBlock(elId, text, opts) {
     const root = document.getElementById(elId);
     if (!root) return;
     root.innerHTML = "";
@@ -162,9 +162,11 @@
       root.innerHTML = '<p class="muted empty">상태 텍스트 없음</p>';
       return;
     }
+    const hideIndicators = Boolean(opts && opts.hideIndicators);
     const lines = raw.split(/\r?\n/);
     let dl = null;
     let pairs = 0;
+    let skipPairs = false;
     const flush = () => {
       if (dl && pairs) root.appendChild(dl);
       dl = null;
@@ -177,7 +179,8 @@
       if (/^[=\-]{3,}/.test(t) || /^----/.test(t)) {
         flush();
         const label = t.replace(/^[=\-\s]+|[=\-\s]+$/g, "").trim();
-        if (label && label !== "봇 상태") {
+        skipPairs = hideIndicators && label === "주요 지표";
+        if (label && label !== "봇 상태" && !skipPairs) {
           const h = document.createElement("div");
           h.className = "status-section";
           h.textContent = label;
@@ -185,6 +188,7 @@
         }
         continue;
       }
+      if (skipPairs) continue;
       const m = t.match(/^([^:：]{1,24})\s*[:：]\s*(.+)$/);
       if (!m) continue;
       const key = m[1].trim();
@@ -206,6 +210,68 @@
       pre.className = "status-pre";
       pre.textContent = raw;
       root.appendChild(pre);
+    }
+  }
+
+  function fmtMeterNum(v) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return "—";
+    if (Math.abs(n) >= 1000) return Math.round(n).toLocaleString("ko-KR");
+    return String(Math.round(n * 100) / 100);
+  }
+
+  function renderMeters(elId, meters) {
+    const root = document.getElementById(elId);
+    if (!root) return;
+    root.innerHTML = "";
+    if (!meters || !meters.length) {
+      root.hidden = true;
+      return;
+    }
+    root.hidden = false;
+    const head = document.createElement("div");
+    head.className = "meters-head";
+    head.textContent = "조건 대비";
+    root.appendChild(head);
+    for (const m of meters) {
+      const row = document.createElement("div");
+      const metClass = m.met === true ? "met" : m.met === false ? "unmet" : "unk";
+      row.className = `meter ${metClass}`;
+
+      const top = document.createElement("div");
+      top.className = "meter-top";
+      const title = document.createElement("span");
+      title.className = "meter-title";
+      title.textContent = `${m.side_label || ""} ${m.label || ""}`.trim();
+      const rule = document.createElement("span");
+      rule.className = "meter-rule";
+      if (m.kind === "compare") {
+        rule.textContent = `${fmtMeterNum(m.left)} ${m.op_sym || ""} ${fmtMeterNum(m.right)}`;
+      } else {
+        rule.textContent = `${fmtMeterNum(m.value)} ${m.op_sym || ""} ${fmtMeterNum(m.threshold)}`;
+      }
+      const badge = document.createElement("span");
+      badge.className = "meter-badge";
+      badge.textContent = m.met === true ? "충족" : m.met === false ? "미충족" : "—";
+      top.append(title, rule, badge);
+
+      const track = document.createElement("div");
+      track.className = "meter-track";
+      const lo = Number(m.min);
+      const hi = Number(m.max);
+      const span = hi - lo || 1;
+      const clampPct = (x) => Math.max(0, Math.min(100, ((Number(x) - lo) / span) * 100));
+      const fill = document.createElement("div");
+      fill.className = "meter-fill";
+      fill.style.width = `${clampPct(m.kind === "compare" ? m.left : m.value)}%`;
+      const mark = document.createElement("div");
+      mark.className = "meter-mark";
+      mark.style.left = `${clampPct(m.kind === "compare" ? m.right : m.threshold)}%`;
+      mark.title = m.kind === "compare" ? String(m.right_label || "기준") : `임계 ${fmtMeterNum(m.threshold)}`;
+      track.append(fill, mark);
+
+      row.append(top, track);
+      root.appendChild(row);
     }
   }
 
@@ -518,10 +584,17 @@
       setFreshness("ok", t || "최신");
     }
 
-    renderStatusBlock("latest-status", data.latest_text || "");
+    const ubMeters = data.condition_meters || [];
+    const bgMeters = bg.condition_meters || [];
+    renderMeters("ub-meters", ubMeters);
+    renderMeters("bg-meters", bgMeters);
+    renderStatusBlock("latest-status", data.latest_text || "", {
+      hideIndicators: ubMeters.length > 0,
+    });
     renderStatusBlock(
       "bg-latest-status",
-      bg.latest_text || (scalpCash ? "모드: SCALP 중지 · cash" : "")
+      bg.latest_text || (scalpCash ? "모드: SCALP 중지 · cash" : ""),
+      { hideIndicators: bgMeters.length > 0 }
     );
     renderSleeves(data);
     renderSwitchHistory(data.switch_history || []);
