@@ -1,0 +1,105 @@
+{
+  "verdict": {
+    "fee_rt": 0.0012,
+    "criteria_primary": {
+      "min_pf": 1.1,
+      "min_trades": 150,
+      "fee": 0.0006
+    },
+    "criteria_strict": {
+      "min_pf": 1.15,
+      "min_trades": 100,
+      "fee": 0.0006
+    },
+    "rationale": "12bps RT eats 15-40% of a 0.3-0.8% scalp move, so after-fee PF must clear 1.0 with room. PF 1.1 is meaningful only with fat n (noise); n~100 needs ~1.15. fee=0 PF~1.13 with n>=100 is NOT enough - fees wipe it."
+  },
+  "5m": {
+    "hits": 0,
+    "combos": 396,
+    "best": {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.01,
+        "take_profit": 0.02,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 65.0,
+      "tag": "rsi_fade_adx20_rsi65_sl0p01_tp0p02_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 0.9895077673250472,
+          "profit_pct": -1.562922979260824,
+          "trades": 212
+        },
+        "h2": {
+          "profit_factor": 0.9296261795053854,
+          "profit_pct": -15.527279753931458,
+          "trades": 307
+        }
+      }
+    }
+  },
+  "1m": {
+    "hits": 0,
+    "combos": 330,
+    "best": {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.008,
+        "take_profit": 0.016,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 75.0,
+      "tag": "rsi_fade_adx20_rsi75_sl0p008_tp0p016_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 0.8585266952016207,
+          "profit_pct": -25.12000000000002,
+          "trades": 296
+        },
+        "h2": {
+          "profit_factor": 0.8658368498394781,
+          "profit_pct": -32.8324061072834,
+          "trades": 410
+        }
+      }
+    }
+  },
+  "5m_strict_pf115_n100": {
+    "hits": 0,
+    "best": {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.01,
+        "take_profit": 0.02,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 65.0,
+      "tag": "rsi_fade_adx20_rsi65_sl0p01_tp0p02_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 0.9895077673250472,
+          "profit_pct": -1.562922979260824,
+          "trades": 212
+        },
+        "h2": {
+          "profit_factor": 0.9296261795053854,
+          "profit_pct": -15.527279753931458,
+          "trades": 307
+        }
+      }
+    }
+  }
+}
