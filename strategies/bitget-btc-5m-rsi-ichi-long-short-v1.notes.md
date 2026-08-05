@@ -3,14 +3,23 @@
 ## Intent
 Regime-agnostic scalp research. Long kept on toolkit KRW-BTC; **short only on Bitget freqtrade** (true futures).
 
-## Long (retained toolkit)
+## Long (retained toolkit) — RESEARCH only, not LIVE
 
 | Entry | Exit | SL/TP |
 |---|---|---|
 | RSI(14) rebound across 22 | close below both cloud spans (offset 26) | 0.5% / 2.0% |
 
-File: `strategies/bitget-btc-5m-rsi-ichi-long-v1.json`  
-OOS halves toolkit: PF≥1.2 both (see `reports/rsi-ichi-checks-20260805/`).
+File: `strategies/bitget-btc-5m-rsi-ichi-long-v1.json`
+
+**What looked good:** OOS halves pre-fee PF ~1.46 / 1.53, n~180+.
+
+**Why not LIVE:**
+- Reported PF is toolkit `profit_factor_before_fees` (fees not in PF).
+- Absolute return still negative in that window (h1 ~−16%, h2 ~−15%) — beat BH (−27%) but lost capital.
+- Exits are almost all cloud sells (tiny holds); fees turn many “green” ticks into KRW losses.
+- Cloud exit is load-bearing; Bitget FT true-long got **0 fills** (exit already true on signal bars).
+
+Keep as research artifact only — do not promote to Policy C / Bitget LIVE.
 
 ## Short — methodology correction
 
