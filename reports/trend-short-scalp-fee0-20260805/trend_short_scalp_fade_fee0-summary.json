@@ -1,0 +1,532 @@
+{
+  "combos": 396,
+  "criteria": {
+    "min_pf": 1.2,
+    "min_trades": 100
+  },
+  "elapsed_ms": 50.0871,
+  "engine": "cpp-bt",
+  "hits": [],
+  "top20": [
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.003,
+        "take_profit": 0.008,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 80.0,
+      "tag": "rsi_fade_adx20_rsi80_sl0p003_tp0p008_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.2121212121212623,
+          "profit_pct": 3.500000000000691,
+          "trades": 80
+        },
+        "h2": {
+          "profit_factor": 1.1594202898551147,
+          "profit_pct": 3.3000000000007557,
+          "trades": 99
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.004,
+        "take_profit": 0.006,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_bb",
+      "rsi_max": 70.0,
+      "tag": "rsi_bb_adx20_rsi70_sl0p004_tp0p006_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1357142857142866,
+          "profit_pct": 3.8000000000000234,
+          "trades": 123
+        },
+        "h2": {
+          "profit_factor": 1.1617647058823555,
+          "profit_pct": 6.600000000000074,
+          "trades": 181
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.005,
+        "take_profit": 0.012,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 65.0,
+      "tag": "rsi_fade_adx20_rsi65_sl0p005_tp0p012_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1397993311037047,
+          "profit_pct": 20.90000000000352,
+          "trades": 441
+        },
+        "h2": {
+          "profit_factor": 1.1306045332318924,
+          "profit_pct": 26.512720246073428,
+          "trades": 598
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.008,
+        "take_profit": 0.012,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "bb_reject",
+      "rsi_max": 55.0,
+      "tag": "bb_reject_adx20_rsi55_sl0p008_tp0p012_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1232558139534885,
+          "profit_pct": 21.20000000000006,
+          "trades": 376
+        },
+        "h2": {
+          "profit_factor": 1.1140736699141813,
+          "profit_pct": 27.195162907540873,
+          "trades": 520
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.005,
+        "take_profit": 0.015,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 65.0,
+      "tag": "rsi_fade_adx20_rsi65_sl0p005_tp0p015_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1117889216432966,
+          "profit_pct": 16.377077020742654,
+          "trades": 402
+        },
+        "h2": {
+          "profit_factor": 1.1599639616142294,
+          "profit_pct": 32.312720246073475,
+          "trades": 561
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.01,
+        "take_profit": 0.02,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 65.0,
+      "tag": "rsi_fade_adx20_rsi65_sl0p01_tp0p02_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.179526894892776,
+          "profit_pct": 23.87707702073917,
+          "trades": 212
+        },
+        "h2": {
+          "profit_factor": 1.1081863971881656,
+          "profit_pct": 21.31272024606852,
+          "trades": 307
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.005,
+        "take_profit": 0.012,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "bb_reject",
+      "rsi_max": 55.0,
+      "tag": "bb_reject_adx20_rsi55_sl0p005_tp0p012_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1061452513966734,
+          "profit_pct": 19.00000000000407,
+          "trades": 523
+        },
+        "h2": {
+          "profit_factor": 1.0995755583301499,
+          "profit_pct": 24.595162907546495,
+          "trades": 721
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.008,
+        "take_profit": 0.012,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 65.0,
+      "tag": "rsi_fade_adx20_rsi65_sl0p008_tp0p012_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1731843575418992,
+          "profit_pct": 24.800000000000075,
+          "trades": 319
+        },
+        "h2": {
+          "profit_factor": 1.0982544262886698,
+          "profit_pct": 20.29047491078635,
+          "trades": 448
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.008,
+        "take_profit": 0.016,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 65.0,
+      "tag": "rsi_fade_adx20_rsi65_sl0p008_tp0p016_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1148362644338512,
+          "profit_pct": 16.07707702073915,
+          "trades": 273
+        },
+        "h2": {
+          "profit_factor": 1.0944872917382558,
+          "profit_pct": 19.89047491078624,
+          "trades": 408
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.004,
+        "take_profit": 0.01,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "bb_reject",
+      "rsi_max": 55.0,
+      "tag": "bb_reject_adx20_rsi55_sl0p004_tp0p01_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.0897435897435912,
+          "profit_pct": 15.400000000000233,
+          "trades": 616
+        },
+        "h2": {
+          "profit_factor": 1.1185359231423584,
+          "profit_pct": 27.595162907541045,
+          "trades": 843
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.01,
+        "take_profit": 0.015,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 65.0,
+      "tag": "rsi_fade_adx20_rsi65_sl0p01_tp0p015_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.0884076930052808,
+          "profit_pct": 12.377077020739216,
+          "trades": 242
+        },
+        "h2": {
+          "profit_factor": 1.0985707474928799,
+          "profit_pct": 19.812720246068587,
+          "trades": 349
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.003,
+        "take_profit": 0.008,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_bb",
+      "rsi_max": 70.0,
+      "tag": "rsi_bb_adx20_rsi70_sl0p003_tp0p008_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.121212121212159,
+          "profit_pct": 3.2000000000008915,
+          "trades": 125
+        },
+        "h2": {
+          "profit_factor": 1.0788804071247222,
+          "profit_pct": 3.100000000001446,
+          "trades": 184
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.005,
+        "take_profit": 0.015,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 60.0,
+      "tag": "rsi_fade_adx20_rsi60_sl0p005_tp0p015_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.0782540916081718,
+          "profit_pct": 14.085736489470598,
+          "trades": 490
+        },
+        "h2": {
+          "profit_factor": 1.0787176527767128,
+          "profit_pct": 18.734801360856693,
+          "trades": 648
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.003,
+        "take_profit": 0.008,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 75.0,
+      "tag": "rsi_fade_adx20_rsi75_sl0p003_tp0p008_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1707317073171157,
+          "profit_pct": 6.30000000000133,
+          "trades": 177
+        },
+        "h2": {
+          "profit_factor": 1.0769230769231177,
+          "profit_pct": 4.8000000000023055,
+          "trades": 292
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.003,
+        "take_profit": 0.005,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "bb_reject",
+      "rsi_max": 55.0,
+      "tag": "bb_reject_adx20_rsi55_sl0p003_tp0p005_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.0700757575757964,
+          "profit_pct": 11.10000000000574,
+          "trades": 867
+        },
+        "h2": {
+          "profit_factor": 1.1029216241374926,
+          "profit_pct": 20.74899942611823,
+          "trades": 1117
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.005,
+        "take_profit": 0.012,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 70.0,
+      "tag": "rsi_fade_adx20_rsi70_sl0p005_tp0p012_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1115789473684476,
+          "profit_pct": 10.600000000002245,
+          "trades": 278
+        },
+        "h2": {
+          "profit_factor": 1.0681288096685693,
+          "profit_pct": 10.04899942611381,
+          "trades": 427
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.008,
+        "take_profit": 0.016,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "bb_reject",
+      "rsi_max": 55.0,
+      "tag": "bb_reject_adx20_rsi55_sl0p008_tp0p016_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1159597847810285,
+          "profit_pct": 19.20294035973832,
+          "trades": 323
+        },
+        "h2": {
+          "profit_factor": 1.0669895313897804,
+          "profit_pct": 15.595162907540809,
+          "trades": 447
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.005,
+        "take_profit": 0.015,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 70.0,
+      "tag": "rsi_fade_adx20_rsi70_sl0p005_tp0p015_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1028862189660595,
+          "profit_pct": 9.877077020741377,
+          "trades": 263
+        },
+        "h2": {
+          "profit_factor": 1.0617095671690693,
+          "profit_pct": 9.34899942611383,
+          "trades": 411
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.01,
+        "take_profit": 0.015,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 60.0,
+      "tag": "rsi_fade_adx20_rsi60_sl0p01_tp0p015_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.1005358530591662,
+          "profit_pct": 16.085736489466726,
+          "trades": 278
+        },
+        "h2": {
+          "profit_factor": 1.0610435616037859,
+          "profit_pct": 13.734801360851305,
+          "trades": 385
+        }
+      }
+    },
+    {
+      "adx_min": 20.0,
+      "exit": {
+        "stoploss": -0.005,
+        "take_profit": 0.012,
+        "trail_offset": 0.0,
+        "trail_pos": 0.0,
+        "trailing": false
+      },
+      "hit": false,
+      "mode": "rsi_fade",
+      "rsi_max": 60.0,
+      "tag": "rsi_fade_adx20_rsi60_sl0p005_tp0p012_notrail",
+      "windows": {
+        "h1": {
+          "profit_factor": 1.0607512190178934,
+          "profit_pct": 11.785736489471013,
+          "trades": 560
+        },
+        "h2": {
+          "profit_factor": 1.0714248527937162,
+          "profit_pct": 17.534801360856864,
+          "trades": 711
+        }
+      }
+    }
+  ]
+}

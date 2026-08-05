@@ -19,6 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY web/app.py ./app.py
 COPY web/equity_curve.py ./equity_curve.py
+COPY web/condition_meters.py ./condition_meters.py
 COPY web/static ./static
 RUN mkdir -p /app/config
 COPY config/sleeves.json config/scalp-live-map.json ./config/

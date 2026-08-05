@@ -169,6 +169,7 @@ services:
       RISK_PATH: /app/data/risk.json
       BITGET_STATE_PATH: /app/data/bitget_state.json
       BITGET_LOG_DIR: /app/logs/bitget
+      STRATEGY_DIR: /app/strategies
       DASHBOARD_TOKEN: ${DASHBOARD_TOKEN:-}
       BASE_PATH: ${BASE_PATH:-/autotrade}
       PORT: "8080"
@@ -176,8 +177,10 @@ services:
       - ./data:/app/data:ro
       - ./logs:/app/logs
       - ./config:/app/config:ro
+      - ./strategies:/app/strategies:ro
       - ./web/static:/app/static:ro
       - ./web/app.py:/app/app.py:ro
+      - ./web/condition_meters.py:/app/condition_meters.py:ro
       - ./web/equity_curve.py:/app/equity_curve.py:ro
     networks:
       net:

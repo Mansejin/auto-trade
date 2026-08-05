@@ -30,6 +30,8 @@ Intent weights remain 50:50 for when SCALP is later re-enabled. Until then treat
 
 See [`docs/ops/weekly-core-obs.md`](ops/weekly-core-obs.md) — regime / path / bot health only. No map retune.
 
+Design (not LIVE): major-bull re-entry gate + Bitget lev swing/hedge — [`bull-reentry-and-lev-hedge.md`](bull-reentry-and-lev-hedge.md).
+
 ## Policy C evidence (short)
 
 - In-sample fair race (2021–26): strong vs hold on return **and** MDD.

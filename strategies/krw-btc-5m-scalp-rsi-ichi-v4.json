@@ -1,0 +1,109 @@
+{
+  "name": "KRW-BTC 5m Scalp RSI Ichimoku Cloud v4",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "5m",
+  "stop_loss": 0.5,
+  "take_profit": 1.0,
+  "indicators": [
+    {
+      "type": "rsi",
+      "ref": "rsi14",
+      "params": {
+        "period": 14,
+        "signal_period": 9,
+        "signal_type": "EMA"
+      }
+    },
+    {
+      "type": "ichimoku_cloud",
+      "ref": "ichi",
+      "params": {
+        "conversion": 9,
+        "base": 26,
+        "leading_span2": 52
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "rsi14.rsi",
+          "offset": 1
+        },
+        "op": "lt",
+        "right": {
+          "type": "literal",
+          "value": 30
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "rsi14.rsi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 30
+        }
+      },
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Leading1",
+          "offset": 26
+        }
+      },
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Leading2",
+          "offset": 26
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "lt",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Leading1",
+          "offset": 26
+        }
+      },
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "lt",
+        "right": {
+          "type": "indicator",
+          "ref": "ichi.Leading2",
+          "offset": 26
+        }
+      }
+    ]
+  }
+}

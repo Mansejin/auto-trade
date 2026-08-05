@@ -153,6 +153,128 @@
     root.appendChild(swCard);
   }
 
+  function renderStatusBlock(elId, text, opts) {
+    const root = document.getElementById(elId);
+    if (!root) return;
+    root.innerHTML = "";
+    const raw = String(text || "").trim();
+    if (!raw) {
+      root.innerHTML = '<p class="muted empty">상태 텍스트 없음</p>';
+      return;
+    }
+    const hideIndicators = Boolean(opts && opts.hideIndicators);
+    const lines = raw.split(/\r?\n/);
+    let dl = null;
+    let pairs = 0;
+    let skipPairs = false;
+    const flush = () => {
+      if (dl && pairs) root.appendChild(dl);
+      dl = null;
+      pairs = 0;
+    };
+    const skipKeys = new Set(["시각", "모드"]);
+    for (const line of lines) {
+      const t = line.trim();
+      if (!t) continue;
+      if (/^[=\-]{3,}/.test(t) || /^----/.test(t)) {
+        flush();
+        const label = t.replace(/^[=\-\s]+|[=\-\s]+$/g, "").trim();
+        skipPairs = hideIndicators && label === "주요 지표";
+        if (label && label !== "봇 상태" && !skipPairs) {
+          const h = document.createElement("div");
+          h.className = "status-section";
+          h.textContent = label;
+          root.appendChild(h);
+        }
+        continue;
+      }
+      if (skipPairs) continue;
+      const m = t.match(/^([^:：]{1,24})\s*[:：]\s*(.+)$/);
+      if (!m) continue;
+      const key = m[1].trim();
+      if (skipKeys.has(key)) continue;
+      if (!dl) {
+        dl = document.createElement("dl");
+        dl.className = "status-kv";
+      }
+      const dt = document.createElement("dt");
+      dt.textContent = key;
+      const dd = document.createElement("dd");
+      dd.textContent = m[2].trim();
+      dl.append(dt, dd);
+      pairs += 1;
+    }
+    flush();
+    if (!root.childElementCount) {
+      const pre = document.createElement("pre");
+      pre.className = "status-pre";
+      pre.textContent = raw;
+      root.appendChild(pre);
+    }
+  }
+
+  function fmtMeterNum(v) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return "—";
+    if (Math.abs(n) >= 1000) return Math.round(n).toLocaleString("ko-KR");
+    return String(Math.round(n * 100) / 100);
+  }
+
+  function renderMeters(elId, meters) {
+    const root = document.getElementById(elId);
+    if (!root) return;
+    root.innerHTML = "";
+    if (!meters || !meters.length) {
+      root.hidden = true;
+      return;
+    }
+    root.hidden = false;
+    const head = document.createElement("div");
+    head.className = "meters-head";
+    head.textContent = "조건 대비";
+    root.appendChild(head);
+    for (const m of meters) {
+      const row = document.createElement("div");
+      const metClass = m.met === true ? "met" : m.met === false ? "unmet" : "unk";
+      row.className = `meter ${metClass}`;
+
+      const top = document.createElement("div");
+      top.className = "meter-top";
+      const title = document.createElement("span");
+      title.className = "meter-title";
+      title.textContent = `${m.side_label || ""} ${m.label || ""}`.trim();
+      const rule = document.createElement("span");
+      rule.className = "meter-rule";
+      if (m.kind === "compare") {
+        rule.textContent = `${fmtMeterNum(m.left)} ${m.op_sym || ""} ${fmtMeterNum(m.right)}`;
+      } else {
+        rule.textContent = `${fmtMeterNum(m.value)} ${m.op_sym || ""} ${fmtMeterNum(m.threshold)}`;
+      }
+      const badge = document.createElement("span");
+      badge.className = "meter-badge";
+      badge.textContent = m.met === true ? "충족" : m.met === false ? "미충족" : "—";
+      top.append(title, rule, badge);
+
+      const track = document.createElement("div");
+      track.className = "meter-track";
+      const lo = Number(m.min);
+      const hi = Number(m.max);
+      const span = hi - lo || 1;
+      const clampPct = (x) => Math.max(0, Math.min(100, ((Number(x) - lo) / span) * 100));
+      const fill = document.createElement("div");
+      fill.className = "meter-fill";
+      fill.style.width = `${clampPct(m.kind === "compare" ? m.left : m.value)}%`;
+      const mark = document.createElement("div");
+      mark.className = "meter-mark";
+      mark.style.left = `${clampPct(m.kind === "compare" ? m.right : m.threshold)}%`;
+      mark.title = m.kind === "compare" ? String(m.right_label || "기준") : `임계 ${fmtMeterNum(m.threshold)}`;
+      track.append(fill, mark);
+
+      row.append(top, track);
+      root.appendChild(row);
+    }
+  }
+
   function qty(v) {
     if (v == null || Number.isNaN(Number(v))) return "—";
     return Number(v)
@@ -170,49 +292,69 @@
     }
   }
 
-  function ensureTvChart(symbol, interval) {
-    if (typeof TradingView === "undefined" || !TradingView.widget) {
-      throw new Error("TradingView 스크립트 미로드");
+  function loadTradingView(onReady) {
+    if (typeof TradingView !== "undefined" && TradingView.widget) {
+      onReady();
+      return;
     }
-    const key = `${symbol}|${interval}`;
-    if (key === lastTvKey && tvWidget) return;
-    lastTvKey = key;
-    const el = document.getElementById("tv_chart");
-    if (!el) return;
-    // Destroy previous frame cleanly; never leave a naked iframe covering the page.
-    el.innerHTML = "";
-    tvWidget = new TradingView.widget({
-      autosize: true,
-      symbol,
-      interval: String(interval || "60"),
-      timezone: "Asia/Seoul",
-      theme: "dark",
-      style: "1",
-      locale: "kr",
-      toolbar_bg: "#131722",
-      enable_publishing: false,
-      hide_top_toolbar: false,
-      hide_legend: false,
-      allow_symbol_change: false,
-      save_image: false,
-      container_id: "tv_chart",
-      backgroundColor: "#131722",
-      gridColor: "rgba(42, 46, 57, 0.6)",
+    const existing = document.querySelector('script[data-desk-tv="1"]');
+    if (existing) {
+      existing.addEventListener("load", onReady);
+      return;
+    }
+    const s = document.createElement("script");
+    s.src = "https://s3.tradingview.com/tv.js";
+    s.async = true;
+    s.dataset.deskTv = "1";
+    s.onload = onReady;
+    s.onerror = () => {
+      setFreshness("stale", "차트 CDN 차단/실패");
+    };
+    document.head.appendChild(s);
+  }
+
+  function ensureTvChart(symbol, interval) {
+    loadTradingView(() => {
+      if (typeof TradingView === "undefined" || !TradingView.widget) {
+        return;
+      }
+      const key = `${symbol}|${interval}`;
+      if (key === lastTvKey && tvWidget) return;
+      lastTvKey = key;
+      const el = document.getElementById("tv_chart");
+      if (!el) return;
+      el.innerHTML = "";
+      try {
+        tvWidget = new TradingView.widget({
+          autosize: true,
+          symbol,
+          interval: String(interval || "60"),
+          timezone: "Asia/Seoul",
+          theme: "dark",
+          style: "1",
+          locale: "kr",
+          toolbar_bg: "#131722",
+          enable_publishing: false,
+          hide_top_toolbar: false,
+          hide_legend: false,
+          allow_symbol_change: false,
+          save_image: false,
+          container_id: "tv_chart",
+          backgroundColor: "#131722",
+          gridColor: "rgba(42, 46, 57, 0.6)",
+        });
+        tvBooted = true;
+      } catch (e) {
+        console.warn(e);
+        setFreshness("stale", `차트: ${e.message || e}`);
+      }
     });
-    tvBooted = true;
   }
 
   function updateCharts(data) {
     const symbol = data.tv_symbol || "UPBIT:BTCKRW";
     const interval = data.tv_interval || "60";
-    const meta = document.getElementById("chart-meta");
-    if (meta) meta.textContent = symbol;
-    try {
-      ensureTvChart(symbol, interval);
-    } catch (e) {
-      console.warn(e);
-      if (!tvBooted) setFreshness("stale", `차트: ${e.message || e}`);
-    }
+    ensureTvChart(symbol, interval);
   }
 
   function renderSwitchHistory(rows) {
@@ -442,9 +584,18 @@
       setFreshness("ok", t || "최신");
     }
 
-    document.getElementById("latest-text").textContent = data.latest_text || "(상태 텍스트 없음)";
-    document.getElementById("bg-latest-text").textContent =
-      bg.latest_text || (scalpCash ? "(SCALP 중지 · Bitget 로그 없음)" : "(상태 텍스트 없음)");
+    const ubMeters = data.condition_meters || [];
+    const bgMeters = bg.condition_meters || [];
+    renderMeters("ub-meters", ubMeters);
+    renderMeters("bg-meters", bgMeters);
+    renderStatusBlock("latest-status", data.latest_text || "", {
+      hideIndicators: ubMeters.length > 0,
+    });
+    renderStatusBlock(
+      "bg-latest-status",
+      bg.latest_text || (scalpCash ? "모드: SCALP 중지 · cash" : ""),
+      { hideIndicators: bgMeters.length > 0 }
+    );
     renderSleeves(data);
     renderSwitchHistory(data.switch_history || []);
     renderTrades(data.recent_trades || [], "KRW", "trades", "trades-empty");

@@ -1,0 +1,87 @@
+{
+  "name": "Regime Bull Trend 4h EMA5/20 +DI>−DI ADX20 SL10/TP40 v3",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "4h",
+  "stop_loss": 10,
+  "take_profit": 40,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "ma_short",
+      "params": {
+        "type": "EMA",
+        "period": 5
+      }
+    },
+    {
+      "type": "moving_average",
+      "ref": "ma_long",
+      "params": {
+        "type": "EMA",
+        "period": 20
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ma_short.value"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "ma_long.value"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 20
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "ma_short.value"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "ma_long.value"
+        }
+      }
+    ]
+  }
+}

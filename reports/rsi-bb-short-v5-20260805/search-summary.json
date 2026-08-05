@@ -1,0 +1,307 @@
+{
+  "criteria": "PF>=1.2 n>=20 both halves",
+  "hits": [],
+  "top15": [
+    {
+      "tag": "r70_lt30_sl0p004_tp0p012",
+      "rsi": 70,
+      "adx": "lt30",
+      "sl": -0.004,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 158,
+          "profit_factor": 0.82,
+          "profit_pct": -9.74
+        },
+        "h2": {
+          "trades": 262,
+          "profit_factor": 0.88,
+          "profit_pct": -10.97
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_lt30_sl0p005_tp0p015",
+      "rsi": 70,
+      "adx": "lt30",
+      "sl": -0.005,
+      "roi": 0.015,
+      "windows": {
+        "h1": {
+          "trades": 143,
+          "profit_factor": 0.8,
+          "profit_pct": -12.01
+        },
+        "h2": {
+          "trades": 227,
+          "profit_factor": 0.87,
+          "profit_pct": -12.31
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_lt30_sl0p003_tp0p012",
+      "rsi": 70,
+      "adx": "lt30",
+      "sl": -0.003,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 178,
+          "profit_factor": 0.81,
+          "profit_pct": -9.72
+        },
+        "h2": {
+          "trades": 296,
+          "profit_factor": 0.79,
+          "profit_pct": -19.01
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_lt30_sl0p004_tp0p01",
+      "rsi": 70,
+      "adx": "lt30",
+      "sl": -0.004,
+      "roi": 0.01,
+      "windows": {
+        "h1": {
+          "trades": 161,
+          "profit_factor": 0.76,
+          "profit_pct": -13.07
+        },
+        "h2": {
+          "trades": 268,
+          "profit_factor": 0.85,
+          "profit_pct": -14.03
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_lt30_sl0p003_tp0p01",
+      "rsi": 70,
+      "adx": "lt30",
+      "sl": -0.003,
+      "roi": 0.01,
+      "windows": {
+        "h1": {
+          "trades": 181,
+          "profit_factor": 0.75,
+          "profit_pct": -12.81
+        },
+        "h2": {
+          "trades": 299,
+          "profit_factor": 0.78,
+          "profit_pct": -19.62
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r75_lt30_sl0p005_tp0p015",
+      "rsi": 75,
+      "adx": "lt30",
+      "sl": -0.005,
+      "roi": 0.015,
+      "windows": {
+        "h1": {
+          "trades": 67,
+          "profit_factor": 0.74,
+          "profit_pct": -7.51
+        },
+        "h2": {
+          "trades": 98,
+          "profit_factor": 0.96,
+          "profit_pct": -1.82
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_off_sl0p005_tp0p015",
+      "rsi": 70,
+      "adx": "off",
+      "sl": -0.005,
+      "roi": 0.015,
+      "windows": {
+        "h1": {
+          "trades": 261,
+          "profit_factor": 0.73,
+          "profit_pct": -26.7
+        },
+        "h2": {
+          "trades": 402,
+          "profit_factor": 0.82,
+          "profit_pct": -29.65
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r75_lt30_sl0p003_tp0p012",
+      "rsi": 75,
+      "adx": "lt30",
+      "sl": -0.003,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 73,
+          "profit_factor": 0.79,
+          "profit_pct": -4.75
+        },
+        "h2": {
+          "trades": 120,
+          "profit_factor": 0.71,
+          "profit_pct": -10.98
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_off_sl0p004_tp0p012",
+      "rsi": 70,
+      "adx": "off",
+      "sl": -0.004,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 306,
+          "profit_factor": 0.7,
+          "profit_pct": -28.78
+        },
+        "h2": {
+          "trades": 482,
+          "profit_factor": 0.87,
+          "profit_pct": -22.15
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r80_gte25_sl0p003_tp0p008",
+      "rsi": 80,
+      "adx": "gte25",
+      "sl": -0.003,
+      "roi": 0.008,
+      "windows": {
+        "h1": {
+          "trades": 86,
+          "profit_factor": 0.7,
+          "profit_pct": -7.77
+        },
+        "h2": {
+          "trades": 95,
+          "profit_factor": 0.96,
+          "profit_pct": -1.02
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_lt30_sl0p003_tp0p008",
+      "rsi": 70,
+      "adx": "lt30",
+      "sl": -0.003,
+      "roi": 0.008,
+      "windows": {
+        "h1": {
+          "trades": 183,
+          "profit_factor": 0.69,
+          "profit_pct": -15.74
+        },
+        "h2": {
+          "trades": 306,
+          "profit_factor": 0.75,
+          "profit_pct": -20.58
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r75_off_sl0p003_tp0p012",
+      "rsi": 75,
+      "adx": "off",
+      "sl": -0.003,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 196,
+          "profit_factor": 0.69,
+          "profit_pct": -17.55
+        },
+        "h2": {
+          "trades": 298,
+          "profit_factor": 0.81,
+          "profit_pct": -17.03
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r75_lt30_sl0p004_tp0p01",
+      "rsi": 75,
+      "adx": "lt30",
+      "sl": -0.004,
+      "roi": 0.01,
+      "windows": {
+        "h1": {
+          "trades": 71,
+          "profit_factor": 0.69,
+          "profit_pct": -7.8
+        },
+        "h2": {
+          "trades": 109,
+          "profit_factor": 0.73,
+          "profit_pct": -10.61
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_off_sl0p003_tp0p012",
+      "rsi": 70,
+      "adx": "off",
+      "sl": -0.003,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 359,
+          "profit_factor": 0.68,
+          "profit_pct": -30.3
+        },
+        "h2": {
+          "trades": 564,
+          "profit_factor": 0.8,
+          "profit_pct": -31.92
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_gte25_sl0p005_tp0p015",
+      "rsi": 70,
+      "adx": "gte25",
+      "sl": -0.005,
+      "roi": 0.015,
+      "windows": {
+        "h1": {
+          "trades": 228,
+          "profit_factor": 0.67,
+          "profit_pct": -30.0
+        },
+        "h2": {
+          "trades": 324,
+          "profit_factor": 0.88,
+          "profit_pct": -15.93
+        }
+      },
+      "hit": false
+    }
+  ],
+  "n": 54
+}

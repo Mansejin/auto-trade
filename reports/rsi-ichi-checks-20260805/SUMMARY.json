@@ -1,0 +1,52 @@
+{
+  "generated_for": "rsi-ichi bitget pair three-check",
+  "fee_rate_toolkit": 0.0006,
+  "windows": {
+    "toolkit_h1": "2025-08-04..2026-02-03",
+    "toolkit_h2": "2026-02-04..2026-08-04",
+    "ft_data_available": "2025-09-01..2026-08-05 (Bitget BTC/USDT:USDT 5m)"
+  },
+  "check_1_oos_toolkit": {
+    "long_frozen_sl0p5_tp2p0": [
+      {"window": "h1", "pf": 1.455325, "trades": 186, "total_return_pct": -16.3401},
+      {"window": "h2", "pf": 1.52976, "trades": 173, "total_return_pct": -14.9817},
+      {"window": "full", "pf": 1.517482, "trades": 364, "total_return_pct": -28.7293}
+    ],
+    "short_proxy_inverted_pnl": [
+      {"window": "h1", "pf": 1.191726, "trades": 769, "note": "below 1.2"},
+      {"window": "h2", "pf": 1.515134, "trades": 846},
+      {"window": "full", "pf": 1.368479, "trades": 1617}
+    ],
+    "judgment": "Long PF>=1.2 holds on both halves. Short proxy fails h1 (PF 1.19)."
+  },
+  "check_3_long_rr_fixed_0p5_1p0": {
+    "key_rows": [
+      {"rsi": 22, "cloud_exit": true, "h1_pf": 1.455, "h2_pf": 1.508, "full_pf": 1.508, "full_n": 364},
+      {"rsi": 22, "cloud_exit": false, "h1_pf": 1.028, "h2_pf": 0.961, "full_pf": 0.997, "full_n": 293},
+      {"rsi": 25, "cloud_exit": true, "full_pf": 1.073, "full_n": 645},
+      {"rsi": 30, "cloud_exit": true, "full_pf": 0.962, "full_n": 1483},
+      {"rsi": 35, "cloud_exit": true, "full_pf": 0.832, "full_n": 2737}
+    ],
+    "judgment": "With SL0.5/TP1.0 fixed, cloud exit is load-bearing at RSI22 (still PF>=1.2 both halves). SL/TP-only or looser RSI thresholds drop below 1.2."
+  },
+  "check_2_freqtrade_true_sides": {
+    "engine": "freqtrade 2026.6 Bitget futures",
+    "strategies": ["RsiIchiScalpLongV1", "RsiIchiScalpShortV1"],
+    "short_true": [
+      {"window": "h1_20250901-20260204", "trades": 19, "profit_factor": 0.24, "profit_pct": -3.03, "market_change_pct": -30.02},
+      {"window": "h2_20260204-20260805", "trades": 33, "profit_factor": 0.14, "profit_pct": -5.81, "market_change_pct": -15.31},
+      {"window": "full_20250901-20260805", "trades": 52, "profit_factor": 0.18, "profit_pct": -8.66, "market_change_pct": -40.74}
+    ],
+    "long_true": [
+      {"window": "full", "trades": 0, "note": "310 raw RSI22 rebound signals on Bitget 5m, but exit_long (below cloud) is true on same bars so FT refuses entry"}
+    ],
+    "signal_vs_fill": {
+      "raw_long_signals_full": 310,
+      "raw_short_signals_full": 1582,
+      "ft_short_trades_full": 52,
+      "note": "FT skips entry when exit signal is already active on the same candle; Upbit toolkit proxy could still open those bars — this inflates proxy trade counts / inverted PF."
+    },
+    "judgment": "True Bitget short FAILS PF>=1.2 hard (PF 0.14-0.24). Proxy inverted PF does not survive true short engine."
+  },
+  "overall": "Toolkit OOS long retains PF>=1.2; short proxy is not confirmed by freqtrade true short. Do not treat prior short hit as Bitget-ready."
+}

@@ -8,9 +8,7 @@ stored toolkit_ret_pct from the OOS run (exchange default ~0.05%).
 from __future__ import annotations
 
 import json
-import subprocess
 import sys
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -18,6 +16,9 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "reports"
 CACHE = ROOT / "reports/five-year/segment-csv-cache-fee2x"
 STRESS_FEE = 0.001  # 0.10% — ~2× typical Upbit 0.05%
+
+sys.path.insert(0, str(ROOT))
+from scripts.toolkit_bt import run_backtest  # noqa: E402
 
 
 def latest_oos() -> Path:
@@ -46,41 +47,7 @@ def parse_perf(csv_path: Path) -> dict[str, str]:
 
 
 def run_bt(strat: str, start: str, end: str, fee: float) -> Path:
-    CACHE.mkdir(parents=True, exist_ok=True)
-    key = f"{Path(strat).stem}_{start}_{end}_fee{fee}".replace(":", "")
-    cached = list(CACHE.glob(f"{key}.csv"))
-    if cached:
-        return cached[0]
-    before = {p.resolve() for p in OUT.glob("*.csv")}
-    cmd = [
-        "uvx",
-        "--from",
-        "git+https://github.com/upbit-official/upbit-strategy-toolkit.git",
-        "upbit-strategy-toolkit",
-        "backtest",
-        "run",
-        str(ROOT / strat),
-        "--start",
-        start,
-        "--end",
-        end,
-        "--fee-rate",
-        str(fee),
-    ]
-    subprocess.run(cmd, cwd=ROOT, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    time.sleep(0.25)
-    after = [p for p in OUT.glob("*.csv") if p.resolve() not in before]
-    stem = Path(strat).stem
-    if after:
-        src = max(after, key=lambda p: p.stat().st_mtime)
-    else:
-        cands = sorted(OUT.glob(f"{stem}-*.csv"), key=lambda p: p.stat().st_mtime)
-        if not cands:
-            raise FileNotFoundError(f"no CSV {strat} {start} {end}")
-        src = cands[-1]
-    dest = CACHE / f"{key}.csv"
-    dest.write_bytes(src.read_bytes())
-    return dest
+    return run_backtest(strat, start, end, cache_dir=CACHE, fee_rate=fee)
 
 
 def compound(rets: list[float]) -> float:

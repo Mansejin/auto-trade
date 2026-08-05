@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "updated": "2026-08-05",
+  "intent": "Fill empty SCALP (Bitget) slots from config/sleeves.json without touching CORE Policy C LIVE.",
+  "rules": [
+    "Never auto-write Policy C STRATEGY_PATH or sleeves live status.",
+    "Never promote without human approve.",
+    "Prefer cpp-bt then fixed-stake FT; skip configs already in reports/auto-slot-fill/ledger.json.",
+    "Honor banned_families and falsified lists from sleeves + prior reports."
+  ],
+  "slots": [
+    {
+      "id": "scalp_bear_short",
+      "priority": 10,
+      "sleeve": "scalp",
+      "regime": "bear",
+      "side": "short",
+      "venue": "bitget",
+      "status": "empty",
+      "goal": "True futures short for Bitget SCALP bear sleeve",
+      "criteria": {"min_pf": 1.2, "min_trades": 20, "fee": 0.0006, "stake_model": "fixed"},
+      "symbol": "BTC_USDT_USDT",
+      "timeframes": ["5m"],
+      "hints": [
+        "Prior fade/MR shorts failed (rsi_fade, bb_reject, rsi_bb scalp).",
+        "Swing di_cloud/SL3/TP9 is RESEARCH_KEEP only — improve fee buffer, do not LIVE-mount.",
+        "Ban toolkit long-invert as short evidence."
+      ],
+      "seed_from": [
+        "reports/bitget-btc-short-swing-hit/README.md",
+        "reports/scalp-pf-threshold-20260805/NOTES.md",
+        "reports/bitget-btc-short-swing-deep-20260805/README.md"
+      ]
+    },
+    {
+      "id": "scalp_bull_long",
+      "priority": 20,
+      "sleeve": "scalp",
+      "regime": "bull",
+      "side": "long",
+      "venue": "bitget",
+      "status": "empty",
+      "goal": "Bitget SCALP bull daytrade/scalp long (CORE already has bull-v2)",
+      "criteria": {"min_pf": 1.2, "min_trades": 40, "fee": 0.0006, "require_positive_return": true},
+      "symbol": "BTC_USDT_USDT",
+      "timeframes": ["5m", "15m"],
+      "hints": [
+        "Toolkit RSI+ichi long had pre-fee PF>1.2 but negative absolute return — reject that class.",
+        "Need after-fee positive total_return on both OOS halves."
+      ],
+      "seed_from": ["strategies/bitget-btc-5m-rsi-ichi-long-short-v1.notes.md"]
+    },
+    {
+      "id": "scalp_transition",
+      "priority": 30,
+      "sleeve": "scalp",
+      "regime": "transition",
+      "side": "either",
+      "venue": "bitget",
+      "status": "empty",
+      "goal": "Transition specialist or cash-ok; only pursue after bear/bull scalp have a research survivor",
+      "criteria": {"min_pf": 1.2, "min_trades": 20, "fee": 0.0006},
+      "depends_on_any_candidate": ["scalp_bear_short", "scalp_bull_long"],
+      "symbol": "BTC_USDT_USDT",
+      "timeframes": ["5m"]
+    },
+    {
+      "id": "scalp_sideways",
+      "priority": 40,
+      "sleeve": "scalp",
+      "regime": "sideways",
+      "side": "either",
+      "venue": "bitget",
+      "status": "empty",
+      "goal": "Sideways scalp (CORE Williams is not this sleeve)",
+      "criteria": {"min_pf": 1.2, "min_trades": 30, "fee": 0.0006},
+      "symbol": "BTC_USDT_USDT",
+      "timeframes": ["5m", "15m"],
+      "hints": ["Prior SidewaysScalp15mBbV1 falsified — do not revive same BB fade."]
+    }
+  ]
+}

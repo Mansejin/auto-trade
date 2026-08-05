@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "updated": "2026-08-05T00:00:00Z",
+  "banned_families": [
+    "toolkit_long_invert_as_short",
+    "rsi_fade_scalp_after_fee",
+    "bb_reject_scalp_after_fee",
+    "rsi_bb_scalp_after_fee",
+    "rsi_ichi_long_prefee_pf_only"
+  ],
+  "known_research": [
+    {
+      "id": "swing_di_cloud_sl3_tp9",
+      "slot_related": "scalp_bear_short",
+      "status": "RESEARCH_KEEP",
+      "note": "FT fixed-stake PF 1.44/1.20; fails 10bps fee stress — not LIVE"
+    }
+  ],
+  "tried": [
+    {
+      "fingerprint": "9d7e67da791648b1",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 12,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 31,
+          "profit_factor": 1.3553,
+          "profit_pct": 23.28
+        },
+        "h2": {
+          "trades": 32,
+          "profit_factor": 1.2156,
+          "profit_pct": 14.8
+        },
+        "pass": true
+      },
+      "at": "2026-08-05T10:02:01Z",
+      "result": "candidate",
+      "ft": {
+        "h1": {
+          "trades": 27,
+          "profit_factor": 1.44
+        },
+        "h2": {
+          "trades": 33,
+          "profit_factor": 1.21
+        },
+        "pass": true
+      }
+    }
+  ],
+  "candidates": [
+    {
+      "slot": "scalp_bear_short",
+      "fingerprint": "9d7e67da791648b1",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 12,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 31,
+          "profit_factor": 1.3553,
+          "profit_pct": 23.28
+        },
+        "h2": {
+          "trades": 32,
+          "profit_factor": 1.2156,
+          "profit_pct": 14.8
+        },
+        "pass": true
+      },
+      "ft": {
+        "h1": {
+          "trades": 27,
+          "profit_factor": 1.44
+        },
+        "h2": {
+          "trades": 33,
+          "profit_factor": 1.21
+        },
+        "pass": true
+      },
+      "status": "HUMAN_APPROVE",
+      "at": "2026-08-05T10:02:21Z"
+    }
+  ],
+  "last_tick": {
+    "ok": true,
+    "action": "ran",
+    "slot": "scalp_bear_short",
+    "fingerprint": "9d7e67da791648b1",
+    "result": "candidate",
+    "cpp_min_pf": 1.2156,
+    "at": "2026-08-05T10:02:21Z"
+  },
+  "notes": "Append-only tried[] keyed by fingerprint. Tick script skips fingerprints already present."
+}

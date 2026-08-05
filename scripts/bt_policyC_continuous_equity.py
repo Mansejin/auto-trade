@@ -11,9 +11,7 @@ from __future__ import annotations
 
 import csv
 import json
-import subprocess
 import sys
-import time
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -29,6 +27,7 @@ from scripts.bt_btc_cash_5050_rebalance import (  # noqa: E402
     parse_d,
     rebalance_to_target,
 )
+from scripts.toolkit_bt import run_backtest  # noqa: E402
 
 PATH_JSON = ROOT / "reports/five-year/policyC-5y-v2bull-v5sw-path.json"
 CACHE = ROOT / "reports/five-year/segment-csv-cache"
@@ -38,47 +37,7 @@ END = date(2026, 7, 26)
 
 
 def run_segment_bt(strat: str, start: str, end: str) -> Path:
-    CACHE.mkdir(parents=True, exist_ok=True)
-    key = f"{Path(strat).stem}_{start}_{end}".replace(":", "")
-    cached = list(CACHE.glob(f"{key}*.csv"))
-    if cached:
-        return cached[0]
-    before = {p.resolve() for p in (ROOT / "reports").glob("*.csv")}
-    cmd = [
-        "uvx",
-        "--from",
-        "git+https://github.com/upbit-official/upbit-strategy-toolkit.git",
-        "upbit-strategy-toolkit",
-        "backtest",
-        "run",
-        str(ROOT / strat),
-        "--start",
-        start,
-        "--end",
-        end,
-    ]
-    subprocess.run(
-        cmd,
-        cwd=ROOT,
-        check=True,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    time.sleep(0.3)
-    after = [p for p in (ROOT / "reports").glob("*.csv") if p.resolve() not in before]
-    if not after:
-        # fallback: newest matching stem
-        stem = Path(strat).stem
-        cands = sorted((ROOT / "reports").glob(f"{stem}-*.csv"), key=lambda p: p.stat().st_mtime)
-        if not cands:
-            raise FileNotFoundError(f"no CSV for {strat} {start} {end}")
-        src = cands[-1]
-    else:
-        src = max(after, key=lambda p: p.stat().st_mtime)
-    dest = CACHE / f"{key}.csv"
-    dest.write_bytes(src.read_bytes())
-    return dest
-
+    return run_backtest(strat, start, end, cache_dir=CACHE)
 
 def parse_trades(csv_path: Path) -> list[dict]:
     lines = csv_path.read_text(encoding="utf-8").splitlines()

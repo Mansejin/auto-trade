@@ -1,0 +1,322 @@
+{
+  "criteria": "PF>=1.2 and n>=20 on both halves (true Bitget short)",
+  "hits": [],
+  "top15_by_min_half_pf": [
+    {
+      "tag": "r68_fade_not_above_off_sl0p003_tp0p008",
+      "rsi": 68,
+      "mode": "fade_not_above",
+      "adx": "off",
+      "sl": -0.003,
+      "roi": 0.008,
+      "windows": {
+        "h1": {
+          "trades": 19,
+          "profit_factor": 1.1,
+          "profit_pct": 0.51
+        },
+        "h2": {
+          "trades": 32,
+          "profit_factor": 0.99,
+          "profit_pct": -0.07
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_fade_not_above_gte25_sl0p003_tp0p012",
+      "rsi": 70,
+      "mode": "fade_not_above",
+      "adx": "gte25",
+      "sl": -0.003,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 6,
+          "profit_factor": 1.41,
+          "profit_pct": 0.69
+        },
+        "h2": {
+          "trades": 9,
+          "profit_factor": 0.81,
+          "profit_pct": -0.55
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r68_fade_below_off_sl0p005_tp0p015",
+      "rsi": 68,
+      "mode": "fade_below",
+      "adx": "off",
+      "sl": -0.005,
+      "roi": 0.015,
+      "windows": {
+        "h1": {
+          "trades": 4,
+          "profit_factor": 0.79,
+          "profit_pct": -0.38
+        },
+        "h2": {
+          "trades": 6,
+          "profit_factor": 1.2,
+          "profit_pct": 0.48
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r72_fade_not_above_off_sl0p003_tp0p008",
+      "rsi": 72,
+      "mode": "fade_not_above",
+      "adx": "off",
+      "sl": -0.003,
+      "roi": 0.008,
+      "windows": {
+        "h1": {
+          "trades": 5,
+          "profit_factor": 1.26,
+          "profit_pct": 0.33
+        },
+        "h2": {
+          "trades": 7,
+          "profit_factor": 0.76,
+          "profit_pct": -0.5
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r68_fade_not_above_lt30_sl0p003_tp0p008",
+      "rsi": 68,
+      "mode": "fade_not_above",
+      "adx": "lt30",
+      "sl": -0.003,
+      "roi": 0.008,
+      "windows": {
+        "h1": {
+          "trades": 16,
+          "profit_factor": 0.86,
+          "profit_pct": -0.63
+        },
+        "h2": {
+          "trades": 25,
+          "profit_factor": 0.73,
+          "profit_pct": -1.95
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_fade_not_above_off_sl0p003_tp0p008",
+      "rsi": 70,
+      "mode": "fade_not_above",
+      "adx": "off",
+      "sl": -0.003,
+      "roi": 0.008,
+      "windows": {
+        "h1": {
+          "trades": 9,
+          "profit_factor": 1.51,
+          "profit_pct": 1.06
+        },
+        "h2": {
+          "trades": 11,
+          "profit_factor": 0.71,
+          "profit_pct": -0.96
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_fade_not_above_gte25_sl0p004_tp0p012",
+      "rsi": 70,
+      "mode": "fade_not_above",
+      "adx": "gte25",
+      "sl": -0.004,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 6,
+          "profit_factor": 1.14,
+          "profit_pct": 0.29
+        },
+        "h2": {
+          "trades": 9,
+          "profit_factor": 0.65,
+          "profit_pct": -1.24
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_fade_not_above_off_sl0p003_tp0p012",
+      "rsi": 70,
+      "mode": "fade_not_above",
+      "adx": "off",
+      "sl": -0.003,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 8,
+          "profit_factor": 0.94,
+          "profit_pct": -0.14
+        },
+        "h2": {
+          "trades": 11,
+          "profit_factor": 0.63,
+          "profit_pct": -1.37
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r68_fade_below_lt30_sl0p005_tp0p015",
+      "rsi": 68,
+      "mode": "fade_below",
+      "adx": "lt30",
+      "sl": -0.005,
+      "roi": 0.015,
+      "windows": {
+        "h1": {
+          "trades": 4,
+          "profit_factor": 0.79,
+          "profit_pct": -0.38
+        },
+        "h2": {
+          "trades": 5,
+          "profit_factor": 0.59,
+          "profit_pct": -0.99
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r68_fade_not_above_gte25_sl0p003_tp0p008",
+      "rsi": 68,
+      "mode": "fade_not_above",
+      "adx": "gte25",
+      "sl": -0.003,
+      "roi": 0.008,
+      "windows": {
+        "h1": {
+          "trades": 9,
+          "profit_factor": 2.34,
+          "profit_pct": 2.28
+        },
+        "h2": {
+          "trades": 21,
+          "profit_factor": 0.59,
+          "profit_pct": -2.67
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r72_fade_not_above_gte25_sl0p003_tp0p012",
+      "rsi": 72,
+      "mode": "fade_not_above",
+      "adx": "gte25",
+      "sl": -0.003,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 3,
+          "profit_factor": 1.4,
+          "profit_pct": 0.34
+        },
+        "h2": {
+          "trades": 6,
+          "profit_factor": 0.57,
+          "profit_pct": -0.9
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r70_fade_not_above_gte25_sl0p003_tp0p008",
+      "rsi": 70,
+      "mode": "fade_not_above",
+      "adx": "gte25",
+      "sl": -0.003,
+      "roi": 0.008,
+      "windows": {
+        "h1": {
+          "trades": 6,
+          "profit_factor": 3.76,
+          "profit_pct": 2.34
+        },
+        "h2": {
+          "trades": 9,
+          "profit_factor": 0.54,
+          "profit_pct": -1.33
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r68_fade_not_above_gte25_sl0p004_tp0p012",
+      "rsi": 68,
+      "mode": "fade_not_above",
+      "adx": "gte25",
+      "sl": -0.004,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 9,
+          "profit_factor": 0.65,
+          "profit_pct": -1.24
+        },
+        "h2": {
+          "trades": 21,
+          "profit_factor": 0.53,
+          "profit_pct": -3.95
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r68_fade_not_above_off_sl0p003_tp0p012",
+      "rsi": 68,
+      "mode": "fade_not_above",
+      "adx": "off",
+      "sl": -0.003,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 17,
+          "profit_factor": 0.87,
+          "profit_pct": -0.69
+        },
+        "h2": {
+          "trades": 32,
+          "profit_factor": 0.52,
+          "profit_pct": -5.17
+        }
+      },
+      "hit": false
+    },
+    {
+      "tag": "r68_fade_not_above_off_sl0p004_tp0p012",
+      "rsi": 68,
+      "mode": "fade_not_above",
+      "adx": "off",
+      "sl": -0.004,
+      "roi": 0.012,
+      "windows": {
+        "h1": {
+          "trades": 17,
+          "profit_factor": 0.95,
+          "profit_pct": -0.29
+        },
+        "h2": {
+          "trades": 32,
+          "profit_factor": 0.52,
+          "profit_pct": -6.11
+        }
+      },
+      "hit": false
+    }
+  ],
+  "n_eval": 135
+}

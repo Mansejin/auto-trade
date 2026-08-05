@@ -1,0 +1,3 @@
+# Auto slot-fill workspace (ledger + candidates). Large `.ftind` stays gitignored under cpp-bt/data.
+candidates/
+_tick_strat.json

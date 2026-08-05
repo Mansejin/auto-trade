@@ -1,0 +1,14 @@
+{
+  "fee_rt": 0.0012,
+  "criteria_primary": {
+    "min_pf": 1.1,
+    "min_trades": 150,
+    "fee": 0.0006
+  },
+  "criteria_strict": {
+    "min_pf": 1.15,
+    "min_trades": 100,
+    "fee": 0.0006
+  },
+  "rationale": "12bps RT eats 15-40% of a 0.3-0.8% scalp move, so after-fee PF must clear 1.0 with room. PF 1.1 is meaningful only with fat n (noise); n~100 needs ~1.15. fee=0 PF~1.13 with n>=100 is NOT enough - fees wipe it."
+}

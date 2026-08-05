@@ -1,0 +1,5 @@
+﻿fee=0 theoretical edge check:
+5m fade/BB: no PF>=1.2 & n>=100 hit. Best n>=100 minPF~1.14 (rsi_bb). Best overall minPF~1.16 but n<100.
+1m: best n>=100 minPF~1.09.
+With real fee 0.0006 edge disappears (minPF~0.86-0.93).
+Conclusion: ultra-short short has no robust edge here; 5m swing HIT remains.
