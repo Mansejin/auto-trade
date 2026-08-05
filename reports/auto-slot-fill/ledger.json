@@ -226,6 +226,48 @@
       },
       "at": "2026-08-05T10:32:21Z",
       "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "16dba43a38f9f882",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 32,
+          "profit_factor": 1.3974,
+          "profit_pct": 26.04
+        },
+        "h2": {
+          "trades": 32,
+          "profit_factor": 1.2139,
+          "profit_pct": 14.68
+        },
+        "pass": true
+      },
+      "at": "2026-08-05T10:37:05Z",
+      "result": "candidate",
+      "ft": {
+        "h1": {
+          "trades": 27,
+          "profit_factor": 1.44
+        },
+        "h2": {
+          "trades": 33,
+          "profit_factor": 1.2
+        },
+        "pass": true
+      }
     }
   ],
   "candidates": [
@@ -270,16 +312,58 @@
       },
       "status": "HUMAN_APPROVE",
       "at": "2026-08-05T10:02:21Z"
+    },
+    {
+      "slot": "scalp_bear_short",
+      "fingerprint": "16dba43a38f9f882",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 32,
+          "profit_factor": 1.3974,
+          "profit_pct": 26.04
+        },
+        "h2": {
+          "trades": 32,
+          "profit_factor": 1.2139,
+          "profit_pct": 14.68
+        },
+        "pass": true
+      },
+      "ft": {
+        "h1": {
+          "trades": 27,
+          "profit_factor": 1.44
+        },
+        "h2": {
+          "trades": 33,
+          "profit_factor": 1.2
+        },
+        "pass": true
+      },
+      "status": "HUMAN_APPROVE",
+      "at": "2026-08-05T10:38:34Z"
     }
   ],
   "last_tick": {
     "ok": true,
     "action": "ran",
     "slot": "scalp_bear_short",
-    "fingerprint": "910692791ac04688",
-    "result": "cpp_miss",
-    "cpp_min_pf": 0.9895,
-    "at": "2026-08-05T10:32:21Z"
+    "fingerprint": "16dba43a38f9f882",
+    "result": "candidate",
+    "cpp_min_pf": 1.2139,
+    "at": "2026-08-05T10:38:34Z"
   },
   "notes": "Append-only tried[] keyed by fingerprint. Tick script skips fingerprints already present."
 }
