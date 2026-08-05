@@ -349,6 +349,22 @@ def main() -> None:
     slots_doc = load_json(SLOTS)
     ledger = load_json(LEDGER) if LEDGER.exists() else {"tried": [], "candidates": [], "banned_families": []}
 
+    # Prefer pending promote_review (fee stress + LIVE gate) over new experiments.
+    _pr = Path(__file__).with_name("auto_slot_promote_review.py")
+    _spec = __import__("importlib.util", fromlist=["util"]).util.spec_from_file_location(
+        "auto_slot_promote_review", _pr
+    )
+    _mod = __import__("importlib.util", fromlist=["util"]).util.module_from_spec(_spec)
+    assert _spec and _spec.loader
+    _spec.loader.exec_module(_mod)
+    reviewed = _mod.review_next_pending(ledger, slots_doc)
+    if reviewed:
+        ledger["last_tick"] = reviewed
+        save_json(LEDGER, ledger)
+        print(json.dumps(reviewed, indent=2))
+        print(f"*** PROMOTE_REVIEW → {reviewed.get('status')} (never auto-LIVE)", flush=True)
+        return
+
     slot = pick_slot(slots_doc, ledger)
     if not slot:
         result = {"ok": True, "action": "idle", "reason": "no empty slot with pending queue", "at": utc_now()}
@@ -425,6 +441,7 @@ def main() -> None:
                 "ft": row["ft"],
                 "status": "HUMAN_APPROVE",
                 "at": utc_now(),
+                "note": "Next tick runs fee stress + LIVE promotion review (still no auto-LIVE).",
             }
             ledger.setdefault("candidates", []).append(cand)
             save_json(OUT / "candidates" / f"{slot['id']}-{fp}.json", cand)
