@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -105,8 +106,13 @@ def ensure_cpp() -> None:
     build_ps1 = ROOT / "cpp-bt" / "scripts" / "build.ps1"
     if cmake_lists.exists() and which("cmake"):
         build_dir.mkdir(parents=True, exist_ok=True)
-        subprocess.run(["cmake", str(ROOT / "cpp-bt")], cwd=build_dir, check=True)
-        subprocess.run(["cmake", "--build", ".", "-j"], cwd=build_dir, check=True)
+        # Cloud Linux often has c++→clang without -lstdc++; prefer g++ when present.
+        env = os.environ.copy()
+        if which("g++"):
+            env["CXX"] = "g++"
+            env["CC"] = "gcc"
+        subprocess.run(["cmake", str(ROOT / "cpp-bt")], cwd=build_dir, check=True, env=env)
+        subprocess.run(["cmake", "--build", ".", "-j"], cwd=build_dir, check=True, env=env)
     elif build_ps1.exists():
         subprocess.run(
             ["powershell", "-ExecutionPolicy", "Bypass", "-File", str(build_ps1)],
