@@ -6,6 +6,7 @@ Does NOT promote LIVE / edit Policy C.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -351,10 +352,8 @@ def main() -> None:
 
     # Prefer pending promote_review (fee stress + LIVE gate) over new experiments.
     _pr = Path(__file__).with_name("auto_slot_promote_review.py")
-    _spec = __import__("importlib.util", fromlist=["util"]).util.spec_from_file_location(
-        "auto_slot_promote_review", _pr
-    )
-    _mod = __import__("importlib.util", fromlist=["util"]).util.module_from_spec(_spec)
+    _spec = importlib.util.spec_from_file_location("auto_slot_promote_review", _pr)
+    _mod = importlib.util.module_from_spec(_spec)
     assert _spec and _spec.loader
     _spec.loader.exec_module(_mod)
     reviewed = _mod.review_next_pending(ledger, slots_doc)
