@@ -28,16 +28,24 @@
     "key": "",
     "secret": "",
     "password": "",
-    "pair_whitelist": ["BTC/USDT:USDT"],
+    "pair_whitelist": [
+      "BTC/USDT:USDT"
+    ],
     "pair_blacklist": []
   },
-  "pairlists": [{ "method": "StaticPairList" }],
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
   "timeframe": "5m",
   "startup_candle_count": 80,
   "fee": 0.0006,
-  "strategy": "RsiIchiScalpShortV1",
+  "strategy": "RsiIchiScalpShortV4",
   "bot_name": "freqtrade-rsi-ichi-check",
   "initial_state": "running",
-  "internals": { "process_throttle_secs": 5 },
+  "internals": {
+    "process_throttle_secs": 5
+  },
   "export": "trades"
 }
