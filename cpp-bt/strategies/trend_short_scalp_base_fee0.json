@@ -1,0 +1,24 @@
+﻿{
+    "name":  "trend-short-scalp-base",
+    "side":  "short",
+    "symbols":  [
+                    "BTC_USDT_USDT"
+                ],
+    "timeframe":  "5m",
+    "fee":  0,
+    "startup":  80,
+    "entry":  {
+                  "mode":  "di_only",
+                  "rsi_period":  14,
+                  "adx_period":  14,
+                  "adx_min":  20,
+                  "rsi_max":  60
+              },
+    "exit":  {
+                 "stoploss":  -0.005,
+                 "take_profit":  0.01,
+                 "trailing":  false,
+                 "trail_pos":  0.0,
+                 "trail_offset":  0.0
+             }
+}
