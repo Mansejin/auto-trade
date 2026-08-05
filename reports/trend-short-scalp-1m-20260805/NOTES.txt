@@ -1,0 +1,4 @@
+﻿1m scalp fade/BB/rsi_bb grid (330 combos, ~0.3s, 486k bars):
+hits=0 under PF>=1.2 & n>=200 both halves.
+Best minPF ~0.86 with hundreds of trades/half — fee drag worse than 5m.
+Swing HIT on 5m remains the only validated short candidate.
