@@ -71,6 +71,1102 @@
         },
         "pass": true
       }
+    },
+    {
+      "fingerprint": "837a176fbb63c17d",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 12,
+        "rsi_max": 55,
+        "sl": -0.035,
+        "tp": 0.105,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 17,
+          "profit_factor": 1.7966,
+          "profit_pct": 28.84
+        },
+        "h2": {
+          "trades": 26,
+          "profit_factor": 1.134,
+          "profit_pct": 8.73
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T10:13:35Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "43af36b198416a64",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 12,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 24,
+          "profit_factor": 1.2692,
+          "profit_pct": 15.12
+        },
+        "h2": {
+          "trades": 23,
+          "profit_factor": 1.1863,
+          "profit_pct": 9.88
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T10:19:02Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "cf1ca13c406aee88",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 12,
+        "rsi_max": 55,
+        "sl": -0.04,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 13,
+          "profit_factor": 1.8022,
+          "profit_pct": 26.44
+        },
+        "h2": {
+          "trades": 14,
+          "profit_factor": 1.305,
+          "profit_pct": 11.31
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T10:22:49Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "49537c69e899f9c6",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 12,
+        "rsi_max": 55,
+        "sl": -0.025,
+        "tp": 0.075,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 48,
+          "profit_factor": 1.1019,
+          "profit_pct": 9.08
+        },
+        "h2": {
+          "trades": 44,
+          "profit_factor": 1.1337,
+          "profit_pct": 10.86
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T10:27:19Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "910692791ac04688",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 12,
+        "rsi_max": 55,
+        "sl": -0.02,
+        "tp": 0.08,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 52,
+          "profit_factor": 1.1771,
+          "profit_pct": 14.64
+        },
+        "h2": {
+          "trades": 55,
+          "profit_factor": 0.9895,
+          "profit_pct": -0.96
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T10:32:21Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "16dba43a38f9f882",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 32,
+          "profit_factor": 1.3974,
+          "profit_pct": 26.04
+        },
+        "h2": {
+          "trades": 32,
+          "profit_factor": 1.2139,
+          "profit_pct": 14.68
+        },
+        "pass": true
+      },
+      "at": "2026-08-05T10:37:05Z",
+      "result": "candidate",
+      "ft": {
+        "h1": {
+          "trades": 27,
+          "profit_factor": 1.44
+        },
+        "h2": {
+          "trades": 33,
+          "profit_factor": 1.2
+        },
+        "pass": true
+      }
+    },
+    {
+      "fingerprint": "d2f55d41db2c8e9e",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.035,
+        "tp": 0.105,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 17,
+          "profit_factor": 1.7966,
+          "profit_pct": 28.84
+        },
+        "h2": {
+          "trades": 26,
+          "profit_factor": 1.134,
+          "profit_pct": 8.73
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T10:41:49Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "0f6c96b5c3ad5672",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 24,
+          "profit_factor": 1.2692,
+          "profit_pct": 15.12
+        },
+        "h2": {
+          "trades": 23,
+          "profit_factor": 1.184,
+          "profit_pct": 9.76
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T10:46:56Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "90b88c28df449445",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.04,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 13,
+          "profit_factor": 1.8022,
+          "profit_pct": 26.44
+        },
+        "h2": {
+          "trades": 14,
+          "profit_factor": 1.305,
+          "profit_pct": 11.31
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T10:51:49Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "3e7fcc322cf654d7",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.025,
+        "tp": 0.075,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 47,
+          "profit_factor": 1.1353,
+          "profit_pct": 11.7
+        },
+        "h2": {
+          "trades": 45,
+          "profit_factor": 1.0969,
+          "profit_pct": 8.12
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T10:56:57Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "b98f743c3ad40ce6",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.02,
+        "tp": 0.08,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 53,
+          "profit_factor": 1.1476,
+          "profit_pct": 12.52
+        },
+        "h2": {
+          "trades": 56,
+          "profit_factor": 0.9657,
+          "profit_pct": -3.2
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:03:40Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "29b4dbd2b80905dd",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 18,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 31,
+          "profit_factor": 1.3553,
+          "profit_pct": 23.28
+        },
+        "h2": {
+          "trades": 34,
+          "profit_factor": 1.1098,
+          "profit_pct": 8.22
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:07:13Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "82e503f9f868c735",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 18,
+        "rsi_max": 55,
+        "sl": -0.035,
+        "tp": 0.105,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 17,
+          "profit_factor": 1.7966,
+          "profit_pct": 28.84
+        },
+        "h2": {
+          "trades": 23,
+          "profit_factor": 1.1302,
+          "profit_pct": 7.54
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:11:54Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "04bf16317e4ba85d",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 18,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 24,
+          "profit_factor": 1.2692,
+          "profit_pct": 15.12
+        },
+        "h2": {
+          "trades": 24,
+          "profit_factor": 1.1143,
+          "profit_pct": 6.42
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:17:24Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "57bf194479831949",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 18,
+        "rsi_max": 55,
+        "sl": -0.04,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 13,
+          "profit_factor": 1.8022,
+          "profit_pct": 26.44
+        },
+        "h2": {
+          "trades": 20,
+          "profit_factor": 1.0449,
+          "profit_pct": 2.59
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:22:39Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "e5a198c805cbe0f0",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 18,
+        "rsi_max": 55,
+        "sl": -0.025,
+        "tp": 0.075,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 47,
+          "profit_factor": 1.1353,
+          "profit_pct": 11.7
+        },
+        "h2": {
+          "trades": 45,
+          "profit_factor": 1.0942,
+          "profit_pct": 7.9
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:27:20Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "faca8b807fb57251",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 18,
+        "rsi_max": 55,
+        "sl": -0.02,
+        "tp": 0.08,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 52,
+          "profit_factor": 1.1771,
+          "profit_pct": 14.64
+        },
+        "h2": {
+          "trades": 56,
+          "profit_factor": 0.9634,
+          "profit_pct": -3.42
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:32:21Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "7e0b5aaf2579efb0",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 20,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 31,
+          "profit_factor": 1.3553,
+          "profit_pct": 23.28
+        },
+        "h2": {
+          "trades": 33,
+          "profit_factor": 1.1564,
+          "profit_pct": 11.22
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:36:58Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "8d321ff5021e14ab",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 20,
+        "rsi_max": 55,
+        "sl": -0.035,
+        "tp": 0.105,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 17,
+          "profit_factor": 1.7966,
+          "profit_pct": 28.84
+        },
+        "h2": {
+          "trades": 22,
+          "profit_factor": 1.1685,
+          "profit_pct": 9.15
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:42:09Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "80443772c8ef5dc4",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 20,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 24,
+          "profit_factor": 1.2692,
+          "profit_pct": 15.12
+        },
+        "h2": {
+          "trades": 25,
+          "profit_factor": 1.0537,
+          "profit_pct": 3.18
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:47:14Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "10a6f711e981ba50",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 20,
+        "rsi_max": 55,
+        "sl": -0.04,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 13,
+          "profit_factor": 1.8022,
+          "profit_pct": 26.44
+        },
+        "h2": {
+          "trades": 19,
+          "profit_factor": 1.1253,
+          "profit_pct": 6.71
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:52:39Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "caf96c9a8ef9aa5b",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 20,
+        "rsi_max": 55,
+        "sl": -0.025,
+        "tp": 0.075,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 46,
+          "profit_factor": 1.1708,
+          "profit_pct": 14.32
+        },
+        "h2": {
+          "trades": 44,
+          "profit_factor": 1.1281,
+          "profit_pct": 10.4
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T11:58:35Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "8ad748c03732cf4a",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 20,
+        "rsi_max": 55,
+        "sl": -0.02,
+        "tp": 0.08,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 51,
+          "profit_factor": 1.208,
+          "profit_pct": 16.76
+        },
+        "h2": {
+          "trades": 56,
+          "profit_factor": 0.9621,
+          "profit_pct": -3.54
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:07:27Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "f13cc994988fc8f1",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 25,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 27,
+          "profit_factor": 1.3141,
+          "profit_pct": 17.64
+        },
+        "h2": {
+          "trades": 34,
+          "profit_factor": 1.1082,
+          "profit_pct": 8.1
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:12:01Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "a80aaf1113abc699",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 25,
+        "rsi_max": 55,
+        "sl": -0.035,
+        "tp": 0.105,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 18,
+          "profit_factor": 1.6317,
+          "profit_pct": 25.16
+        },
+        "h2": {
+          "trades": 25,
+          "profit_factor": 1.0028,
+          "profit_pct": 0.18
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:18:28Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "790a64c8447eb6ea",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 25,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 24,
+          "profit_factor": 1.2692,
+          "profit_pct": 15.12
+        },
+        "h2": {
+          "trades": 24,
+          "profit_factor": 1.1123,
+          "profit_pct": 6.3
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:22:42Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "d43a42b527acfeab",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 25,
+        "rsi_max": 55,
+        "sl": -0.04,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 13,
+          "profit_factor": 1.8022,
+          "profit_pct": 26.44
+        },
+        "h2": {
+          "trades": 20,
+          "profit_factor": 1.0406,
+          "profit_pct": 2.34
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:26:57Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "fd632fbbe26457f7",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 25,
+        "rsi_max": 55,
+        "sl": -0.025,
+        "tp": 0.075,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 48,
+          "profit_factor": 1.1019,
+          "profit_pct": 9.08
+        },
+        "h2": {
+          "trades": 45,
+          "profit_factor": 0.9744,
+          "profit_pct": -2.22
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:31:48Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "2d03934ae7c6d082",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 25,
+        "rsi_max": 55,
+        "sl": -0.02,
+        "tp": 0.08,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 51,
+          "profit_factor": 1.208,
+          "profit_pct": 16.76
+        },
+        "h2": {
+          "trades": 52,
+          "profit_factor": 1.0583,
+          "profit_pct": 4.94
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:37:06Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "608b96158a0851dc",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_only",
+        "adx_min": 12,
+        "rsi_max": 60,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 30,
+          "profit_factor": 1.5445,
+          "profit_pct": 32.28
+        },
+        "h2": {
+          "trades": 33,
+          "profit_factor": 1.1659,
+          "profit_pct": 11.9
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:42:00Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "5f1c3af77fff6156",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_only",
+        "adx_min": 12,
+        "rsi_max": 60,
+        "sl": -0.035,
+        "tp": 0.105,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 17,
+          "profit_factor": 1.7966,
+          "profit_pct": 28.84
+        },
+        "h2": {
+          "trades": 23,
+          "profit_factor": 1.106,
+          "profit_pct": 6.14
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:46:59Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "72a75c3335ee969b",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_only",
+        "adx_min": 12,
+        "rsi_max": 60,
+        "sl": -0.03,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 24,
+          "profit_factor": 1.3427,
+          "profit_pct": 18.19
+        },
+        "h2": {
+          "trades": 18,
+          "profit_factor": 1.2162,
+          "profit_pct": 8.77
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:51:56Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "e9b6ad8a91d96591",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_only",
+        "adx_min": 12,
+        "rsi_max": 60,
+        "sl": -0.04,
+        "tp": 0.12,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 15,
+          "profit_factor": 1.6,
+          "profit_pct": 22.27
+        },
+        "h2": {
+          "trades": 16,
+          "profit_factor": 1.0704,
+          "profit_pct": 3.19
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T12:56:59Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "3cd63e99f971f323",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_only",
+        "adx_min": 12,
+        "rsi_max": 60,
+        "sl": -0.025,
+        "tp": 0.075,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 38,
+          "profit_factor": 1.3859,
+          "profit_pct": 25.28
+        },
+        "h2": {
+          "trades": 51,
+          "profit_factor": 1.0208,
+          "profit_pct": 2.02
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T13:02:00Z",
+      "result": "cpp_miss"
+    },
+    {
+      "fingerprint": "93c6d1e9fef79b97",
+      "slot": "scalp_bear_short",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_only",
+        "adx_min": 12,
+        "rsi_max": 60,
+        "sl": -0.02,
+        "tp": 0.08,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 49,
+          "profit_factor": 1.2751,
+          "profit_pct": 21.0
+        },
+        "h2": {
+          "trades": 63,
+          "profit_factor": 0.9206,
+          "profit_pct": -8.42
+        },
+        "pass": false
+      },
+      "at": "2026-08-05T13:07:24Z",
+      "result": "cpp_miss"
     }
   ],
   "candidates": [
@@ -115,16 +1211,58 @@
       },
       "status": "HUMAN_APPROVE",
       "at": "2026-08-05T10:02:21Z"
+    },
+    {
+      "slot": "scalp_bear_short",
+      "fingerprint": "16dba43a38f9f882",
+      "exp": {
+        "slot": "scalp_bear_short",
+        "tf": "5m",
+        "mode": "di_cloud",
+        "adx_min": 15,
+        "rsi_max": 55,
+        "sl": -0.03,
+        "tp": 0.09,
+        "trailing": false,
+        "fee": 0.0006,
+        "family": "trend_short_neighbor"
+      },
+      "cpp": {
+        "h1": {
+          "trades": 32,
+          "profit_factor": 1.3974,
+          "profit_pct": 26.04
+        },
+        "h2": {
+          "trades": 32,
+          "profit_factor": 1.2139,
+          "profit_pct": 14.68
+        },
+        "pass": true
+      },
+      "ft": {
+        "h1": {
+          "trades": 27,
+          "profit_factor": 1.44
+        },
+        "h2": {
+          "trades": 33,
+          "profit_factor": 1.2
+        },
+        "pass": true
+      },
+      "status": "HUMAN_APPROVE",
+      "at": "2026-08-05T10:38:34Z"
     }
   ],
   "last_tick": {
     "ok": true,
     "action": "ran",
     "slot": "scalp_bear_short",
-    "fingerprint": "9d7e67da791648b1",
-    "result": "candidate",
-    "cpp_min_pf": 1.2156,
-    "at": "2026-08-05T10:02:21Z"
+    "fingerprint": "93c6d1e9fef79b97",
+    "result": "cpp_miss",
+    "cpp_min_pf": 0.9206,
+    "at": "2026-08-05T13:07:24Z"
   },
   "notes": "Append-only tried[] keyed by fingerprint. Tick script skips fingerprints already present."
 }
