@@ -130,24 +130,42 @@ def queue_for_slot(slot: dict, tried: set[str]) -> list[dict]:
     return []
 
 
+def _eligible_status(slot: dict) -> bool:
+    return slot.get("status") in ("empty", "cash_stopped", "understudy", "research", None)
+
+
+def _recent_need_hypothesis(ledger: dict, slot_id: str, n: int = 8) -> bool:
+    rows = [t for t in ledger.get("tried", []) if t.get("slot") == slot_id]
+    return any(t.get("result") == "need_hypothesis" for t in rows[-n:])
+
+
 def pick_slot(slots_doc: dict, ledger: dict) -> dict | None:
+    """Prefer cpp-bt runnable queues; else rotate toolkit / understudy slots for agent hypothesis."""
     cands = {c.get("slot") for c in ledger.get("candidates", [])}
-    for slot in sorted(slots_doc["slots"], key=lambda s: s.get("priority", 99)):
-        if slot.get("status") not in ("empty", "cash_stopped", None) and slot.get("status") != "empty":
-            # still allow empty + research
-            pass
+    ordered = sorted(slots_doc["slots"], key=lambda s: s.get("priority", 99))
+
+    for slot in ordered:
+        if not _eligible_status(slot):
+            continue
         deps = slot.get("depends_on_any_candidate") or []
         if deps and not any(d in cands for d in deps):
             continue
         tried = {t["fingerprint"] for t in ledger.get("tried", []) if t.get("slot") == slot["id"]}
-        q = queue_for_slot(slot, tried)
-        if q:
+        if queue_for_slot(slot, tried):
             return slot
-        # long slot etc. with empty queue → still return for agent hypothesis
-        if slot["id"] in ("scalp_bull_long",) and not any(
-            t.get("slot") == slot["id"] and t.get("result") == "need_hypothesis" for t in ledger.get("tried", [])[-5:]
-        ):
-            return slot
+
+    for slot in ordered:
+        if not _eligible_status(slot):
+            continue
+        deps = slot.get("depends_on_any_candidate") or []
+        if deps and not any(d in cands for d in deps):
+            continue
+        eng = slot.get("engine") or ""
+        if eng == "cpp-bt" and slot["id"] != "scalp_bull_long":
+            continue
+        if _recent_need_hypothesis(ledger, slot["id"]):
+            continue
+        return slot
     return None
 
 
@@ -316,7 +334,14 @@ def main() -> None:
             "ok": True,
             "action": "need_hypothesis",
             "slot": slot["id"],
-            "message": "Queue exhausted or long side unsupported by cpp-bt short engine — propose NEW entry family, then extend scripts/auto_slot_fill_tick.py queue_for_slot.",
+            "horizon": slot.get("horizon"),
+            "engine": slot.get("engine"),
+            "live_baseline": slot.get("live_baseline"),
+            "message": (
+                "No cpp-bt queue left (or toolkit slot). Invent ONE new family from slot hints/seeds; "
+                "for CORE understudies must beat live_baseline on both OOS halves; "
+                "log fingerprint in ledger; never auto-replace Policy C LIVE."
+            ),
             "at": utc_now(),
         }
         save_json(LEDGER, ledger)

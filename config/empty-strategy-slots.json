@@ -1,21 +1,30 @@
 {
-  "version": 1,
+  "version": 2,
   "updated": "2026-08-05",
-  "intent": "Fill empty SCALP (Bitget) slots from config/sleeves.json without touching CORE Policy C LIVE.",
+  "intent": "Fill empty SCALP + daytrade short slots and CORE understudies (never auto-replace Policy C LIVE).",
   "rules": [
     "Never auto-write Policy C STRATEGY_PATH or sleeves live status.",
     "Never promote without human approve.",
-    "Prefer cpp-bt then fixed-stake FT; skip configs already in reports/auto-slot-fill/ledger.json.",
+    "CORE slots are understudies only — beat LIVE on same OOS halves before HUMAN_APPROVE.",
+    "Bitget shorts: prefer cpp-bt then fixed-stake FT; skip ledger fingerprints.",
+    "Upbit CORE/daytrade: use toolkit / existing strategy JSON + backtest skill; still log fingerprints in ledger.",
     "Honor banned_families and falsified lists from sleeves + prior reports."
   ],
+  "horizon_labels": {
+    "core": "중장기 (장타 / Policy C understudy)",
+    "daytrade": "단기 (daytrade edge)",
+    "scalp": "초단기 SCALP (Bitget)"
+  },
   "slots": [
     {
       "id": "scalp_bear_short",
       "priority": 10,
+      "horizon": "scalp",
       "sleeve": "scalp",
       "regime": "bear",
       "side": "short",
       "venue": "bitget",
+      "engine": "cpp-bt",
       "status": "empty",
       "goal": "True futures short for Bitget SCALP bear sleeve",
       "criteria": {"min_pf": 1.2, "min_trades": 20, "fee": 0.0006, "stake_model": "fixed"},
@@ -33,12 +42,58 @@
       ]
     },
     {
+      "id": "core_transition_understudy",
+      "priority": 15,
+      "horizon": "core",
+      "sleeve": "core",
+      "regime": "transition",
+      "side": "long",
+      "venue": "upbit",
+      "engine": "toolkit",
+      "status": "understudy",
+      "goal": "Transition specialist better than borrowing bull-v2 for CORE transition",
+      "live_baseline": "regime-bull-trend-4h-v2.json",
+      "criteria": {"min_pf": 1.2, "min_trades": 15, "require_positive_return": true, "beat_baseline": true},
+      "symbol": "KRW-BTC",
+      "timeframes": ["4h", "1h"],
+      "hints": [
+        "LIVE map reuses bull-v2 in transition — gap for a real recovery/transition card.",
+        "Seed from regime-transition-recovery-4h.json; do not weaken bull LIVE."
+      ],
+      "seed_from": ["strategies/regime-transition-recovery-4h.json", "strategies/regime-bull-trend-4h-v2.json"]
+    },
+    {
+      "id": "daytrade_bear",
+      "priority": 18,
+      "horizon": "daytrade",
+      "sleeve": "daytrade",
+      "regime": "bear",
+      "side": "long_or_edge",
+      "venue": "upbit",
+      "engine": "toolkit",
+      "status": "empty",
+      "goal": "Short-horizon bear-regime daytrade edge (Upbit); siblings existed but SCALP path cash-stopped",
+      "criteria": {"min_pf": 1.2, "min_trades": 25, "fee": 0.0005, "require_positive_return": true},
+      "symbol": "KRW-BTC",
+      "timeframes": ["10m", "15m"],
+      "hints": [
+        "Siblings: daytrade-edge-10m-div-v1, daytrade-edge-10m-div-adx-v1.",
+        "Div ATR LIVE stopped for fee/slippage — any revive must clear fee stress."
+      ],
+      "seed_from": [
+        "strategies/daytrade-edge-10m-div-atr-v1.json",
+        "strategies/daytrade-edge-10m-div-adx-v1.json"
+      ]
+    },
+    {
       "id": "scalp_bull_long",
       "priority": 20,
+      "horizon": "scalp",
       "sleeve": "scalp",
       "regime": "bull",
       "side": "long",
       "venue": "bitget",
+      "engine": "toolkit_or_ft",
       "status": "empty",
       "goal": "Bitget SCALP bull daytrade/scalp long (CORE already has bull-v2)",
       "criteria": {"min_pf": 1.2, "min_trades": 40, "fee": 0.0006, "require_positive_return": true},
@@ -51,14 +106,124 @@
       "seed_from": ["strategies/bitget-btc-5m-rsi-ichi-long-short-v1.notes.md"]
     },
     {
+      "id": "daytrade_bull",
+      "priority": 22,
+      "horizon": "daytrade",
+      "sleeve": "daytrade",
+      "regime": "bull",
+      "side": "long",
+      "venue": "upbit",
+      "engine": "toolkit",
+      "status": "empty",
+      "goal": "Bull-regime short-horizon pullback / daytrade edge on Upbit",
+      "criteria": {"min_pf": 1.2, "min_trades": 30, "require_positive_return": true},
+      "symbol": "KRW-BTC",
+      "timeframes": ["10m", "15m"],
+      "hints": ["Seed pullback family; do not confuse with CORE 4h bull-v2."],
+      "seed_from": [
+        "strategies/daytrade-edge-bull-15m-pullback-v9.json",
+        "strategies/daytrade-edge-bull-10m-pullback-v8.json"
+      ]
+    },
+    {
+      "id": "core_bear_understudy",
+      "priority": 25,
+      "horizon": "core",
+      "sleeve": "core",
+      "regime": "bear",
+      "side": "long",
+      "venue": "upbit",
+      "engine": "toolkit",
+      "status": "understudy",
+      "goal": "Beat or diversify LIVE bear CORE (m5-v6 long-biased swing) without auto-replace",
+      "live_baseline": "krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+      "criteria": {"min_pf": 1.2, "min_trades": 15, "require_positive_return": true, "beat_baseline": true},
+      "symbol": "KRW-BTC",
+      "timeframes": ["1h", "4h"],
+      "hints": ["Keep long-biased Upbit swing frame; ban long→short mirror as default."],
+      "seed_from": [
+        "strategies/krw-btc-1h-ema-adx23-rsi55-sl3-tp45-m5-v6.json",
+        "strategies/regime-bear-bounce-1d.json"
+      ]
+    },
+    {
+      "id": "core_bull_understudy",
+      "priority": 28,
+      "horizon": "core",
+      "sleeve": "core",
+      "regime": "bull",
+      "side": "long",
+      "venue": "upbit",
+      "engine": "toolkit",
+      "status": "understudy",
+      "goal": "CORE bull understudy that beats bull-v2 on OOS (sell-side / exit variants already explored)",
+      "live_baseline": "regime-bull-trend-4h-v2.json",
+      "criteria": {"min_pf": 1.25, "min_trades": 12, "require_positive_return": true, "beat_baseline": true},
+      "symbol": "KRW-BTC",
+      "timeframes": ["4h"],
+      "hints": [
+        "Many alt exits exist (v5–v8 sell/ema). Prefer incremental beat of v2, not random indicators."
+      ],
+      "seed_from": [
+        "strategies/regime-bull-trend-4h-v2.json",
+        "strategies/regime-bull-trend-4h-ema50-exit-v5.json",
+        "strategies/regime-bull-trend-4h-sell-or-ema50-break-v8.json"
+      ]
+    },
+    {
+      "id": "daytrade_sideways",
+      "priority": 32,
+      "horizon": "daytrade",
+      "sleeve": "daytrade",
+      "regime": "sideways",
+      "side": "mean_revert",
+      "venue": "upbit",
+      "engine": "toolkit",
+      "status": "empty",
+      "goal": "Short-horizon sideways daytrade (BB fade family parked; need fee-robust variant)",
+      "criteria": {"min_pf": 1.2, "min_trades": 30, "require_positive_return": true},
+      "symbol": "KRW-BTC",
+      "timeframes": ["10m", "15m"],
+      "hints": ["Falsified prior SidewaysScalp15mBbV1 — do not revive same BB fade."],
+      "seed_from": [
+        "strategies/daytrade-edge-side-15m-bb-fade-v5.json",
+        "strategies/daytrade-edge-side-15m-bb-fade-v8.json"
+      ]
+    },
+    {
+      "id": "core_sideways_understudy",
+      "priority": 35,
+      "horizon": "core",
+      "sleeve": "core",
+      "regime": "sideways",
+      "side": "mean_revert",
+      "venue": "upbit",
+      "engine": "toolkit",
+      "status": "understudy",
+      "goal": "Beat Williams 1h LIVE or harden fallback chain (v5) as understudy",
+      "live_baseline": "regime-sideways-mr-1h-williams-v1.json",
+      "live_fallback": "regime-sideways-mr-4h-v5.json",
+      "criteria": {"min_pf": 1.2, "min_trades": 20, "require_positive_return": true, "beat_baseline": true},
+      "symbol": "KRW-BTC",
+      "timeframes": ["1h", "4h"],
+      "hints": ["early-strict-v2 and stochrsi variants already in tree — compare before inventing."],
+      "seed_from": [
+        "strategies/regime-sideways-mr-1h-williams-v1.json",
+        "strategies/regime-sideways-mr-1h-williams-early-strict-v2.json",
+        "strategies/regime-sideways-mr-4h-v5.json"
+      ]
+    },
+    {
       "id": "scalp_transition",
-      "priority": 30,
+      "priority": 40,
+      "horizon": "scalp",
       "sleeve": "scalp",
       "regime": "transition",
       "side": "either",
       "venue": "bitget",
+      "engine": "cpp-bt",
       "status": "empty",
-      "goal": "Transition specialist or cash-ok; only pursue after bear/bull scalp have a research survivor",
+      "goal": "Transition specialist or cash-ok; only after bear/bull scalp have a research survivor",
       "criteria": {"min_pf": 1.2, "min_trades": 20, "fee": 0.0006},
       "depends_on_any_candidate": ["scalp_bear_short", "scalp_bull_long"],
       "symbol": "BTC_USDT_USDT",
@@ -66,17 +231,35 @@
     },
     {
       "id": "scalp_sideways",
-      "priority": 40,
+      "priority": 45,
+      "horizon": "scalp",
       "sleeve": "scalp",
       "regime": "sideways",
       "side": "either",
       "venue": "bitget",
+      "engine": "cpp-bt",
       "status": "empty",
       "goal": "Sideways scalp (CORE Williams is not this sleeve)",
       "criteria": {"min_pf": 1.2, "min_trades": 30, "fee": 0.0006},
       "symbol": "BTC_USDT_USDT",
       "timeframes": ["5m", "15m"],
       "hints": ["Prior SidewaysScalp15mBbV1 falsified — do not revive same BB fade."]
+    },
+    {
+      "id": "daytrade_transition",
+      "priority": 50,
+      "horizon": "daytrade",
+      "sleeve": "daytrade",
+      "regime": "transition",
+      "side": "either",
+      "venue": "upbit",
+      "engine": "toolkit",
+      "status": "empty",
+      "goal": "Short-horizon transition daytrade; lower priority until bull/bear daytrade have survivors",
+      "criteria": {"min_pf": 1.2, "min_trades": 20, "require_positive_return": true},
+      "depends_on_any_candidate": ["daytrade_bull", "daytrade_bear"],
+      "symbol": "KRW-BTC",
+      "timeframes": ["10m", "15m"]
     }
   ]
 }
