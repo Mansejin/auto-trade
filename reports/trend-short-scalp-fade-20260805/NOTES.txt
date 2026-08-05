@@ -1,0 +1,8 @@
+﻿초단 vs 스윙 (2026-08-05)
+
+스윙 HIT (유지): di_cloud/adx15/SL3%/TP9% — ~30 trades/half on 5m. Not scalp.
+초단 재시도:
+- trend entry + tight SL/TP, n>=100: no PF>=1.2 hit
+- NEW entries rsi_fade / bb_reject / rsi_bb, 396 combos, n often 200-500/half: best minPF~0.93 (fees dominate at 6bps*2)
+
+Verdict: 이 구간 Bitget BTC 5m에서 초단 숏은 아직 엣지 없음. 스윙 HIT만 근거 있음(고정 stake FT).

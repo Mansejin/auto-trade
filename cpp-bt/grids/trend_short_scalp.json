@@ -1,0 +1,32 @@
+﻿{
+  "base_strategy": "strategies/trend_short_scalp_base.json",
+  "entry_modes": ["cloud_break", "di_cloud", "di_only"],
+  "adx_min": [15, 20, 25, 30],
+  "rsi_max": [50, 55, 60, 65, 70],
+  "exits": [
+    {"stoploss": -0.003, "take_profit": 0.005},
+    {"stoploss": -0.003, "take_profit": 0.008},
+    {"stoploss": -0.004, "take_profit": 0.006},
+    {"stoploss": -0.004, "take_profit": 0.010},
+    {"stoploss": -0.005, "take_profit": 0.008},
+    {"stoploss": -0.005, "take_profit": 0.012},
+    {"stoploss": -0.005, "take_profit": 0.015},
+    {"stoploss": -0.006, "take_profit": 0.010},
+    {"stoploss": -0.008, "take_profit": 0.012},
+    {"stoploss": -0.008, "take_profit": 0.016},
+    {"stoploss": -0.010, "take_profit": 0.015},
+    {"stoploss": -0.010, "take_profit": 0.020}
+  ],
+  "trailing": [
+    {"enabled": false},
+    {"enabled": true, "trail_pos": 0.003, "trail_offset": 0.005},
+    {"enabled": true, "trail_pos": 0.004, "trail_offset": 0.008},
+    {"enabled": true, "trail_pos": 0.005, "trail_offset": 0.010}
+  ],
+  "windows": [
+    {"name": "h1", "start": "2025-09-01", "end": "2026-02-04"},
+    {"name": "h2", "start": "2026-02-04", "end": "2026-08-05"}
+  ],
+  "criteria": {"min_pf": 1.2, "min_trades": 100}
+}
+

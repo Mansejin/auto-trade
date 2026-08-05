@@ -10,7 +10,7 @@
 namespace bt {
 
 enum class Side { Long, Short };
-enum class EntryMode { CloudBreak, DiCloud, DiOnly };
+enum class EntryMode { CloudBreak, DiCloud, DiOnly, RsiFade, BbReject, RsiBb };
 
 struct ExitCfg {
   double stoploss = -0.01;     // negative fraction, e.g. -0.02
@@ -29,7 +29,7 @@ struct StrategyCfg {
   int rsi_period = 14;
   int adx_period = 14;
   double adx_min = 25;
-  double rsi_max = 55;
+  double rsi_max = 55;  // di_only filter OR rsi_fade overbought threshold
   ExitCfg exit;
 };
 
@@ -44,6 +44,9 @@ struct SimResult {
 inline EntryMode parse_mode(const std::string& s) {
   if (s == "cloud_break") return EntryMode::CloudBreak;
   if (s == "di_cloud") return EntryMode::DiCloud;
+  if (s == "rsi_fade") return EntryMode::RsiFade;
+  if (s == "bb_reject") return EntryMode::BbReject;
+  if (s == "rsi_bb") return EntryMode::RsiBb;
   return EntryMode::DiOnly;
 }
 
@@ -51,6 +54,9 @@ inline const char* mode_str(EntryMode m) {
   switch (m) {
     case EntryMode::CloudBreak: return "cloud_break";
     case EntryMode::DiCloud: return "di_cloud";
+    case EntryMode::RsiFade: return "rsi_fade";
+    case EntryMode::BbReject: return "bb_reject";
+    case EntryMode::RsiBb: return "rsi_bb";
     default: return "di_only";
   }
 }
@@ -61,7 +67,7 @@ inline std::vector<uint8_t> entry_signals(const std::vector<Candle>& c, const In
   std::vector<uint8_t> sig(n, 0);
   for (int i = 1; i < n; ++i) {
     if (i < cfg.startup) continue;
-    if (is_nan(ind.cloud1[i]) || c[i].volume <= 0) continue;
+    if (c[i].volume <= 0) continue;
     bool ok = false;
     switch (cfg.mode) {
       case EntryMode::CloudBreak:
@@ -69,14 +75,29 @@ inline std::vector<uint8_t> entry_signals(const std::vector<Candle>& c, const In
              c[i - 1].close >= ind.cloud_top[i - 1] && c[i].close < ind.cloud_bot[i];
         break;
       case EntryMode::DiCloud:
-        ok = !is_nan(ind.minus_di[i]) && !is_nan(ind.plus_di[i]) && !is_nan(ind.adx[i]) &&
-             ind.minus_di[i] > ind.plus_di[i] && ind.adx[i] >= cfg.adx_min &&
+        ok = !is_nan(ind.cloud1[i]) && !is_nan(ind.minus_di[i]) && !is_nan(ind.plus_di[i]) &&
+             !is_nan(ind.adx[i]) && ind.minus_di[i] > ind.plus_di[i] && ind.adx[i] >= cfg.adx_min &&
              c[i].close < ind.cloud1[i] && c[i].close < ind.cloud2[i];
         break;
       case EntryMode::DiOnly:
         ok = !is_nan(ind.minus_di[i]) && !is_nan(ind.rsi[i]) && !is_nan(ind.adx[i]) &&
              ind.minus_di[i] > ind.plus_di[i] && ind.adx[i] >= cfg.adx_min &&
              ind.rsi[i] < cfg.rsi_max;
+        break;
+      case EntryMode::RsiFade:
+        // Short fade: RSI leaves overbought (cross down through rsi_max)
+        ok = !is_nan(ind.rsi[i]) && !is_nan(ind.rsi[i - 1]) && ind.rsi[i - 1] >= cfg.rsi_max &&
+             ind.rsi[i] < cfg.rsi_max;
+        break;
+      case EntryMode::BbReject:
+        // Close was outside upper band, reclaimed inside
+        ok = !is_nan(ind.bb_upper[i]) && !is_nan(ind.bb_upper[i - 1]) &&
+             c[i - 1].close > ind.bb_upper[i - 1] && c[i].close <= ind.bb_upper[i];
+        break;
+      case EntryMode::RsiBb:
+        ok = !is_nan(ind.rsi[i]) && !is_nan(ind.bb_upper[i]) && !is_nan(ind.bb_upper[i - 1]) &&
+             ind.rsi[i] >= cfg.rsi_max && c[i - 1].close > ind.bb_upper[i - 1] &&
+             c[i].close <= ind.bb_upper[i];
         break;
     }
     sig[i] = ok ? 1 : 0;

@@ -89,8 +89,9 @@ static Series load_series(const fs::path& data_dir, const std::string& sym, cons
 }
 
 static Indicators resolve_ind(const Series& series, const StrategyCfg& cfg) {
-  if (series.has_ind) return series.ind;
-  return compute_indicators(series.bars, cfg.rsi_period, cfg.adx_period);
+  Indicators ind = series.has_ind ? series.ind : compute_indicators(series.bars, cfg.rsi_period, cfg.adx_period);
+  ensure_bb(series.bars, ind);
+  return ind;
 }
 
 static int cmd_run(const fs::path& root, const fs::path& strat_path, const fs::path& data_dir,
@@ -183,8 +184,13 @@ static int cmd_grid(const fs::path& root, const fs::path& grid_path, const fs::p
 
   for (auto mode : modes) {
     for (double adx : adxs) {
-      if (mode == EntryMode::CloudBreak && adx != adxs[adxs.size() / 2]) continue;  // one adx
-      const auto& rsi_list = (mode == EntryMode::DiOnly) ? rsis : std::vector<double>{55.0};
+      const bool adx_irrelevant =
+          mode == EntryMode::CloudBreak || mode == EntryMode::RsiFade || mode == EntryMode::BbReject ||
+          mode == EntryMode::RsiBb;
+      if (adx_irrelevant && adx != adxs[adxs.size() / 2]) continue;
+      std::vector<double> rsi_list{55.0};
+      if (mode == EntryMode::DiOnly || mode == EntryMode::RsiFade || mode == EntryMode::RsiBb)
+        rsi_list = rsis;
       for (double rsi : rsi_list) {
         StrategyCfg cfg = base;
         cfg.mode = mode;

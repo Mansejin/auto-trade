@@ -19,6 +19,9 @@ struct Indicators {
   std::vector<double> cloud2;
   std::vector<double> cloud_top;
   std::vector<double> cloud_bot;
+  std::vector<double> bb_mid;
+  std::vector<double> bb_upper;
+  std::vector<double> bb_lower;
 };
 
 struct Series {

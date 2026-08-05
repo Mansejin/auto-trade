@@ -118,12 +118,40 @@ inline void ichimoku(const std::vector<Candle>& c, Indicators& ind) {
   }
 }
 
+inline void bollinger(const std::vector<Candle>& c, Indicators& ind, int period = 20, double mult = 2.0) {
+  const int n = (int)c.size();
+  ind.bb_mid.assign(n, NaN);
+  ind.bb_upper.assign(n, NaN);
+  ind.bb_lower.assign(n, NaN);
+  for (int i = period - 1; i < n; ++i) {
+    double sum = 0;
+    for (int j = i - period + 1; j <= i; ++j) sum += c[j].close;
+    double mid = sum / period;
+    double var = 0;
+    for (int j = i - period + 1; j <= i; ++j) {
+      double d = c[j].close - mid;
+      var += d * d;
+    }
+    double sd = std::sqrt(var / period);
+    ind.bb_mid[i] = mid;
+    ind.bb_upper[i] = mid + mult * sd;
+    ind.bb_lower[i] = mid - mult * sd;
+  }
+}
+
 inline Indicators compute_indicators(const std::vector<Candle>& c, int rsi_p, int adx_p) {
   Indicators ind;
   ind.rsi = rsi_wilder(c, rsi_p);
   adx_di(c, adx_p, ind.adx, ind.plus_di, ind.minus_di);
   ichimoku(c, ind);
+  bollinger(c, ind);
   return ind;
+}
+
+// Fill BB on an existing indicator pack (e.g. after .ftind load).
+inline void ensure_bb(const std::vector<Candle>& c, Indicators& ind) {
+  if (ind.bb_mid.size() == c.size() && !ind.bb_mid.empty() && !is_nan(ind.bb_mid.back())) return;
+  bollinger(c, ind);
 }
 
 }  // namespace bt
