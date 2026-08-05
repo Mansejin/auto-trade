@@ -10,6 +10,9 @@
 | Fee model | 6 bps/side |
 | OOS | h1 `2025-09-01`→`2026-02-04`, h2 `2026-02-04`→`2026-08-05` |
 
+**Status: RESEARCH_KEEP** after deep validation (2026-08-05).  
+See `reports/bitget-btc-short-swing-deep-20260805/` — not LIVE until fee-stress buffer improves.
+
 **Freqtrade check (stake=100, `use_order_book=false`):**
 
 | Window | Trades | PF |

@@ -1,0 +1,24 @@
+{
+  "name": "swing-deep",
+  "side": "short",
+  "symbols": [
+    "BTC_USDT_USDT"
+  ],
+  "timeframe": "5m",
+  "fee": 0.0006,
+  "startup": 80,
+  "entry": {
+    "mode": "di_cloud",
+    "rsi_period": 14,
+    "adx_period": 14,
+    "adx_min": 25,
+    "rsi_max": 55
+  },
+  "exit": {
+    "stoploss": -0.02,
+    "take_profit": 0.09,
+    "trailing": false,
+    "trail_pos": 0.0,
+    "trail_offset": 0.0
+  }
+}
