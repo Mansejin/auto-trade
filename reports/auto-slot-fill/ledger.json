@@ -6,7 +6,8 @@
     "rsi_fade_scalp_after_fee",
     "bb_reject_scalp_after_fee",
     "rsi_bb_scalp_after_fee",
-    "rsi_ichi_long_prefee_pf_only"
+    "rsi_ichi_long_prefee_pf_only",
+    "sideways_scalp_15m_bb_v1_same"
   ],
   "known_research": [
     {
@@ -14,6 +15,18 @@
       "slot_related": "scalp_bear_short",
       "status": "RESEARCH_KEEP",
       "note": "FT fixed-stake PF 1.44/1.20; fails 10bps fee stress — not LIVE"
+    },
+    {
+      "id": "policy_c_core_live",
+      "slot_related": "core_*_understudy",
+      "status": "LIVE_BASELINE",
+      "note": "bull-v2 / m5-v6 / Williams+v5 — understudies only; never auto-replace"
+    },
+    {
+      "id": "daytrade_div_atr_stopped",
+      "slot_related": "daytrade_bear",
+      "status": "CASH_STOPPED",
+      "note": "Div ATR fee/slippage stop 2026-07-30 — revive needs fee stress pass"
     }
   ],
   "tried": [
