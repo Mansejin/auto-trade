@@ -1984,8 +1984,237 @@
         },
         "pass": true
       },
-      "status": "HUMAN_APPROVE",
-      "at": "2026-08-05T10:02:21Z"
+      "status": "RESEARCH_KEEP",
+      "at": "2026-08-05T10:02:21Z",
+      "promote_review": {
+        "at": "2026-08-05T17:10:28Z",
+        "fee_stress_cpp": {
+          "0.0": {
+            "h1": {
+              "trades": 31,
+              "profit_factor": 1.4286,
+              "profit_pct": 27.0
+            },
+            "h2": {
+              "trades": 32,
+              "profit_factor": 1.2824,
+              "profit_pct": 18.64
+            },
+            "pass_pf12": true
+          },
+          "0.0006": {
+            "h1": {
+              "trades": 31,
+              "profit_factor": 1.3553,
+              "profit_pct": 23.28
+            },
+            "h2": {
+              "trades": 32,
+              "profit_factor": 1.2156,
+              "profit_pct": 14.8
+            },
+            "pass_pf12": true
+          },
+          "0.001": {
+            "h1": {
+              "trades": 31,
+              "profit_factor": 1.3095,
+              "profit_pct": 20.8
+            },
+            "h2": {
+              "trades": 32,
+              "profit_factor": 1.1739,
+              "profit_pct": 12.24
+            },
+            "pass_pf12": false
+          },
+          "0.0012": {
+            "h1": {
+              "trades": 31,
+              "profit_factor": 1.2875,
+              "profit_pct": 19.56
+            },
+            "h2": {
+              "trades": 32,
+              "profit_factor": 1.1537,
+              "profit_pct": 10.96
+            },
+            "pass_pf12": false
+          }
+        },
+        "fee_stress_ft": {
+          "0.0006": {
+            "h1": {
+              "trades": 27,
+              "profit_factor": 1.44
+            },
+            "h2": {
+              "trades": 33,
+              "profit_factor": 1.2
+            },
+            "pass_pf12": true
+          },
+          "0.001": {
+            "h1": {
+              "trades": 27,
+              "profit_factor": 1.4
+            },
+            "h2": {
+              "trades": 33,
+              "profit_factor": 1.17
+            },
+            "pass_pf12": false
+          }
+        },
+        "quarters_cpp": {
+          "q1": {
+            "trades": 18,
+            "profit_factor": 1.1911,
+            "profit_pct": 7.16
+          },
+          "q2": {
+            "trades": 13,
+            "profit_factor": 1.5305,
+            "profit_pct": 13.24
+          },
+          "q3": {
+            "trades": 18,
+            "profit_factor": 1.2156,
+            "profit_pct": 8.07
+          },
+          "q4": {
+            "trades": 14,
+            "profit_factor": 1.3903,
+            "profit_pct": 10.96
+          }
+        },
+        "quarters_pf_ge_1": 4,
+        "neighbors_cpp": {
+          "base": {
+            "adx": 12,
+            "sl": -0.03,
+            "tp": 0.09,
+            "h1": {
+              "trades": 31,
+              "profit_factor": 1.3553,
+              "profit_pct": 23.28
+            },
+            "h2": {
+              "trades": 32,
+              "profit_factor": 1.2156,
+              "profit_pct": 14.8
+            },
+            "pass_pf12": true
+          },
+          "adx_m3": {
+            "adx": 9,
+            "sl": -0.03,
+            "tp": 0.09,
+            "h1": {
+              "trades": 31,
+              "profit_factor": 1.3553,
+              "profit_pct": 23.28
+            },
+            "h2": {
+              "trades": 32,
+              "profit_factor": 1.2156,
+              "profit_pct": 14.8
+            },
+            "pass_pf12": true
+          },
+          "adx_p3": {
+            "adx": 15,
+            "sl": -0.03,
+            "tp": 0.09,
+            "h1": {
+              "trades": 32,
+              "profit_factor": 1.3974,
+              "profit_pct": 26.04
+            },
+            "h2": {
+              "trades": 32,
+              "profit_factor": 1.2139,
+              "profit_pct": 14.68
+            },
+            "pass_pf12": true
+          },
+          "sl_tight": {
+            "adx": 12,
+            "sl": -0.0249,
+            "tp": 0.0747,
+            "h1": {
+              "trades": 48,
+              "profit_factor": 1.1017,
+              "profit_pct": 9.03
+            },
+            "h2": {
+              "trades": 45,
+              "profit_factor": 1.2244,
+              "profit_pct": 18.16
+            },
+            "pass_pf12": false
+          },
+          "sl_wide": {
+            "adx": 12,
+            "sl": -0.0351,
+            "tp": 0.1053,
+            "h1": {
+              "trades": 17,
+              "profit_factor": 1.7967,
+              "profit_pct": 28.92
+            },
+            "h2": {
+              "trades": 22,
+              "profit_factor": 1.1697,
+              "profit_pct": 9.24
+            },
+            "pass_pf12": false
+          },
+          "tp_wide": {
+            "adx": 12,
+            "sl": -0.03,
+            "tp": 0.1197,
+            "h1": {
+              "trades": 24,
+              "profit_factor": 1.266,
+              "profit_pct": 14.94
+            },
+            "h2": {
+              "trades": 23,
+              "profit_factor": 1.1834,
+              "profit_pct": 9.73
+            },
+            "pass_pf12": false
+          },
+          "tp_narrow": {
+            "adx": 12,
+            "sl": -0.03,
+            "tp": 0.0603,
+            "h1": {
+              "trades": 43,
+              "profit_factor": 1.1225,
+              "profit_pct": 10.32
+            },
+            "h2": {
+              "trades": 49,
+              "profit_factor": 1.1357,
+              "profit_pct": 12.71
+            },
+            "pass_pf12": false
+          }
+        },
+        "neighbor_pass": "3/7",
+        "fragile": [
+          "h2 PF only marginally >=1.2",
+          "fails at 10bps/side fee (cpp)",
+          "fails at 10bps/side fee (ft)",
+          "fails at 12bps/side fee (cpp)"
+        ],
+        "fee10_pass": false,
+        "status": "RESEARCH_KEEP",
+        "promote_auto": false,
+        "note": "LIVE mount requires human; automation must not write Policy C / sleeves."
+      }
     },
     {
       "slot": "scalp_bear_short",
@@ -2032,12 +2261,20 @@
   ],
   "last_tick": {
     "ok": true,
-    "action": "ran",
+    "action": "promote_review",
     "slot": "scalp_bear_short",
-    "fingerprint": "962b9198066e2e35",
-    "result": "cpp_miss",
-    "cpp_min_pf": 1.0929,
-    "at": "2026-08-05T16:17:31Z"
+    "fingerprint": "9d7e67da791648b1",
+    "status": "RESEARCH_KEEP",
+    "fee10_pass": false,
+    "fragile": [
+      "h2 PF only marginally >=1.2",
+      "fails at 10bps/side fee (cpp)",
+      "fails at 10bps/side fee (ft)",
+      "fails at 12bps/side fee (cpp)"
+    ],
+    "neighbor_pass": "3/7",
+    "quarters_pf_ge_1": 4,
+    "at": "2026-08-05T17:10:28Z"
   },
   "notes": "Append-only tried[] keyed by fingerprint. Tick script skips fingerprints already present."
 }
