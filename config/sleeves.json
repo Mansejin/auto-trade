@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updated": "2026-07-31",
+  "updated": "2026-08-06",
   "intent": "장타(CORE) 50% Upbit + 단타(SCALP) 50% Bitget. Venue split equals sleeve split (5:5). CORE = Policy C (famous race lost).",
   "weights": {
     "core_pct": 50,
@@ -15,8 +15,8 @@
       "bitget_pct": 50,
       "notes": "Upbit hosts 장타 only; Bitget hosts 단타 only — keeps 빗겟:업비트 5:5."
     },
-    "frozen_by": "human_2026-07-30",
-    "notes": "Frozen 장타50 / 단타50 intent. SCALP LIVE off — seed Upbit-only until total≥500k KRW and a scalp card re-passes. No rebalance below 500k."
+    "frozen_by": "human_2026-08-06",
+    "notes": "CORE Policy C + Bitget SCALP bear TrendShort ADX15 in parallel. Other scalp regimes cash. No rebalance below 500k."
   },
   "seed_policy": {
     "deposit_venue": "upbit_only",
@@ -35,9 +35,9 @@
     "scalp": {
       "label": "단타",
       "venue": "bitget_uta_futures",
-      "bot": "freqtrade-scalp",
+      "bot": "freqtrade-scalp-trend-short",
       "capital_pct": 50,
-      "role": "SCALP LIVE stopped (cash). Research/automation only until re-promotion.",
+      "role": "SCALP bear LIVE = TrendShortV1 di_cloud ADX15 (FT). Other regimes cash. Parallel with CORE.",
       "live_map": "config/scalp-live-map.json"
     }
   },
@@ -74,10 +74,13 @@
         "notes": "Long-biased Upbit swing — keep even when scalp short exists."
       },
       "scalp": {
-        "strategy": null,
-        "upbit_ref": "strategies/daytrade-edge-10m-div-atr-v1.json",
-        "status": "cash_stopped",
-        "notes": "2026-07-30: Div ATR LIVE stopped (2nd opinion — fee/slippage/15m drift). bot-bitget stopped. Short slot still open for research only.",
+        "strategy": "bitget-btc-5m-trend-short-di-cloud-adx15-v1",
+        "status": "live_human",
+        "engine": "freqtrade",
+        "ft_strategy": "TrendShortV1",
+        "fingerprint": "16dba43a38f9f882",
+        "notes": "2026-08-06: Human LIVE — di_cloud ADX15 SL3/TP9. Fails 8bps fee stress; fixed stake 100 USDT. Not bot-bitget.",
+        "parked_was": "bitget-scalp-div-atr-v1",
         "candidates_falsified_short": [
           "BearShortBreakdownVolV6",
           "BearShortFailedReclaimV7",
@@ -87,10 +90,6 @@
           "BearShortEmaCrossV11",
           "BearShortStochFadeV12",
           "BearShortDivAtrV13"
-        ],
-        "siblings_ready": [
-          "daytrade-edge-10m-div-v1",
-          "daytrade-edge-10m-div-adx-v1"
         ]
       }
     },

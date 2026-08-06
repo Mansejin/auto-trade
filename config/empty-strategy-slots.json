@@ -25,14 +25,15 @@
       "side": "short",
       "venue": "bitget",
       "engine": "cpp-bt",
-      "status": "empty",
-      "goal": "True futures short for Bitget SCALP bear sleeve",
+      "status": "live_human",
+      "live_card": "bitget-btc-5m-trend-short-di-cloud-adx15-v1",
+      "goal": "True futures short for Bitget SCALP bear sleeve — ADX15 LIVE mounted 2026-08-06; keep hunting fee-robust understudies only",
       "criteria": {"min_pf": 1.2, "min_trades": 20, "fee": 0.0006, "stake_model": "fixed"},
       "symbol": "BTC_USDT_USDT",
       "timeframes": ["5m"],
       "hints": [
-        "Prior fade/MR shorts failed (rsi_fade, bb_reject, rsi_bb scalp).",
-        "Swing di_cloud/SL3/TP9 is RESEARCH_KEEP only — improve fee buffer, do not LIVE-mount.",
+        "LIVE is di_cloud ADX15 SL3/TP9 (16dba43a38f9f882) — do not auto-replace.",
+        "Fails 8bps fee stress; any understudy must clear stress8 before challenging LIVE.",
         "Ban toolkit long-invert as short evidence."
       ],
       "seed_from": [
