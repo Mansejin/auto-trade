@@ -228,6 +228,7 @@ services:
       --logfile /freqtrade/user_data/logs/scalp-trend-short.log
       --db-url sqlite:////freqtrade/user_data/tradesv3-scalp-trend-short.sqlite
       --config /freqtrade/user_data/config.bitget-scalp-trend-short-live.json
+      --config /freqtrade/user_data/config.bitget-scalp.secrets.json
       --strategy TrendShortV1
     logging:
       driver: json-file
