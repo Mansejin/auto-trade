@@ -1,7 +1,7 @@
 {
   "max_open_trades": 1,
   "stake_currency": "USDT",
-  "stake_amount": 100,
+  "stake_amount": 8,
   "tradable_balance_ratio": 0.99,
   "dry_run": false,
   "dry_run_wallet": 1000,
@@ -28,7 +28,9 @@
     "key": "",
     "secret": "",
     "password": "",
-    "pair_whitelist": ["BTC/USDT:USDT"],
+    "pair_whitelist": [
+      "BTC/USDT:USDT"
+    ],
     "pair_blacklist": [],
     "ccxt_config": {
       "options": {
@@ -43,18 +45,26 @@
       }
     }
   },
-  "pairlists": [{"method": "StaticPairList"}],
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
   "timeframe": "5m",
   "startup_candle_count": 80,
   "stoploss": -0.03,
   "trailing_stop": false,
-  "minimal_roi": {"0": 0.09},
+  "minimal_roi": {
+    "0": 0.09
+  },
   "use_exit_signal": false,
   "fee": 0.0006,
   "strategy": "TrendShortV1",
   "bot_name": "freqtrade-scalp-trend-short-adx15",
   "initial_state": "running",
-  "internals": {"process_throttle_secs": 5},
+  "internals": {
+    "process_throttle_secs": 5
+  },
   "cancel_open_orders_on_exit": true,
-  "_comment": "Fill exchange.key/secret/password on host only. Matches RESEARCH_KEEP fingerprint 16dba43a38f9f882 (di_cloud ADX15 SL3/TP9). use_order_book=false matches validated fixed-stake BT."
+  "_comment": "Host injects Bitget key/secret/password. stake 8 fits mini UTA dust; raise after funding. uta=true required."
 }
