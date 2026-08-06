@@ -1,26 +1,39 @@
 {
-  "version": 2,
-  "updated": "2026-07-30",
+  "version": 3,
+  "updated": "2026-08-06",
   "venue": "bitget_uta_futures",
-  "bot": "bitget-futures-bot",
-  "host": "nas",
+  "bot": "freqtrade-scalp-trend-short",
+  "compose_service": "bot-ft-scalp",
+  "compose_profile": "scalp",
+  "host": "nas_or_oracle",
   "capital_pct": 50,
-  "status": "stopped_cash",
+  "status": "live_bear_only",
   "fee": 0.0006,
   "map": {
     "bull": null,
     "transition": null,
-    "bear": null,
+    "bear": "bitget-btc-5m-trend-short-di-cloud-adx15-v1",
     "sideways": null
   },
+  "engines": {
+    "bear": {
+      "runtime": "freqtrade",
+      "strategy_class": "TrendShortV1",
+      "config": "freqtrade-research/user_data/config.bitget-scalp-trend-short-live.json",
+      "fingerprint": "16dba43a38f9f882",
+      "params": "di_cloud ADX≥15 SL3% TP9%",
+      "note": "True short. Do not use bot-bitget (long-only)."
+    }
+  },
   "switch_notes": [
-    "2026-07-30: Div ATR + all SCALP LIVE stopped after second-opinion (fee/slippage/TF-drift). Bear scalp = cash.",
-    "bot-bitget is compose profile 'scalp' — default `docker compose up -d` does NOT start it.",
-    "CORE Policy C on Upbit remains the only active LIVE sleeve until a scalp card re-passes falsification."
+    "2026-08-06: Human LIVE mount — di_cloud ADX15 SL3/TP9 (RESEARCH_KEEP; fails 8bps stress). Fixed stake 100 USDT.",
+    "2026-07-30: Div ATR + all SCALP LIVE previously stopped (fee/slippage).",
+    "bot-bitget (toolkit long) stays stopped. Default `docker compose up -d` does NOT start scalp FT.",
+    "CORE Policy C on Upbit runs in parallel (separate venue)."
   ],
   "parked": {
     "bear_was": "bitget-scalp-div-atr-v1",
     "sideways_was": "SidewaysEdge15mBbFadeV5",
-    "reason": "Gemini+agent: Div ATR not worth fee risk as bear defense; cash dominates"
+    "reason": "Replaced bear cash with TrendShort ADX15; sides remain cash"
   }
 }

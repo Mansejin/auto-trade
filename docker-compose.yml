@@ -208,3 +208,29 @@ services:
       options:
         max-size: "3m"
         max-file: "2"
+
+  # Bitget SCALP true-short — Freqtrade TrendShortV1 (di_cloud ADX15).
+  # bot-bitget is long-only toolkit; do not point it at this short.
+  # Start: docker compose --profile scalp up -d bot-ft-scalp
+  bot-ft-scalp:
+    image: freqtradeorg/freqtrade:stable
+    container_name: freqtrade-scalp-trend-short
+    profiles: ["scalp"]
+    restart: unless-stopped
+    mem_limit: 512m
+    cpus: 0.75
+    env_file:
+      - .env
+    volumes:
+      - ./freqtrade-research/user_data:/freqtrade/user_data
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/scalp-trend-short.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3-scalp-trend-short.sqlite
+      --config /freqtrade/user_data/config.bitget-scalp-trend-short-live.json
+      --strategy TrendShortV1
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"

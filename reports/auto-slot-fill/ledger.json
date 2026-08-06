@@ -2387,7 +2387,7 @@
         },
         "pass": true
       },
-      "status": "RESEARCH_KEEP",
+      "status": "RESEARCH_KEEP_BACKUP",
       "at": "2026-08-05T10:02:21Z",
       "promote_review_prev": {
         "at": "2026-08-05T17:56:03Z",
@@ -2864,7 +2864,8 @@
         "status": "RESEARCH_KEEP",
         "promote_auto": false,
         "note": "Base=Bitget taker 6bps; stress=8bps cushion. LIVE mount requires human; never write Policy C / sleeves."
-      }
+      },
+      "note": "ADX12 neighbor — not mounted; ADX15 chosen for LIVE."
     },
     {
       "slot": "scalp_bear_short",
@@ -2905,7 +2906,7 @@
         },
         "pass": true
       },
-      "status": "RESEARCH_KEEP",
+      "status": "LIVE_HUMAN",
       "at": "2026-08-05T10:38:34Z",
       "promote_review_prev": {
         "at": "2026-08-05T19:26:19Z",
@@ -3382,7 +3383,11 @@
         "status": "RESEARCH_KEEP",
         "promote_auto": false,
         "note": "Base=Bitget taker 6bps; stress=8bps cushion. LIVE mount requires human; never write Policy C / sleeves."
-      }
+      },
+      "live_mounted_at": "2026-08-06T02:06:26Z",
+      "live_card": "bitget-btc-5m-trend-short-di-cloud-adx15-v1",
+      "live_runtime": "freqtrade bot-ft-scalp",
+      "note": "Human LIVE 2026-08-06; parallel CORE; fails 8bps stress — small fixed stake."
     }
   ],
   "last_tick": {
@@ -3405,5 +3410,11 @@
     "quarters_pf_ge_1": 4,
     "at": "2026-08-06T01:46:59Z"
   },
-  "notes": "Base fee=0.0006 (Bitget taker). LIVE stress gate=0.0008 (8bps). Append-only tried[]; promote_review.gate_version must match script."
+  "notes": "Base fee=0.0006 (Bitget taker). LIVE stress gate=0.0008 (8bps). Append-only tried[]; promote_review.gate_version must match script.",
+  "last_human_promote": {
+    "at": "2026-08-06T02:06:26Z",
+    "fingerprint": "16dba43a38f9f882",
+    "card": "bitget-btc-5m-trend-short-di-cloud-adx15-v1",
+    "runtime": "freqtrade"
+  }
 }

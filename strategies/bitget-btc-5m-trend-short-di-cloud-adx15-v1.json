@@ -1,0 +1,28 @@
+{
+  "name": "Bitget BTC 5m trend short di_cloud ADX15 SL3/TP9 v1",
+  "slug": "bitget-btc-5m-trend-short-di-cloud-adx15-v1",
+  "market": "BTC/USDT:USDT",
+  "exchange": "bitget",
+  "venue": "bitget_uta_futures",
+  "timeframe": "5m",
+  "side": "short",
+  "status": "LIVE_HUMAN",
+  "engine": "freqtrade",
+  "ft_strategy": "TrendShortV1",
+  "ft_config": "freqtrade-research/user_data/config.bitget-scalp-trend-short-live.json",
+  "fingerprint": "16dba43a38f9f882",
+  "params": {
+    "entry_mode": "di_cloud",
+    "adx_min": 15,
+    "rsi_max": 55,
+    "stoploss": -0.03,
+    "take_profit": 0.09
+  },
+  "notes": [
+    "True futures short — do NOT run on bot-bitget (long-only toolkit).",
+    "RESEARCH_KEEP under 8bps stress; human LIVE approve 2026-08-06.",
+    "Parallel with Upbit CORE Policy C (separate venue/bot)."
+  ],
+  "stop_loss": 3.0,
+  "take_profit": 9.0
+}
