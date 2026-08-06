@@ -171,6 +171,7 @@ services:
       RISK_PATH: /app/data/risk.json
       BITGET_STATE_PATH: /app/data/bitget_state.json
       BITGET_LOG_DIR: /app/logs/bitget
+      FREQTRADE_SCALP_DB: /app/ft-userdata/tradesv3-scalp-trend-short.sqlite
       STRATEGY_DIR: /app/strategies
       DASHBOARD_TOKEN: ${DASHBOARD_TOKEN:-}
       BASE_PATH: ${BASE_PATH:-/autotrade}
@@ -180,6 +181,7 @@ services:
       - ./logs:/app/logs
       - ./config:/app/config:ro
       - ./strategies:/app/strategies:ro
+      - ./freqtrade-research/user_data:/app/ft-userdata:ro
       - ./web/static:/app/static:ro
       - ./web/app.py:/app/app.py:ro
       - ./web/condition_meters.py:/app/condition_meters.py:ro

@@ -525,7 +525,8 @@
     const bgPos = document.getElementById("m-bg-pos");
     if (bgPos) {
       if (bg.position && bg.position.qty) {
-        bgPos.textContent = `${qty(bg.position.qty)} @ ${money(bg.position.entry_price, "USDT")}`;
+        const side = bg.position.side ? `${String(bg.position.side).toUpperCase()} ` : "";
+        bgPos.textContent = `${side}${qty(bg.position.qty)} @ ${money(bg.position.entry_price, "USDT")}`;
       } else {
         bgPos.textContent = scalpCash ? "—" : "없음";
       }

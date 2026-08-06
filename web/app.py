@@ -32,6 +32,12 @@ if not _CFG.is_dir():
     _CFG = Path(__file__).resolve().parent.parent / "config"
 SLEEVES_PATH = Path(os.getenv("SLEEVES_PATH", str(_CFG / "sleeves.json")))
 SCALP_MAP_PATH = Path(os.getenv("SCALP_MAP_PATH", str(_CFG / "scalp-live-map.json")))
+FREQTRADE_SCALP_DB = Path(
+    os.getenv(
+        "FREQTRADE_SCALP_DB",
+        "/app/ft-userdata/tradesv3-scalp-trend-short.sqlite",
+    )
+)
 TOKEN = os.getenv("DASHBOARD_TOKEN", "").strip()
 BASE_PATH = os.getenv("BASE_PATH", "").strip().rstrip("/")
 COOKIE_NAME = "desk_token"
@@ -630,6 +636,62 @@ def _read_equity_history() -> list[dict[str, Any]]:
             return out
     return []
 
+def _scalp_map_live() -> bool:
+    m = _load_json(SCALP_MAP_PATH)
+    st = str(m.get("status") or "")
+    return bool(st) and st.startswith("live") and "cash" not in st
+
+
+def _load_freqtrade_scalp() -> dict[str, Any]:
+    """Open Freqtrade SCALP trade from sqlite (read-only)."""
+    db = FREQTRADE_SCALP_DB
+    if not db.is_file():
+        return {}
+    try:
+        import sqlite3
+
+        con = sqlite3.connect(f"file:{db.as_posix()}?mode=ro", uri=True)
+        con.row_factory = sqlite3.Row
+        row = con.execute(
+            "SELECT pair, amount, open_rate, is_short, strategy, open_date "
+            "FROM trades WHERE is_open = 1 ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        con.close()
+    except Exception:
+        return {}
+    if not row:
+        return {}
+    is_short = bool(row["is_short"])
+    qty = float(row["amount"] or 0)
+    entry = float(row["open_rate"] or 0)
+    pair = str(row["pair"] or "")
+    strat = str(row["strategy"] or "")
+    side = "short" if is_short else "long"
+    text = (
+        f"Freqtrade SCALP LIVE\n"
+        f"전략: {strat or '-'}\n"
+        f"페어: {pair}\n"
+        f"포지션: {side} {qty} @ {entry}\n"
+        f"진입: {row['open_date'] or '-'}"
+    )
+    return {
+        "running": True,
+        "exchange": "bitget",
+        "mode": "LIVE",
+        "strategy": strat or None,
+        "market": pair or None,
+        "signal": side,
+        "position": {
+            "qty": qty,
+            "entry_price": entry,
+            "side": side,
+            "opened_at": row["open_date"],
+        },
+        "latest_text": text,
+        "source": "freqtrade",
+    }
+
+
 def _load_bitget() -> dict[str, Any]:
     bitget_state = _load_json(BITGET_STATE_PATH)
     bitget_status = _load_json(BITGET_LOG_DIR / "status.json")
@@ -637,32 +699,64 @@ def _load_bitget() -> dict[str, Any]:
     latest_text = ""
     if text_path.exists():
         latest_text = text_path.read_text(encoding="utf-8", errors="ignore")[:8000]
-    if not bitget_state and not bitget_status:
-        return {
-            "running": False,
-            "latest_text": latest_text,
-            "recent_trades": [],
-        }
-    bs = bitget_status or {}
-    trades = bitget_state.get("trades") or []
-    cash = bs.get("cash")
-    if cash is None:
-        cash = bs.get("usdt")
-    if cash is None:
-        cash = bitget_state.get("cash")
-    return {
-        "running": True,
-        "exchange": "bitget",
-        "mode": bs.get("mode") or bitget_state.get("mode"),
-        "strategy": bs.get("strategy") or bitget_state.get("strategy"),
-        "market": bs.get("market") or bitget_state.get("market"),
-        "signal": bs.get("signal"),
-        "cash": cash,
-        "position": bs.get("position") or bitget_state.get("position"),
+    toolkit: dict[str, Any] = {
+        "running": False,
         "latest_text": latest_text,
-        "recent_trades": trades[-8:] if isinstance(trades, list) else [],
-        "condition_meters": _build_condition_meters(bs),
+        "recent_trades": [],
     }
+    if bitget_state or bitget_status:
+        bs = bitget_status or {}
+        trades = bitget_state.get("trades") or []
+        cash = bs.get("cash")
+        if cash is None:
+            cash = bs.get("usdt")
+        if cash is None:
+            cash = bitget_state.get("cash")
+        toolkit = {
+            "running": True,
+            "exchange": "bitget",
+            "mode": bs.get("mode") or bitget_state.get("mode"),
+            "strategy": bs.get("strategy") or bitget_state.get("strategy"),
+            "market": bs.get("market") or bitget_state.get("market"),
+            "signal": bs.get("signal"),
+            "cash": cash,
+            "position": bs.get("position") or bitget_state.get("position"),
+            "latest_text": latest_text,
+            "recent_trades": trades[-8:] if isinstance(trades, list) else [],
+            "condition_meters": _build_condition_meters(bs),
+            "source": "toolkit",
+        }
+
+    ft = _load_freqtrade_scalp()
+    if ft:
+        out = {**toolkit, **ft}
+        # Prefer toolkit cash if present; FT sqlite has no wallet.
+        if toolkit.get("cash") is not None:
+            out["cash"] = toolkit["cash"]
+        if not out.get("latest_text"):
+            out["latest_text"] = toolkit.get("latest_text") or ""
+        if not out.get("recent_trades"):
+            out["recent_trades"] = toolkit.get("recent_trades") or []
+        return out
+
+    if _scalp_map_live() and not toolkit.get("running"):
+        scalp_map = _load_json(SCALP_MAP_PATH)
+        bear = ((scalp_map.get("map") or {}).get("bear")) or None
+        return {
+            "running": True,
+            "exchange": "bitget",
+            "mode": "LIVE",
+            "strategy": _basename(bear) if bear else None,
+            "market": "BTC/USDT:USDT",
+            "signal": None,
+            "cash": toolkit.get("cash"),
+            "position": None,
+            "latest_text": toolkit.get("latest_text")
+            or "SCALP map LIVE (Freqtrade flat / no open trade in DB)",
+            "recent_trades": [],
+            "source": "scalp-map",
+        }
+    return toolkit
 
 
 def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:

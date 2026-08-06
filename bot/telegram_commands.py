@@ -127,12 +127,48 @@ def _cmd_status(settings: Settings) -> str:
             f"({last.get('ts') or '-'})"
         )
 
+    # CORE Upbit bot: also show Bitget SCALP (Freqtrade) when keys exist.
+    if settings.exchange == "upbit" and settings.bitget_ready and not settings.paper:
+        lines.extend(_scalp_bitget_lines(settings))
+
     latest = settings.log_dir / "latest_status.txt"
     if latest.exists():
         lines.append("")
         lines.append(latest.read_text(encoding="utf-8").strip())
 
     return "\n".join(lines)
+
+
+def _scalp_bitget_lines(settings: Settings) -> list[str]:
+    lines = ["", "---- Bitget SCALP ----"]
+    try:
+        from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
+
+        # Freqtrade SCALP is real UTA live — ignore BITGET_PAPER_TRADING on CORE bot.
+        client = BitgetPrivate(
+            settings.bitget_api_key,
+            settings.bitget_secret_key,
+            settings.bitget_passphrase,
+            paper_trading=False,
+        )
+        try:
+            usdt = client.available_usdt()
+            lines.append(f"USDT 가용≈: {fmt_quote(usdt, 'USDT')}")
+            poses = client.futures_positions()
+            if not poses:
+                lines.append("선물 포지션: 없음")
+            for p in poses:
+                side = str(p.get("posSide") or "-")
+                lines.append(
+                    f"선물: {side} {p.get('symbol')} "
+                    f"size={p.get('total')} @ {p.get('avgPrice')} "
+                    f"(mark {p.get('markPrice')}, uPnL {p.get('unrealisedPnl')})"
+                )
+        finally:
+            client.close()
+    except Exception as e:
+        lines.append(f"Bitget SCALP 조회 실패: {type(e).__name__}")
+    return lines
 
 
 def _cmd_strategy(settings: Settings) -> str:
