@@ -53,6 +53,7 @@ services:
       REBALANCE_ALERT_COOLDOWN_SEC: ${REBALANCE_ALERT_COOLDOWN_SEC:-3600}
       REBALANCE_MIN_MOVE_KRW: ${REBALANCE_MIN_MOVE_KRW:-30000}
     volumes:
+      - ./bot:/app/bot:ro
       - ./data:/app/data
       - ./strategies:/app/strategies:ro
       - ./logs:/app/logs
@@ -120,6 +121,7 @@ services:
       TRANSFER_DEFAULT_CHAIN: ${TRANSFER_DEFAULT_CHAIN:-TRC20}
       TRANSFER_COOLDOWN_SEC: ${TRANSFER_COOLDOWN_SEC:-1800}
     volumes:
+      - ./bot:/app/bot:ro
       - ./data:/app/data
       - ./strategies:/app/strategies:ro
       - ./logs:/app/logs

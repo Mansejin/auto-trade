@@ -63,5 +63,6 @@ curl -sS https://api.ipify.org && echo
 
 - Use `sudo docker` (`/usr/local/bin/docker`).
 - Prefer `user: "0:0"` on bots; avoid `read_only` on shared folders.
+- `w1`/`w2` mount `./bot:/app/bot:ro` — Python bot 코드 수정은 이미지 리빌드 없이 host `bot/` 동기화 후 `restart`/`up -d` 로 반영.
 - If `data/` / `logs/` files are owned by uid 10001 and unwritable, wipe via a root container then recreate.
 - `.env` must be real LF newlines (not literal `\n`). Helper: `deploy/nas/merge_env.py`.
