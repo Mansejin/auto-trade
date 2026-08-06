@@ -7,7 +7,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -17,6 +17,38 @@ from fastapi.staticfiles import StaticFiles
 
 from equity_curve import equity_curve_from_trades, equity_summary
 from condition_meters import build_condition_meters as _build_condition_meters
+
+_KST = timezone(timedelta(hours=9))
+
+
+def _fmt_kst(ts: Any) -> str:
+    """UTC/naive FT timestamps -> YYYY-MM-DD HH:MM:SS Asia/Seoul (no micros)."""
+    if ts is None:
+        return "-"
+    s = str(ts).strip().replace("Z", "")
+    if not s or s == "-":
+        return "-"
+    dt: datetime | None = None
+    for fmt in (
+        "%Y-%m-%d %H:%M:%S.%f",
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S.%f",
+        "%Y-%m-%dT%H:%M:%S",
+    ):
+        try:
+            dt = datetime.strptime(s, fmt)
+            break
+        except ValueError:
+            continue
+    if dt is None:
+        return s.split(".")[0]
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(_KST).strftime("%Y-%m-%d %H:%M:%S")
+
+
+# ponytail: ceiling = parse list only covers FT sqlite shapes; upgrade if ISO offsets appear.
+assert _fmt_kst("2026-08-06 02:27:17.813960") == "2026-08-06 11:27:17"
 
 LOG_DIR = Path(os.getenv("LOG_DIR", "/app/logs"))
 STATE_PATH = Path(os.getenv("STATE_PATH", "/app/data/state.json"))
@@ -667,12 +699,13 @@ def _load_freqtrade_scalp() -> dict[str, Any]:
     pair = str(row["pair"] or "")
     strat = str(row["strategy"] or "")
     side = "short" if is_short else "long"
+    opened = _fmt_kst(row["open_date"])
     text = (
         f"Freqtrade SCALP LIVE\n"
         f"전략: {strat or '-'}\n"
         f"페어: {pair}\n"
         f"포지션: {side} {qty} @ {entry}\n"
-        f"진입: {row['open_date'] or '-'}"
+        f"진입: {opened} (KST)"
     )
     return {
         "running": True,
@@ -685,9 +718,10 @@ def _load_freqtrade_scalp() -> dict[str, Any]:
             "qty": qty,
             "entry_price": entry,
             "side": side,
-            "opened_at": row["open_date"],
+            "opened_at": opened,
         },
         "latest_text": text,
+        "condition_meters": [],
         "source": "freqtrade",
     }
 
@@ -703,6 +737,7 @@ def _load_bitget() -> dict[str, Any]:
         "running": False,
         "latest_text": latest_text,
         "recent_trades": [],
+        "condition_meters": [],
     }
     if bitget_state or bitget_status:
         bs = bitget_status or {}
@@ -733,8 +768,8 @@ def _load_bitget() -> dict[str, Any]:
         # Prefer toolkit cash if present; FT sqlite has no wallet.
         if toolkit.get("cash") is not None:
             out["cash"] = toolkit["cash"]
-        if not out.get("latest_text"):
-            out["latest_text"] = toolkit.get("latest_text") or ""
+        # Never keep toolkit SMA meters over TrendShortV1.
+        out["condition_meters"] = []
         if not out.get("recent_trades"):
             out["recent_trades"] = toolkit.get("recent_trades") or []
         return out
@@ -754,6 +789,7 @@ def _load_bitget() -> dict[str, Any]:
             "latest_text": toolkit.get("latest_text")
             or "SCALP map LIVE (Freqtrade flat / no open trade in DB)",
             "recent_trades": [],
+            "condition_meters": [],
             "source": "scalp-map",
         }
     return toolkit
