@@ -1,7 +1,12 @@
 """ponytail: one check for condition-meter mapping. run: python web/_meters_selfcheck.py"""
 from __future__ import annotations
 
-from condition_meters import build_condition_meters, cond_met, meter_scale
+from condition_meters import (
+    build_condition_meters,
+    cond_met,
+    meters_from_trend_short_snap,
+    meter_scale,
+)
 
 
 def main() -> None:
@@ -28,7 +33,22 @@ def main() -> None:
     assert adx["met"] is True and adx["threshold"] == 23
     rsi = next(m for m in meters if m["label"] == "RSI" and m["side"] == "buy")
     assert rsi["met"] is True and rsi["threshold"] == 55
-    print(f"ok meters={len(meters)}")
+
+    ts = meters_from_trend_short_snap(
+        {
+            "close": 64000,
+            "adx": 20,
+            "plus_di": 10,
+            "minus_di": 18,
+            "cloud1": 65000,
+            "cloud2": 65500,
+        },
+        adx_min=15,
+    )
+    assert len(ts) == 4
+    assert all(m["side_label"] == "숏진입" for m in ts)
+    assert all(m["met"] is True for m in ts)
+    print(f"ok meters={len(meters)} trend_short={len(ts)}")
 
 
 if __name__ == "__main__":

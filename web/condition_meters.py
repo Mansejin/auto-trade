@@ -3,6 +3,10 @@ from __future__ import annotations
 
 import json
 import os
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
 from pathlib import Path
 from typing import Any
 
@@ -212,3 +216,254 @@ def build_condition_meters(status: dict[str, Any], *, limit: int = 8) -> list[di
                 }
             )
     return meters
+
+
+_bg_cache: tuple[float, list[list[float]]] | None = None
+
+
+def _fetch_bitget_5m(symbol: str = "BTCUSDT", limit: int = 120) -> list[list[float]]:
+    """Return [ts_ms, o, h, l, c] oldest→newest. Public Bitget mix candles."""
+    global _bg_cache
+    now = time.time()
+    if _bg_cache and now - _bg_cache[0] < 30:
+        return _bg_cache[1]
+    q = urllib.parse.urlencode(
+        {
+            "symbol": symbol,
+            "productType": "USDT-FUTURES",
+            "granularity": "5m",
+            "limit": str(limit),
+        }
+    )
+    url = f"https://api.bitget.com/api/v2/mix/market/candles?{q}"
+    try:
+        with urllib.request.urlopen(url, timeout=12) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, ValueError):
+        return _bg_cache[1] if _bg_cache else []
+    rows = payload.get("data") if isinstance(payload, dict) else None
+    if not isinstance(rows, list) or not rows:
+        return _bg_cache[1] if _bg_cache else []
+    out: list[list[float]] = []
+    for r in rows:
+        if not isinstance(r, (list, tuple)) or len(r) < 5:
+            continue
+        try:
+            out.append([float(r[0]), float(r[1]), float(r[2]), float(r[3]), float(r[4])])
+        except (TypeError, ValueError):
+            continue
+    out.sort(key=lambda x: x[0])
+    if out:
+        _bg_cache = (now, out)
+    return out
+
+
+def _rma(vals: list[float], period: int) -> list[float | None]:
+    """Wilder RMA; None until first seed."""
+    out: list[float | None] = [None] * len(vals)
+    if period <= 0 or len(vals) < period:
+        return out
+    seed = sum(vals[:period]) / period
+    out[period - 1] = seed
+    alpha = 1.0 / period
+    prev = seed
+    for i in range(period, len(vals)):
+        prev = prev + alpha * (vals[i] - prev)
+        out[i] = prev
+    return out
+
+
+def _roll_max(xs: list[float], win: int) -> list[float | None]:
+    out: list[float | None] = [None] * len(xs)
+    for i in range(win - 1, len(xs)):
+        out[i] = max(xs[i - win + 1 : i + 1])
+    return out
+
+
+def _roll_min(xs: list[float], win: int) -> list[float | None]:
+    out: list[float | None] = [None] * len(xs)
+    for i in range(win - 1, len(xs)):
+        out[i] = min(xs[i - win + 1 : i + 1])
+    return out
+
+
+def trend_short_snapshot(
+    high: list[float], low: list[float], close: list[float], *, period: int = 14
+) -> dict[str, float] | None:
+    """Last-bar ADX/+DI/-DI + ichimoku cloud spans (TrendShortV1 di_cloud)."""
+    n = len(close)
+    if n < 80 or len(high) != n or len(low) != n:
+        return None
+    tr: list[float] = [0.0] * n
+    pdm: list[float] = [0.0] * n
+    mdm: list[float] = [0.0] * n
+    for i in range(1, n):
+        up = high[i] - high[i - 1]
+        down = low[i - 1] - low[i]
+        pdm[i] = up if up > down and up > 0 else 0.0
+        mdm[i] = down if down > up and down > 0 else 0.0
+        tr[i] = max(
+            high[i] - low[i],
+            abs(high[i] - close[i - 1]),
+            abs(low[i] - close[i - 1]),
+        )
+    atr_f = _rma(tr, period)
+    pdm_f = _rma(pdm, period)
+    mdm_f = _rma(mdm, period)
+    plus_di = [None] * n
+    minus_di = [None] * n
+    dx = [0.0] * n
+    for i in range(n):
+        a, p, m = atr_f[i], pdm_f[i], mdm_f[i]
+        if a is None or p is None or m is None or a == 0:
+            continue
+        pdi = 100.0 * p / a
+        mdi = 100.0 * m / a
+        plus_di[i] = pdi
+        minus_di[i] = mdi
+        s = pdi + mdi
+        dx[i] = 0.0 if s == 0 else abs(pdi - mdi) / s * 100.0
+    # ADX = RMA of DX but only after DI is valid; seed from first full DX window.
+    first = next((i for i, v in enumerate(plus_di) if v is not None), None)
+    if first is None or first + period > n:
+        return None
+    dx_series = [dx[i] if plus_di[i] is not None else 0.0 for i in range(n)]
+    # Seed ADX at first+period-1 using mean of DX over that window of valid bars.
+    adx_out: list[float | None] = [None] * n
+    start = first + period - 1
+    if start >= n:
+        return None
+    seed = sum(dx_series[first : start + 1]) / period
+    adx_out[start] = seed
+    prev = seed
+    for i in range(start + 1, n):
+        prev = (prev * (period - 1) + dx_series[i]) / period
+        adx_out[i] = prev
+
+    hh9, ll9 = _roll_max(high, 9), _roll_min(low, 9)
+    hh26, ll26 = _roll_max(high, 26), _roll_min(low, 26)
+    hh52, ll52 = _roll_max(high, 52), _roll_min(low, 52)
+    tenkan = [
+        (hh9[i] + ll9[i]) / 2.0 if hh9[i] is not None and ll9[i] is not None else None
+        for i in range(n)
+    ]
+    kijun = [
+        (hh26[i] + ll26[i]) / 2.0 if hh26[i] is not None and ll26[i] is not None else None
+        for i in range(n)
+    ]
+    span1 = [
+        (tenkan[i] + kijun[i]) / 2.0
+        if tenkan[i] is not None and kijun[i] is not None
+        else None
+        for i in range(n)
+    ]
+    span2 = [
+        (hh52[i] + ll52[i]) / 2.0 if hh52[i] is not None and ll52[i] is not None else None
+        for i in range(n)
+    ]
+    cloud1 = [span1[i - 26] if i >= 26 and span1[i - 26] is not None else None for i in range(n)]
+    cloud2 = [span2[i - 26] if i >= 26 and span2[i - 26] is not None else None for i in range(n)]
+
+    i = n - 1
+    if (
+        adx_out[i] is None
+        or plus_di[i] is None
+        or minus_di[i] is None
+        or cloud1[i] is None
+        or cloud2[i] is None
+    ):
+        return None
+    return {
+        "close": float(close[i]),
+        "adx": float(adx_out[i]),
+        "plus_di": float(plus_di[i]),
+        "minus_di": float(minus_di[i]),
+        "cloud1": float(cloud1[i]),
+        "cloud2": float(cloud2[i]),
+    }
+
+
+def meters_from_trend_short_snap(
+    snap: dict[str, float], *, adx_min: float = 15.0
+) -> list[dict[str, Any]]:
+    """di_cloud entry gates as desk meters (side=sell → 숏진입)."""
+    mdi, pdi = snap["minus_di"], snap["plus_di"]
+    adx, close = snap["adx"], snap["close"]
+    c1, c2 = snap["cloud1"], snap["cloud2"]
+    meters: list[dict[str, Any]] = []
+
+    def _cmp(label: str, left: float, right: float, op: str, left_l: str, right_l: str) -> None:
+        met = cond_met(op, left, right)
+        span = abs(left - right)
+        lo = min(left, right) - max(span * 0.25, abs(max(left, right)) * 0.01, 1.0)
+        hi = max(left, right) + max(span * 0.25, abs(max(left, right)) * 0.01, 1.0)
+        meters.append(
+            {
+                "kind": "compare",
+                "side": "sell",
+                "side_label": "숏진입",
+                "label": label,
+                "op": op,
+                "op_sym": _OP_SYM.get(op, op),
+                "left_label": left_l,
+                "right_label": right_l,
+                "left": round(left, 4),
+                "right": round(right, 4),
+                "value": round(left, 4),
+                "threshold": round(right, 4),
+                "min": round(lo, 4),
+                "max": round(hi, 4),
+                "met": met,
+            }
+        )
+
+    def _thr(label: str, value: float, thr: float, op: str, ref: str) -> None:
+        lo, hi = meter_scale(ref, value, thr)
+        meters.append(
+            {
+                "kind": "threshold",
+                "side": "sell",
+                "side_label": "숏진입",
+                "label": label,
+                "op": op,
+                "op_sym": _OP_SYM.get(op, op),
+                "value": round(value, 4),
+                "threshold": thr,
+                "min": round(lo, 4),
+                "max": round(hi, 4),
+                "met": cond_met(op, value, thr),
+            }
+        )
+
+    _cmp("-DI vs +DI", mdi, pdi, "gt", "-DI", "+DI")
+    _thr("ADX", adx, float(adx_min), "gte", "adx14.adx")
+    _cmp("종가 vs 구름1", close, c1, "lt", "종가", "구름1")
+    _cmp("종가 vs 구름2", close, c2, "lt", "종가", "구름2")
+    return meters
+
+
+def build_trend_short_meters(*, adx_min: float = 15.0, symbol: str = "BTCUSDT") -> list[dict[str, Any]]:
+    rows = _fetch_bitget_5m(symbol=symbol, limit=120)
+    if len(rows) < 80:
+        return []
+    high = [r[2] for r in rows]
+    low = [r[3] for r in rows]
+    close = [r[4] for r in rows]
+    snap = trend_short_snapshot(high, low, close)
+    if not snap:
+        return []
+    return meters_from_trend_short_snap(snap, adx_min=adx_min)
+
+
+# ponytail: ceiling = DIY Wilder ADX may drift slightly vs talib; upgrade if desk vs bot diverge.
+assert meters_from_trend_short_snap(
+    {
+        "close": 64000,
+        "adx": 20,
+        "plus_di": 10,
+        "minus_di": 18,
+        "cloud1": 65000,
+        "cloud2": 65500,
+    },
+    adx_min=15,
+)[0]["met"] is True

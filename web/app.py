@@ -17,6 +17,7 @@ from fastapi.staticfiles import StaticFiles
 
 from equity_curve import equity_curve_from_trades, equity_summary
 from condition_meters import build_condition_meters as _build_condition_meters
+from condition_meters import build_trend_short_meters as _build_trend_short_meters
 
 _KST = timezone(timedelta(hours=9))
 
@@ -721,7 +722,7 @@ def _load_freqtrade_scalp() -> dict[str, Any]:
             "opened_at": opened,
         },
         "latest_text": text,
-        "condition_meters": [],
+        "condition_meters": _build_trend_short_meters(adx_min=15),
         "source": "freqtrade",
     }
 
@@ -768,8 +769,10 @@ def _load_bitget() -> dict[str, Any]:
         # Prefer toolkit cash if present; FT sqlite has no wallet.
         if toolkit.get("cash") is not None:
             out["cash"] = toolkit["cash"]
-        # Never keep toolkit SMA meters over TrendShortV1.
-        out["condition_meters"] = []
+        # Prefer FT TrendShort meters over toolkit SMA leftovers.
+        out["condition_meters"] = ft.get("condition_meters") or _build_trend_short_meters(
+            adx_min=15
+        )
         if not out.get("recent_trades"):
             out["recent_trades"] = toolkit.get("recent_trades") or []
         return out
@@ -789,7 +792,7 @@ def _load_bitget() -> dict[str, Any]:
             "latest_text": toolkit.get("latest_text")
             or "SCALP map LIVE (Freqtrade flat / no open trade in DB)",
             "recent_trades": [],
-            "condition_meters": [],
+            "condition_meters": _build_trend_short_meters(adx_min=15),
             "source": "scalp-map",
         }
     return toolkit
