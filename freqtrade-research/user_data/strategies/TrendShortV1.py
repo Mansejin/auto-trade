@@ -32,6 +32,34 @@ class TrendShortV1(IStrategy):
     adx_min = 15
     rsi_max = 55
 
+
+    def bot_start(self, **kwargs) -> None:
+        """Bitget UTA: Classic set_margin_mode returns 40085 — ignore and continue."""
+        exch = None
+        for attr in ("_exchange", "exchange"):
+            exch = getattr(self.dp, attr, None)
+            if exch is not None:
+                break
+        if exch is None or getattr(exch, "_uta_margin_patched", False):
+            return
+        orig = getattr(exch, "set_margin_mode", None)
+        if not callable(orig):
+            return
+
+        def _set_margin_mode(margin_mode, symbol=None, params=None):
+            params = dict(params or {})
+            params.setdefault("uta", True)
+            try:
+                return orig(margin_mode, symbol, params)
+            except Exception as e:
+                msg = str(e)
+                if "40085" in msg or "Unified Account" in msg or "Classic Account API" in msg:
+                    return {"code": "40085", "ignored": True}
+                raise
+
+        exch.set_margin_mode = _set_margin_mode  # type: ignore[method-assign]
+        exch._uta_margin_patched = True
+
     def populate_indicators(self, dataframe: DataFrame, metadata: dict) -> DataFrame:
         dataframe["rsi"] = ta.RSI(dataframe, timeperiod=14)
         dataframe["adx"] = ta.ADX(dataframe, timeperiod=14)
