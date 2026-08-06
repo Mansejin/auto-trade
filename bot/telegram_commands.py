@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import shutil
 import threading
 import time
@@ -359,9 +360,18 @@ def _cmd_transfer_request(raw: str, settings: Settings) -> str:
     )
 
 
+def _redact_tg(text: str, token: str) -> str:
+    """Keep bot tokens out of logs (httpx puts them in exception URLs)."""
+    out = str(text)
+    if token:
+        out = out.replace(token, "***")
+    return re.sub(r"bot\d+:[A-Za-z0-9_-]+", "bot***:***", out)
+
+
 def _poll_loop(settings: Settings, notify: TelegramNotifier, stop: threading.Event) -> None:
     offset = 0
-    url = f"https://api.telegram.org/bot{settings.telegram_bot_token}/getUpdates"
+    # Build path without embedding the token in a reusable URL string for logs.
+    token = settings.telegram_bot_token
     allowed = str(settings.telegram_chat_id)
     logger.info("텔레그램 명령 수신을 시작합니다.")
 
@@ -369,7 +379,7 @@ def _poll_loop(settings: Settings, notify: TelegramNotifier, stop: threading.Eve
         while not stop.is_set():
             try:
                 resp = client.get(
-                    url,
+                    f"https://api.telegram.org/bot{token}/getUpdates",
                     params={
                         "offset": offset,
                         "timeout": 25,
@@ -392,10 +402,14 @@ def _poll_loop(settings: Settings, notify: TelegramNotifier, stop: threading.Eve
                     reply = handle_command(text, settings)
                     if reply:
                         notify.send(reply)
-            except Exception:
+            except Exception as e:
                 if stop.is_set():
                     break
-                logger.exception("텔레그램 수신 오류 — 잠시 후 다시 시도합니다.")
+                # Never logger.exception here — traceback includes tokenized URLs.
+                logger.warning(
+                    "텔레그램 수신 오류 — 잠시 후 다시 시도합니다: %s",
+                    _redact_tg(e, token),
+                )
                 stop.wait(3)
 
     logger.info("텔레그램 명령 수신을 종료합니다.")
