@@ -8,9 +8,9 @@
 | Sleeve | Venue | Bot | LIVE |
 |--------|-------|-----|------|
 | 장타 CORE | Upbit spot | `upbit-paper-bot` Policy C | **ON** (병행) |
-| 단타 SCALP | Bitget UTA futures | `bot-ft-scalp` → Freqtrade `TrendShortV1` | **bear only** |
+| 단타 SCALP | Bitget UTA futures | `bot-ft-scalp` → Freqtrade `TrendShortV1Lev3Px` | **bear only** |
 
-- **Bear:** `di_cloud` ADX≥15 / SL 3% / TP 9% (`fingerprint 16dba43a38f9f882`)
+- **Bear:** `di_cloud` ADX≥15 / **3x** / SL −9% ROI +27% profit-ratio (≈ **3%/9% price**) (`TrendShortV1Lev3Px`)
 - Bull / transition / sideways scalp: **cash** (`null`)
 - `bot-bitget` toolkit = **롱만** 가능 → 이 숏에 쓰지 말 것
 - NAS host folder: `/volume1/docker/p3f8c1a2` · compose project `p3f8c1a2` · service **`w5`** (profile `scalp`)
@@ -21,7 +21,7 @@ Fee note: backtest bar = 6bps/side; **fails 8bps stress** — human accepted RES
 
 | Regime | LIVE card |
 |--------|-----------|
-| bear | `bitget-btc-5m-trend-short-di-cloud-adx15-v1` |
+| bear | `bitget-btc-5m-trend-short-di-cloud-adx15-v1` (LIVE code: `TrendShortV1Lev3Px`) |
 | bull / transition / sideways | null (cash) |
 
 ## Credentials (do not put keys in the tracked live JSON)

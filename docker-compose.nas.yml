@@ -222,7 +222,7 @@ services:
     profiles:
       - tunnel
 
-  # Bitget SCALP true-short (TrendShortV1 di_cloud ADX15). Not w2 toolkit (long-only).
+  # Bitget SCALP true-short (TrendShortV1Lev3Px di_cloud ADX15 @ 3x, price-matched SL/TP).
   # Start: sudo docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile scalp up -d w5
   w5:
     image: freqtradeorg/freqtrade:stable
@@ -249,7 +249,7 @@ services:
       - --config
       - /freqtrade/user_data/config.bitget-scalp.secrets.json
       - --strategy
-      - TrendShortV1
+      - TrendShortV1Lev3Px
     logging:
       driver: json-file
       options:

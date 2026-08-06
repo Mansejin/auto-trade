@@ -56,15 +56,15 @@
   "pairlists": [{"method": "StaticPairList"}],
   "timeframe": "5m",
   "startup_candle_count": 80,
-  "stoploss": -0.03,
+  "stoploss": -0.09,
   "trailing_stop": false,
-  "minimal_roi": {"0": 0.09},
+  "minimal_roi": {"0": 0.27},
   "use_exit_signal": false,
   "fee": 0.0002,
-  "strategy": "TrendShortV1",
-  "bot_name": "freqtrade-scalp-trend-short-adx15",
+  "strategy": "TrendShortV1Lev3Px",
+  "bot_name": "freqtrade-scalp-trend-short-lev3px",
   "initial_state": "running",
   "internals": {"process_throttle_secs": 5},
   "cancel_open_orders_on_exit": true,
-  "_comment": "Maker entry/exit via orderbook. Stoploss via UTA reduceOnly trigger (TrendShortV1). Leave exchange.key/secret/password empty — load config.bitget-scalp.secrets.json (gitignored) as second --config."
+  "_comment": "3x price-matched exits: profit-ratio SL-9%/ROI+27% ~ 3%/9% price. Keys in secrets.json overlay."
 }
