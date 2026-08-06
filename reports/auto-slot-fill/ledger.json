@@ -2387,9 +2387,9 @@
         },
         "pass": true
       },
-      "status": "RESEARCH_KEEP",
+      "status": "HUMAN_APPROVE",
       "at": "2026-08-05T10:02:21Z",
-      "promote_review": {
+      "promote_review_prev": {
         "at": "2026-08-05T17:56:03Z",
         "fee_stress_cpp": {
           "0.0": {
@@ -2658,9 +2658,9 @@
         },
         "pass": true
       },
-      "status": "RESEARCH_KEEP",
+      "status": "HUMAN_APPROVE",
       "at": "2026-08-05T10:38:34Z",
-      "promote_review": {
+      "promote_review_prev": {
         "at": "2026-08-05T19:26:19Z",
         "fee_stress_cpp": {
           "0.0": {
@@ -2900,5 +2900,5 @@
     "cpp_min_pf": 1.1206,
     "at": "2026-08-06T01:22:23Z"
   },
-  "notes": "Append-only tried[] keyed by fingerprint. Tick script skips fingerprints already present."
+  "notes": "Base fee=0.0006 (Bitget taker). LIVE stress gate=0.0008 (8bps). Append-only tried[]; promote_review.gate_version must match script."
 }
