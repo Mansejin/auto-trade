@@ -11,7 +11,8 @@
     "entry": "limit",
     "exit": "limit",
     "stoploss": "market",
-    "stoploss_on_exchange": false,
+    "stoploss_on_exchange": true,
+    "stoploss_on_exchange_interval": 60,
     "emergency_exit": "market"
   },
   "unfilledtimeout": {
@@ -65,5 +66,5 @@
   "initial_state": "running",
   "internals": {"process_throttle_secs": 5},
   "cancel_open_orders_on_exit": true,
-  "_comment": "Maker-prefer: limit+orderbook same-side top1. Stoploss stays market. Host injects Bitget keys. fee=2bps maker assume."
+  "_comment": "Maker entry/exit via orderbook. Stoploss on Bitget via UTA reduceOnly trigger (TrendShortV1 patch; native tpsl 31008 on one-way) + bot soft backup. ROI TP bot-side. Host injects keys."
 }
