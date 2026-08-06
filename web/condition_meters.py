@@ -401,7 +401,7 @@ def meters_from_trend_short_snap(
             {
                 "kind": "compare",
                 "side": "sell",
-                "side_label": "숏진입",
+                "side_label": "숏조건",
                 "label": label,
                 "op": op,
                 "op_sym": _OP_SYM.get(op, op),
@@ -423,7 +423,7 @@ def meters_from_trend_short_snap(
             {
                 "kind": "threshold",
                 "side": "sell",
-                "side_label": "숏진입",
+                "side_label": "숏조건",
                 "label": label,
                 "op": op,
                 "op_sym": _OP_SYM.get(op, op),
@@ -435,10 +435,10 @@ def meters_from_trend_short_snap(
             }
         )
 
-    _cmp("-DI vs +DI", mdi, pdi, "gt", "-DI", "+DI")
-    _thr("ADX", adx, float(adx_min), "gte", "adx14.adx")
-    _cmp("종가 vs 구름1", close, c1, "lt", "종가", "구름1")
-    _cmp("종가 vs 구름2", close, c2, "lt", "종가", "구름2")
+    _cmp("-DI > +DI", mdi, pdi, "gt", "-DI", "+DI")
+    _thr("ADX ≥ 임계", adx, float(adx_min), "gte", "adx14.adx")
+    _cmp("종가 < 스팬A", close, c1, "lt", "종가", "스팬A")
+    _cmp("종가 < 스팬B", close, c2, "lt", "종가", "스팬B")
     return meters
 
 

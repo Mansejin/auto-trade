@@ -46,7 +46,7 @@ def main() -> None:
         adx_min=15,
     )
     assert len(ts) == 4
-    assert all(m["side_label"] == "숏진입" for m in ts)
+    assert all(m["side_label"] == "숏조건" for m in ts)
     assert all(m["met"] is True for m in ts)
     print(f"ok meters={len(meters)} trend_short={len(ts)}")
 

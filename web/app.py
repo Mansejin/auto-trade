@@ -676,10 +676,11 @@ def _scalp_map_live() -> bool:
 
 
 def _load_freqtrade_scalp() -> dict[str, Any]:
-    """Open Freqtrade SCALP trade from sqlite (read-only)."""
+    """Freqtrade SCALP sleeve from sqlite (open trade or flat). Always TrendShort meters."""
     db = FREQTRADE_SCALP_DB
     if not db.is_file():
         return {}
+    meters = _build_trend_short_meters(adx_min=15)
     try:
         import sqlite3
 
@@ -689,21 +690,55 @@ def _load_freqtrade_scalp() -> dict[str, Any]:
             "SELECT pair, amount, open_rate, is_short, strategy, open_date "
             "FROM trades WHERE is_open = 1 ORDER BY id DESC LIMIT 1"
         ).fetchone()
+        last = con.execute(
+            "SELECT strategy FROM trades ORDER BY id DESC LIMIT 1"
+        ).fetchone()
         con.close()
     except Exception:
-        return {}
+        return {
+            "running": True,
+            "exchange": "bitget",
+            "mode": "LIVE",
+            "strategy": "TrendShortV1Lev3Px",
+            "market": "BTC/USDT:USDT",
+            "signal": None,
+            "position": None,
+            "latest_text": "Freqtrade SCALP LIVE\n포지션: — (db read error)\n",
+            "condition_meters": meters,
+            "source": "freqtrade",
+        }
+
+    strat_fallback = str((last["strategy"] if last else None) or "TrendShortV1Lev3Px")
     if not row:
-        return {}
+        text = (
+            f"Freqtrade SCALP LIVE\n"
+            f"전략: {strat_fallback}\n"
+            f"페어: BTC/USDT:USDT\n"
+            f"포지션: 없음 (flat)"
+        )
+        return {
+            "running": True,
+            "exchange": "bitget",
+            "mode": "LIVE",
+            "strategy": strat_fallback,
+            "market": "BTC/USDT:USDT",
+            "signal": None,
+            "position": None,
+            "latest_text": text,
+            "condition_meters": meters,
+            "source": "freqtrade",
+        }
+
     is_short = bool(row["is_short"])
     qty = float(row["amount"] or 0)
     entry = float(row["open_rate"] or 0)
     pair = str(row["pair"] or "")
-    strat = str(row["strategy"] or "")
+    strat = str(row["strategy"] or "") or strat_fallback
     side = "short" if is_short else "long"
     opened = _fmt_kst(row["open_date"])
     text = (
         f"Freqtrade SCALP LIVE\n"
-        f"전략: {strat or '-'}\n"
+        f"전략: {strat}\n"
         f"페어: {pair}\n"
         f"포지션: {side} {qty} @ {entry}\n"
         f"진입: {opened} (KST)"
@@ -712,7 +747,7 @@ def _load_freqtrade_scalp() -> dict[str, Any]:
         "running": True,
         "exchange": "bitget",
         "mode": "LIVE",
-        "strategy": strat or None,
+        "strategy": strat,
         "market": pair or None,
         "signal": side,
         "position": {
@@ -722,7 +757,7 @@ def _load_freqtrade_scalp() -> dict[str, Any]:
             "opened_at": opened,
         },
         "latest_text": text,
-        "condition_meters": _build_trend_short_meters(adx_min=15),
+        "condition_meters": meters,
         "source": "freqtrade",
     }
 
@@ -766,32 +801,33 @@ def _load_bitget() -> dict[str, Any]:
     ft = _load_freqtrade_scalp()
     if ft:
         out = {**toolkit, **ft}
-        # Prefer toolkit cash if present; FT sqlite has no wallet.
         if toolkit.get("cash") is not None:
             out["cash"] = toolkit["cash"]
-        # Prefer FT TrendShort meters over toolkit SMA leftovers.
+        # Never keep toolkit SMA meters — FT scalp sleeve owns this panel.
         out["condition_meters"] = ft.get("condition_meters") or _build_trend_short_meters(
             adx_min=15
         )
+        out["source"] = "freqtrade"
         if not out.get("recent_trades"):
             out["recent_trades"] = toolkit.get("recent_trades") or []
         return out
 
-    if _scalp_map_live() and not toolkit.get("running"):
+    if _scalp_map_live():
+        # Flat FT DB missing, but scalp map still live — TrendShort meters only.
         scalp_map = _load_json(SCALP_MAP_PATH)
         bear = ((scalp_map.get("map") or {}).get("bear")) or None
         return {
             "running": True,
             "exchange": "bitget",
             "mode": "LIVE",
-            "strategy": _basename(bear) if bear else None,
+            "strategy": _basename(bear) if bear else "TrendShortV1Lev3Px",
             "market": "BTC/USDT:USDT",
             "signal": None,
             "cash": toolkit.get("cash"),
             "position": None,
             "latest_text": toolkit.get("latest_text")
             or "SCALP map LIVE (Freqtrade flat / no open trade in DB)",
-            "recent_trades": [],
+            "recent_trades": toolkit.get("recent_trades") or [],
             "condition_meters": _build_trend_short_meters(adx_min=15),
             "source": "scalp-map",
         }
