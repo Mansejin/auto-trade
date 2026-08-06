@@ -7,30 +7,37 @@
   "dry_run_wallet": 1000,
   "trading_mode": "futures",
   "margin_mode": "isolated",
+  "order_types": {
+    "entry": "limit",
+    "exit": "limit",
+    "stoploss": "market",
+    "stoploss_on_exchange": false,
+    "emergency_exit": "market"
+  },
   "unfilledtimeout": {
-    "entry": 10,
-    "exit": 10,
+    "entry": 15,
+    "exit": 15,
     "exit_timeout_count": 0,
     "unit": "minutes"
   },
   "entry_pricing": {
     "price_side": "same",
-    "use_order_book": false,
-    "order_book_top": 1
+    "use_order_book": true,
+    "order_book_top": 1,
+    "price_last_balance": 0.0
   },
   "exit_pricing": {
     "price_side": "same",
-    "use_order_book": false,
-    "order_book_top": 1
+    "use_order_book": true,
+    "order_book_top": 1,
+    "price_last_balance": 0.0
   },
   "exchange": {
     "name": "bitget",
     "key": "",
     "secret": "",
     "password": "",
-    "pair_whitelist": [
-      "BTC/USDT:USDT"
-    ],
+    "pair_whitelist": ["BTC/USDT:USDT"],
     "pair_blacklist": [],
     "ccxt_config": {
       "options": {
@@ -45,26 +52,18 @@
       }
     }
   },
-  "pairlists": [
-    {
-      "method": "StaticPairList"
-    }
-  ],
+  "pairlists": [{"method": "StaticPairList"}],
   "timeframe": "5m",
   "startup_candle_count": 80,
   "stoploss": -0.03,
   "trailing_stop": false,
-  "minimal_roi": {
-    "0": 0.09
-  },
+  "minimal_roi": {"0": 0.09},
   "use_exit_signal": false,
-  "fee": 0.0006,
+  "fee": 0.0002,
   "strategy": "TrendShortV1",
   "bot_name": "freqtrade-scalp-trend-short-adx15",
   "initial_state": "running",
-  "internals": {
-    "process_throttle_secs": 5
-  },
+  "internals": {"process_throttle_secs": 5},
   "cancel_open_orders_on_exit": true,
-  "_comment": "Host injects Bitget key/secret/password. stake 8 fits mini UTA dust; raise after funding. uta=true required."
+  "_comment": "Maker-prefer: limit+orderbook same-side top1. Stoploss stays market. Host injects Bitget keys. fee=2bps maker assume."
 }
