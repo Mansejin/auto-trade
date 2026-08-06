@@ -1,5 +1,8 @@
 {
-  "at": "2026-08-05T19:26:19Z",
+  "at": "2026-08-06T01:46:59Z",
+  "gate_version": "base6_stress8_v1",
+  "base_fee": 0.0006,
+  "stress_fee": 0.0008,
   "fee_stress_cpp": {
     "0.0": {
       "h1": {
@@ -26,6 +29,19 @@
         "profit_pct": 14.68
       },
       "pass_pf12": true
+    },
+    "0.0008": {
+      "h1": {
+        "trades": 32,
+        "profit_factor": 1.3731,
+        "profit_pct": 24.76
+      },
+      "h2": {
+        "trades": 32,
+        "profit_factor": 1.1928,
+        "profit_pct": 13.4
+      },
+      "pass_pf12": false
     },
     "0.001": {
       "h1": {
@@ -66,14 +82,14 @@
       },
       "pass_pf12": true
     },
-    "0.001": {
+    "0.0008": {
       "h1": {
         "trades": 27,
-        "profit_factor": 1.4
+        "profit_factor": 1.42
       },
       "h2": {
         "trades": 33,
-        "profit_factor": 1.17
+        "profit_factor": 1.19
       },
       "pass_pf12": false
     }
@@ -160,9 +176,9 @@
         "profit_pct": 11.64
       },
       "h2": {
-        "trades": 48,
-        "profit_factor": 1.1151,
-        "profit_pct": 10.21
+        "trades": 46,
+        "profit_factor": 1.1848,
+        "profit_pct": 15.43
       },
       "pass_pf12": false
     },
@@ -218,12 +234,14 @@
   "neighbor_pass": "2/7",
   "fragile": [
     "h2 PF only marginally >=1.2",
-    "fails at 10bps/side fee (cpp)",
-    "fails at 10bps/side fee (ft)",
-    "fails at 12bps/side fee (cpp)"
+    "fails at 8bps/side fee stress (cpp)",
+    "fails at 8bps/side fee stress (ft)",
+    "info: fails at 10bps/side (cpp)",
+    "info: fails at 12bps/side (cpp)"
   ],
+  "fee_stress_pass": false,
   "fee10_pass": false,
   "status": "RESEARCH_KEEP",
   "promote_auto": false,
-  "note": "LIVE mount requires human; automation must not write Policy C / sleeves."
+  "note": "Base=Bitget taker 6bps; stress=8bps cushion. LIVE mount requires human; never write Policy C / sleeves."
 }
