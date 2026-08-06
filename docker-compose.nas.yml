@@ -218,6 +218,32 @@ services:
     profiles:
       - tunnel
 
+  # Bitget SCALP true-short (TrendShortV1 di_cloud ADX15). Not w2 toolkit (long-only).
+  # Start: sudo docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile scalp up -d w5
+  w5:
+    image: freqtradeorg/freqtrade:stable
+    container_name: p3f8c1a2-w5
+    profiles: ["scalp"]
+    restart: unless-stopped
+    user: "0:0"
+    environment:
+      TZ: Asia/Seoul
+    volumes:
+      - ./freqtrade-research/user_data:/freqtrade/user_data
+    networks:
+      - net
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/scalp-trend-short.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3-scalp-trend-short.sqlite
+      --config /freqtrade/user_data/config.bitget-scalp-trend-short-live.json
+      --strategy TrendShortV1
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
 networks:
   net:
     name: p3f8c1a2-net

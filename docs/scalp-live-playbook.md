@@ -13,6 +13,7 @@
 - **Bear:** `di_cloud` ADX≥15 / SL 3% / TP 9% (`fingerprint 16dba43a38f9f882`)
 - Bull / transition / sideways scalp: **cash** (`null`)
 - `bot-bitget` toolkit = **롱만** 가능 → 이 숏에 쓰지 말 것
+- NAS host folder: `/volume1/docker/p3f8c1a2` · compose project `p3f8c1a2` · service **`w5`** (profile `scalp`)
 
 Fee note: backtest bar = 6bps/side; **fails 8bps stress** — human accepted RESEARCH_KEEP → LIVE. Prefer small fixed stake (`stake_amount: 100` USDT).
 
@@ -23,38 +24,27 @@ Fee note: backtest bar = 6bps/side; **fails 8bps stress** — human accepted RES
 | bear | `bitget-btc-5m-trend-short-di-cloud-adx15-v1` |
 | bull / transition / sideways | null (cash) |
 
-## Enable (human)
-
-On the host that runs compose (credentials already in FT live config):
+## Enable on NAS (human / local SSH)
 
 ```bash
-cd ~/auto-trade   # or repo root
-git pull
+# from PC
+ssh saenggibu-nas-local
 
-# Put Bitget API key/secret/passphrase into:
-#   freqtrade-research/user_data/config.bitget-scalp-trend-short-live.json
-# (do not commit secrets)
+cd /volume1/docker/p3f8c1a2
+# Bitget keys must be in config.bitget-scalp-trend-short-live.json (inject from .env; never commit)
 
-chmod +x scripts/start-scalp-trend-short.sh
-./scripts/start-scalp-trend-short.sh
-# equivalent:
-# docker compose --profile scalp up -d bot-ft-scalp
-```
-
-Verify:
-
-```bash
-docker compose --profile scalp ps bot-ft-scalp
-docker compose --profile scalp logs -f bot-ft-scalp
+sudo /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile scalp up -d w5
+sudo /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile scalp ps w5
+sudo /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile scalp logs -f w5
 ```
 
 Stop:
 
 ```bash
-docker compose --profile scalp stop bot-ft-scalp
+sudo /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile scalp stop w5
 ```
 
-CORE Upbit is unchanged by these commands (`docker compose up -d` without `--profile scalp` does not start FT scalp).
+CORE `w1` is unchanged (no `--profile scalp` needed for normal desk/upbit).
 
 ## Files
 
@@ -64,10 +54,10 @@ CORE Upbit is unchanged by these commands (`docker compose up -d` without `--pro
 | Card | `strategies/bitget-btc-5m-trend-short-di-cloud-adx15-v1.json` |
 | FT config | `freqtrade-research/user_data/config.bitget-scalp-trend-short-live.json` |
 | Strategy class | `freqtrade-research/user_data/strategies/TrendShortV1.py` |
-| Compose | `bot-ft-scalp` profile `scalp` |
+| NAS compose | `w5` profile `scalp` in `docker-compose.nas.yml` |
 
 ## Roll back to cash
 
-1. `docker compose --profile scalp stop bot-ft-scalp`
+1. Stop `w5`
 2. Set `config/scalp-live-map.json` `map.bear` → `null`, `status` → `stopped_cash`
 3. Commit when intentional
