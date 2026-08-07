@@ -72,3 +72,13 @@ below cover only the non-obvious caveats for running things locally (outside Doc
   Official package: https://www.npmjs.com/package/@bitget-ai/bitget-agent-mcp — Agent Hub:
   https://github.com/Bitget-AI/agent_hub
 - Older npm name `bitget-mcp-server` is superseded; prefer `@bitget-ai/bitget-agent-mcp`.
+
+### Synology NAS opaque names (production)
+
+Company NAS folders/containers use opaque `p*` / `w*` codes so File Station does not show
+brand names like `auto-trade`. **Do not** look for `/volume1/docker/auto-trade`.
+
+Canonical map (English): [`docs/agents/nas-opaque-names.md`](docs/agents/nas-opaque-names.md)  
+NAS mirror: `/volume1/docker/p3f8c1a2/deploy/nas/opaque-names.agent.md`
+
+Quick decode for this stack: host `p3f8c1a2` · `w1` Upbit · `w2` Bitget · `w3` desk (alias `desk`) · `w4` cloudflared · `w5` FT scalp.
