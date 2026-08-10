@@ -160,24 +160,40 @@
     const botRows = seriesRows(points, "equity");
     const bhRows = bhOn ? seriesRows(points, "bh_equity") : [];
 
-    ensureChart();
-    if (botSeries) botSeries.setData(botRows);
-    if (bhSeries) bhSeries.setData(bhRows);
-    if (chart) chart.timeScale().fitContent();
-
     renderSummary(data.summary || {});
     const bg =
       data.bitget_usdt != null
         ? ` · Bitget ${Number(data.bitget_usdt).toLocaleString("en-US", { maximumFractionDigits: 2 })} USDT`
         : "";
-    document.getElementById("chart-meta").textContent =
-      `${data.market || "KRW-BTC"} · ${data.range || range} · 포인트 ${botRows.length}${bg}`;
-    document.getElementById("eq-source").textContent =
-      data.source === "trades_mtm"
-        ? "복원(체결+일봉)"
-        : data.source === "history"
-          ? "스냅샷"
-          : data.source || "—";
+    const metaEl = document.getElementById("chart-meta");
+    if (metaEl) {
+      metaEl.textContent =
+        `${data.market || "KRW-BTC"} · ${data.range || range} · 포인트 ${botRows.length}${bg}`;
+    }
+    const srcEl = document.getElementById("eq-source");
+    if (srcEl) {
+      srcEl.textContent =
+        data.source === "trades_mtm"
+          ? "복원(체결+일봉)"
+          : data.source === "history"
+            ? "스냅샷"
+            : data.source || "—";
+    }
+
+    try {
+      ensureChart();
+      if (botSeries) botSeries.setData(botRows);
+      if (bhSeries) bhSeries.setData(bhRows);
+      if (chart) chart.timeScale().fitContent();
+    } catch (chartErr) {
+      console.warn(chartErr);
+      setFreshness(
+        botRows.length ? "stale" : "error",
+        `숫자 OK · 차트 실패 (${chartErr.message || chartErr})`
+      );
+      return;
+    }
+
     setFreshness(botRows.length ? "ok" : "stale", botRows.length ? "최신" : "데이터 부족");
   }
 
