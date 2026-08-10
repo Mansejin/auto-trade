@@ -18,8 +18,10 @@
 
   let tvWidget = null;
   let lastTvKey = "";
-  let lastStatus = null;
-  let tvBooted = false;
+  let lastOkAt = null;
+  let lastFreshKind = "stale";
+  let lastFreshFallback = "갱신 대기";
+  let refreshBusy = false;
 
   function money(v, quote) {
     if (v == null || Number.isNaN(Number(v))) return "—";
@@ -45,12 +47,85 @@
     return s;
   }
 
-  function setText(id, text, className, title) {
-    const el = document.getElementById(id);
+  function relativeAge(ts) {
+    if (!ts) return null;
+    const sec = Math.max(0, Math.round((Date.now() - ts) / 1000));
+    if (sec < 5) return "방금";
+    if (sec < 60) return `${sec}초 전`;
+    const min = Math.floor(sec / 60);
+    if (min < 60) return `${min}분 전`;
+    const hr = Math.floor(min / 60);
+    if (hr < 48) return `${hr}시간 전`;
+    return `${Math.floor(hr / 24)}일 전`;
+  }
+
+  function setFreshness(kind, text) {
+    lastFreshKind = kind;
+    if (kind === "ok") {
+      lastOkAt = Date.now();
+      lastFreshFallback = text || "최신";
+    } else {
+      lastFreshFallback = text || lastFreshFallback;
+    }
+    paintFreshness();
+  }
+
+  function paintFreshness() {
+    const pulse = document.getElementById("pulse");
+    const label = document.getElementById("fresh-text");
+    let text = lastFreshFallback;
+    if (lastFreshKind === "ok" && lastOkAt) {
+      const age = relativeAge(lastOkAt);
+      text = age ? `${age}` : lastFreshFallback;
+    }
+    if (label) label.textContent = text;
+    if (pulse) {
+      pulse.classList.toggle("stale", lastFreshKind === "stale" || lastFreshKind === "error");
+      pulse.classList.toggle("ok", lastFreshKind === "ok");
+    }
+  }
+
+  function showChartError(msg) {
+    const el = document.getElementById("chart-error");
     if (!el) return;
-    el.textContent = text;
-    if (className != null) el.className = className;
-    if (title != null) el.title = title;
+    if (!msg) {
+      el.classList.add("hidden");
+      el.textContent = "";
+      return;
+    }
+    el.textContent = msg;
+    el.classList.remove("hidden");
+  }
+
+  function renderRegimeStrip(data) {
+    const root = document.getElementById("regime-strip");
+    if (!root) return;
+    const regime = data.regime || {};
+    if (!regime.code) {
+      root.textContent = "";
+      root.className = "regime-strip";
+      return;
+    }
+    const adx =
+      regime.adx != null && !Number.isNaN(Number(regime.adx))
+        ? ` · ADX ${Number(regime.adx).toFixed(0)}`
+        : "";
+    root.className = `regime-strip ${REGIME_CLASS[regime.code] || ""}`.trim();
+    root.innerHTML = "";
+    const title = document.createElement("span");
+    title.textContent = `${regime.label || regime.code}${adx}`;
+    root.appendChild(title);
+    const metaBits = [
+      regime.date ? `일자 ${regime.date}` : null,
+      regime.selected_file ? shortName(regime.selected_file, 28) : null,
+      regime.policy ? `policy ${String(regime.policy).replace(/^C_.*/, "C")}` : null,
+    ].filter(Boolean);
+    if (metaBits.length) {
+      const meta = document.createElement("span");
+      meta.className = "regime-meta";
+      meta.textContent = metaBits.join(" · ");
+      root.appendChild(meta);
+    }
   }
 
   function renderSleeves(data) {
@@ -66,7 +141,7 @@
 
     const rows = [
       {
-        tag: "CORE",
+        tag: "CORE · 장타",
         label: core.label || "장타",
         status: core.status_label || core.status || "—",
         ok: String(core.status || "").includes("live"),
@@ -79,7 +154,7 @@
         note: core.notes || null,
       },
       {
-        tag: "SCALP",
+        tag: "SCALP · 단타",
         label: scalp.label || "단타",
         status: scalpLive
           ? `가동 · ${shortName(bg.strategy) || "—"}`
@@ -127,7 +202,7 @@
     swHead.className = "sleeve-head";
     const swTag = document.createElement("span");
     swTag.className = "sleeve-tag";
-    swTag.textContent = "SWITCH";
+    swTag.textContent = "SWITCH · 전환";
     const swSt = document.createElement("span");
     swSt.className =
       "sleeve-status" +
@@ -282,16 +357,6 @@
       .replace(/\.?0+$/, "");
   }
 
-  function setFreshness(kind, text) {
-    const pulse = document.getElementById("pulse");
-    const label = document.getElementById("fresh-text");
-    if (label) label.textContent = text;
-    if (pulse) {
-      pulse.classList.toggle("stale", kind === "stale" || kind === "error");
-      pulse.classList.toggle("ok", kind === "ok");
-    }
-  }
-
   function loadTradingView(onReady) {
     if (typeof TradingView !== "undefined" && TradingView.widget) {
       onReady();
@@ -308,7 +373,8 @@
     s.dataset.deskTv = "1";
     s.onload = onReady;
     s.onerror = () => {
-      setFreshness("stale", "차트 CDN 차단/실패");
+      showChartError("차트 CDN 차단/실패 — 상태·체결은 정상 갱신됩니다.");
+      setFreshness("stale", "차트 CDN 실패");
     };
     document.head.appendChild(s);
   }
@@ -324,6 +390,7 @@
       const el = document.getElementById("tv_chart");
       if (!el) return;
       el.innerHTML = "";
+      showChartError("");
       try {
         tvWidget = new TradingView.widget({
           autosize: true,
@@ -343,9 +410,9 @@
           backgroundColor: "#131722",
           gridColor: "rgba(42, 46, 57, 0.6)",
         });
-        tvBooted = true;
       } catch (e) {
         console.warn(e);
+        showChartError(`차트: ${e.message || e}`);
         setFreshness("stale", `차트: ${e.message || e}`);
       }
     });
@@ -354,6 +421,11 @@
   function updateCharts(data) {
     const symbol = data.tv_symbol || "UPBIT:BTCKRW";
     const interval = data.tv_interval || "60";
+    const meta = document.getElementById("chart-meta");
+    if (meta) {
+      const tf = data.timeframe || interval;
+      meta.textContent = `${symbol} · ${tf}`;
+    }
     ensureTvChart(symbol, interval);
   }
 
@@ -434,175 +506,158 @@
     }
   }
 
-  async function refresh() {
-    const base = window.__DESK_BASE__ || "/";
-    let res;
-    try {
-      res = await fetch(base + "api/status", { credentials: "same-origin" });
-    } catch (e) {
-      throw new Error("상태 API 네트워크 오류");
-    }
-    if (res.status === 401) {
-      location.href = base;
-      return;
-    }
-    if (!res.ok) throw new Error(`상태 API ${res.status}`);
-    const data = await res.json();
-    lastStatus = data;
-    const s = data.status || {};
-    const risk = s.risk || {};
-
-    const modeEl = document.getElementById("m-mode");
-    modeEl.textContent = s.mode === "LIVE" ? "실주문" : s.mode === "PAPER" ? "모의" : s.mode || "—";
-    modeEl.className = "pill" + (s.mode === "LIVE" ? " live" : "");
-
-    const regimeEl = document.getElementById("m-regime");
-    const regime = data.regime || null;
-    if (regime && regime.code) {
-      const adx =
-        regime.adx != null && !Number.isNaN(Number(regime.adx))
-          ? ` · ADX ${Number(regime.adx).toFixed(0)}`
-          : "";
-      regimeEl.textContent = `${regime.label || regime.code}${adx}`;
-      regimeEl.className = `v ${REGIME_CLASS[regime.code] || ""}`.trim();
-      regimeEl.title = [
-        regime.date ? `일자 ${regime.date}` : null,
-        regime.selected_file ? `매핑 ${regime.selected_file}` : null,
-        regime.engine ? `engine ${regime.engine}` : null,
-        regime.policy ? `policy ${regime.policy}` : null,
-      ]
-        .filter(Boolean)
-        .join(" · ");
-    } else {
-      regimeEl.textContent = "—";
-      regimeEl.className = "v";
-      regimeEl.title = "";
-    }
-
-    const sleeves = data.sleeves || {};
-    const core = sleeves.core || {};
-    const scalp = sleeves.scalp || {};
-    const sw = data.switch || {};
-    const bg = data.bitget || {};
-
-    const coreFull = core.strategy || regime?.selected_file || s.strategy || s.strategy_file || "";
-    setText(
-      "m-core",
-      shortName(coreFull),
-      "v",
-      String(coreFull).replace(/^.*\//, "").replace(/\.json$/i, "") || undefined
-    );
-    const scalpCash = String(scalp.status || "").includes("cash") || !bg.running;
-    setText(
-      "m-scalp",
-      scalpCash ? scalp.status_label || "중지 · cash" : shortName(bg.strategy) || "가동",
-      scalpCash ? "v muted-v" : "v ok"
-    );
-    const switchLabel = sw.action_label || regime?.action_label || "—";
-    const switchWarn = sw.action === "position_skip" || sw.action === "dwell_block";
-    setText("m-switch", switchLabel, switchWarn ? "v warn" : "v");
-    const switchEl = document.getElementById("m-switch");
-    if (switchEl) {
-      switchEl.title = [sw.reason, sw.from && sw.to ? `${shortName(sw.from)} → ${shortName(sw.to)}` : null, sw.ts]
-        .filter(Boolean)
-        .join(" · ");
-    }
-
-    const sig = SIGNAL_KO[s.signal] || s.signal || "—";
-    document.getElementById("m-signal").textContent = sig;
-    document.getElementById("m-krw").textContent = money(s.krw ?? s.cash);
-    if (s.position && s.position.qty) {
-      document.getElementById("m-pos").textContent = `${qty(s.position.qty)} @ ${money(
-        s.position.entry_price
-      )}`;
-    } else {
-      document.getElementById("m-pos").textContent = "없음";
-    }
-    document.getElementById("m-bitget").textContent =
-      bg.cash != null ? money(bg.cash, "USDT") : scalpCash ? "cash" : "—";
-    const bgSig = document.getElementById("m-bg-signal");
-    if (bgSig) bgSig.textContent = SIGNAL_KO[bg.signal] || bg.signal || (scalpCash ? "중지" : "—");
-    const bgPos = document.getElementById("m-bg-pos");
-    if (bgPos) {
-      if (bg.position && bg.position.qty) {
-        const side = bg.position.side ? `${String(bg.position.side).toUpperCase()} ` : "";
-        bgPos.textContent = `${side}${qty(bg.position.qty)} @ ${money(bg.position.entry_price, "USDT")}`;
-      } else {
-        bgPos.textContent = scalpCash ? "—" : "없음";
-      }
-    }
-
-    const xfer = data.transfer || null;
-    const xferEl = document.getElementById("m-xfer");
-    const xferTick = document.getElementById("tick-xfer");
-    if (xferEl) {
-      if (xfer && xfer.code) {
-        xferEl.textContent = String(xfer.code);
-        xferEl.className = "v warn";
-        xferEl.title = [
-          xfer.direction,
-          xfer.coin && xfer.amount != null ? `${xfer.coin} ${xfer.amount}` : null,
-          xfer.detail,
-          xfer.created_at,
-        ]
-          .filter(Boolean)
-          .join(" · ");
-        if (xferTick) xferTick.classList.add("tick-pri");
-      } else {
-        xferEl.textContent = "없음";
-        xferEl.className = "v muted-v";
-        xferEl.title = "";
-        if (xferTick) xferTick.classList.remove("tick-pri");
-      }
-    }
-
-    const riskEl = document.getElementById("m-risk");
-    if (risk.trading_halted) {
+  function setHaltBanner(risk) {
+    const banner = document.getElementById("halt-banner");
+    const title = document.getElementById("halt-title");
+    const detail = document.getElementById("halt-detail");
+    if (!banner || !title || !detail) return;
+    if (risk && risk.trading_halted) {
       const why = String(risk.halt_reason || "").trim();
-      riskEl.textContent = risk.halt_buys_only ? "매수중단" : "전면중단";
-      if (why && why.length <= 18) riskEl.textContent += ` · ${why}`;
-      riskEl.className = "v warn";
-      riskEl.title = [
+      title.textContent = risk.halt_buys_only ? "매수 중단" : "거래 전면 중단";
+      const bits = [
         why || null,
         risk.consecutive_errors != null ? `연속오류 ${risk.consecutive_errors}` : null,
-        risk.day_start_equity != null ? `일초 자산 ${Math.round(Number(risk.day_start_equity)).toLocaleString("ko-KR")}` : null,
-      ]
-        .filter(Boolean)
-        .join(" · ");
+      ].filter(Boolean);
+      detail.textContent = bits.join(" · ") || "사유 없음 — risk.json / 텔레그램 확인";
+      banner.hidden = false;
+      banner.classList.remove("hidden");
     } else {
-      riskEl.textContent = "정상";
-      riskEl.className = "v ok";
-      riskEl.title =
-        risk.day_start_equity != null
-          ? `일초 자산 ${Math.round(Number(risk.day_start_equity)).toLocaleString("ko-KR")}`
-          : "";
+      banner.hidden = true;
+      banner.classList.add("hidden");
+      detail.textContent = "";
     }
+  }
 
-    if (data.stale) {
-      setFreshness("stale", "상태 오래됨");
-    } else {
-      const t = s.updated_at || (data.mtime ? new Date(data.mtime * 1000).toLocaleString("ko-KR") : "");
-      setFreshness("ok", t || "최신");
+  async function refresh() {
+    if (refreshBusy) return;
+    refreshBusy = true;
+    const btn = document.getElementById("btn-refresh");
+    if (btn) btn.disabled = true;
+    const base = window.__DESK_BASE__ || "/";
+    try {
+      let res;
+      try {
+        res = await fetch(base + "api/status", { credentials: "same-origin" });
+      } catch (e) {
+        throw new Error("상태 API 네트워크 오류");
+      }
+      if (res.status === 401) {
+        location.href = base;
+        return;
+      }
+      if (!res.ok) throw new Error(`상태 API ${res.status}`);
+      const data = await res.json();
+      const s = data.status || {};
+      const risk = s.risk || {};
+
+      const modeEl = document.getElementById("m-mode");
+      if (modeEl) {
+        modeEl.textContent = s.mode === "LIVE" ? "실주문" : s.mode === "PAPER" ? "모의" : s.mode || "—";
+        modeEl.className = "pill" + (s.mode === "LIVE" ? " live" : "");
+      }
+
+      const sleeves = data.sleeves || {};
+      const scalp = sleeves.scalp || {};
+      const bg = data.bitget || {};
+      const scalpCash = String(scalp.status || "").includes("cash") || !bg.running;
+
+      const sig = SIGNAL_KO[s.signal] || s.signal || "—";
+      document.getElementById("m-signal").textContent = sig;
+      document.getElementById("m-krw").textContent = money(s.krw ?? s.cash);
+      if (s.position && s.position.qty) {
+        document.getElementById("m-pos").textContent = `${qty(s.position.qty)} @ ${money(
+          s.position.entry_price
+        )}`;
+      } else {
+        document.getElementById("m-pos").textContent = "없음";
+      }
+      document.getElementById("m-bitget").textContent =
+        bg.cash != null ? money(bg.cash, "USDT") : scalpCash ? "cash" : "—";
+      const bgSig = document.getElementById("m-bg-signal");
+      if (bgSig) bgSig.textContent = SIGNAL_KO[bg.signal] || bg.signal || (scalpCash ? "중지" : "—");
+      const bgPos = document.getElementById("m-bg-pos");
+      if (bgPos) {
+        if (bg.position && bg.position.qty) {
+          const side = bg.position.side ? `${String(bg.position.side).toUpperCase()} ` : "";
+          bgPos.textContent = `${side}${qty(bg.position.qty)} @ ${money(bg.position.entry_price, "USDT")}`;
+        } else {
+          bgPos.textContent = scalpCash ? "—" : "없음";
+        }
+      }
+
+      const xfer = data.transfer || null;
+      const xferEl = document.getElementById("m-xfer");
+      const xferTick = document.getElementById("tick-xfer");
+      if (xferEl) {
+        if (xfer && xfer.code) {
+          xferEl.textContent = String(xfer.code);
+          xferEl.className = "v warn";
+          xferEl.title = [
+            xfer.direction,
+            xfer.coin && xfer.amount != null ? `${xfer.coin} ${xfer.amount}` : null,
+            xfer.detail,
+            xfer.created_at,
+          ]
+            .filter(Boolean)
+            .join(" · ");
+          if (xferTick) {
+            xferTick.classList.add("tick-pri");
+            xferTick.classList.remove("tick-sec");
+          }
+        } else {
+          xferEl.textContent = "없음";
+          xferEl.className = "v muted-v";
+          xferEl.title = "";
+          if (xferTick) {
+            xferTick.classList.remove("tick-pri");
+            xferTick.classList.add("tick-sec");
+          }
+        }
+      }
+
+      const riskEl = document.getElementById("m-risk");
+      if (risk.trading_halted) {
+        riskEl.textContent = risk.halt_buys_only ? "매수중단" : "전면중단";
+        riskEl.className = "v warn";
+        riskEl.title = String(risk.halt_reason || "");
+      } else {
+        riskEl.textContent = "정상";
+        riskEl.className = "v ok";
+        riskEl.title =
+          risk.day_start_equity != null
+            ? `일초 자산 ${Math.round(Number(risk.day_start_equity)).toLocaleString("ko-KR")}`
+            : "";
+      }
+      setHaltBanner(risk);
+
+      if (data.stale) {
+        setFreshness("stale", "상태 오래됨");
+      } else {
+        setFreshness("ok", "최신");
+      }
+
+      const ubMeters = data.condition_meters || [];
+      const bgMeters = bg.condition_meters || [];
+      renderMeters("ub-meters", ubMeters);
+      renderMeters("bg-meters", bgMeters);
+      renderStatusBlock("latest-status", data.latest_text || "", {
+        hideIndicators: ubMeters.length > 0,
+      });
+      renderStatusBlock(
+        "bg-latest-status",
+        bg.latest_text || (scalpCash ? "모드: SCALP 중지 · cash" : ""),
+        { hideIndicators: bgMeters.length > 0 }
+      );
+      renderRegimeStrip(data);
+      renderSleeves(data);
+      renderSwitchHistory(data.switch_history || []);
+      renderTrades(data.recent_trades || [], "KRW", "trades", "trades-empty");
+      renderTrades(bg.recent_trades || [], "USDT", "bg-trades", "bg-trades-empty");
+      updateCharts(data);
+    } finally {
+      refreshBusy = false;
+      if (btn) btn.disabled = false;
     }
-
-    const ubMeters = data.condition_meters || [];
-    const bgMeters = bg.condition_meters || [];
-    renderMeters("ub-meters", ubMeters);
-    renderMeters("bg-meters", bgMeters);
-    renderStatusBlock("latest-status", data.latest_text || "", {
-      hideIndicators: ubMeters.length > 0,
-    });
-    renderStatusBlock(
-      "bg-latest-status",
-      bg.latest_text || (scalpCash ? "모드: SCALP 중지 · cash" : ""),
-      { hideIndicators: bgMeters.length > 0 }
-    );
-    renderSleeves(data);
-    renderSwitchHistory(data.switch_history || []);
-    renderTrades(data.recent_trades || [], "KRW", "trades", "trades-empty");
-    renderTrades(bg.recent_trades || [], "USDT", "bg-trades", "bg-trades-empty");
-    // Chart is sync and must not block/lock status refresh if TV script is slow.
-    updateCharts(data);
   }
 
   async function loop() {
@@ -615,6 +670,24 @@
     setTimeout(loop, 20000);
   }
 
+  function wireTabs() {
+    document.querySelectorAll(".seg-tabs .seg").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tab = btn.getAttribute("data-tab");
+        const target = btn.getAttribute("data-target");
+        if (!tab || !target) return;
+        document.querySelectorAll(`.seg-tabs .seg[data-tab="${tab}"]`).forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle("active", on);
+          b.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        document.querySelectorAll(`.tab-pane[data-pane="${tab}"]`).forEach((pane) => {
+          pane.classList.toggle("hidden", pane.getAttribute("data-for") !== target);
+        });
+      });
+    });
+  }
+
   const tickerMore = document.getElementById("btn-ticker-more");
   const tickerStrip = document.querySelector(".ticker-strip");
   if (tickerMore && tickerStrip) {
@@ -625,5 +698,27 @@
     });
   }
 
+  const refreshBtn = document.getElementById("btn-refresh");
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", () => {
+      refresh().catch((e) => {
+        console.error(e);
+        setFreshness("error", `갱신 실패 · ${e.message || e}`);
+      });
+    });
+  }
+
+  const chartExpand = document.getElementById("btn-chart-expand");
+  const chartPlane = document.querySelector(".chart-plane");
+  if (chartExpand && chartPlane) {
+    chartExpand.addEventListener("click", () => {
+      const open = chartPlane.classList.toggle("expanded");
+      chartExpand.setAttribute("aria-pressed", open ? "true" : "false");
+      chartExpand.textContent = open ? "차트 작게" : "차트 크게";
+    });
+  }
+
+  wireTabs();
+  setInterval(paintFreshness, 5000);
   loop();
 })();
