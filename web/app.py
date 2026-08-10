@@ -583,24 +583,92 @@ def _load_sleeves(regime_code: str | None) -> dict[str, Any]:
     }
 
 
-def _mark_upbit_equity(status: dict[str, Any], state: dict[str, Any]) -> float | None:
-    price = status.get("price")
-    if price is None:
+def _fetch_upbit_ticker_price(market: str) -> float | None:
+    """Public last trade price (no auth). Cached briefly via candle cache key space."""
+    market = str(market or "").strip().upper()
+    if not market:
         return None
+    cache_key = f"ticker|{market}"
+    now = time.time()
+    hit = _candle_cache.get(cache_key)
+    if hit and now - hit[0] < 30:
+        try:
+            return float(hit[1][0]["close"])  # type: ignore[index]
+        except Exception:
+            pass
+    url = f"https://api.upbit.com/v1/ticker?markets={urllib.parse.quote(market)}"
+    try:
+        req = urllib.request.Request(url, headers={"Accept": "application/json", "User-Agent": "auto-trade-desk"})
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            rows = json.loads(resp.read().decode("utf-8"))
+        if not rows:
+            return None
+        px = float(rows[0]["trade_price"])
+        _candle_cache[cache_key] = (now, [{"close": px}])
+        return px
+    except Exception:
+        return None
+
+
+def _mark_upbit_equity(status: dict[str, Any], state: dict[str, Any]) -> float | None:
+    """Upbit-side mark in KRW (cash + BTC pos + USDT/TRX bridge inventory)."""
+    if status.get("equity_krw") is not None:
+        try:
+            return float(status["equity_krw"])
+        except (TypeError, ValueError):
+            pass
+    price = status.get("price")
     cash = status.get("krw")
     if cash is None:
         cash = status.get("cash")
     if cash is None:
         cash = state.get("cash")
-    if cash is None:
+    if cash is None or price is None:
         return None
     pos = status.get("position") or state.get("position") or {}
     qty = float(pos.get("qty") or 0) if isinstance(pos, dict) else 0.0
-    return float(cash) + qty * float(price)
+    total = float(cash) + qty * float(price)
+    usdt_bal = status.get("usdt")
+    trx_bal = status.get("trx")
+    try:
+        if usdt_bal is not None and float(usdt_bal) > 1e-8:
+            usdt_px = _fetch_upbit_ticker_price("KRW-USDT")
+            if usdt_px:
+                total += float(usdt_bal) * usdt_px
+        if trx_bal is not None and float(trx_bal) > 1e-8:
+            trx_px = _fetch_upbit_ticker_price("KRW-TRX")
+            if trx_px:
+                total += float(trx_bal) * trx_px
+    except (TypeError, ValueError):
+        pass
+    return total
+
+
+def _mark_portfolio_equity(
+    status: dict[str, Any], state: dict[str, Any], bg: dict[str, Any] | None = None
+) -> float | None:
+    """Total liquid book in KRW: Upbit (incl. bridge) + Bitget USDT * KRW-USDT."""
+    upbit = _mark_upbit_equity(status, state)
+    if upbit is None:
+        return None
+    bg = bg if bg is not None else _load_bitget()
+    bg_usdt = bg.get("cash")
+    if bg_usdt is None:
+        bg_usdt = bg.get("usdt")
+    try:
+        bg_usdt_f = float(bg_usdt) if bg_usdt is not None else 0.0
+    except (TypeError, ValueError):
+        bg_usdt_f = 0.0
+    if bg_usdt_f > 1e-8:
+        usdt_px = _fetch_upbit_ticker_price("KRW-USDT")
+        if usdt_px:
+            return upbit + bg_usdt_f * usdt_px
+    return upbit
 
 
 def _maybe_sample_equity(status: dict[str, Any], state: dict[str, Any]) -> None:
-    eq = _mark_upbit_equity(status, state)
+    bg = _load_bitget()
+    eq = _mark_portfolio_equity(status, state, bg)
     if eq is None:
         return
     now = time.time()
@@ -624,14 +692,18 @@ def _maybe_sample_equity(status: dict[str, Any], state: dict[str, Any]) -> None:
         except Exception:
             pass
     pos = status.get("position") or state.get("position") or {}
-    bg = _load_bitget()
+    upbit_eq = _mark_upbit_equity(status, state)
     point = {
         "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
         "equity": round(eq, 2),
+        "equity_upbit": round(float(upbit_eq), 2) if upbit_eq is not None else None,
         "cash": status.get("krw") if status.get("krw") is not None else state.get("cash"),
+        "usdt": status.get("usdt"),
+        "trx": status.get("trx"),
         "price": status.get("price"),
         "qty": float(pos.get("qty") or 0) if isinstance(pos, dict) else 0.0,
         "bitget_usdt": bg.get("cash"),
+        "portfolio": True,
         "source": "sample",
     }
     payload = json.dumps(point, ensure_ascii=False) + "\n"
@@ -668,6 +740,58 @@ def _read_equity_history() -> list[dict[str, Any]]:
         if out:
             return out
     return []
+
+
+def _inflate_legacy_equity_points(
+    history: list[dict[str, Any]], status: dict[str, Any]
+) -> list[dict[str, Any]]:
+    """Old samples stored Upbit KRW(+BTC) only; lift them to portfolio KRW for display."""
+    if not history:
+        return history
+    usdt_px = _fetch_upbit_ticker_price("KRW-USDT") or 0.0
+    trx_px = _fetch_upbit_ticker_price("KRW-TRX") or 0.0
+    # Prefer live bridge inventory when legacy rows omit TRX/USDT.
+    default_trx = 0.0
+    default_usdt = 0.0
+    try:
+        if status.get("trx") is not None:
+            default_trx = float(status.get("trx") or 0.0)
+        if status.get("usdt") is not None:
+            default_usdt = float(status.get("usdt") or 0.0)
+    except (TypeError, ValueError):
+        pass
+    out: list[dict[str, Any]] = []
+    for raw in history:
+        p = dict(raw)
+        if p.get("portfolio"):
+            out.append(p)
+            continue
+        try:
+            cash = p.get("cash")
+            price = p.get("price")
+            qty = float(p.get("qty") or 0.0)
+            if cash is not None and price is not None:
+                upbit = float(cash) + qty * float(price)
+            else:
+                upbit = float(p["equity"])
+            trx = p.get("trx")
+            usdt = p.get("usdt")
+            trx_f = float(trx) if trx is not None else default_trx
+            usdt_f = float(usdt) if usdt is not None else default_usdt
+            if trx_px > 0 and trx_f > 0:
+                upbit += trx_f * trx_px
+            if usdt_px > 0 and usdt_f > 0:
+                upbit += usdt_f * usdt_px
+            bg = float(p.get("bitget_usdt") or 0.0)
+            total = upbit + (bg * usdt_px if usdt_px > 0 else 0.0)
+            p["equity_upbit"] = round(upbit, 2)
+            p["equity"] = round(total, 2)
+            p["portfolio"] = True
+            p["inflated"] = True
+        except Exception:
+            pass
+        out.append(p)
+    return out
 
 def _scalp_map_live() -> bool:
     m = _load_json(SCALP_MAP_PATH)
@@ -936,7 +1060,7 @@ def api_equity(
         }
     _maybe_sample_equity(status, state)
 
-    history = _read_equity_history()
+    history = _inflate_legacy_equity_points(_read_equity_history(), status)
     market = str(status.get("market") or state.get("market") or "KRW-BTC")
     source = "history"
     range_key = (range or "30d").strip().lower()
@@ -963,13 +1087,14 @@ def api_equity(
             if rebuilt:
                 history = rebuilt
                 source = "trades_mtm"
-                tip = _mark_upbit_equity(status, state)
+                tip = _mark_portfolio_equity(status, state)
                 if tip is not None:
                     history.append(
                         {
                             "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
                             "equity": round(tip, 2),
                             "price": status.get("price"),
+                            "portfolio": True,
                             "source": "live",
                         }
                     )

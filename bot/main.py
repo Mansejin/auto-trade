@@ -185,13 +185,30 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
 
         krw: float | None
         base_qty: float | None
+        usdt_bal = 0.0
+        trx_bal = 0.0
         if private is not None:
             try:
                 krw = private.available_balance("KRW")
                 base_qty = private.available_balance(base)
+                try:
+                    usdt_bal = float(private.available_balance("USDT") or 0.0)
+                except Exception:
+                    usdt_bal = 0.0
+                try:
+                    trx_bal = float(private.available_balance("TRX") or 0.0)
+                except Exception:
+                    trx_bal = 0.0
                 if not portfolio.in_position:
                     portfolio.cash = krw
-                logger.info("잔고 조회 성공 | KRW=%s원 | %s=%s", fmt_money(krw), base, fmt_qty(base_qty))
+                logger.info(
+                    "잔고 조회 성공 | KRW=%s원 | %s=%s | USDT=%s | TRX=%s",
+                    fmt_money(krw),
+                    base,
+                    fmt_qty(base_qty),
+                    f"{usdt_bal:.4f}",
+                    f"{trx_bal:.4f}",
+                )
             except Exception:
                 logger.exception("잔고 조회 실패 (API 인증/IP/권한 확인 필요)")
                 krw, base_qty = None, None
@@ -209,10 +226,10 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
             try:
                 from bot.transfer import _upbit_ticker  # noqa: PLC0415
 
-                for coin in ("USDT", "TRX"):
-                    bal = private.available_balance(coin)
-                    if bal > 1e-8:
-                        equity_mark += bal * _upbit_ticker(f"KRW-{coin}")
+                if usdt_bal > 1e-8:
+                    equity_mark += usdt_bal * _upbit_ticker("KRW-USDT")
+                if trx_bal > 1e-8:
+                    equity_mark += trx_bal * _upbit_ticker("KRW-TRX")
             except Exception:
                 logger.debug("bridge inventory mark failed", exc_info=True)
         else:
@@ -261,6 +278,9 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
                 "signal": result.signal.value,
                 "reason": result.reason,
                 "krw": krw,
+                "usdt": usdt_bal,
+                "trx": trx_bal,
+                "equity_krw": round(float(equity_mark), 2) if equity_mark is not None else None,
                 "base": base,
                 "base_qty": base_qty,
                 "in_position": portfolio.in_position,
