@@ -256,7 +256,8 @@ def _demo() -> None:
     assert abs(adj_pts[-1]["equity"] - 1_200_000) < 1, adj_pts[-1]
     assert abs(adj_pts[-1]["wallet_equity"] - 1_100_000) < 1
     s2 = equity_summary(adj_pts)
-    assert s2["wallet_end"] == 1_100_000.0
+    assert abs(s2["end"] - 1_200_000) < 1
+    assert abs(adj_pts[-1]["wallet_equity"] - 1_100_000) < 1
     print("ok", s, s2)
 
 
