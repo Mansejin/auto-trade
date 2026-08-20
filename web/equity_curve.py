@@ -5,10 +5,21 @@ from datetime import datetime, timezone
 from typing import Any, Callable
 
 
-def equity_summary(points: list[dict[str, Any]]) -> dict[str, Any]:
+def equity_summary(
+    points: list[dict[str, Any]], *, value_key: str = "equity"
+) -> dict[str, Any]:
     if not points:
         return {"n": 0}
-    vals = [float(p["equity"]) for p in points]
+    vals: list[float] = []
+    for p in points:
+        raw = p.get(value_key)
+        if raw is None and value_key != "equity":
+            raw = p.get("equity")
+        if raw is None:
+            continue
+        vals.append(float(raw))
+    if not vals:
+        return {"n": 0}
     start, end = vals[0], vals[-1]
     peak = vals[0]
     mdd = 0.0
@@ -17,7 +28,7 @@ def equity_summary(points: list[dict[str, Any]]) -> dict[str, Any]:
         if peak > 0:
             mdd = min(mdd, (v - peak) / peak)
     ret = ((end / start) - 1.0) * 100.0 if start else 0.0
-    out: dict[str, Any] = {
+    return {
         "n": len(vals),
         "start": round(start, 2),
         "end": round(end, 2),
@@ -26,15 +37,6 @@ def equity_summary(points: list[dict[str, Any]]) -> dict[str, Any]:
         "high": round(max(vals), 2),
         "low": round(min(vals), 2),
     }
-    wallet_vals = [
-        float(p["wallet_equity"])
-        for p in points
-        if p.get("wallet_equity") is not None
-    ]
-    if wallet_vals:
-        out["wallet_end"] = round(wallet_vals[-1], 2)
-        out["wallet_start"] = round(wallet_vals[0], 2)
-    return out
 
 
 def normalize_equity_flows(raw: Any) -> list[dict[str, Any]]:

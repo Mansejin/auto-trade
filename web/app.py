@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import os
 import secrets
@@ -1133,14 +1134,22 @@ def api_equity(
         history = filtered or history[-1:]
 
     flows = normalize_equity_flows(_load_json(EQUITY_FLOWS_PATH))
+    # Chart / 현재·시작 = actual wallet. Return/MDD/alpha silently ignore external flows.
+    wallet_history = copy.deepcopy(history)
+    for p in wallet_history:
+        if p.get("wallet_equity") is None:
+            p["wallet_equity"] = float(p["equity"])
+        p["equity"] = float(p["wallet_equity"])
+
+    perf_history = copy.deepcopy(wallet_history)
     flow_adjust = 0.0
     if flows:
-        history, flow_adjust = apply_external_flows(history, flows, _parse_iso_ts)
+        perf_history, flow_adjust = apply_external_flows(perf_history, flows, _parse_iso_ts)
 
     bh_on = bool(int(bh))
-    if bh_on and len(history) >= 2:
+    if bh_on and len(perf_history) >= 2:
         price_by_day: dict[str, float] = {}
-        for p in history:
+        for p in perf_history:
             if p.get("price") is not None:
                 day = str(p.get("ts") or "")[:10]
                 if len(day) == 10:
@@ -1153,8 +1162,8 @@ def api_equity(
         except Exception:
             pass
 
-        start_eq = float(history[0]["equity"])
-        start_day = str(history[0].get("ts") or "")[:10]
+        start_eq = float(perf_history[0]["equity"])
+        start_day = str(perf_history[0].get("ts") or "")[:10]
         start_px = price_by_day.get(start_day)
         if start_px is None:
             for day in sorted(price_by_day):
@@ -1162,7 +1171,7 @@ def api_equity(
                     start_px = price_by_day[day]
                     break
         if start_px and start_px > 0:
-            for p in history:
+            for p in perf_history:
                 day = str(p.get("ts") or "")[:10]
                 px = p.get("price")
                 if px is None:
@@ -1170,12 +1179,18 @@ def api_equity(
                 if px is None:
                     continue
                 p["bh_equity"] = round(start_eq * (float(px) / start_px), 2)
+            # Mirror BH onto wallet points for optional overlay (scaled to wallet start).
+            w_start = float(wallet_history[0]["equity"])
+            scale = (w_start / start_eq) if start_eq else 1.0
+            for wp, pp in zip(wallet_history, perf_history):
+                if pp.get("bh_equity") is not None:
+                    wp["bh_equity"] = round(float(pp["bh_equity"]) * scale, 2)
 
-    sum_bot = equity_summary(history)
-    paired = [p for p in history if p.get("bh_equity") is not None]
-    # Alpha only on overlapping bot+BH points so windows match.
+    sum_wallet = equity_summary(wallet_history)
+    sum_perf = equity_summary(perf_history)
+    paired = [p for p in perf_history if p.get("bh_equity") is not None]
     sum_bh = equity_summary([{"equity": p["bh_equity"]} for p in paired]) if len(paired) >= 2 else {"n": 0}
-    sum_bot_vs_bh = equity_summary(paired) if len(paired) >= 2 else sum_bot
+    sum_bot_vs_bh = equity_summary(paired) if len(paired) >= 2 else sum_perf
     alpha = None
     if sum_bot_vs_bh.get("n") and sum_bh.get("n"):
         alpha = round(float(sum_bot_vs_bh["ret_pct"]) - float(sum_bh["ret_pct"]), 2)
@@ -1187,9 +1202,16 @@ def api_equity(
         "source": source,
         "range": range_key,
         "bh": bh_on,
-        "points": history,
+        "points": wallet_history,
         "summary": {
-            **sum_bot,
+            "n": sum_wallet.get("n", 0),
+            "start": sum_wallet.get("start"),
+            "end": sum_wallet.get("end"),
+            "high": sum_wallet.get("high"),
+            "low": sum_wallet.get("low"),
+            # Return / drawdown exclude external cash flows; curve shows wallet.
+            "ret_pct": sum_perf.get("ret_pct"),
+            "mdd_pct": sum_perf.get("mdd_pct"),
             "bh_ret_pct": sum_bh.get("ret_pct"),
             "alpha_pct": alpha,
             "flow_adjust_krw": flow_adjust,
