@@ -41,13 +41,14 @@
     </header>
 
     <section class="equity-stats" aria-label="자산 요약">
-      <div class="stat"><span class="k">현재</span><span class="v" id="eq-end">—</span></div>
+      <div class="stat"><span class="k">현재(지갑)</span><span class="v" id="eq-end">—</span></div>
       <div class="stat"><span class="k">시작</span><span class="v" id="eq-start">—</span></div>
       <div class="stat"><span class="k">봇 수익</span><span class="v" id="eq-ret">—</span></div>
       <div class="stat"><span class="k">B&amp;H</span><span class="v" id="eq-bh">—</span></div>
       <div class="stat"><span class="k">알파</span><span class="v" id="eq-alpha">—</span></div>
       <div class="stat"><span class="k">MDD</span><span class="v" id="eq-mdd">—</span></div>
     </section>
+    <p id="eq-flow-note" class="equity-foot muted hidden"></p>
 
     <section class="chart-plane equity-plane" aria-label="자산 곡선">
       <div class="chart-toolbar">
@@ -63,7 +64,7 @@
 
     <p class="equity-foot muted">
       총자산 = Upbit(원화·BTC·USDT·TRX) + Bitget USDT×KRW-USDT. B&amp;H는 동일 시작자본의 BTC 홀드.
-      desk 폴링 시 5분마다 스냅샷 · 히스토리 없으면 체결+일봉으로 복원.
+      외부 입출금은 <code>config/equity-flows.json</code>에 기록하면 수익률·곡선에서 제외합니다.
     </p>
   </div>
   <script src="static/equity.js"></script>

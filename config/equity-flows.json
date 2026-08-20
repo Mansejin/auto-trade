@@ -1,0 +1,8 @@
+[
+  {
+    "ts": "2026-08-19T12:00:00+09:00",
+    "kind": "withdraw",
+    "amount_krw": 25000,
+    "note": "personal cash-out — exclude from bot return"
+  }
+]

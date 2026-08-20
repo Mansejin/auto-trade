@@ -15,7 +15,12 @@ from fastapi import Cookie, Depends, FastAPI, Form, HTTPException, Request, Resp
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from equity_curve import equity_curve_from_trades, equity_summary
+from equity_curve import (
+    apply_external_flows,
+    equity_curve_from_trades,
+    equity_summary,
+    normalize_equity_flows,
+)
 from condition_meters import build_condition_meters as _build_condition_meters
 from condition_meters import build_trend_short_meters as _build_trend_short_meters
 
@@ -65,6 +70,7 @@ if not _CFG.is_dir():
     _CFG = Path(__file__).resolve().parent.parent / "config"
 SLEEVES_PATH = Path(os.getenv("SLEEVES_PATH", str(_CFG / "sleeves.json")))
 SCALP_MAP_PATH = Path(os.getenv("SCALP_MAP_PATH", str(_CFG / "scalp-live-map.json")))
+EQUITY_FLOWS_PATH = Path(os.getenv("EQUITY_FLOWS_PATH", str(_CFG / "equity-flows.json")))
 FREQTRADE_SCALP_DB = Path(
     os.getenv(
         "FREQTRADE_SCALP_DB",
@@ -1122,6 +1128,11 @@ def api_equity(
                 filtered.append(p)
         history = filtered or history[-1:]
 
+    flows = normalize_equity_flows(_load_json(EQUITY_FLOWS_PATH))
+    flow_adjust = 0.0
+    if flows:
+        history, flow_adjust = apply_external_flows(history, flows, _parse_iso_ts)
+
     bh_on = bool(int(bh))
     if bh_on and len(history) >= 2:
         price_by_day: dict[str, float] = {}
@@ -1177,7 +1188,9 @@ def api_equity(
             **sum_bot,
             "bh_ret_pct": sum_bh.get("ret_pct"),
             "alpha_pct": alpha,
+            "flow_adjust_krw": flow_adjust,
         },
+        "flows": flows,
         "bitget_usdt": bg.get("cash"),
         "scalp_running": bool(bg.get("running")),
     }
