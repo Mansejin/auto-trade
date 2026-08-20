@@ -1067,6 +1067,10 @@ def api_equity(
     _maybe_sample_equity(status, state)
 
     history = _inflate_legacy_equity_points(_read_equity_history(), status)
+    # Prefer continuous portfolio samples — legacy KRW-only rows create a fake cliff.
+    portfolio_only = [p for p in history if p.get("portfolio")]
+    if len(portfolio_only) >= 2:
+        history = portfolio_only
     market = str(status.get("market") or state.get("market") or "KRW-BTC")
     source = "history"
     range_key = (range or "30d").strip().lower()

@@ -102,8 +102,8 @@
   }
 
   function renderSummary(sum) {
-    const walletEnd = sum.wallet_end != null ? sum.wallet_end : sum.end;
-    document.getElementById("eq-end").textContent = money(walletEnd);
+    // Performance equity (external flows already applied server-side).
+    document.getElementById("eq-end").textContent = money(sum.end);
     document.getElementById("eq-start").textContent = money(sum.start);
 
     const retEl = document.getElementById("eq-ret");
@@ -139,21 +139,6 @@
     const mddEl = document.getElementById("eq-mdd");
     mddEl.textContent = sum.mdd_pct != null ? `${Number(sum.mdd_pct).toFixed(2)}%` : "—";
     mddEl.className = "v warn";
-
-    const flowEl = document.getElementById("eq-flow-note");
-    if (flowEl) {
-      const adj = Number(sum.flow_adjust_krw || 0);
-      if (adj > 0) {
-        flowEl.textContent = `수익률·곡선은 외부 출금 ${Math.round(adj).toLocaleString("ko-KR")}원 제외(성과 기준). 현재 칸은 지갑 잔액.`;
-        flowEl.classList.remove("hidden");
-      } else if (adj < 0) {
-        flowEl.textContent = `수익률·곡선은 외부 입금 ${Math.round(-adj).toLocaleString("ko-KR")}원 제외(성과 기준). 현재 칸은 지갑 잔액.`;
-        flowEl.classList.remove("hidden");
-      } else {
-        flowEl.textContent = "";
-        flowEl.classList.add("hidden");
-      }
-    }
   }
 
   async function refresh() {
