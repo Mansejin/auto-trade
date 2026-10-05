@@ -10,7 +10,7 @@ param(
     [Parameter(Mandatory = $true)]
     [string[]] $Files,
 
-    [string] $HostAlias = "saenggibu-nas-local",
+    [string] $HostAlias = "nas",
 
     [string] $RemoteRoot = "/volume1/docker/p3f8c1a2",
 

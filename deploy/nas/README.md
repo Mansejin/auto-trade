@@ -44,7 +44,7 @@ curl -sS http://127.0.0.1:18080/autotrade/healthz
 Name remapping helper (NAS): `deploy/nas/obfuscate-nas.sh`  
 Local-only map: `deploy/nas/name-map.local.md` (gitignored).
 
-SSH alias: `saenggibu-nas-local` (link-local). Tailscale host may refuse SSH.
+SSH: `ssh nas` (Tailscale; works from office and home). Connection guide lives only in the private repo `Mansejin/ohola-nas`.
 
 ## API IP allowlist (required)
 

@@ -8,7 +8,7 @@ param(
     [Parameter(Mandatory = $true)]
     [string] $ScriptPath,
 
-    [string] $HostAlias = "saenggibu-nas-local",
+    [string] $HostAlias = "nas",
 
     [string] $RemotePath = "",
 

@@ -27,8 +27,8 @@ Fee note: backtest bar = 6bps/side; **fails 8bps stress** — human accepted RES
 ## Enable on NAS (human / local SSH)
 
 ```bash
-# from PC
-ssh saenggibu-nas-local
+# from PC (connection guide: Mansejin/ohola-nas)
+ssh nas
 
 cd /volume1/docker/p3f8c1a2
 # Bitget keys must be in config.bitget-scalp-trend-short-live.json (inject from .env; never commit)
