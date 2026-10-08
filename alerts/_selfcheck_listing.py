@@ -23,7 +23,7 @@ assert la.match_perp("NOPE", syms) == ""
 snap = {"binance_symbol": "1000BONKUSDT", "perp_age_days": 400, "quote_volume_musd": 12.3, "funding_pct": 0.01,
         "bybit": "1000BONKUSDT", "bitget": "없음"}
 text, rec = la.build_alert("6642", "2026-10-06T20:36:26+09:00", "BONK", "봉크(BONK) 디지털 자산 추가", stats, {}, snap)
-assert la.DISCLAIMER in text and "1000BONKUSDT" in text and "$12.3M" in text and str(stats["ret7_p50_pct"]) in text
+assert la.DISCLAIMER in text and "1000BONKUSDT" in text and "1천만~1억 달러" in text and "양(+)" in text and str(stats["ret7_p50_pct"]) in text
 assert rec["followup_due_utc"] == "2026-10-14T00:10:00+00:00" and rec["d0_kst"] == "2026-10-06"
 nsnap = {"binance_symbol": "", "bybit": "XYZUSDT", "bitget": "없음"}
 nop, nrec = la.build_alert("1", "2026-10-06T20:36:26+09:00", "XYZ", "t", stats, {}, nsnap)
