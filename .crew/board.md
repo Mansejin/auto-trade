@@ -151,11 +151,11 @@ auto: off
   - 결과: **업비트 현물 KILL / Binance 무기한(Bitget 대용) 경계선 형식 SURVIVE.** 거래 106(train 51 / OOS 55: BTC 23·ETH 20·SOL 12), OOS 연 16.9회(빈도 미달). 업비트 OOS x2 +0.31%·PF 1.30이지만 무작위 79.2백분위 → KILL. 무기한 OOS x2 +0.77%·PF 1.75, 무작위 95.3백분위로 사전 기준 전부 통과. OI 정보 검증 통과(가격만 OOS 업비트 −0.18%/무기한 +0.19%). 의심점: OOS 뒤 절반 무기한 PF 1.01·업비트 0.65, SOL 제외 OOS 평균 업비트 −0.24%/무기한 +0.15%, ETH OOS 음수, 업비트가 무기한보다 2일간 0.51%p 덜 오름(김프 추정). SMA200 아래 OOS PF 0.47/0.60 → "CORE 현금 구간 사용 불가" → docs/research/results/oi-flush-rebound.md, scripts/bt_oi_flush_rebound.py, reports/research-cards/oi-flush-rebound.json
   - 다음: T-032 red-team (무기한 버전)
 
-- [ ] T-032 | to: red-team | from: quant-researcher | open | oi-flush-rebound 무기한(Bitget) 버전 반증
+- [x] T-032 | to: red-team | from: quant-researcher | done | oi-flush-rebound 무기한(Bitget) 버전 반증
   - 참고: docs/research/results/oi-flush-rebound.md, reports/research-cards/oi-flush-rebound.json(`perp` 블록), scripts/bt_oi_flush_rebound.py
   - 볼 것: 무작위 95.3백분위 경계(시드·건수 민감도), SOL 12건 집중(제외 시 +0.15%), OOS 뒤 절반 PF 1.01(최근 소멸?), ETH train→OOS 부호 반전, Binance 가격 대 Bitget 실제 체결·펀딩, OI 타임스탬프 +5분 보정(2026-09 이전 미대조), 업비트 실행이 죽는 이유(김프)
   - 완료 기준: docs/research/redteam/oi-flush-rebound.md, VETO/PASS
-  - 결과:
+  - 결과: **VETO** → 카드 전체 KILL. 수치 정확히 재현(OOS 55건 +0.77% PF 1.75 무작위 95.3). ① 95.3은 시드 20개 중 최댓값(중앙 92.9, 95 이상 1/20), 세 코인 같은 날 군집을 살린 무작위 86~90, 날짜 군집 t 0.97(37개 날짜) ② 카드가 주 판정 실행처를 안 정했고 진입·SMA200 결합이 업비트 전제 → 업비트 KILL 뒤 무기한 통과는 문턱 두 번 쏘기 ③ 2026 PF 0.34(n=14), 롤링 20건 마지막 PF 0.89, 상위 5건 제거 −0.05%, SOL 2건(2024-03-05, 2024-08-05)이 SOL 수익 70%. 룩어헤드는 깨끗(oi_pre 23:55 +0.82%, 낡은 날 전날 제외 영향 0건, 임계값 train 전용). 비용 4배 슬리피지도 PF 1.33. 허용: 자본 0 신호 기록 페이퍼만(포워드 30건+ 군집 무작위 95 이상일 때만 재심), 변형 금지 → docs/research/redteam/oi-flush-rebound.md, scripts/redteam/oi_flush_redteam.py
 
 - [ ] T-027 | to: user | from: product-strategist | blocked | SMA200 포워드 기록 방식·법무 송부 결정
   - 결정할 것: (1) Upbit에 소액(예: 30만~50만원) 투입해 실체결 기록을 남길지, 신호 전용 기록만 할지 (2) docs/legal/sma200-subscription/lawyer-questions.md를 상장 알림 질의서(T-015)와 함께 송부할지
