@@ -133,10 +133,10 @@ auto: off
   - 완료 기준: freeze 카드 2~3개(docs/research/cards/), 각 카드에 하이퍼 ≤3·기각 기준·예상 거래 수(연 24회 이상)·필요 데이터·SMA200 필터와 결합 방식(켜짐/꺼짐 구간)
   - 결과: 카드 3장, 전부 SMA200과 독립 슬리브(게이트 없음, 위/아래 성과는 보고만). ① weekend-gap-fade-btc-eth(주말 ±2% → 월요일 1일 되돌림, 연 30~45회, 데이터 완비 → 먼저 테스트) ② oi-flush-rebound(OI 하위 5% 감소+하락일 → 2일 롱, BTC/ETH/SOL 연 25~35회, OI 이력 quant-data 필요, 가격만 버전 대비 검증 필수) ③ xs-funding-crowding-weekly(알트 펀딩 상위5 숏·하위5 롱, 연 52회, 상폐 포함 전체 무기한 유니버스 quant-data 필요, 역모멘텀 대비 검증 필수) → docs/research/cards/{weekend-gap-fade-btc-eth,oi-flush-rebound,xs-funding-crowding-weekly}.md
 
-- [ ] T-029 | to: quant-researcher | from: edge-scout | open | weekend-gap-fade-btc-eth 카드 그대로 백테스트·반증
+- [x] T-029 | to: quant-researcher | from: edge-scout | done | weekend-gap-fade-btc-eth 카드 그대로 백테스트·반증
   - 참고: docs/research/cards/weekend-gap-fade-btc-eth.md, docs/research/data-catalog.md, scripts/bt_*.py(기존 카드 백테스트 패턴)
   - 완료 기준: docs/research/results/weekend-gap-fade-btc-eth.md + reports/research-cards/*.json, 카드의 기각 기준별 PASS/KILL. 파라미터 튜닝 금지.
-  - 결과:
+  - 결과: **KILL** (사전 기준 9개 중 6개 실패, 기본 비용으로도 같음). 거래 421(OOS 120, 연 36.9회). OOS x2 평균 −0.29%·PF 0.81, 무작위 57.4백분위, ETF 이후 −0.22%, BTC −0.53%/ETH −0.12%, B&H(+0.114%/일, Sharpe 0.90)에 열세. train도 PF 0.84. 손실은 숏(주말 급등 후 월요일 숏, OOS PF 0.53)에서. 사후 분해로 롱만 OOS PF 1.36(n=53)이지만 판정 근거 아님 → 원하면 Scout가 "롱만" v2 카드를 새로 freeze. 업비트 롱만 변형 OOS x2 PF 1.08(보고만). 레드팀 불필요. → docs/research/results/weekend-gap-fade-btc-eth.md, scripts/bt_weekend_gap_fade.py, reports/research-cards/weekend-gap-fade-btc-eth.json
   - 메모: oi-flush-rebound·xs-funding-crowding-weekly는 데이터(quant-data) 필요 → 이 결과 본 뒤 착수
 
 - [ ] T-027 | to: user | from: product-strategist | blocked | SMA200 포워드 기록 방식·법무 송부 결정
