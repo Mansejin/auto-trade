@@ -92,6 +92,45 @@ auto: off
   - 완료 기준: 새 서비스(난독 이름 규칙 준수) DRY_RUN으로 기동, 로그 확인. 실제 채널 발송 전환은 to: user.
   - 결과: 2026-10-08 NAS `p3f8c1a2-w6` 기동(DRY_RUN=true, CHAT_ID 미설정, w1 이미지 재사용·코드 바인드 마운트, env_file 없이 필요한 env만). bootstrap 기록(기존 공지 8건 skip) + 이후 폴링 정상, `logs/listing-alerts.jsonl`·`data/listing-alert-state.json` 생성. 코드 갱신은 sync-files 후 `restart w6`만 → docker-compose.nas.yml(w6), docs/agents/nas-opaque-names.md, deploy/nas/opaque-names.agent.md
 
+- [x] T-021 | to: growth-pr | from: user | done | @listing7d_kr 채널 홍보안 (채널별 규칙·8주 일정·초안·측정)
+  - 참고: docs/sales/upbit-listing-alert/{channel-plan,community-posts,message-templates}.md, pinned.txt, docs/legal/upbit-listing-alert/issues.md
+  - 완료 기준: docs/marketing/listing7d/{channels,calendar,tracking}.md + drafts/
+  - 결과: 우선순위 1 네이버 블로그(링크 허용·상장 때마다 검색 재유입), 2 X(링크 허용·실시간, 첫 코인 글 자동잠금 주의), 3 코인판(타깃 정확하나 텔레그램 모집은 운영진 사전 동의 필수 → 동의 전 링크 없는 통계 글만). 디시·코인니스는 외부 채널 유도 금지로 보류/제외, 쇼츠는 W5 이후(쇼츠 링크 클릭 불가→프로필), Reddit 등 해외는 법무 권고로 제외. 8주 일정은 첫 알림(E1)·첫 7일 결과(R1)·월간 결산·"160개 전략" 이야기에 연동. 채널별 이름 붙은 초대 링크로 측정, 경고 1회 즉시 중단·4주 10명 미만 중단 규칙. 규칙 출처·확인일(2026-10-08)·미확인 표시 → docs/marketing/listing7d/{channels,calendar,tracking}.md, drafts/{community-stats-post,x-thread,shorts-script,blog-seo-outline}.md
+
+- [ ] T-023 | to: user | from: growth-pr | blocked | 홍보 계정·게시 실행 (사람이 직접)
+  - 참고: docs/marketing/listing7d/calendar.md, tracking.md, drafts/
+  - 할 일(W1): ① 텔레그램 채널에 이름 붙은 초대 링크 8개 생성(tracking.md 1절) ② TGStat에 채널 등록(Korea/Korean, 소유 인증은 보류 권장) ③ X 계정 준비(전화 인증·프로필 링크=x-profile) 후 소개 트윗 ④ 코인판 운영진에 링크 허용 문의 메일(calendar.md 하단 초안) ⑤ 네이버 블로그 기둥 글 게시(blog-seo-outline.md, 검색량은 네이버 키워드 도구로 확인)
+  - 할 일(이후): 첫 알림 뒤 코인판(·선택 디시)에 링크 없는 통계 글 1회, 7일 결과 인용 트윗, W3~4 "160개 전략" 스레드, 월간 결산, W5 쇼츠 제작·유튜브 채널 개설, W6 비트맨 카페 가입해 홍보 규정 확인, 매주 월요일 tracking.md 기록
+  - 결정할 것: 위 계정을 만들지(X·네이버 블로그·유튜브·코인판), 실명/브랜드 계정 여부, 스레드 할지
+  - 결과:
+
+- [ ] T-024 | to: legal-compliance | from: growth-pr | open | 홍보물 법무 확인 (상표·광고 해당성)
+  - 참고: docs/marketing/listing7d/drafts/, docs/legal/upbit-listing-alert/issues.md
+  - 질문: (1) 블로그·쇼츠·X에서 "업비트" 이름을 제목·키워드로 쓰는 것, 로고 미사용이면 상표 문제 없는지 (2) 무료 채널을 알리는 홍보물이 유사투자자문 "광고"(제101조의3 필수 기재)로 볼 여지가 있는지, 고지 문구가 충분한지 (3) 홍보물에 과거 분포(133건)를 표로 싣는 것이 쟁점 1(데이터 재배포)과 다른지
+  - 완료 기준: issues.md에 홍보물 절 추가 또는 drafts/ 수정 요청 목록
+  - 결과:
+
+- [x] T-025 | to: sales-marketer | from: growth-pr | done | community-posts.md 분위수를 채널 값과 일치
+  - 참고: docs/sales/upbit-listing-alert/community-posts.md(글 1 표 −28.2/−9.1/+15.0%), config/listing-alert-stats.json(채널 알림 −32.9/−11.2/+12.2%, 기간 2023-07-28..2026-08-24), pinned.txt
+  - 이유: 커뮤니티 글과 채널 알림의 분위수가 다르면 공개 직후 "숫자가 다르다"는 지적을 받는다. 홍보 초안(docs/marketing/listing7d/drafts/)은 채널 값으로 썼다.
+  - 완료 기준: 공개 문서 분위수·기간이 config와 같은 정의로 통일
+  - 결과: 팀장 직접 수정. community-posts.md 표 −32.9/−11.2/+12.2%, 기간 2023-07-28~2026-08-24; message-templates.md 출처를 config/listing-alert-stats.json으로 교체
+
+- [x] T-022 | to: product-strategist | from: user | done | SMA200 필터 유료 구독 상품화 검토 (법무 쟁점 포함)
+  - 참고: docs/product/btc-bear-filter-brief.md, docs/research/redteam/sma200-filter.md, docs/legal/upbit-listing-alert/issues.md
+  - 완료 기준: docs/product/sma200-subscription-brief.md — 팔 수 있는 형태/없는 형태, 경쟁(무료 대체재), 가격 가설, 출시 전 조건, 법무 질문
+  - 결과: 단독 유료 신호 비추천(무료 대체재·연 6.5회·포워드 0·수익 우위 VETO). 추천 = 무료 일일 공개 기록 6개월 → 상장 알림 유료 티어에 월간 "BTC 레짐 리포트" 묶음 + 교육 병행. 봇 키트·호스팅 SaaS 보류(금융위·FIU 회신: API 자동매매 SW 개발·공급도 특금법 VASP 신고 소지), 타인 자금 운용 불가. 실체결 없음(KRW≈0) → 신호 로그 필수·소액 투입은 사용자 결정 → docs/product/sma200-subscription-brief.md, docs/legal/sma200-subscription/lawyer-questions.md
+
+- [ ] T-026 | to: backend-dev | from: product-strategist | open | w1 SMA200 일일 판정 append-only 로그 + 공개 표 1개
+  - 참고: docs/product/sma200-subscription-brief.md 4절·7절(앱개발팀), strategies/core-btc-sma200-filter-1d.json, bot/main.py
+  - 내용: 일봉 확정 후 하루 1줄(date, close, sma200, state, switched, recorded_at, source), 재시작 중복 금지, 진행 중 봉으로 판정하지 않는지 점검. 전환 시에만 텔레그램 1건(채널은 판매팀 결정). 주문 기능·결제·사용자 키 수집 없음.
+  - 완료 기준: 로그 파일 생성·셀프체크 1개, 데스크 읽기 전용 표 또는 정적 파일
+  - 결과:
+
+- [ ] T-027 | to: user | from: product-strategist | blocked | SMA200 포워드 기록 방식·법무 송부 결정
+  - 결정할 것: (1) Upbit에 소액(예: 30만~50만원) 투입해 실체결 기록을 남길지, 신호 전용 기록만 할지 (2) docs/legal/sma200-subscription/lawyer-questions.md를 상장 알림 질의서(T-015)와 함께 송부할지
+  - 결과:
+
 - [x] T-018 | to: user | from: devops | done | 상장 알림 실제 발송 전환 — 2026-10-08 19:10 KST LISTING_ALERT_DRY_RUN=false, CHAT_ID=@listing7d_kr(-1003757343147). 무료 채널만, 유료는 법무 답변 전 금지.
   - 선행: T-015(법무 결정), T-016(채널 개설). 텔레그램 채널 만들고 봇(TELEGRAM_BOT_TOKEN의 봇)을 관리자로 추가.
   - 전환 방법: NAS `/volume1/docker/p3f8c1a2/.env`에 `LISTING_ALERT_CHAT_ID=<채널 ID 또는 @핸들>`, `LISTING_ALERT_DRY_RUN=false` 추가 → `sudo -n /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml up -d --no-deps w6`. 공개 기록 주소가 생기면 `LISTING_ALERT_RECORD_URL`도(compose w6 environment에 한 줄 추가 필요).
