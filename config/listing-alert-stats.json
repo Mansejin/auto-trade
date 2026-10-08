@@ -1,0 +1,25 @@
+{
+  "source": "reports/research-cards/upbit-listing-fade.json OOS events, Binance USDT-M perp daily, entry open D+1 UTC",
+  "period": "2023-07-28..2026-08-24",
+  "n": 133,
+  "ret7_p10_pct": -32.9,
+  "ret7_p50_pct": -11.2,
+  "ret7_p90_pct": 12.2,
+  "high7_ge30_n": 19,
+  "high7_ge30_pct": 14.3,
+  "high7_max_pct": 201.5,
+  "age_buckets": {
+    "<=30d": {
+      "n": 35,
+      "ret7_p50_pct": -17.3
+    },
+    "31-180d": {
+      "n": 33,
+      "ret7_p50_pct": -11.7
+    },
+    ">180d": {
+      "n": 65,
+      "ret7_p50_pct": -5.5
+    }
+  }
+}
