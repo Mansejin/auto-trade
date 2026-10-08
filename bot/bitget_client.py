@@ -209,6 +209,29 @@ class BitgetPrivate:
                 return float(row.get("available") or 0.0)
         return 0.0
 
+    def futures_positions(
+        self,
+        *,
+        category: str = CATEGORY_USDT_FUTURES,
+        symbol: str | None = None,
+    ) -> list[dict[str, Any]]:
+        """GET /api/v3/position/current-position — non-zero UTA futures only."""
+        params: dict[str, Any] = {"category": category}
+        if symbol:
+            params["symbol"] = symbol.upper().replace("/", "").replace(":", "")
+        data = self._request("GET", "/api/v3/position/current-position", params=params)
+        rows = (data or {}).get("list") if isinstance(data, dict) else data
+        out: list[dict[str, Any]] = []
+        for row in rows or []:
+            try:
+                tot = float(row.get("total") or 0)
+            except (TypeError, ValueError):
+                tot = 0.0
+            if tot == 0:
+                continue
+            out.append(row)
+        return out
+
     # --- Trade (UTA place-order) ---
 
     def place_order(

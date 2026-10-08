@@ -1,0 +1,1664 @@
+{
+ "reproduce_oos_x2": {
+  "n": 133,
+  "pf": 1.922,
+  "mean_pct": 5.09,
+  "median_pct": 8.68,
+  "win_pct": 63.9
+ },
+ "n_full": 154,
+ "timing": {
+  "oos_with_notice": 132,
+  "hours_notice_to_D1_entry": {
+   "min": 13.6,
+   "p10": 15.7,
+   "median": 19.0,
+   "max": 9280.6
+  },
+  "entry_before_notice": [],
+  "entry_lt_12h_after_notice": 0,
+  "entry_lt_24h_after_notice": 123,
+  "first_candle_date_ne_notice_utc_date": [
+   "BIGTIME",
+   "MOVE",
+   "ME",
+   "VANA",
+   "ANIME",
+   "LAYER",
+   "WAL",
+   "CC",
+   "IO"
+  ],
+  "notice_subset_D1_baseline": {
+   "n": 132,
+   "pf": 1.895,
+   "mean_pct": 4.98,
+   "median_pct": 8.68,
+   "win_pct": 63.6
+  },
+  "notice_subset_notice_plus24h": {
+   "n": 132,
+   "pf": 1.934,
+   "mean_pct": 4.86,
+   "median_pct": 7.75,
+   "win_pct": 65.9
+  },
+  "oos_D2_all": {
+   "n": 133,
+   "pf": 1.723,
+   "mean_pct": 4.15,
+   "median_pct": 7.64,
+   "win_pct": 65.4
+  },
+  "oos_D3_all": {
+   "n": 133,
+   "pf": 1.769,
+   "mean_pct": 3.83,
+   "median_pct": 5.11,
+   "win_pct": 65.4
+  },
+  "oos_D0_all_for_reference": {
+   "n": 133,
+   "pf": 0.236,
+   "mean_pct": -17.65,
+   "median_pct": -9.16,
+   "win_pct": 32.3
+  }
+ },
+ "perp_age_at_listing": {
+  "<=7d": {
+   "n": 21,
+   "pf": 1.493,
+   "mean_pct": 4.37,
+   "median_pct": 8.68,
+   "win_pct": 61.9
+  },
+  "8-30d": {
+   "n": 14,
+   "pf": 12.698,
+   "mean_pct": 13.39,
+   "median_pct": 13.52,
+   "win_pct": 85.7
+  },
+  "31-180d": {
+   "n": 33,
+   "pf": 1.331,
+   "mean_pct": 2.98,
+   "median_pct": 9.5,
+   "win_pct": 60.6
+  },
+  ">180d": {
+   "n": 65,
+   "pf": 2.272,
+   "mean_pct": 4.61,
+   "median_pct": 3.37,
+   "win_pct": 61.5
+  },
+  "entry_before_perp_first_bar": 0
+ },
+ "entry_day_perp_quote_vol_usd": {
+  "min": 0,
+  "p10": 25901032,
+  "median": 180201039
+ },
+ "funding": {
+  "oos_mean_funding_contrib_pct": -3.585,
+  "min_pct": -56.67,
+  "max_pct": 1.92,
+  "events_without_settlements_in_window": [
+   "RAY",
+   "XCN",
+   "B3",
+   "AI"
+  ],
+  "oos_no_funding_x2": {
+   "n": 133,
+   "pf": 3.084,
+   "mean_pct": 8.68,
+   "median_pct": 10.8,
+   "win_pct": 69.9
+  },
+  "multiplier_symbols": [
+   {
+    "ticker": "PEPE",
+    "sym": "1000PEPEUSDT",
+    "net_pct": -0.16,
+    "fund_pct": 0.379
+   },
+   {
+    "ticker": "BONK",
+    "sym": "1000BONKUSDT",
+    "net_pct": 11.41,
+    "fund_pct": 0.493
+   },
+   {
+    "ticker": "0G",
+    "sym": "0GUSDT",
+    "net_pct": 29.46,
+    "fund_pct": -9.844
+   }
+  ]
+ },
+ "ticker_collision_check": {
+  "n": 127,
+  "ratio_min": [
+   0.979,
+   "ENA",
+   "ENAUSDT"
+  ],
+  "ratio_max": [
+   9.075,
+   "RAY",
+   "RAYUSDT"
+  ],
+  "outside_0.8_1.4": [
+   [
+    2.016,
+    "AI",
+    "AIUSDT"
+   ],
+   [
+    6.176,
+    "B3",
+    "B3USDT"
+   ],
+   [
+    9.075,
+    "RAY",
+    "RAYUSDT"
+   ]
+  ]
+ },
+ "parsing": {
+  "first_only_after_2022_01_11": [
+   "AVAX",
+   "DATA",
+   "G",
+   "MANTRA",
+   "MASK",
+   "MNT",
+   "PYTH",
+   "SHIB",
+   "USDT"
+  ],
+  "notice_only_total": [
+   "BONK",
+   "DRIFT",
+   "GAL",
+   "IP",
+   "OM",
+   "OMNI",
+   "PONS",
+   "STG",
+   "UXLINK",
+   "WEMIX"
+  ]
+ },
+ "by_year_x2": {
+  "2020": {
+   "n": 4,
+   "pf": 0.088,
+   "mean_pct": -13.31,
+   "median_pct": -4.08,
+   "win_pct": 25.0
+  },
+  "2021": {
+   "n": 7,
+   "pf": 1.793,
+   "mean_pct": 3.43,
+   "median_pct": 1.43,
+   "win_pct": 71.4
+  },
+  "2022": {
+   "n": 3,
+   "pf": 4.015,
+   "mean_pct": 15.0,
+   "median_pct": -6.92,
+   "win_pct": 33.3
+  },
+  "2023": {
+   "n": 10,
+   "pf": 7.237,
+   "mean_pct": 7.49,
+   "median_pct": 10.55,
+   "win_pct": 80.0
+  },
+  "2024": {
+   "n": 25,
+   "pf": 1.694,
+   "mean_pct": 2.99,
+   "median_pct": 0.55,
+   "win_pct": 52.0
+  },
+  "2025": {
+   "n": 62,
+   "pf": 1.803,
+   "mean_pct": 5.5,
+   "median_pct": 10.53,
+   "win_pct": 64.5
+  },
+  "2026": {
+   "n": 43,
+   "pf": 2.288,
+   "mean_pct": 5.82,
+   "median_pct": 5.31,
+   "win_pct": 69.8
+  }
+ },
+ "top5_removed_oos": {
+  "n": 128,
+  "pf": 1.648,
+  "mean_pct": 3.72,
+  "median_pct": 6.25,
+  "win_pct": 62.5
+ },
+ "top10_removed_oos": {
+  "n": 123,
+  "pf": 1.438,
+  "mean_pct": 2.61,
+  "median_pct": 5.31,
+  "win_pct": 61.0
+ },
+ "share_2025_26_oos": 0.789,
+ "oos_2023_24_only": {
+  "n": 28,
+  "pf": 1.744,
+  "mean_pct": 3.07,
+  "median_pct": 0.55,
+  "win_pct": 53.6
+ },
+ "oos_week_clustered": {
+  "n": 87,
+  "pf": 2.188,
+  "mean_pct": 5.01,
+  "median_pct": 6.63,
+  "win_pct": 71.3,
+  "t_stat": 2.74
+ },
+ "oos_month_means_pct": {
+  "2023-07": 0.2,
+  "2023-10": 18.7,
+  "2023-12": -7.8,
+  "2024-02": 2.8,
+  "2024-05": 6.7,
+  "2024-06": -0.9,
+  "2024-07": 0.0,
+  "2024-08": -3.6,
+  "2024-09": -35.9,
+  "2024-10": 2.8,
+  "2024-11": 14.5,
+  "2024-12": 17.0,
+  "2025-01": 26.0,
+  "2025-02": 21.2,
+  "2025-03": -3.0,
+  "2025-04": 12.2,
+  "2025-05": 9.3,
+  "2025-06": -4.6,
+  "2025-07": 5.1,
+  "2025-08": 5.6,
+  "2025-09": 1.9,
+  "2025-10": 5.2,
+  "2025-11": 9.3,
+  "2025-12": -6.9,
+  "2026-01": -13.4,
+  "2026-02": 11.8,
+  "2026-03": 10.4,
+  "2026-04": 6.2,
+  "2026-05": 12.8,
+  "2026-06": 19.8,
+  "2026-07": 10.3,
+  "2026-08": -4.8
+ },
+ "beta": {
+  "oos_alt_index_short_top30_x2": {
+   "n": 133,
+   "pf": 1.319,
+   "mean_pct": 0.94,
+   "median_pct": 1.28,
+   "win_pct": 55.6
+  },
+  "oos_excess_vs_index_short": {
+   "n": 133,
+   "pf": 1.725,
+   "mean_pct": 4.15,
+   "median_pct": 6.81,
+   "win_pct": 69.2
+  },
+  "oos_excess_vs_btc_short_mean_pct": 5.52,
+  "excess_by_year": {
+   "2023": {
+    "n": 3,
+    "pf": 9.25,
+    "mean_pct": 11.28,
+    "median_pct": 9.83,
+    "win_pct": 66.7
+   },
+   "2024": {
+    "n": 25,
+    "pf": 2.241,
+    "mean_pct": 5.62,
+    "median_pct": 4.89,
+    "win_pct": 68.0
+   },
+   "2025": {
+    "n": 62,
+    "pf": 1.591,
+    "mean_pct": 3.7,
+    "median_pct": 7.54,
+    "win_pct": 71.0
+   },
+   "2026": {
+    "n": 43,
+    "pf": 1.58,
+    "mean_pct": 3.45,
+    "median_pct": 4.56,
+    "win_pct": 67.4
+   }
+  },
+  "random_top100_alt_short_same_windows": {
+   "pct_rank_of_event_mean": 100.0,
+   "random_mean_pct": 0.84,
+   "random_p95_pct": 2.62
+  },
+  "new_listing_control_short": {
+   "n": 133,
+   "pf": 1.189,
+   "mean_pct": 0.81,
+   "median_pct": 0.91,
+   "win_pct": 53.4
+  },
+  "excess_vs_new_listing_control": {
+   "n": 133,
+   "pf": 1.681,
+   "mean_pct": 4.28,
+   "median_pct": 7.19,
+   "win_pct": 65.4
+  }
+ },
+ "sizing_oos": {
+  "L1": {
+   "final_equity": 23.18,
+   "mdd_pct": -71.8,
+   "worst_month": [
+    "2026-01",
+    -62.7
+   ],
+   "liquidations": 4,
+   "stops": 0,
+   "ruin_date": null,
+   "max_gross_x_equity": 4.28,
+   "by_year_pct": {
+    "2023": 9.7,
+    "2024": 28.0,
+    "2025": 607.1,
+    "2026": 133.5
+   }
+  },
+  "L2": {
+   "final_equity": -0.024,
+   "mdd_pct": -100.2,
+   "worst_month": [
+    "2025-11",
+    -100.6
+   ],
+   "liquidations": 9,
+   "stops": 0,
+   "ruin_date": "2025-11-25",
+   "max_gross_x_equity": 19.45,
+   "by_year_pct": {
+    "2023": 16.5,
+    "2024": 2.7,
+    "2025": -102.0
+   }
+  },
+  "L3": {
+   "final_equity": -0.092,
+   "mdd_pct": -104.3,
+   "worst_month": [
+    "2024-09",
+    -107.0
+   ],
+   "liquidations": 2,
+   "stops": 0,
+   "ruin_date": "2024-09-18",
+   "max_gross_x_equity": 19.79,
+   "by_year_pct": {
+    "2023": 20.4,
+    "2024": -107.7
+   }
+  },
+  "L1_stop30_NOT_FROZEN": {
+   "final_equity": 29.034,
+   "mdd_pct": -63.2,
+   "worst_month": [
+    "2024-09",
+    -45.0
+   ],
+   "liquidations": 0,
+   "stops": 19,
+   "ruin_date": null,
+   "max_gross_x_equity": 2.23,
+   "by_year_pct": {
+    "2023": 9.7,
+    "2024": 27.7,
+    "2025": 400.5,
+    "2026": 314.0
+   }
+  },
+  "L2_stop30_NOT_FROZEN": {
+   "final_equity": 46.087,
+   "mdd_pct": -94.3,
+   "worst_month": [
+    "2024-09",
+    -79.2
+   ],
+   "liquidations": 0,
+   "stops": 19,
+   "ruin_date": null,
+   "max_gross_x_equity": 6.25,
+   "by_year_pct": {
+    "2023": 16.5,
+    "2024": -7.0,
+    "2025": 417.1,
+    "2026": 722.5
+   }
+  }
+ },
+ "sizing_full": {
+  "L1": {
+   "final_equity": 45.482,
+   "mdd_pct": -71.8,
+   "worst_month": [
+    "2026-01",
+    -62.7
+   ],
+   "liquidations": 4,
+   "stops": 0,
+   "ruin_date": null,
+   "max_gross_x_equity": 4.28,
+   "by_year_pct": {
+    "2020": -26.6,
+    "2021": 7.2,
+    "2022": 37.0,
+    "2023": 99.7,
+    "2024": 28.0,
+    "2025": 607.1,
+    "2026": 133.5
+   }
+  },
+  "L2": {
+   "final_equity": -0.033,
+   "mdd_pct": -100.2,
+   "worst_month": [
+    "2025-11",
+    -100.6
+   ],
+   "liquidations": 10,
+   "stops": 0,
+   "ruin_date": "2025-11-25",
+   "max_gross_x_equity": 19.45,
+   "by_year_pct": {
+    "2020": -71.8,
+    "2021": 1.3,
+    "2022": 59.2,
+    "2023": 260.8,
+    "2024": 2.7,
+    "2025": -102.0
+   }
+  },
+  "L3": {
+   "final_equity": -0.008,
+   "mdd_pct": -100.6,
+   "worst_month": [
+    "2024-09",
+    -107.0
+   ],
+   "liquidations": 4,
+   "stops": 0,
+   "ruin_date": "2024-09-18",
+   "max_gross_x_equity": 19.79,
+   "by_year_pct": {
+    "2020": -98.8,
+    "2021": -19.6,
+    "2022": 68.5,
+    "2023": 500.1,
+    "2024": -107.7
+   }
+  }
+ },
+ "oos_max_adverse_excursion": {
+  "p50_pct": 8.2,
+  "p90_pct": 47.3,
+  "max_pct": 201.5,
+  "n_ge_32pct(L3 liq)": 19,
+  "n_ge_49pct(L2 liq)": 12,
+  "n_ge_30pct": 19
+ },
+ "clean": {
+  "dropped_dead_perp": [
+   "AI",
+   "B3",
+   "GAL",
+   "RAY",
+   "XCN"
+  ],
+  "dropped_ambiguous_date": [
+   "BIGTIME",
+   "IO"
+  ],
+  "oos_x2": {
+   "n": 126,
+   "pf": 2.018,
+   "mean_pct": 5.58,
+   "median_pct": 9.5,
+   "win_pct": 66.7
+  },
+  "sizing_L1": {
+   "final_equity": 28.004,
+   "mdd_pct": -71.8,
+   "worst_month": [
+    "2026-01",
+    -62.7
+   ],
+   "liquidations": 4,
+   "stops": 0,
+   "ruin_date": null,
+   "max_gross_x_equity": 4.28,
+   "by_year_pct": {
+    "2023": 9.7,
+    "2024": 62.0,
+    "2025": 646.5,
+    "2026": 111.1
+   }
+  }
+ },
+ "perp_after_listing_oos": {
+  "all": {
+   "n": 38,
+   "pf": 3.067,
+   "mean_pct": 10.52,
+   "median_pct": 14.9,
+   "win_pct": 76.3
+  },
+  "perp_within_7d": {
+   "n": 28,
+   "pf": 4.478,
+   "mean_pct": 14.65,
+   "median_pct": 21.46,
+   "win_pct": 89.3
+  },
+  "perp_after_7d": {
+   "n": 10,
+   "pf": 0.86,
+   "mean_pct": -1.05,
+   "median_pct": -0.89,
+   "win_pct": 40.0
+  }
+ },
+ "oos_events": [
+  {
+   "t": "IMX",
+   "D": "2023-07-28",
+   "sym": "IMXUSDT",
+   "age": 532,
+   "net": 0.2,
+   "idx": 4.3
+  },
+  {
+   "t": "MINA",
+   "D": "2023-10-24",
+   "sym": "MINAUSDT",
+   "age": 259,
+   "net": 18.7,
+   "idx": -9.4
+  },
+  {
+   "t": "ASTR",
+   "D": "2023-12-18",
+   "sym": "ASTRUSDT",
+   "age": 307,
+   "net": -7.8,
+   "idx": -17.6
+  },
+  {
+   "t": "ID",
+   "D": "2024-02-07",
+   "sym": "IDUSDT",
+   "age": 321,
+   "net": -14.3,
+   "idx": -15.8
+  },
+  {
+   "t": "PYTH",
+   "D": "2024-02-27",
+   "sym": "PYTHUSDT",
+   "age": 97,
+   "net": 19.9,
+   "idx": -4.9
+  },
+  {
+   "t": "OMNI",
+   "D": "2024-05-03",
+   "sym": "OMNIUSDT",
+   "age": 16,
+   "net": 13.2,
+   "idx": 3.4
+  },
+  {
+   "t": "ZETA",
+   "D": "2024-05-03",
+   "sym": "ZETAUSDT",
+   "age": 91,
+   "net": -6.1,
+   "idx": 3.4
+  },
+  {
+   "t": "AUCTION",
+   "D": "2024-05-29",
+   "sym": "AUCTIONUSDT",
+   "age": 166,
+   "net": 9.3,
+   "idx": -5.2
+  },
+  {
+   "t": "STG",
+   "D": "2024-05-30",
+   "sym": "STGUSDT",
+   "age": 644,
+   "net": 10.5,
+   "idx": -4.4
+  },
+  {
+   "t": "ONDO",
+   "D": "2024-06-14",
+   "sym": "ONDOUSDT",
+   "age": 146,
+   "net": -0.9,
+   "idx": 10.9
+  },
+  {
+   "t": "JUP",
+   "D": "2024-07-04",
+   "sym": "JUPUSDT",
+   "age": 155,
+   "net": -1.3,
+   "idx": -3.8
+  },
+  {
+   "t": "ENS",
+   "D": "2024-07-09",
+   "sym": "ENSUSDT",
+   "age": 952,
+   "net": 1.6,
+   "idx": -19.5
+  },
+  {
+   "t": "GAL",
+   "D": "2024-07-11",
+   "sym": "GALUSDT",
+   "age": 798,
+   "net": -0.2,
+   "idx": -18.9
+  },
+  {
+   "t": "PENDLE",
+   "D": "2024-08-06",
+   "sym": "PENDLEUSDT",
+   "age": 375,
+   "net": -6.8,
+   "idx": -9.4
+  },
+  {
+   "t": "USDC",
+   "D": "2024-08-30",
+   "sym": "USDCUSDT",
+   "age": 537,
+   "net": -0.4,
+   "idx": 10.2
+  },
+  {
+   "t": "BIGTIME",
+   "D": "2024-09-05",
+   "sym": "BIGTIMEUSDT",
+   "age": 329,
+   "net": -41.7,
+   "idx": -8.4
+  },
+  {
+   "t": "CKB",
+   "D": "2024-09-13",
+   "sym": "CKBUSDT",
+   "age": 563,
+   "net": -30.2,
+   "idx": -6.1
+  },
+  {
+   "t": "W",
+   "D": "2024-10-02",
+   "sym": "WUSDT",
+   "age": 182,
+   "net": 11.7,
+   "idx": -1.3
+  },
+  {
+   "t": "INJ",
+   "D": "2024-10-17",
+   "sym": "INJUSDT",
+   "age": 792,
+   "net": 4.2,
+   "idx": -0.7
+  },
+  {
+   "t": "MEW",
+   "D": "2024-10-21",
+   "sym": "MEWUSDT",
+   "age": 126,
+   "net": -5.3,
+   "idx": 5.8
+  },
+  {
+   "t": "UNI",
+   "D": "2024-10-22",
+   "sym": "UNIUSDT",
+   "age": 1495,
+   "net": 0.5,
+   "idx": 1.4
+  },
+  {
+   "t": "AGLD",
+   "D": "2024-11-13",
+   "sym": "AGLDUSDT",
+   "age": 473,
+   "net": 32.2,
+   "idx": 0.0
+  },
+  {
+   "t": "PEPE",
+   "D": "2024-11-14",
+   "sym": "1000PEPEUSDT",
+   "age": 559,
+   "net": -0.2,
+   "idx": -12.2
+  },
+  {
+   "t": "BONK",
+   "D": "2024-11-20",
+   "sym": "1000BONKUSDT",
+   "age": 364,
+   "net": 11.4,
+   "idx": -15.5
+  },
+  {
+   "t": "RENDER",
+   "D": "2024-12-05",
+   "sym": "RENDERUSDT",
+   "age": 132,
+   "net": 6.2,
+   "idx": 3.7
+  },
+  {
+   "t": "MOVE",
+   "D": "2024-12-10",
+   "sym": "MOVEUSDT",
+   "age": 1,
+   "net": 13.6,
+   "idx": -4.1
+  },
+  {
+   "t": "ME",
+   "D": "2024-12-11",
+   "sym": "MEUSDT",
+   "age": 1,
+   "net": 48.3,
+   "idx": 14.2
+  },
+  {
+   "t": "VANA",
+   "D": "2024-12-17",
+   "sym": "VANAUSDT",
+   "age": 1,
+   "net": -0.3,
+   "idx": 11.4
+  },
+  {
+   "t": "ANIME",
+   "D": "2025-01-24",
+   "sym": "ANIMEUSDT",
+   "age": 1,
+   "net": 26.0,
+   "idx": 4.1
+  },
+  {
+   "t": "VIRTUAL",
+   "D": "2025-01-31",
+   "sym": "VIRTUALUSDT",
+   "age": 52,
+   "net": 41.6,
+   "idx": 27.5
+  },
+  {
+   "t": "LAYER",
+   "D": "2025-02-12",
+   "sym": "LAYERUSDT",
+   "age": 1,
+   "net": 29.3,
+   "idx": 5.6
+  },
+  {
+   "t": "TRUMP",
+   "D": "2025-02-13",
+   "sym": "TRUMPUSDT",
+   "age": 26,
+   "net": -5.1,
+   "idx": -0.7
+  },
+  {
+   "t": "JTO",
+   "D": "2025-02-21",
+   "sym": "JTOUSDT",
+   "age": 441,
+   "net": 13.0,
+   "idx": 8.5
+  },
+  {
+   "t": "COW",
+   "D": "2025-02-25",
+   "sym": "COWUSDT",
+   "age": 111,
+   "net": 27.4,
+   "idx": 4.8
+  },
+  {
+   "t": "KAITO",
+   "D": "2025-03-05",
+   "sym": "KAITOUSDT",
+   "age": 13,
+   "net": 12.8,
+   "idx": 12.0
+  },
+  {
+   "t": "ARKM",
+   "D": "2025-03-11",
+   "sym": "ARKMUSDT",
+   "age": 592,
+   "net": -5.2,
+   "idx": -8.3
+  },
+  {
+   "t": "ORCA",
+   "D": "2025-03-21",
+   "sym": "ORCAUSDT",
+   "age": 105,
+   "net": -1.1,
+   "idx": -1.4
+  },
+  {
+   "t": "WAL",
+   "D": "2025-03-28",
+   "sym": "WALUSDT",
+   "age": 1,
+   "net": -18.5,
+   "idx": 9.6
+  },
+  {
+   "t": "COMP",
+   "D": "2025-04-01",
+   "sym": "COMPUSDT",
+   "age": 1736,
+   "net": 15.0,
+   "idx": 19.6
+  },
+  {
+   "t": "FIL",
+   "D": "2025-04-04",
+   "sym": "FILUSDT",
+   "age": 1631,
+   "net": 11.0,
+   "idx": 3.1
+  },
+  {
+   "t": "WCT",
+   "D": "2025-04-16",
+   "sym": "WCTUSDT",
+   "age": 1,
+   "net": 6.1,
+   "idx": -17.6
+  },
+  {
+   "t": "SIGN",
+   "D": "2025-04-29",
+   "sym": "SIGNUSDT",
+   "age": 1,
+   "net": 16.8,
+   "idx": 7.1
+  },
+  {
+   "t": "TIA",
+   "D": "2025-05-08",
+   "sym": "TIAUSDT",
+   "age": 555,
+   "net": -0.7,
+   "idx": -4.8
+  },
+  {
+   "t": "PENGU",
+   "D": "2025-05-09",
+   "sym": "PENGUUSDT",
+   "age": 143,
+   "net": 9.5,
+   "idx": 2.3
+  },
+  {
+   "t": "OM",
+   "D": "2025-05-21",
+   "sym": "OMUSDT",
+   "age": 463,
+   "net": 5.3,
+   "idx": 1.3
+  },
+  {
+   "t": "LPT",
+   "D": "2025-05-30",
+   "sym": "LPTUSDT",
+   "age": 1296,
+   "net": 23.2,
+   "idx": 3.0
+  },
+  {
+   "t": "RVN",
+   "D": "2025-06-05",
+   "sym": "RVNUSDT",
+   "age": 1563,
+   "net": -54.3,
+   "idx": -5.4
+  },
+  {
+   "t": "AXL",
+   "D": "2025-06-10",
+   "sym": "AXLUSDT",
+   "age": 466,
+   "net": 10.5,
+   "idx": 17.7
+  },
+  {
+   "t": "ALT",
+   "D": "2025-06-16",
+   "sym": "ALTUSDT",
+   "age": 508,
+   "net": 9.7,
+   "idx": 5.4
+  },
+  {
+   "t": "RAY",
+   "D": "2025-06-19",
+   "sym": "RAYUSDT",
+   "age": 1399,
+   "net": -0.4,
+   "idx": 6.5
+  },
+  {
+   "t": "NEWT",
+   "D": "2025-06-24",
+   "sym": "NEWTUSDT",
+   "age": 5,
+   "net": 11.4,
+   "idx": 4.6
+  },
+  {
+   "t": "MOODENG",
+   "D": "2025-07-03",
+   "sym": "MOODENGUSDT",
+   "age": 251,
+   "net": -14.2,
+   "idx": -12.1
+  },
+  {
+   "t": "HYPER",
+   "D": "2025-07-10",
+   "sym": "HYPERUSDT",
+   "age": 79,
+   "net": 22.7,
+   "idx": -11.0
+  },
+  {
+   "t": "ENA",
+   "D": "2025-07-11",
+   "sym": "ENAUSDT",
+   "age": 465,
+   "net": -15.7,
+   "idx": -10.8
+  },
+  {
+   "t": "SYRUP",
+   "D": "2025-07-25",
+   "sym": "SYRUPUSDT",
+   "age": 79,
+   "net": 25.9,
+   "idx": 13.1
+  },
+  {
+   "t": "OP",
+   "D": "2025-07-28",
+   "sym": "OPUSDT",
+   "age": 1153,
+   "net": 6.7,
+   "idx": 4.0
+  },
+  {
+   "t": "PROVE",
+   "D": "2025-08-06",
+   "sym": "PROVEUSDT",
+   "age": 1,
+   "net": -36.3,
+   "idx": -15.8
+  },
+  {
+   "t": "IP",
+   "D": "2025-08-08",
+   "sym": "IPUSDT",
+   "age": 176,
+   "net": 14.0,
+   "idx": 2.1
+  },
+  {
+   "t": "CYBER",
+   "D": "2025-08-12",
+   "sym": "CYBERUSDT",
+   "age": 722,
+   "net": 23.2,
+   "idx": 10.8
+  },
+  {
+   "t": "API3",
+   "D": "2025-08-19",
+   "sym": "API3USDT",
+   "age": 1274,
+   "net": -7.9,
+   "idx": -2.8
+  },
+  {
+   "t": "AERO",
+   "D": "2025-08-22",
+   "sym": "AEROUSDT",
+   "age": 261,
+   "net": 25.1,
+   "idx": 11.3
+  },
+  {
+   "t": "TREE",
+   "D": "2025-08-28",
+   "sym": "TREEUSDT",
+   "age": 30,
+   "net": 15.2,
+   "idx": 7.3
+  },
+  {
+   "t": "WLFI",
+   "D": "2025-09-01",
+   "sym": "WLFIUSDT",
+   "age": 9,
+   "net": 8.8,
+   "idx": -11.1
+  },
+  {
+   "t": "RED",
+   "D": "2025-09-05",
+   "sym": "REDUSDT",
+   "age": 183,
+   "net": -6.3,
+   "idx": -14.1
+  },
+  {
+   "t": "WLD",
+   "D": "2025-09-09",
+   "sym": "WLDUSDT",
+   "age": 778,
+   "net": 21.2,
+   "idx": -3.0
+  },
+  {
+   "t": "LINEA",
+   "D": "2025-09-10",
+   "sym": "LINEAUSDT",
+   "age": 9,
+   "net": -10.9,
+   "idx": -3.9
+  },
+  {
+   "t": "OPEN",
+   "D": "2025-09-10",
+   "sym": "OPENUSDT",
+   "age": 2,
+   "net": 16.9,
+   "idx": -3.9
+  },
+  {
+   "t": "PUMP",
+   "D": "2025-09-11",
+   "sym": "PUMPUSDT",
+   "age": 63,
+   "net": -32.6,
+   "idx": -4.1
+  },
+  {
+   "t": "AVNT",
+   "D": "2025-09-15",
+   "sym": "AVNTUSDT",
+   "age": 6,
+   "net": -66.7,
+   "idx": 5.3
+  },
+  {
+   "t": "LA",
+   "D": "2025-09-18",
+   "sym": "LAUSDT",
+   "age": 105,
+   "net": 9.7,
+   "idx": 17.6
+  },
+  {
+   "t": "0G",
+   "D": "2025-09-22",
+   "sym": "0GUSDT",
+   "age": 5,
+   "net": 29.5,
+   "idx": 2.8
+  },
+  {
+   "t": "SUN",
+   "D": "2025-09-22",
+   "sym": "SUNUSDT",
+   "age": 396,
+   "net": 21.3,
+   "idx": 2.8
+  },
+  {
+   "t": "XPL",
+   "D": "2025-09-25",
+   "sym": "XPLUSDT",
+   "age": 34,
+   "net": 26.7,
+   "idx": -11.9
+  },
+  {
+   "t": "SUPER",
+   "D": "2025-09-29",
+   "sym": "SUPERUSDT",
+   "age": 673,
+   "net": 5.9,
+   "idx": -10.7
+  },
+  {
+   "t": "SOMI",
+   "D": "2025-10-01",
+   "sym": "SOMIUSDT",
+   "age": 37,
+   "net": -1.9,
+   "idx": -2.2
+  },
+  {
+   "t": "DOOD",
+   "D": "2025-10-07",
+   "sym": "DOODUSDT",
+   "age": 151,
+   "net": 22.8,
+   "idx": 15.2
+  },
+  {
+   "t": "IN",
+   "D": "2025-10-10",
+   "sym": "INUSDT",
+   "age": 64,
+   "net": 20.4,
+   "idx": 2.1
+  },
+  {
+   "t": "YGG",
+   "D": "2025-10-15",
+   "sym": "YGGUSDT",
+   "age": 802,
+   "net": 19.2,
+   "idx": 6.4
+  },
+  {
+   "t": "ZORA",
+   "D": "2025-10-17",
+   "sym": "ZORAUSDT",
+   "age": 84,
+   "net": -5.4,
+   "idx": -5.5
+  },
+  {
+   "t": "BIO",
+   "D": "2025-10-20",
+   "sym": "BIOUSDT",
+   "age": 290,
+   "net": -2.7,
+   "idx": -3.0
+  },
+  {
+   "t": "F",
+   "D": "2025-10-21",
+   "sym": "FUSDT",
+   "age": 125,
+   "net": -99.9,
+   "idx": -2.4
+  },
+  {
+   "t": "ORDER",
+   "D": "2025-10-24",
+   "sym": "ORDERUSDT",
+   "age": 28,
+   "net": 28.9,
+   "idx": 4.3
+  },
+  {
+   "t": "KERNEL",
+   "D": "2025-10-28",
+   "sym": "KERNELUSDT",
+   "age": 197,
+   "net": 39.3,
+   "idx": 17.0
+  },
+  {
+   "t": "ENSO",
+   "D": "2025-10-29",
+   "sym": "ENSOUSDT",
+   "age": 15,
+   "net": 31.6,
+   "idx": 13.9
+  },
+  {
+   "t": "KITE",
+   "D": "2025-11-03",
+   "sym": "KITEUSDT",
+   "age": 5,
+   "net": -15.0,
+   "idx": -8.8
+  },
+  {
+   "t": "MMT",
+   "D": "2025-11-05",
+   "sym": "MMTUSDT",
+   "age": 1,
+   "net": 38.9,
+   "idx": 2.7
+  },
+  {
+   "t": "MON",
+   "D": "2025-11-24",
+   "sym": "MONUSDT",
+   "age": 45,
+   "net": -0.9,
+   "idx": 10.8
+  },
+  {
+   "t": "PLUME",
+   "D": "2025-11-26",
+   "sym": "PLUMEUSDT",
+   "age": 250,
+   "net": 14.2,
+   "idx": 4.6
+  },
+  {
+   "t": "WET",
+   "D": "2025-12-15",
+   "sym": "WETUSDT",
+   "age": 5,
+   "net": -22.6,
+   "idx": 2.0
+  },
+  {
+   "t": "ZKP",
+   "D": "2025-12-26",
+   "sym": "ZKPUSDT",
+   "age": 5,
+   "net": 8.7,
+   "idx": -11.9
+  },
+  {
+   "t": "ZK",
+   "D": "2026-01-06",
+   "sym": "ZKUSDT",
+   "age": 568,
+   "net": -0.1,
+   "idx": 4.2
+  },
+  {
+   "t": "BREV",
+   "D": "2026-01-07",
+   "sym": "BREVUSDT",
+   "age": 8,
+   "net": 13.5,
+   "idx": -1.0
+  },
+  {
+   "t": "SENT",
+   "D": "2026-01-29",
+   "sym": "SENTUSDT",
+   "age": 76,
+   "net": -53.5,
+   "idx": 28.7
+  },
+  {
+   "t": "BIRB",
+   "D": "2026-02-03",
+   "sym": "BIRBUSDT",
+   "age": 5,
+   "net": 3.0,
+   "idx": 11.0
+  },
+  {
+   "t": "TAO",
+   "D": "2026-02-16",
+   "sym": "TAOUSDT",
+   "age": 676,
+   "net": 13.7,
+   "idx": 9.2
+  },
+  {
+   "t": "AZTEC",
+   "D": "2026-02-20",
+   "sym": "AZTECUSDT",
+   "age": 9,
+   "net": 18.2,
+   "idx": 4.8
+  },
+  {
+   "t": "ESP",
+   "D": "2026-02-24",
+   "sym": "ESPUSDT",
+   "age": 14,
+   "net": 20.7,
+   "idx": -4.3
+  },
+  {
+   "t": "SKR",
+   "D": "2026-02-24",
+   "sym": "SKRUSDT",
+   "age": 33,
+   "net": 3.3,
+   "idx": -4.3
+  },
+  {
+   "t": "ICP",
+   "D": "2026-03-11",
+   "sym": "ICPUSDT",
+   "age": 1261,
+   "net": 2.7,
+   "idx": -3.6
+  },
+  {
+   "t": "ETHFI",
+   "D": "2026-03-19",
+   "sym": "ETHFIUSDT",
+   "age": 731,
+   "net": 3.4,
+   "idx": 2.6
+  },
+  {
+   "t": "KAT",
+   "D": "2026-03-26",
+   "sym": "KATUSDT",
+   "age": 24,
+   "net": 25.1,
+   "idx": 5.5
+  },
+  {
+   "t": "SKY",
+   "D": "2026-03-31",
+   "sym": "SKYUSDT",
+   "age": 203,
+   "net": -5.6,
+   "idx": -4.9
+  },
+  {
+   "t": "ZAMA",
+   "D": "2026-04-14",
+   "sym": "ZAMAUSDT",
+   "age": 95,
+   "net": 10.3,
+   "idx": -1.2
+  },
+  {
+   "t": "CC",
+   "D": "2026-04-15",
+   "sym": "CCUSDT",
+   "age": 166,
+   "net": -1.5,
+   "idx": 2.2
+  },
+  {
+   "t": "SOON",
+   "D": "2026-04-17",
+   "sym": "SOONUSDT",
+   "age": 329,
+   "net": 10.9,
+   "idx": 0.4
+  },
+  {
+   "t": "PIEVERSE",
+   "D": "2026-04-20",
+   "sym": "PIEVERSEUSDT",
+   "age": 157,
+   "net": 24.7,
+   "idx": -0.6
+  },
+  {
+   "t": "CHIP",
+   "D": "2026-04-21",
+   "sym": "CHIPUSDT",
+   "age": 5,
+   "net": -20.9,
+   "idx": 0.3
+  },
+  {
+   "t": "SPK",
+   "D": "2026-04-23",
+   "sym": "SPKUSDT",
+   "age": 310,
+   "net": 27.9,
+   "idx": 4.4
+  },
+  {
+   "t": "PRL",
+   "D": "2026-04-27",
+   "sym": "PRLUSDT",
+   "age": 26,
+   "net": 10.1,
+   "idx": -0.2
+  },
+  {
+   "t": "XCN",
+   "D": "2026-04-27",
+   "sym": "XCNUSDT",
+   "age": 381,
+   "net": -0.4,
+   "idx": -0.2
+  },
+  {
+   "t": "MEGA",
+   "D": "2026-04-30",
+   "sym": "MEGAUSDT",
+   "age": 90,
+   "net": 26.6,
+   "idx": -10.1
+  },
+  {
+   "t": "WIF",
+   "D": "2026-05-06",
+   "sym": "WIFUSDT",
+   "age": 839,
+   "net": 2.0,
+   "idx": 1.7
+  },
+  {
+   "t": "B3",
+   "D": "2026-05-07",
+   "sym": "B3USDT",
+   "age": 448,
+   "net": -0.4,
+   "idx": -0.7
+  },
+  {
+   "t": "VVV",
+   "D": "2026-05-12",
+   "sym": "VVVUSDT",
+   "age": 468,
+   "net": -1.9,
+   "idx": 8.5
+  },
+  {
+   "t": "IRYS",
+   "D": "2026-05-15",
+   "sym": "IRYSUSDT",
+   "age": 170,
+   "net": 33.0,
+   "idx": 3.0
+  },
+  {
+   "t": "IO",
+   "D": "2026-05-29",
+   "sym": "IOUSDT",
+   "age": 717,
+   "net": 17.8,
+   "idx": 14.2
+  },
+  {
+   "t": "BABY",
+   "D": "2026-06-05",
+   "sym": "BABYUSDT",
+   "age": 426,
+   "net": 19.2,
+   "idx": -4.0
+  },
+  {
+   "t": "SPX",
+   "D": "2026-06-16",
+   "sym": "SPXUSDT",
+   "age": 553,
+   "net": 11.0,
+   "idx": 7.6
+  },
+  {
+   "t": "RE",
+   "D": "2026-06-19",
+   "sym": "REUSDT",
+   "age": 1,
+   "net": 29.2,
+   "idx": 6.5
+  },
+  {
+   "t": "AI",
+   "D": "2026-06-30",
+   "sym": "AIUSDT",
+   "age": 904,
+   "net": -0.4,
+   "idx": -8.5
+  },
+  {
+   "t": "OPG",
+   "D": "2026-07-07",
+   "sym": "OPGUSDT",
+   "age": 76,
+   "net": 13.4,
+   "idx": -0.6
+  },
+  {
+   "t": "O",
+   "D": "2026-07-23",
+   "sym": "OUSDT",
+   "age": 29,
+   "net": 5.3,
+   "idx": 6.9
+  },
+  {
+   "t": "MORPHO",
+   "D": "2026-07-25",
+   "sym": "MORPHOUSDT",
+   "age": 605,
+   "net": 1.5,
+   "idx": 9.8
+  },
+  {
+   "t": "EUL",
+   "D": "2026-07-26",
+   "sym": "EULUSDT",
+   "age": 286,
+   "net": 31.9,
+   "idx": 8.9
+  },
+  {
+   "t": "CFX",
+   "D": "2026-07-31",
+   "sym": "CFXUSDT",
+   "age": 1257,
+   "net": 2.8,
+   "idx": -0.2
+  },
+  {
+   "t": "HOME",
+   "D": "2026-08-04",
+   "sym": "HOMEUSDT",
+   "age": 420,
+   "net": -12.9,
+   "idx": 1.2
+  },
+  {
+   "t": "GRVT",
+   "D": "2026-08-05",
+   "sym": "GRVTUSDT",
+   "age": 5,
+   "net": -5.6,
+   "idx": 0.6
+  },
+  {
+   "t": "CAP",
+   "D": "2026-08-06",
+   "sym": "CAPUSDT",
+   "age": 40,
+   "net": -86.1,
+   "idx": -0.1
+  },
+  {
+   "t": "BSB",
+   "D": "2026-08-07",
+   "sym": "BSBUSDT",
+   "age": 135,
+   "net": 27.7,
+   "idx": 0.5
+  },
+  {
+   "t": "KMNO",
+   "D": "2026-08-07",
+   "sym": "KMNOUSDT",
+   "age": 595,
+   "net": 3.7,
+   "idx": 0.5
+  },
+  {
+   "t": "PROM",
+   "D": "2026-08-12",
+   "sym": "PROMUSDT",
+   "age": 574,
+   "net": 21.0,
+   "idx": -3.0
+  },
+  {
+   "t": "CRV",
+   "D": "2026-08-21",
+   "sym": "CRVUSDT",
+   "age": 2180,
+   "net": 10.9,
+   "idx": 1.9
+  },
+  {
+   "t": "LIT",
+   "D": "2026-08-24",
+   "sym": "LITUSDT",
+   "age": 244,
+   "net": -5.0,
+   "idx": 4.0
+  }
+ ]
+}

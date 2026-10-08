@@ -1,7 +1,7 @@
 {
   "max_open_trades": 1,
   "stake_currency": "USDT",
-  "stake_amount": 8,
+  "stake_amount": "unlimited",
   "tradable_balance_ratio": 0.99,
   "dry_run": false,
   "dry_run_wallet": 1000,
@@ -11,7 +11,8 @@
     "entry": "limit",
     "exit": "limit",
     "stoploss": "market",
-    "stoploss_on_exchange": false,
+    "stoploss_on_exchange": true,
+    "stoploss_on_exchange_interval": 60,
     "emergency_exit": "market"
   },
   "unfilledtimeout": {
@@ -55,15 +56,15 @@
   "pairlists": [{"method": "StaticPairList"}],
   "timeframe": "5m",
   "startup_candle_count": 80,
-  "stoploss": -0.03,
+  "stoploss": -0.09,
   "trailing_stop": false,
-  "minimal_roi": {"0": 0.09},
+  "minimal_roi": {"0": 0.27},
   "use_exit_signal": false,
   "fee": 0.0002,
-  "strategy": "TrendShortV1",
-  "bot_name": "freqtrade-scalp-trend-short-adx15",
+  "strategy": "TrendShortV1Lev3Px",
+  "bot_name": "freqtrade-scalp-trend-short-lev3px",
   "initial_state": "running",
   "internals": {"process_throttle_secs": 5},
   "cancel_open_orders_on_exit": true,
-  "_comment": "Maker-prefer: limit+orderbook same-side top1. Stoploss stays market. Host injects Bitget keys. fee=2bps maker assume."
+  "_comment": "3x price-matched exits: profit-ratio SL-9%/ROI+27% ~ 3%/9% price. Keys in secrets.json overlay."
 }

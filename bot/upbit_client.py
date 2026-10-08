@@ -23,10 +23,17 @@ class UpbitPublic:
 
     def candles(self, market: str, timeframe: str, count: int = 200) -> list[dict[str, Any]]:
         path, params = self._candle_request(market, timeframe, count)
-        resp = self._client.get(path, params=params)
-        resp.raise_for_status()
-        data = resp.json()
-        return list(reversed(data))
+        data: list[dict[str, Any]] = []
+        while len(data) < count:
+            resp = self._client.get(path, params=params)
+            resp.raise_for_status()
+            batch = resp.json()
+            data.extend(batch)
+            if len(batch) < params["count"]:
+                break
+            params = {**params, "to": batch[-1]["candle_date_time_utc"]}
+            time.sleep(0.12)
+        return list(reversed(data[:count]))
 
     @staticmethod
     def _candle_request(market: str, timeframe: str, count: int) -> tuple[str, dict[str, Any]]:

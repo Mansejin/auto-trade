@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import shutil
 import threading
 import time
@@ -126,12 +127,48 @@ def _cmd_status(settings: Settings) -> str:
             f"({last.get('ts') or '-'})"
         )
 
+    # CORE Upbit bot: also show Bitget SCALP (Freqtrade) when keys exist.
+    if settings.exchange == "upbit" and settings.bitget_ready and not settings.paper:
+        lines.extend(_scalp_bitget_lines(settings))
+
     latest = settings.log_dir / "latest_status.txt"
     if latest.exists():
         lines.append("")
         lines.append(latest.read_text(encoding="utf-8").strip())
 
     return "\n".join(lines)
+
+
+def _scalp_bitget_lines(settings: Settings) -> list[str]:
+    lines = ["", "---- Bitget SCALP ----"]
+    try:
+        from bot.bitget_client import BitgetPrivate  # noqa: PLC0415
+
+        # Freqtrade SCALP is real UTA live — ignore BITGET_PAPER_TRADING on CORE bot.
+        client = BitgetPrivate(
+            settings.bitget_api_key,
+            settings.bitget_secret_key,
+            settings.bitget_passphrase,
+            paper_trading=False,
+        )
+        try:
+            usdt = client.available_usdt()
+            lines.append(f"USDT 가용≈: {fmt_quote(usdt, 'USDT')}")
+            poses = client.futures_positions()
+            if not poses:
+                lines.append("선물 포지션: 없음")
+            for p in poses:
+                side = str(p.get("posSide") or "-")
+                lines.append(
+                    f"선물: {side} {p.get('symbol')} "
+                    f"size={p.get('total')} @ {p.get('avgPrice')} "
+                    f"(mark {p.get('markPrice')}, uPnL {p.get('unrealisedPnl')})"
+                )
+        finally:
+            client.close()
+    except Exception as e:
+        lines.append(f"Bitget SCALP 조회 실패: {type(e).__name__}")
+    return lines
 
 
 def _cmd_strategy(settings: Settings) -> str:
@@ -359,9 +396,18 @@ def _cmd_transfer_request(raw: str, settings: Settings) -> str:
     )
 
 
+def _redact_tg(text: str, token: str) -> str:
+    """Keep bot tokens out of logs (httpx puts them in exception URLs)."""
+    out = str(text)
+    if token:
+        out = out.replace(token, "***")
+    return re.sub(r"bot\d+:[A-Za-z0-9_-]+", "bot***:***", out)
+
+
 def _poll_loop(settings: Settings, notify: TelegramNotifier, stop: threading.Event) -> None:
     offset = 0
-    url = f"https://api.telegram.org/bot{settings.telegram_bot_token}/getUpdates"
+    # Build path without embedding the token in a reusable URL string for logs.
+    token = settings.telegram_bot_token
     allowed = str(settings.telegram_chat_id)
     logger.info("텔레그램 명령 수신을 시작합니다.")
 
@@ -369,7 +415,7 @@ def _poll_loop(settings: Settings, notify: TelegramNotifier, stop: threading.Eve
         while not stop.is_set():
             try:
                 resp = client.get(
-                    url,
+                    f"https://api.telegram.org/bot{token}/getUpdates",
                     params={
                         "offset": offset,
                         "timeout": 25,
@@ -392,10 +438,14 @@ def _poll_loop(settings: Settings, notify: TelegramNotifier, stop: threading.Eve
                     reply = handle_command(text, settings)
                     if reply:
                         notify.send(reply)
-            except Exception:
+            except Exception as e:
                 if stop.is_set():
                     break
-                logger.exception("텔레그램 수신 오류 — 잠시 후 다시 시도합니다.")
+                # Never logger.exception here — traceback includes tokenized URLs.
+                logger.warning(
+                    "텔레그램 수신 오류 — 잠시 후 다시 시도합니다: %s",
+                    _redact_tg(e, token),
+                )
                 stop.wait(3)
 
     logger.info("텔레그램 명령 수신을 종료합니다.")

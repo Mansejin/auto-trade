@@ -19,25 +19,48 @@
   <main class="login-shell">
     <div class="login-card">
       <div class="brand-block">
-        <span class="logo-mark">AT</span>
+        <span class="logo-mark" aria-hidden="true">AT</span>
         <div>
           <p class="eyebrow">AUTO-TRADE</p>
           <h1 class="brand">DESK</h1>
         </div>
       </div>
-      <p class="lede">봇 현황을 보려면 로그인하세요.</p>
+      <p class="lede">봇 현황을 보려면 대시보드 토큰으로 로그인하세요.</p>
       <form class="login-form" method="post" action="login">
-        <label for="token">비밀번호</label>
-        <input id="token" name="token" type="password" autocomplete="current-password" required autofocus />
+        <label for="token">대시보드 토큰</label>
+        <div class="login-token-wrap">
+          <input
+            id="token"
+            name="token"
+            type="password"
+            autocomplete="current-password"
+            spellcheck="false"
+            required
+            autofocus
+            placeholder="토큰 붙여넣기"
+          />
+          <button type="button" class="toggle-vis" id="btn-toggle-token" aria-pressed="false">표시</button>
+        </div>
         <button type="submit">로그인</button>
       </form>
-      <p id="err" class="err hidden">비밀번호가 올바르지 않습니다.</p>
+      <p id="err" class="err hidden">토큰이 올바르지 않습니다. 다시 확인하세요.</p>
     </div>
   </main>
   <script>
     if (new URLSearchParams(location.search).get("e") === "1") {
       document.getElementById("err").classList.remove("hidden");
     }
+    (function () {
+      var input = document.getElementById("token");
+      var btn = document.getElementById("btn-toggle-token");
+      if (!input || !btn) return;
+      btn.addEventListener("click", function () {
+        var show = input.type === "password";
+        input.type = show ? "text" : "password";
+        btn.textContent = show ? "숨김" : "표시";
+        btn.setAttribute("aria-pressed", show ? "true" : "false");
+      });
+    })();
   </script>
 </body>
 </html>

@@ -29,6 +29,7 @@
 - [ ] `REBALANCE_ENABLED` — 5:5±밴드 하이브리드(알림→`/리밸런스승인`). 기본 밴드 12%p, 알림 쿨다운·`TRANSFER_COOLDOWN`로 잦은 이체 제한
 - [ ] `/원화준비 <원>` — Bitget→Upbit TRX 브릿지 + Upbit KRW 매도 제안→승인
 - [ ] Bitget→Upbit 에 `TRANSFER_WHITELIST_UPBIT_TRX`(또는 USDT 트론 alias) + Bitget Withdraw
+- [ ] Freqtrade scalp LIVE: 키는 **gitignored** `freqtrade-research/user_data/config.bitget-scalp.secrets.json` 만 — tracked `config.bitget-scalp-trend-short-live.json` 의 `exchange.key/secret/password`는 비움. dual `--config` (compose `w5` / `bot-ft-scalp`). `scripts/ensure_bitget_scalp_secrets.py` 로 정리.
 - [ ] `bot-bitget` 은 `TELEGRAM_COMMANDS=false` (명령 수신은 Upbit `bot`만)
 
 ## 2. `.env` (서버에만 존재)

@@ -150,6 +150,7 @@ class TelegramNotifier:
                 )
                 resp.raise_for_status()
             return True
-        except Exception:
-            logger.exception("텔레그램 전송 실패")
+        except Exception as e:
+            safe = str(e).replace(self.token, "***") if self.token else str(e)
+            logger.warning("텔레그램 전송 실패: %s", safe)
             return False

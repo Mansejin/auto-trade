@@ -1,0 +1,141 @@
+{
+  "windows": {
+    "IS 2021-07-27..2026-07-26": {
+      "regime proxy, hindsight segs (BT method)": {
+        "ret_pct": 591.2,
+        "mdd_pct": -37.0,
+        "switches": 17
+      },
+      "regime proxy, raw label same day": {
+        "ret_pct": 898.6,
+        "mdd_pct": -33.3,
+        "switches": 86
+      },
+      "regime proxy, raw label next day (live)": {
+        "ret_pct": 251.3,
+        "mdd_pct": -53.4,
+        "switches": 85
+      },
+      "regime proxy, 14d confirm next day": {
+        "ret_pct": 92.9,
+        "mdd_pct": -50.7,
+        "switches": 18
+      },
+      "BTC hold": {
+        "ret_pct": 109.4,
+        "mdd_pct": -74.1,
+        "switches": 0
+      },
+      "SMA200 filter (close>SMA200, next day)": {
+        "ret_pct": 168.1,
+        "mdd_pct": -33.9,
+        "switches": 44
+      },
+      "vol-target 40% (30d, cap 1x)": {
+        "ret_pct": 81.7,
+        "mdd_pct": -69.9,
+        "switches": 975
+      },
+      "SMA200 filter @ 50% size": {
+        "ret_pct": 73.7,
+        "mdd_pct": -18.2,
+        "switches": 44
+      },
+      "50:50 rebalance (+-12%p, cd30)": {
+        "ret_pct": 77.4,
+        "mdd_pct": -45.3
+      },
+      "_hindsight_label_mismatch_vs_live_pct": 20.8,
+      "_risk_on_mismatch_pct": 14.2
+    },
+    "OOS 2018-04-12..2021-07-24": {
+      "regime proxy, hindsight segs (BT method)": {
+        "ret_pct": 792.4,
+        "mdd_pct": -54.2,
+        "switches": 16
+      },
+      "regime proxy, raw label same day": {
+        "ret_pct": 801.8,
+        "mdd_pct": -59.5,
+        "switches": 48
+      },
+      "regime proxy, raw label next day (live)": {
+        "ret_pct": 411.6,
+        "mdd_pct": -54.8,
+        "switches": 48
+      },
+      "regime proxy, 14d confirm next day": {
+        "ret_pct": 234.3,
+        "mdd_pct": -57.5,
+        "switches": 16
+      },
+      "BTC hold": {
+        "ret_pct": 393.9,
+        "mdd_pct": -66.6,
+        "switches": 0
+      },
+      "SMA200 filter (close>SMA200, next day)": {
+        "ret_pct": 638.6,
+        "mdd_pct": -47.3,
+        "switches": 10
+      },
+      "vol-target 40% (30d, cap 1x)": {
+        "ret_pct": 244.2,
+        "mdd_pct": -52.9,
+        "switches": 982
+      },
+      "SMA200 filter @ 50% size": {
+        "ret_pct": 197.8,
+        "mdd_pct": -26.7,
+        "switches": 10
+      },
+      "50:50 rebalance (+-12%p, cd30)": {
+        "ret_pct": 201.5,
+        "mdd_pct": -40.3
+      },
+      "_hindsight_label_mismatch_vs_live_pct": 15.7,
+      "_risk_on_mismatch_pct": 8.8
+    }
+  },
+  "concentration_IS": {
+    "n_segments": 36,
+    "all": 425.8,
+    "top5": [
+      45.49,
+      33.15,
+      25.5,
+      21.4,
+      16.32
+    ],
+    "without_top5": 53.2,
+    "without_top1": 261.4,
+    "by_regime": {
+      "transition": 40.0,
+      "bull": 163.8,
+      "bear": 3.7,
+      "sideways": 37.2
+    }
+  },
+  "concentration_OOS": {
+    "n_segments": 25,
+    "all": 387.4,
+    "top5": [
+      177.56,
+      75.16,
+      31.0,
+      23.96,
+      9.29
+    ],
+    "without_top5": -43.5,
+    "without_top1": 75.6,
+    "by_regime": {
+      "bear": -23.5,
+      "transition": 53.6,
+      "sideways": -6.9,
+      "bull": 345.6
+    }
+  },
+  "segments_total": 63,
+  "segments_start_label_mismatch": 0,
+  "raw_label_changes_all_history": 226
+}

@@ -8,21 +8,38 @@
 | Sleeve | Venue | Bot | LIVE |
 |--------|-------|-----|------|
 | 장타 CORE | Upbit spot | `upbit-paper-bot` Policy C | **ON** (병행) |
-| 단타 SCALP | Bitget UTA futures | `bot-ft-scalp` → Freqtrade `TrendShortV1` | **bear only** |
+| 단타 SCALP | Bitget UTA futures | `bot-ft-scalp` → Freqtrade `TrendShortV1Lev3Px` | **bear only** |
 
-- **Bear:** `di_cloud` ADX≥15 / SL 3% / TP 9% (`fingerprint 16dba43a38f9f882`)
+- **Bear:** `di_cloud` ADX≥15 / **3x** / SL −9% ROI +27% profit-ratio (≈ **3%/9% price**) (`TrendShortV1Lev3Px`)
 - Bull / transition / sideways scalp: **cash** (`null`)
 - `bot-bitget` toolkit = **롱만** 가능 → 이 숏에 쓰지 말 것
 - NAS host folder: `/volume1/docker/p3f8c1a2` · compose project `p3f8c1a2` · service **`w5`** (profile `scalp`)
 
-Fee note: backtest bar = 6bps/side; **fails 8bps stress** — human accepted RESEARCH_KEEP → LIVE. Prefer small fixed stake (`stake_amount: 100` USDT).
+Fee note: backtest bar = 6bps/side; **fails 8bps stress** — human accepted RESEARCH_KEEP → LIVE. Live stake is small (`stake_amount` in FT config).
 
 ## Regime map
 
 | Regime | LIVE card |
 |--------|-----------|
-| bear | `bitget-btc-5m-trend-short-di-cloud-adx15-v1` |
+| bear | `bitget-btc-5m-trend-short-di-cloud-adx15-v1` (LIVE code: `TrendShortV1Lev3Px`) |
 | bull / transition / sideways | null (cash) |
+
+## Credentials (do not put keys in the tracked live JSON)
+
+| File | Git | Role |
+|------|-----|------|
+| `config.bitget-scalp-trend-short-live.json` | tracked | strategy / stake / order types — leave `exchange.key/secret/password` **empty** |
+| `config.bitget-scalp.secrets.json` | **gitignored** | Bitget API key overlay only |
+| `config.bitget-scalp.secrets.example.json` | tracked | empty template to copy |
+
+`w5` / `bot-ft-scalp` load **both** via dual `--config` (secrets last so they win).
+
+```bash
+cd freqtrade-research/user_data
+cp -n config.bitget-scalp.secrets.example.json config.bitget-scalp.secrets.json
+# fill key/secret/password from host .env (BITGET_*), never commit secrets.json
+# readable by container ftuser (uid 1000): chmod 644 is fine on the NAS share
+```
 
 ## Enable on NAS (human / local SSH)
 
@@ -31,7 +48,7 @@ Fee note: backtest bar = 6bps/side; **fails 8bps stress** — human accepted RES
 ssh nas
 
 cd /volume1/docker/p3f8c1a2
-# Bitget keys must be in config.bitget-scalp-trend-short-live.json (inject from .env; never commit)
+# Secrets: freqtrade-research/user_data/config.bitget-scalp.secrets.json only (gitignored)
 
 sudo /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile scalp up -d w5
 sudo /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml --profile scalp ps w5
@@ -53,6 +70,7 @@ CORE `w1` is unchanged (no `--profile scalp` needed for normal desk/upbit).
 | Map | `config/scalp-live-map.json` |
 | Card | `strategies/bitget-btc-5m-trend-short-di-cloud-adx15-v1.json` |
 | FT config | `freqtrade-research/user_data/config.bitget-scalp-trend-short-live.json` |
+| FT secrets | `freqtrade-research/user_data/config.bitget-scalp.secrets.json` (gitignored) |
 | Strategy class | `freqtrade-research/user_data/strategies/TrendShortV1.py` |
 | NAS compose | `w5` profile `scalp` in `docker-compose.nas.yml` |
 

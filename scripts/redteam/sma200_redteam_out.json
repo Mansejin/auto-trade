@@ -1,0 +1,1505 @@
+{
+ "fee_base": 0.0005,
+ "primary": {
+  "series": "upbit KRW-BTC",
+  "from": "2018-04-13",
+  "to": "2026-10-06"
+ },
+ "fees": {
+  "x1 0.05%": {
+   "ret_pct": 2040.3,
+   "cagr_pct": 43.5,
+   "mdd_pct": -54.7,
+   "sharpe": 1.14,
+   "calmar": 0.79,
+   "exposure_pct": 53.1,
+   "switches": 55,
+   "fee_drag_pct": 2.75,
+   "days": 3099
+  },
+  "x2 0.10%": {
+   "ret_pct": 1982.2,
+   "cagr_pct": 43.0,
+   "mdd_pct": -55.0,
+   "sharpe": 1.13,
+   "calmar": 0.78,
+   "exposure_pct": 53.1,
+   "switches": 55,
+   "fee_drag_pct": 5.5,
+   "days": 3099
+  },
+  "x4 0.20%": {
+   "ret_pct": 1870.6,
+   "cagr_pct": 42.1,
+   "mdd_pct": -55.6,
+   "sharpe": 1.11,
+   "calmar": 0.76,
+   "exposure_pct": 53.1,
+   "switches": 55,
+   "fee_drag_pct": 11.0,
+   "days": 3099
+  },
+  "B&H": {
+   "ret_pct": 1326.6,
+   "cagr_pct": 36.8,
+   "mdd_pct": -74.1,
+   "sharpe": 0.85,
+   "calmar": 0.5,
+   "exposure_pct": 100.0,
+   "switches": 1,
+   "fee_drag_pct": 0.05,
+   "days": 3099
+  }
+ },
+ "exec_extra_1day_delay_x1": {
+  "ret_pct": 2448.0,
+  "cagr_pct": 46.4,
+  "mdd_pct": -54.4,
+  "sharpe": 1.19,
+  "calmar": 0.85,
+  "exposure_pct": 53.1,
+  "switches": 55,
+  "fee_drag_pct": 2.75,
+  "days": 3098
+ },
+ "exec_extra_1day_delay_note": "lag-2 series starts 2018-04-14 (vs 2018-04-13)",
+ "random": {
+  "x1": {
+   "real": {
+    "ret_pct": 2040.3,
+    "cagr_pct": 43.5,
+    "mdd_pct": -54.7,
+    "sharpe": 1.14,
+    "calmar": 0.79,
+    "exposure_pct": 53.1,
+    "switches": 55,
+    "fee_drag_pct": 2.75,
+    "days": 3099
+   },
+   "random_median": {
+    "ret_pct": 285.3,
+    "sharpe": 0.61,
+    "mdd_pct": -66.1,
+    "calmar": 0.26
+   },
+   "percentile_ret": 95.2,
+   "percentile_sharpe": 95.8,
+   "percentile_mdd_(share of randoms with deeper MDD)": 91.5
+  },
+  "x2": {
+   "real": {
+    "ret_pct": 1982.2,
+    "cagr_pct": 43.0,
+    "mdd_pct": -55.0,
+    "sharpe": 1.13,
+    "calmar": 0.78,
+    "exposure_pct": 53.1,
+    "switches": 55,
+    "fee_drag_pct": 5.5,
+    "days": 3099
+   },
+   "random_median": {
+    "ret_pct": 274.8,
+    "sharpe": 0.6,
+    "mdd_pct": -66.2,
+    "calmar": 0.26
+   },
+   "percentile_ret": 95.2,
+   "percentile_sharpe": 95.8,
+   "percentile_mdd_(share of randoms with deeper MDD)": 91.3
+  },
+  "IS 2021-07-27..2026-07-26": {
+   "real": {
+    "ret_pct": 168.4,
+    "cagr_pct": 21.8,
+    "mdd_pct": -33.9,
+    "sharpe": 0.79,
+    "calmar": 0.64,
+    "exposure_pct": 54.1,
+    "switches": 44,
+    "fee_drag_pct": 2.2,
+    "days": 1826
+   },
+   "random_median": {
+    "ret_pct": 41.3,
+    "sharpe": 0.37,
+    "mdd_pct": -58.1,
+    "calmar": 0.12
+   },
+   "percentile_ret": 85.2,
+   "percentile_sharpe": 86.3,
+   "percentile_mdd_(share of randoms with deeper MDD)": 98.1
+  },
+  "OOS 2018-04-12..2021-07-24": {
+   "real": {
+    "ret_pct": 639.3,
+    "cagr_pct": 83.9,
+    "mdd_pct": -47.3,
+    "sharpe": 1.52,
+    "calmar": 1.77,
+    "exposure_pct": 51.1,
+    "switches": 10,
+    "fee_drag_pct": 0.5,
+    "days": 1199
+   },
+   "random_median": {
+    "ret_pct": 163.6,
+    "sharpe": 0.86,
+    "mdd_pct": -59.0,
+    "calmar": 0.57
+   },
+   "percentile_ret": 89.2,
+   "percentile_sharpe": 88.2,
+   "percentile_mdd_(share of randoms with deeper MDD)": 89.4
+  }
+ },
+ "transfer": {
+  "upbit_KRW-BTC full": {
+   "from": "2018-04-13",
+   "to": "2026-10-06",
+   "sma200_x1": {
+    "ret_pct": 2040.3,
+    "cagr_pct": 43.5,
+    "mdd_pct": -54.7,
+    "sharpe": 1.14,
+    "calmar": 0.79,
+    "exposure_pct": 53.1,
+    "switches": 55,
+    "fee_drag_pct": 2.75,
+    "days": 3099
+   },
+   "sma200_x2": {
+    "ret_pct": 1982.2,
+    "cagr_pct": 43.0,
+    "mdd_pct": -55.0,
+    "sharpe": 1.13,
+    "calmar": 0.78,
+    "exposure_pct": 53.1,
+    "switches": 55,
+    "fee_drag_pct": 5.5,
+    "days": 3099
+   },
+   "bh": {
+    "ret_pct": 1326.6,
+    "cagr_pct": 36.8,
+    "mdd_pct": -74.1,
+    "sharpe": 0.85,
+    "calmar": 0.5,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 3099
+   },
+   "exposure_matched": {
+    "exposure": 0.531,
+    "const_weight_daily_rebal": {
+     "ret_pct": 461.0,
+     "cagr_pct": 22.5,
+     "mdd_pct": -49.2,
+     "sharpe": 0.85,
+     "calmar": 0.46,
+     "exposure_pct": 53.1,
+     "switches": 0,
+     "fee_drag_pct": 0.0,
+     "days": 3099
+    },
+    "static_buy_e_hold": {
+     "ret_pct": 705.0,
+     "mdd_pct": -68.1
+    }
+   },
+   "random_pct": {
+    "percentile_ret": 95.2,
+    "percentile_sharpe": 95.8,
+    "percentile_mdd_(share of randoms with deeper MDD)": 91.5
+   }
+  },
+  "upbit_KRW-ETH full": {
+   "from": "2018-04-16",
+   "to": "2026-10-06",
+   "sma200_x1": {
+    "ret_pct": 1899.3,
+    "cagr_pct": 42.4,
+    "mdd_pct": -69.2,
+    "sharpe": 0.94,
+    "calmar": 0.61,
+    "exposure_pct": 50.9,
+    "switches": 53,
+    "fee_drag_pct": 2.65,
+    "days": 3096
+   },
+   "sma200_x2": {
+    "ret_pct": 1846.9,
+    "cagr_pct": 41.9,
+    "mdd_pct": -69.4,
+    "sharpe": 0.93,
+    "calmar": 0.6,
+    "exposure_pct": 50.9,
+    "switches": 53,
+    "fee_drag_pct": 5.3,
+    "days": 3096
+   },
+   "bh": {
+    "ret_pct": 561.6,
+    "cagr_pct": 25.0,
+    "mdd_pct": -89.5,
+    "sharpe": 0.67,
+    "calmar": 0.28,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 3096
+   },
+   "exposure_matched": {
+    "exposure": 0.509,
+    "const_weight_daily_rebal": {
+     "ret_pct": 371.0,
+     "cagr_pct": 20.0,
+     "mdd_pct": -66.4,
+     "sharpe": 0.67,
+     "calmar": 0.3,
+     "exposure_pct": 50.9,
+     "switches": 0,
+     "fee_drag_pct": 0.0,
+     "days": 3096
+    },
+    "static_buy_e_hold": {
+     "ret_pct": 286.2,
+     "mdd_pct": -70.9
+    }
+   },
+   "random_pct": {
+    "percentile_ret": 95.8,
+    "percentile_sharpe": 95.7,
+    "percentile_mdd_(share of randoms with deeper MDD)": 84.1
+   }
+  },
+  "upbit_KRW-XRP full": {
+   "from": "2018-04-16",
+   "to": "2026-10-06",
+   "sma200_x1": {
+    "ret_pct": -70.4,
+    "cagr_pct": -13.4,
+    "mdd_pct": -90.7,
+    "sharpe": 0.13,
+    "calmar": -0.15,
+    "exposure_pct": 41.9,
+    "switches": 109,
+    "fee_drag_pct": 5.45,
+    "days": 3096
+   },
+   "sma200_x2": {
+    "ret_pct": -72.0,
+    "cagr_pct": -13.9,
+    "mdd_pct": -90.9,
+    "sharpe": 0.12,
+    "calmar": -0.15,
+    "exposure_pct": 41.9,
+    "switches": 109,
+    "fee_drag_pct": 10.9,
+    "days": 3096
+   },
+   "bh": {
+    "ret_pct": 183.6,
+    "cagr_pct": 13.1,
+    "mdd_pct": -82.6,
+    "sharpe": 0.57,
+    "calmar": 0.16,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 3096
+   },
+   "exposure_matched": {
+    "exposure": 0.419,
+    "const_weight_daily_rebal": {
+     "ret_pct": 259.0,
+     "cagr_pct": 16.3,
+     "mdd_pct": -44.3,
+     "sharpe": 0.57,
+     "calmar": 0.37,
+     "exposure_pct": 41.9,
+     "switches": 0,
+     "fee_drag_pct": 0.0,
+     "days": 3096
+    },
+    "static_buy_e_hold": {
+     "ret_pct": 77.0,
+     "mdd_pct": -59.1
+    }
+   },
+   "random_pct": {
+    "percentile_ret": 13.4,
+    "percentile_sharpe": 20.6,
+    "percentile_mdd_(share of randoms with deeper MDD)": 11.7
+   }
+  },
+  "binance_BTCUSDT full": {
+   "from": "2018-03-05",
+   "to": "2026-10-06",
+   "sma200_x1": {
+    "ret_pct": 726.9,
+    "cagr_pct": 27.9,
+    "mdd_pct": -63.7,
+    "sharpe": 0.79,
+    "calmar": 0.44,
+    "exposure_pct": 52.4,
+    "switches": 65,
+    "fee_drag_pct": 3.25,
+    "days": 3138
+   },
+   "sma200_x2": {
+    "ret_pct": 700.4,
+    "cagr_pct": 27.4,
+    "mdd_pct": -64.0,
+    "sharpe": 0.78,
+    "calmar": 0.43,
+    "exposure_pct": 52.4,
+    "switches": 65,
+    "fee_drag_pct": 6.5,
+    "days": 3138
+   },
+   "bh": {
+    "ret_pct": 642.6,
+    "cagr_pct": 26.3,
+    "mdd_pct": -76.6,
+    "sharpe": 0.69,
+    "calmar": 0.34,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 3138
+   },
+   "exposure_matched": {
+    "exposure": 0.524,
+    "const_weight_daily_rebal": {
+     "ret_pct": 337.3,
+     "cagr_pct": 18.7,
+     "mdd_pct": -50.5,
+     "sharpe": 0.69,
+     "calmar": 0.37,
+     "exposure_pct": 52.4,
+     "switches": 0,
+     "fee_drag_pct": 0.0,
+     "days": 3138
+    },
+    "static_buy_e_hold": {
+     "ret_pct": 336.6,
+     "mdd_pct": -66.3
+    }
+   },
+   "random_pct": {
+    "percentile_ret": 89.7,
+    "percentile_sharpe": 90.8,
+    "percentile_mdd_(share of randoms with deeper MDD)": 76.0
+   }
+  },
+  "binance_ETHUSDT full": {
+   "from": "2018-03-05",
+   "to": "2026-10-06",
+   "sma200_x1": {
+    "ret_pct": 1045.8,
+    "cagr_pct": 32.8,
+    "mdd_pct": -73.6,
+    "sharpe": 0.78,
+    "calmar": 0.45,
+    "exposure_pct": 50.8,
+    "switches": 55,
+    "fee_drag_pct": 2.75,
+    "days": 3138
+   },
+   "sma200_x2": {
+    "ret_pct": 1014.7,
+    "cagr_pct": 32.4,
+    "mdd_pct": -73.7,
+    "sharpe": 0.78,
+    "calmar": 0.44,
+    "exposure_pct": 50.8,
+    "switches": 55,
+    "fee_drag_pct": 5.5,
+    "days": 3138
+   },
+   "bh": {
+    "ret_pct": 211.1,
+    "cagr_pct": 14.1,
+    "mdd_pct": -90.3,
+    "sharpe": 0.58,
+    "calmar": 0.16,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 3138
+   },
+   "exposure_matched": {
+    "exposure": 0.508,
+    "const_weight_daily_rebal": {
+     "ret_pct": 280.3,
+     "cagr_pct": 16.8,
+     "mdd_pct": -66.5,
+     "sharpe": 0.58,
+     "calmar": 0.25,
+     "exposure_pct": 50.8,
+     "switches": 0,
+     "fee_drag_pct": 0.0,
+     "days": 3138
+    },
+    "static_buy_e_hold": {
+     "ret_pct": 107.4,
+     "mdd_pct": -67.5
+    }
+   },
+   "random_pct": {
+    "percentile_ret": 94.0,
+    "percentile_sharpe": 94.0,
+    "percentile_mdd_(share of randoms with deeper MDD)": 87.3
+   }
+  },
+  "binance_XRPUSDT full": {
+   "from": "2018-11-20",
+   "to": "2026-10-06",
+   "sma200_x1": {
+    "ret_pct": -14.3,
+    "cagr_pct": -1.9,
+    "mdd_pct": -91.0,
+    "sharpe": 0.34,
+    "calmar": -0.02,
+    "exposure_pct": 44.3,
+    "switches": 95,
+    "fee_drag_pct": 4.75,
+    "days": 2878
+   },
+   "sma200_x2": {
+    "ret_pct": -18.3,
+    "cagr_pct": -2.5,
+    "mdd_pct": -91.4,
+    "sharpe": 0.33,
+    "calmar": -0.03,
+    "exposure_pct": 44.3,
+    "switches": 95,
+    "fee_drag_pct": 9.5,
+    "days": 2878
+   },
+   "bh": {
+    "ret_pct": 210.2,
+    "cagr_pct": 15.4,
+    "mdd_pct": -83.2,
+    "sharpe": 0.62,
+    "calmar": 0.19,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 2878
+   },
+   "exposure_matched": {
+    "exposure": 0.443,
+    "const_weight_daily_rebal": {
+     "ret_pct": 308.1,
+     "cagr_pct": 19.5,
+     "mdd_pct": -45.0,
+     "sharpe": 0.62,
+     "calmar": 0.43,
+     "exposure_pct": 44.3,
+     "switches": 0,
+     "fee_drag_pct": 0.0,
+     "days": 2878
+    },
+    "static_buy_e_hold": {
+     "ret_pct": 93.2,
+     "mdd_pct": -62.6
+    }
+   },
+   "random_pct": {
+    "percentile_ret": 29.1,
+    "percentile_sharpe": 36.8,
+    "percentile_mdd_(share of randoms with deeper MDD)": 8.8
+   }
+  },
+  "bitstamp_BTCUSD pre2018 (..2017-12-31)": {
+   "from": "2012-03-19",
+   "to": "2017-12-31",
+   "sma200_x1": {
+    "ret_pct": 298569.0,
+    "cagr_pct": 298.1,
+    "mdd_pct": -70.7,
+    "sharpe": 2.09,
+    "calmar": 4.22,
+    "exposure_pct": 77.3,
+    "switches": 27,
+    "fee_drag_pct": 1.35,
+    "days": 2114
+   },
+   "sma200_x2": {
+    "ret_pct": 294561.1,
+    "cagr_pct": 297.2,
+    "mdd_pct": -70.7,
+    "sharpe": 2.09,
+    "calmar": 4.2,
+    "exposure_pct": 77.3,
+    "switches": 27,
+    "fee_drag_pct": 2.7,
+    "days": 2114
+   },
+   "bh": {
+    "ret_pct": 264653.1,
+    "cagr_pct": 289.9,
+    "mdd_pct": -84.8,
+    "sharpe": 1.98,
+    "calmar": 3.42,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 2114
+   },
+   "exposure_matched": {
+    "exposure": 0.773,
+    "const_weight_daily_rebal": {
+     "ret_pct": 68165.4,
+     "cagr_pct": 208.6,
+     "mdd_pct": -74.4,
+     "sharpe": 1.98,
+     "calmar": 2.8,
+     "exposure_pct": 77.3,
+     "switches": 0,
+     "fee_drag_pct": 0.0,
+     "days": 2114
+    },
+    "static_buy_e_hold": {
+     "ret_pct": 204663.9,
+     "mdd_pct": -84.7
+    }
+   },
+   "random_pct": {
+    "percentile_ret": 97.8,
+    "percentile_sharpe": 95.8,
+    "percentile_mdd_(share of randoms with deeper MDD)": 90.5
+   }
+  },
+  "bitstamp_BTCUSD 2018+": {
+   "from": "2018-01-01",
+   "to": "2026-10-06",
+   "sma200_x1": {
+    "ret_pct": 458.2,
+    "cagr_pct": 21.7,
+    "mdd_pct": -63.7,
+    "sharpe": 0.66,
+    "calmar": 0.34,
+    "exposure_pct": 53.2,
+    "switches": 69,
+    "fee_drag_pct": 3.45,
+    "days": 3201
+   },
+   "sma200_x2": {
+    "ret_pct": 439.3,
+    "cagr_pct": 21.2,
+    "mdd_pct": -64.0,
+    "sharpe": 0.65,
+    "calmar": 0.33,
+    "exposure_pct": 53.2,
+    "switches": 69,
+    "fee_drag_pct": 6.9,
+    "days": 3201
+   },
+   "bh": {
+    "ret_pct": 516.0,
+    "cagr_pct": 23.0,
+    "mdd_pct": -81.4,
+    "sharpe": 0.65,
+    "calmar": 0.28,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 3201
+   },
+   "exposure_matched": {
+    "exposure": 0.532,
+    "const_weight_daily_rebal": {
+     "ret_pct": 319.9,
+     "cagr_pct": 17.8,
+     "mdd_pct": -55.7,
+     "sharpe": 0.65,
+     "calmar": 0.32,
+     "exposure_pct": 53.2,
+     "switches": 0,
+     "fee_drag_pct": 0.0,
+     "days": 3201
+    },
+    "static_buy_e_hold": {
+     "ret_pct": 274.5,
+     "mdd_pct": -64.9
+    }
+   },
+   "random_pct": {
+    "percentile_ret": 80.4,
+    "percentile_sharpe": 80.5,
+    "percentile_mdd_(share of randoms with deeper MDD)": 86.5
+   }
+  },
+  "bitstamp_BTCUSD full": {
+   "from": "2012-03-19",
+   "to": "2026-10-06",
+   "sma200_x1": {
+    "ret_pct": 1667946.4,
+    "cagr_pct": 95.0,
+    "mdd_pct": -70.7,
+    "sharpe": 1.38,
+    "calmar": 1.34,
+    "exposure_pct": 62.8,
+    "switches": 95,
+    "fee_drag_pct": 4.75,
+    "days": 5315
+   },
+   "sma200_x2": {
+    "ret_pct": 1590509.8,
+    "cagr_pct": 94.3,
+    "mdd_pct": -70.7,
+    "sharpe": 1.37,
+    "calmar": 1.33,
+    "exposure_pct": 62.8,
+    "switches": 95,
+    "fee_drag_pct": 9.5,
+    "days": 5315
+   },
+   "bh": {
+    "ret_pct": 1631609.3,
+    "cagr_pct": 94.7,
+    "mdd_pct": -84.8,
+    "sharpe": 1.27,
+    "calmar": 1.12,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 5315
+   },
+   "exposure_matched": {
+    "exposure": 0.628,
+    "const_weight_daily_rebal": {
+     "ret_pct": 121260.7,
+     "cagr_pct": 62.9,
+     "mdd_pct": -65.3,
+     "sharpe": 1.27,
+     "calmar": 0.96,
+     "exposure_pct": 62.8,
+     "switches": 0,
+     "fee_drag_pct": 0.0,
+     "days": 5315
+    },
+    "static_buy_e_hold": {
+     "ret_pct": 1024604.3,
+     "mdd_pct": -84.6
+    }
+   },
+   "random_pct": {
+    "percentile_ret": 98.5,
+    "percentile_sharpe": 98.1,
+    "percentile_mdd_(share of randoms with deeper MDD)": 94.7
+   }
+  }
+ },
+ "venue_common_window": {
+  "from": "2018-04-13",
+  "to": "2026-10-06",
+  "upbit_KRW-BTC": {
+   "sma200": {
+    "ret_pct": 2040.3,
+    "cagr_pct": 43.5,
+    "mdd_pct": -54.7,
+    "sharpe": 1.14,
+    "calmar": 0.79,
+    "exposure_pct": 53.1,
+    "switches": 55,
+    "fee_drag_pct": 2.75,
+    "days": 3099
+   },
+   "bh": {
+    "ret_pct": 1326.6,
+    "cagr_pct": 36.8,
+    "mdd_pct": -74.1,
+    "sharpe": 0.85,
+    "calmar": 0.5,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 3099
+   }
+  },
+  "binance_BTCUSDT": {
+   "sma200": {
+    "ret_pct": 1167.2,
+    "cagr_pct": 34.9,
+    "mdd_pct": -63.7,
+    "sharpe": 0.91,
+    "calmar": 0.55,
+    "exposure_pct": 52.7,
+    "switches": 61,
+    "fee_drag_pct": 3.05,
+    "days": 3099
+   },
+   "bh": {
+    "ret_pct": 979.2,
+    "cagr_pct": 32.3,
+    "mdd_pct": -76.6,
+    "sharpe": 0.77,
+    "calmar": 0.42,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 3099
+   }
+  },
+  "bitstamp_BTCUSD": {
+   "sma200": {
+    "ret_pct": 1134.3,
+    "cagr_pct": 34.4,
+    "mdd_pct": -63.7,
+    "sharpe": 0.9,
+    "calmar": 0.54,
+    "exposure_pct": 52.7,
+    "switches": 63,
+    "fee_drag_pct": 3.15,
+    "days": 3099
+   },
+   "bh": {
+    "ret_pct": 979.1,
+    "cagr_pct": 32.3,
+    "mdd_pct": -76.7,
+    "sharpe": 0.77,
+    "calmar": 0.42,
+    "exposure_pct": 100.0,
+    "switches": 1,
+    "fee_drag_pct": 0.05,
+    "days": 3099
+   }
+  }
+ },
+ "per_year": {
+  "2018": {
+   "days": 263,
+   "strat_ret": 0.0,
+   "bh_ret": -48.3,
+   "strat_mdd": 0.0,
+   "bh_mdd": -66.5,
+   "exposure": 0.0,
+   "switches": 0,
+   "fee_pct": 0.0
+  },
+  "2019": {
+   "days": 365,
+   "strat_ret": 76.6,
+   "bh_ret": 97.8,
+   "strat_mdd": -39.7,
+   "bh_mdd": -51.2,
+   "exposure": 49.9,
+   "switches": 6,
+   "fee_pct": 0.3
+  },
+  "2020": {
+   "days": 366,
+   "strat_ret": 215.2,
+   "bh_ret": 285.6,
+   "strat_mdd": -17.4,
+   "bh_mdd": -46.3,
+   "exposure": 78.7,
+   "switches": 3,
+   "fee_pct": 0.15
+  },
+  "2021": {
+   "days": 365,
+   "strat_ret": 18.1,
+   "bh_ret": 77.2,
+   "strat_mdd": -53.2,
+   "bh_mdd": -56.2,
+   "exposure": 72.6,
+   "switches": 11,
+   "fee_pct": 0.55
+  },
+  "2022": {
+   "days": 365,
+   "strat_ret": -0.7,
+   "bh_ret": -62.9,
+   "strat_mdd": -0.7,
+   "bh_mdd": -63.6,
+   "exposure": 0.3,
+   "switches": 2,
+   "fee_pct": 0.1
+  },
+  "2023": {
+   "days": 365,
+   "strat_ret": 71.6,
+   "bh_ret": 170.6,
+   "strat_mdd": -20.9,
+   "bh_mdd": -17.5,
+   "exposure": 80.8,
+   "switches": 11,
+   "fee_pct": 0.55
+  },
+  "2024": {
+   "days": 366,
+   "strat_ret": 116.5,
+   "bh_ret": 144.4,
+   "strat_mdd": -24.9,
+   "bh_mdd": -29.3,
+   "exposure": 77.9,
+   "switches": 6,
+   "fee_pct": 0.3
+  },
+  "2025": {
+   "days": 365,
+   "strat_ret": -18.1,
+   "bh_ret": -8.2,
+   "strat_mdd": -33.9,
+   "bh_mdd": -28.5,
+   "exposure": 77.8,
+   "switches": 15,
+   "fee_pct": 0.75
+  },
+  "2026": {
+   "days": 279,
+   "strat_ret": 7.9,
+   "bh_ret": -9.4,
+   "strat_mdd": -7.2,
+   "bh_mdd": -37.3,
+   "exposure": 16.5,
+   "switches": 1,
+   "fee_pct": 0.05
+  }
+ },
+ "per_year_bitstamp": {
+  "2012": {
+   "days": 288,
+   "strat_ret": 155.6,
+   "bh_ret": 152.7,
+   "strat_mdd": -40.0,
+   "bh_mdd": -40.0,
+   "exposure": 99.7,
+   "switches": 3,
+   "fee_pct": 0.15
+  },
+  "2013": {
+   "days": 365,
+   "strat_ret": 4321.2,
+   "bh_ret": 5428.7,
+   "strat_mdd": -70.7,
+   "bh_mdd": -71.0,
+   "exposure": 99.2,
+   "switches": 4,
+   "fee_pct": 0.2
+  },
+  "2014": {
+   "days": 365,
+   "strat_ret": -45.7,
+   "bh_ret": -56.1,
+   "strat_mdd": -56.6,
+   "bh_mdd": -66.0,
+   "exposure": 33.2,
+   "switches": 15,
+   "fee_pct": 0.75
+  },
+  "2015": {
+   "days": 365,
+   "strat_ret": 51.0,
+   "bh_ret": 34.2,
+   "strat_mdd": -29.0,
+   "bh_mdd": -46.4,
+   "exposure": 36.4,
+   "switches": 5,
+   "fee_pct": 0.25
+  },
+  "2016": {
+   "days": 366,
+   "strat_ret": 124.3,
+   "bh_ret": 124.3,
+   "strat_mdd": -29.6,
+   "bh_mdd": -29.6,
+   "exposure": 100.0,
+   "switches": 0,
+   "fee_pct": 0.0
+  },
+  "2017": {
+   "days": 365,
+   "strat_ret": 1336.3,
+   "bh_ret": 1336.3,
+   "strat_mdd": -35.1,
+   "bh_mdd": -35.1,
+   "exposure": 100.0,
+   "switches": 0,
+   "fee_pct": 0.0
+  },
+  "2018": {
+   "days": 365,
+   "strat_ret": -54.8,
+   "bh_ret": -73.4,
+   "strat_mdd": -63.4,
+   "bh_mdd": -81.4,
+   "exposure": 18.9,
+   "switches": 5,
+   "fee_pct": 0.25
+  },
+  "2019": {
+   "days": 365,
+   "strat_ret": 55.2,
+   "bh_ret": 93.9,
+   "strat_mdd": -41.2,
+   "bh_mdd": -48.8,
+   "exposure": 52.1,
+   "switches": 4,
+   "fee_pct": 0.2
+  },
+  "2020": {
+   "days": 366,
+   "strat_ret": 173.7,
+   "bh_ret": 305.0,
+   "strat_mdd": -26.7,
+   "bh_mdd": -53.3,
+   "exposure": 77.0,
+   "switches": 7,
+   "fee_pct": 0.35
+  },
+  "2021": {
+   "days": 365,
+   "strat_ret": -20.3,
+   "bh_ret": 59.4,
+   "strat_mdd": -63.7,
+   "bh_mdd": -53.2,
+   "exposure": 71.0,
+   "switches": 19,
+   "fee_pct": 0.95
+  },
+  "2022": {
+   "days": 365,
+   "strat_ret": 0.0,
+   "bh_ret": -64.2,
+   "strat_mdd": 0.0,
+   "bh_mdd": -67.0,
+   "exposure": 0.0,
+   "switches": 0,
+   "fee_pct": 0.0
+  },
+  "2023": {
+   "days": 365,
+   "strat_ret": 94.5,
+   "bh_ret": 155.6,
+   "strat_mdd": -18.6,
+   "bh_mdd": -20.1,
+   "exposure": 80.3,
+   "switches": 5,
+   "fee_pct": 0.25
+  },
+  "2024": {
+   "days": 366,
+   "strat_ret": 81.6,
+   "bh_ret": 120.9,
+   "strat_mdd": -25.7,
+   "bh_mdd": -26.2,
+   "exposure": 80.1,
+   "switches": 10,
+   "fee_pct": 0.5
+  },
+  "2025": {
+   "days": 365,
+   "strat_ret": -16.3,
+   "bh_ret": -6.3,
+   "strat_mdd": -31.5,
+   "bh_mdd": -32.1,
+   "exposure": 73.4,
+   "switches": 17,
+   "fee_pct": 0.85
+  },
+  "2026": {
+   "days": 279,
+   "strat_ret": 23.4,
+   "bh_ret": -2.2,
+   "strat_mdd": -7.0,
+   "bh_mdd": -39.6,
+   "exposure": 17.2,
+   "switches": 1,
+   "fee_pct": 0.05
+  }
+ },
+ "whipsaw_upbit": {
+  "n_trips": 28,
+  "n_losers": 20,
+  "win_rate_pct": 28.6,
+  "median_loser_pct": -2.18,
+  "top5": [
+   {
+    "entry": "2020-04-28",
+    "days": 391,
+    "ret_pct": 348.29
+   },
+   {
+    "entry": "2023-10-17",
+    "days": 262,
+    "ret_pct": 110.92
+   },
+   {
+    "entry": "2019-04-03",
+    "days": 177,
+    "ret_pct": 79.09
+   },
+   {
+    "entry": "2024-10-15",
+    "days": 147,
+    "ret_pct": 32.42
+   },
+   {
+    "entry": "2023-01-21",
+    "days": 210,
+    "ret_pct": 27.97
+   }
+  ],
+  "all_trips_compound_pct": 2039.3,
+  "without_top1_pct": 377.2,
+  "without_top5_pct": -25.4,
+  "by_entry_year": {
+   "2019": {
+    "trips": 3,
+    "losers": 2,
+    "short_le_20d": 2,
+    "loss_compound_pct": -1.4
+   },
+   "2020": {
+    "trips": 2,
+    "losers": 1,
+    "short_le_20d": 0,
+    "loss_compound_pct": -6.6
+   },
+   "2021": {
+    "trips": 5,
+    "losers": 5,
+    "short_le_20d": 3,
+    "loss_compound_pct": -11.1
+   },
+   "2022": {
+    "trips": 1,
+    "losers": 1,
+    "short_le_20d": 1,
+    "loss_compound_pct": -0.7
+   },
+   "2023": {
+    "trips": 6,
+    "losers": 4,
+    "short_le_20d": 4,
+    "loss_compound_pct": -9.0
+   },
+   "2024": {
+    "trips": 3,
+    "losers": 1,
+    "short_le_20d": 2,
+    "loss_compound_pct": -4.3
+   },
+   "2025": {
+    "trips": 7,
+    "losers": 6,
+    "short_le_20d": 6,
+    "loss_compound_pct": -14.8
+   },
+   "2026": {
+    "trips": 1,
+    "losers": 0,
+    "short_le_20d": 0,
+    "loss_compound_pct": 0.0
+   }
+  }
+ },
+ "whipsaw_bitstamp": {
+  "n_trips": 48,
+  "n_losers": 35,
+  "win_rate_pct": 27.1,
+  "median_loser_pct": -2.92,
+  "top5": [
+   {
+    "entry": "2015-10-11",
+    "days": 849,
+    "ret_pct": 2696.7
+   },
+   {
+    "entry": "2012-03-27",
+    "days": 466,
+    "ret_pct": 1377.16
+   },
+   {
+    "entry": "2020-04-30",
+    "days": 385,
+    "ret_pct": 318.17
+   },
+   {
+    "entry": "2013-10-04",
+    "days": 175,
+    "ret_pct": 303.44
+   },
+   {
+    "entry": "2023-10-17",
+    "days": 262,
+    "ret_pct": 99.77
+   }
+  ],
+  "all_trips_compound_pct": 1666787.9,
+  "without_top1_pct": 59502.0,
+  "without_top5_pct": 19.7,
+  "by_entry_year": {
+   "2012": {
+    "trips": 2,
+    "losers": 1,
+    "short_le_20d": 1,
+    "loss_compound_pct": -12.3
+   },
+   "2013": {
+    "trips": 2,
+    "losers": 0,
+    "short_le_20d": 0,
+    "loss_compound_pct": 0.0
+   },
+   "2014": {
+    "trips": 7,
+    "losers": 7,
+    "short_le_20d": 6,
+    "loss_compound_pct": -16.2
+   },
+   "2015": {
+    "trips": 3,
+    "losers": 2,
+    "short_le_20d": 1,
+    "loss_compound_pct": -13.9
+   },
+   "2018": {
+    "trips": 2,
+    "losers": 1,
+    "short_le_20d": 1,
+    "loss_compound_pct": -14.1
+   },
+   "2019": {
+    "trips": 2,
+    "losers": 1,
+    "short_le_20d": 1,
+    "loss_compound_pct": -5.5
+   },
+   "2020": {
+    "trips": 4,
+    "losers": 3,
+    "short_le_20d": 2,
+    "loss_compound_pct": -17.0
+   },
+   "2021": {
+    "trips": 9,
+    "losers": 9,
+    "short_le_20d": 7,
+    "loss_compound_pct": -37.2
+   },
+   "2023": {
+    "trips": 3,
+    "losers": 1,
+    "short_le_20d": 1,
+    "loss_compound_pct": -1.6
+   },
+   "2024": {
+    "trips": 5,
+    "losers": 3,
+    "short_le_20d": 3,
+    "loss_compound_pct": -6.8
+   },
+   "2025": {
+    "trips": 8,
+    "losers": 7,
+    "short_le_20d": 7,
+    "loss_compound_pct": -14.9
+   },
+   "2026": {
+    "trips": 1,
+    "losers": 0,
+    "short_le_20d": 0,
+    "loss_compound_pct": 0.0
+   }
+  }
+ },
+ "neighbours": {
+  "upbit_KRW-BTC": {
+   "from": "2018-07-22",
+   "SMA100": {
+    "ret_pct": 5798.4,
+    "cagr_pct": 64.3,
+    "mdd_pct": -46.6,
+    "sharpe": 1.49,
+    "exposure_pct": 55.8,
+    "switches": 95
+   },
+   "SMA150": {
+    "ret_pct": 3359.8,
+    "cagr_pct": 53.9,
+    "mdd_pct": -41.9,
+    "sharpe": 1.31,
+    "exposure_pct": 53.8,
+    "switches": 51
+   },
+   "SMA175": {
+    "ret_pct": 2849.8,
+    "cagr_pct": 51.0,
+    "mdd_pct": -47.4,
+    "sharpe": 1.26,
+    "exposure_pct": 54.1,
+    "switches": 55
+   },
+   "SMA200": {
+    "ret_pct": 2040.3,
+    "cagr_pct": 45.2,
+    "mdd_pct": -54.7,
+    "sharpe": 1.16,
+    "exposure_pct": 54.9,
+    "switches": 55
+   },
+   "SMA225": {
+    "ret_pct": 1594.6,
+    "cagr_pct": 41.1,
+    "mdd_pct": -57.9,
+    "sharpe": 1.07,
+    "exposure_pct": 57.7,
+    "switches": 63
+   },
+   "SMA250": {
+    "ret_pct": 1493.2,
+    "cagr_pct": 40.1,
+    "mdd_pct": -58.7,
+    "sharpe": 1.04,
+    "exposure_pct": 60.2,
+    "switches": 53
+   },
+   "SMA300": {
+    "ret_pct": 2169.4,
+    "cagr_pct": 46.2,
+    "mdd_pct": -57.7,
+    "sharpe": 1.12,
+    "exposure_pct": 61.5,
+    "switches": 43
+   },
+   "B&H": {
+    "ret_pct": 1285.3,
+    "cagr_pct": 37.7,
+    "mdd_pct": -74.1,
+    "sharpe": 0.87
+   }
+  },
+  "bitstamp_BTCUSD": {
+   "from": "2012-06-27",
+   "SMA100": {
+    "ret_pct": 3138030.2,
+    "cagr_pct": 106.4,
+    "mdd_pct": -70.4,
+    "sharpe": 1.49,
+    "exposure_pct": 58.4,
+    "switches": 165
+   },
+   "SMA150": {
+    "ret_pct": 2779677.5,
+    "cagr_pct": 104.7,
+    "mdd_pct": -72.1,
+    "sharpe": 1.47,
+    "exposure_pct": 60.9,
+    "switches": 103
+   },
+   "SMA175": {
+    "ret_pct": 2576913.4,
+    "cagr_pct": 103.6,
+    "mdd_pct": -72.0,
+    "sharpe": 1.45,
+    "exposure_pct": 61.7,
+    "switches": 95
+   },
+   "SMA200": {
+    "ret_pct": 1347043.3,
+    "cagr_pct": 94.5,
+    "mdd_pct": -70.7,
+    "sharpe": 1.37,
+    "exposure_pct": 62.1,
+    "switches": 93
+   },
+   "SMA225": {
+    "ret_pct": 1314541.4,
+    "cagr_pct": 94.2,
+    "mdd_pct": -71.0,
+    "sharpe": 1.36,
+    "exposure_pct": 63.6,
+    "switches": 111
+   },
+   "SMA250": {
+    "ret_pct": 1165979.4,
+    "cagr_pct": 92.6,
+    "mdd_pct": -76.0,
+    "sharpe": 1.34,
+    "exposure_pct": 65.8,
+    "switches": 101
+   },
+   "SMA300": {
+    "ret_pct": 1603458.9,
+    "cagr_pct": 96.9,
+    "mdd_pct": -71.0,
+    "sharpe": 1.36,
+    "exposure_pct": 68.6,
+    "switches": 83
+   },
+   "B&H": {
+    "ret_pct": 1333777.8,
+    "cagr_pct": 94.4,
+    "mdd_pct": -84.8,
+    "sharpe": 1.26
+   }
+  },
+  "upbit_KRW-ETH": {
+   "from": "2018-07-25",
+   "SMA100": {
+    "ret_pct": 2501.2,
+    "cagr_pct": 48.7,
+    "mdd_pct": -63.3,
+    "sharpe": 1.03,
+    "exposure_pct": 53.1,
+    "switches": 83
+   },
+   "SMA150": {
+    "ret_pct": 2547.1,
+    "cagr_pct": 49.1,
+    "mdd_pct": -62.9,
+    "sharpe": 1.02,
+    "exposure_pct": 51.6,
+    "switches": 73
+   },
+   "SMA175": {
+    "ret_pct": 2882.4,
+    "cagr_pct": 51.2,
+    "mdd_pct": -65.5,
+    "sharpe": 1.05,
+    "exposure_pct": 51.4,
+    "switches": 47
+   },
+   "SMA200": {
+    "ret_pct": 2397.4,
+    "cagr_pct": 48.0,
+    "mdd_pct": -69.2,
+    "sharpe": 1.01,
+    "exposure_pct": 52.3,
+    "switches": 47
+   },
+   "SMA225": {
+    "ret_pct": 2276.9,
+    "cagr_pct": 47.1,
+    "mdd_pct": -73.9,
+    "sharpe": 0.99,
+    "exposure_pct": 52.8,
+    "switches": 33
+   },
+   "SMA250": {
+    "ret_pct": 1286.7,
+    "cagr_pct": 37.8,
+    "mdd_pct": -72.3,
+    "sharpe": 0.87,
+    "exposure_pct": 53.4,
+    "switches": 53
+   },
+   "SMA300": {
+    "ret_pct": 1194.1,
+    "cagr_pct": 36.6,
+    "mdd_pct": -61.0,
+    "sharpe": 0.86,
+    "exposure_pct": 54.1,
+    "switches": 65
+   },
+   "B&H": {
+    "ret_pct": 577.9,
+    "cagr_pct": 26.3,
+    "mdd_pct": -82.5,
+    "sharpe": 0.69
+   }
+  },
+  "upbit_KRW-XRP": {
+   "from": "2018-07-25",
+   "SMA100": {
+    "ret_pct": 41.1,
+    "cagr_pct": 4.3,
+    "mdd_pct": -87.1,
+    "sharpe": 0.39,
+    "exposure_pct": 42.9,
+    "switches": 117
+   },
+   "SMA150": {
+    "ret_pct": 56.0,
+    "cagr_pct": 5.6,
+    "mdd_pct": -80.1,
+    "sharpe": 0.41,
+    "exposure_pct": 42.3,
+    "switches": 101
+   },
+   "SMA175": {
+    "ret_pct": -12.6,
+    "cagr_pct": -1.6,
+    "mdd_pct": -87.5,
+    "sharpe": 0.31,
+    "exposure_pct": 41.7,
+    "switches": 105
+   },
+   "SMA200": {
+    "ret_pct": -64.1,
+    "cagr_pct": -11.7,
+    "mdd_pct": -90.7,
+    "sharpe": 0.17,
+    "exposure_pct": 43.3,
+    "switches": 105
+   },
+   "SMA225": {
+    "ret_pct": -0.5,
+    "cagr_pct": -0.1,
+    "mdd_pct": -83.0,
+    "sharpe": 0.34,
+    "exposure_pct": 43.3,
+    "switches": 87
+   },
+   "SMA250": {
+    "ret_pct": 14.4,
+    "cagr_pct": 1.7,
+    "mdd_pct": -84.7,
+    "sharpe": 0.36,
+    "exposure_pct": 43.3,
+    "switches": 103
+   },
+   "SMA300": {
+    "ret_pct": 70.5,
+    "cagr_pct": 6.7,
+    "mdd_pct": -81.1,
+    "sharpe": 0.43,
+    "exposure_pct": 43.4,
+    "switches": 62
+   },
+   "B&H": {
+    "ret_pct": 293.0,
+    "cagr_pct": 18.1,
+    "mdd_pct": -82.6,
+    "sharpe": 0.62
+   }
+  }
+ },
+ "exposure_matched_primary": {
+  "exposure": 0.531,
+  "const_weight_daily_rebal": {
+   "ret_pct": 461.0,
+   "cagr_pct": 22.5,
+   "mdd_pct": -49.2,
+   "sharpe": 0.85,
+   "calmar": 0.46,
+   "exposure_pct": 53.1,
+   "switches": 0,
+   "fee_drag_pct": 0.0,
+   "days": 3099
+  },
+  "static_buy_e_hold": {
+   "ret_pct": 705.0,
+   "mdd_pct": -68.1
+  }
+ },
+ "sma200_primary_x1": {
+  "ret_pct": 2040.3,
+  "cagr_pct": 43.5,
+  "mdd_pct": -54.7,
+  "sharpe": 1.14,
+  "calmar": 0.79,
+  "exposure_pct": 53.1,
+  "switches": 55,
+  "fee_drag_pct": 2.75,
+  "days": 3099
+ }
+}

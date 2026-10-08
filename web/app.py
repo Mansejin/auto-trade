@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import os
 import secrets
@@ -7,7 +8,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -15,8 +16,46 @@ from fastapi import Cookie, Depends, FastAPI, Form, HTTPException, Request, Resp
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from equity_curve import equity_curve_from_trades, equity_summary
+from equity_curve import (
+    apply_external_flows,
+    equity_curve_from_trades,
+    equity_summary,
+    normalize_equity_flows,
+)
 from condition_meters import build_condition_meters as _build_condition_meters
+from condition_meters import build_trend_short_meters as _build_trend_short_meters
+
+_KST = timezone(timedelta(hours=9))
+
+
+def _fmt_kst(ts: Any) -> str:
+    """UTC/naive FT timestamps -> YYYY-MM-DD HH:MM:SS Asia/Seoul (no micros)."""
+    if ts is None:
+        return "-"
+    s = str(ts).strip().replace("Z", "")
+    if not s or s == "-":
+        return "-"
+    dt: datetime | None = None
+    for fmt in (
+        "%Y-%m-%d %H:%M:%S.%f",
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%dT%H:%M:%S.%f",
+        "%Y-%m-%dT%H:%M:%S",
+    ):
+        try:
+            dt = datetime.strptime(s, fmt)
+            break
+        except ValueError:
+            continue
+    if dt is None:
+        return s.split(".")[0]
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(_KST).strftime("%Y-%m-%d %H:%M:%S")
+
+
+# ponytail: ceiling = parse list only covers FT sqlite shapes; upgrade if ISO offsets appear.
+assert _fmt_kst("2026-08-06 02:27:17.813960") == "2026-08-06 11:27:17"
 
 LOG_DIR = Path(os.getenv("LOG_DIR", "/app/logs"))
 STATE_PATH = Path(os.getenv("STATE_PATH", "/app/data/state.json"))
@@ -32,6 +71,13 @@ if not _CFG.is_dir():
     _CFG = Path(__file__).resolve().parent.parent / "config"
 SLEEVES_PATH = Path(os.getenv("SLEEVES_PATH", str(_CFG / "sleeves.json")))
 SCALP_MAP_PATH = Path(os.getenv("SCALP_MAP_PATH", str(_CFG / "scalp-live-map.json")))
+EQUITY_FLOWS_PATH = Path(os.getenv("EQUITY_FLOWS_PATH", str(_CFG / "equity-flows.json")))
+FREQTRADE_SCALP_DB = Path(
+    os.getenv(
+        "FREQTRADE_SCALP_DB",
+        "/app/ft-userdata/tradesv3-scalp-trend-short.sqlite",
+    )
+)
 TOKEN = os.getenv("DASHBOARD_TOKEN", "").strip()
 BASE_PATH = os.getenv("BASE_PATH", "").strip().rstrip("/")
 COOKIE_NAME = "desk_token"
@@ -544,24 +590,92 @@ def _load_sleeves(regime_code: str | None) -> dict[str, Any]:
     }
 
 
-def _mark_upbit_equity(status: dict[str, Any], state: dict[str, Any]) -> float | None:
-    price = status.get("price")
-    if price is None:
+def _fetch_upbit_ticker_price(market: str) -> float | None:
+    """Public last trade price (no auth). Cached briefly via candle cache key space."""
+    market = str(market or "").strip().upper()
+    if not market:
         return None
+    cache_key = f"ticker|{market}"
+    now = time.time()
+    hit = _candle_cache.get(cache_key)
+    if hit and now - hit[0] < 30:
+        try:
+            return float(hit[1][0]["close"])  # type: ignore[index]
+        except Exception:
+            pass
+    url = f"https://api.upbit.com/v1/ticker?markets={urllib.parse.quote(market)}"
+    try:
+        req = urllib.request.Request(url, headers={"Accept": "application/json", "User-Agent": "auto-trade-desk"})
+        with urllib.request.urlopen(req, timeout=8) as resp:
+            rows = json.loads(resp.read().decode("utf-8"))
+        if not rows:
+            return None
+        px = float(rows[0]["trade_price"])
+        _candle_cache[cache_key] = (now, [{"close": px}])
+        return px
+    except Exception:
+        return None
+
+
+def _mark_upbit_equity(status: dict[str, Any], state: dict[str, Any]) -> float | None:
+    """Upbit-side mark in KRW (cash + BTC pos + USDT/TRX bridge inventory)."""
+    if status.get("equity_krw") is not None:
+        try:
+            return float(status["equity_krw"])
+        except (TypeError, ValueError):
+            pass
+    price = status.get("price")
     cash = status.get("krw")
     if cash is None:
         cash = status.get("cash")
     if cash is None:
         cash = state.get("cash")
-    if cash is None:
+    if cash is None or price is None:
         return None
     pos = status.get("position") or state.get("position") or {}
     qty = float(pos.get("qty") or 0) if isinstance(pos, dict) else 0.0
-    return float(cash) + qty * float(price)
+    total = float(cash) + qty * float(price)
+    usdt_bal = status.get("usdt")
+    trx_bal = status.get("trx")
+    try:
+        if usdt_bal is not None and float(usdt_bal) > 1e-8:
+            usdt_px = _fetch_upbit_ticker_price("KRW-USDT")
+            if usdt_px:
+                total += float(usdt_bal) * usdt_px
+        if trx_bal is not None and float(trx_bal) > 1e-8:
+            trx_px = _fetch_upbit_ticker_price("KRW-TRX")
+            if trx_px:
+                total += float(trx_bal) * trx_px
+    except (TypeError, ValueError):
+        pass
+    return total
+
+
+def _mark_portfolio_equity(
+    status: dict[str, Any], state: dict[str, Any], bg: dict[str, Any] | None = None
+) -> float | None:
+    """Total liquid book in KRW: Upbit (incl. bridge) + Bitget USDT * KRW-USDT."""
+    upbit = _mark_upbit_equity(status, state)
+    if upbit is None:
+        return None
+    bg = bg if bg is not None else _load_bitget()
+    bg_usdt = bg.get("cash")
+    if bg_usdt is None:
+        bg_usdt = bg.get("usdt")
+    try:
+        bg_usdt_f = float(bg_usdt) if bg_usdt is not None else 0.0
+    except (TypeError, ValueError):
+        bg_usdt_f = 0.0
+    if bg_usdt_f > 1e-8:
+        usdt_px = _fetch_upbit_ticker_price("KRW-USDT")
+        if usdt_px:
+            return upbit + bg_usdt_f * usdt_px
+    return upbit
 
 
 def _maybe_sample_equity(status: dict[str, Any], state: dict[str, Any]) -> None:
-    eq = _mark_upbit_equity(status, state)
+    bg = _load_bitget()
+    eq = _mark_portfolio_equity(status, state, bg)
     if eq is None:
         return
     now = time.time()
@@ -585,14 +699,18 @@ def _maybe_sample_equity(status: dict[str, Any], state: dict[str, Any]) -> None:
         except Exception:
             pass
     pos = status.get("position") or state.get("position") or {}
-    bg = _load_bitget()
+    upbit_eq = _mark_upbit_equity(status, state)
     point = {
         "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
         "equity": round(eq, 2),
+        "equity_upbit": round(float(upbit_eq), 2) if upbit_eq is not None else None,
         "cash": status.get("krw") if status.get("krw") is not None else state.get("cash"),
+        "usdt": status.get("usdt"),
+        "trx": status.get("trx"),
         "price": status.get("price"),
         "qty": float(pos.get("qty") or 0) if isinstance(pos, dict) else 0.0,
         "bitget_usdt": bg.get("cash"),
+        "portfolio": True,
         "source": "sample",
     }
     payload = json.dumps(point, ensure_ascii=False) + "\n"
@@ -630,6 +748,151 @@ def _read_equity_history() -> list[dict[str, Any]]:
             return out
     return []
 
+
+def _inflate_legacy_equity_points(
+    history: list[dict[str, Any]], status: dict[str, Any]
+) -> list[dict[str, Any]]:
+    """Old samples stored Upbit KRW(+BTC) only; lift them to portfolio KRW for display."""
+    if not history:
+        return history
+    usdt_px = _fetch_upbit_ticker_price("KRW-USDT") or 0.0
+    trx_px = _fetch_upbit_ticker_price("KRW-TRX") or 0.0
+    # Prefer live bridge inventory when legacy rows omit TRX/USDT.
+    default_trx = 0.0
+    default_usdt = 0.0
+    try:
+        if status.get("trx") is not None:
+            default_trx = float(status.get("trx") or 0.0)
+        if status.get("usdt") is not None:
+            default_usdt = float(status.get("usdt") or 0.0)
+    except (TypeError, ValueError):
+        pass
+    out: list[dict[str, Any]] = []
+    for raw in history:
+        p = dict(raw)
+        if p.get("portfolio"):
+            out.append(p)
+            continue
+        try:
+            cash = p.get("cash")
+            price = p.get("price")
+            qty = float(p.get("qty") or 0.0)
+            if cash is not None and price is not None:
+                upbit = float(cash) + qty * float(price)
+            else:
+                upbit = float(p["equity"])
+            trx = p.get("trx")
+            usdt = p.get("usdt")
+            trx_f = float(trx) if trx is not None else default_trx
+            usdt_f = float(usdt) if usdt is not None else default_usdt
+            if trx_px > 0 and trx_f > 0:
+                upbit += trx_f * trx_px
+            if usdt_px > 0 and usdt_f > 0:
+                upbit += usdt_f * usdt_px
+            bg = float(p.get("bitget_usdt") or 0.0)
+            total = upbit + (bg * usdt_px if usdt_px > 0 else 0.0)
+            p["equity_upbit"] = round(upbit, 2)
+            p["equity"] = round(total, 2)
+            p["portfolio"] = True
+            p["inflated"] = True
+        except Exception:
+            pass
+        out.append(p)
+    return out
+
+def _scalp_map_live() -> bool:
+    m = _load_json(SCALP_MAP_PATH)
+    st = str(m.get("status") or "")
+    return bool(st) and st.startswith("live") and "cash" not in st
+
+
+def _load_freqtrade_scalp() -> dict[str, Any]:
+    """Freqtrade SCALP sleeve from sqlite (open trade or flat). Always TrendShort meters."""
+    db = FREQTRADE_SCALP_DB
+    if not db.is_file():
+        return {}
+    meters = _build_trend_short_meters(adx_min=15)
+    try:
+        import sqlite3
+
+        con = sqlite3.connect(f"file:{db.as_posix()}?mode=ro", uri=True)
+        con.row_factory = sqlite3.Row
+        row = con.execute(
+            "SELECT pair, amount, open_rate, is_short, strategy, open_date "
+            "FROM trades WHERE is_open = 1 ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        last = con.execute(
+            "SELECT strategy FROM trades ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        con.close()
+    except Exception:
+        return {
+            "running": True,
+            "exchange": "bitget",
+            "mode": "LIVE",
+            "strategy": "TrendShortV1Lev3Px",
+            "market": "BTC/USDT:USDT",
+            "signal": None,
+            "position": None,
+            "latest_text": "Freqtrade SCALP LIVE\n포지션: — (db read error)\n",
+            "condition_meters": meters,
+            "source": "freqtrade",
+        }
+
+    strat_fallback = str((last["strategy"] if last else None) or "TrendShortV1Lev3Px")
+    if not row:
+        text = (
+            f"Freqtrade SCALP LIVE\n"
+            f"전략: {strat_fallback}\n"
+            f"페어: BTC/USDT:USDT\n"
+            f"포지션: 없음 (flat)"
+        )
+        return {
+            "running": True,
+            "exchange": "bitget",
+            "mode": "LIVE",
+            "strategy": strat_fallback,
+            "market": "BTC/USDT:USDT",
+            "signal": None,
+            "position": None,
+            "latest_text": text,
+            "condition_meters": meters,
+            "source": "freqtrade",
+        }
+
+    is_short = bool(row["is_short"])
+    qty = float(row["amount"] or 0)
+    entry = float(row["open_rate"] or 0)
+    pair = str(row["pair"] or "")
+    strat = str(row["strategy"] or "") or strat_fallback
+    side = "short" if is_short else "long"
+    opened = _fmt_kst(row["open_date"])
+    text = (
+        f"Freqtrade SCALP LIVE\n"
+        f"전략: {strat}\n"
+        f"페어: {pair}\n"
+        f"포지션: {side} {qty} @ {entry}\n"
+        f"진입: {opened} (KST)"
+    )
+    return {
+        "running": True,
+        "exchange": "bitget",
+        "mode": "LIVE",
+        "strategy": strat,
+        "market": pair or None,
+        "signal": side,
+        "position": {
+            "qty": qty,
+            "entry_price": entry,
+            "side": side,
+            "opened_at": opened,
+        },
+        "latest_text": text,
+        "condition_meters": meters,
+        "source": "freqtrade",
+    }
+
+
 def _load_bitget() -> dict[str, Any]:
     bitget_state = _load_json(BITGET_STATE_PATH)
     bitget_status = _load_json(BITGET_LOG_DIR / "status.json")
@@ -637,32 +900,69 @@ def _load_bitget() -> dict[str, Any]:
     latest_text = ""
     if text_path.exists():
         latest_text = text_path.read_text(encoding="utf-8", errors="ignore")[:8000]
-    if not bitget_state and not bitget_status:
-        return {
-            "running": False,
-            "latest_text": latest_text,
-            "recent_trades": [],
-        }
-    bs = bitget_status or {}
-    trades = bitget_state.get("trades") or []
-    cash = bs.get("cash")
-    if cash is None:
-        cash = bs.get("usdt")
-    if cash is None:
-        cash = bitget_state.get("cash")
-    return {
-        "running": True,
-        "exchange": "bitget",
-        "mode": bs.get("mode") or bitget_state.get("mode"),
-        "strategy": bs.get("strategy") or bitget_state.get("strategy"),
-        "market": bs.get("market") or bitget_state.get("market"),
-        "signal": bs.get("signal"),
-        "cash": cash,
-        "position": bs.get("position") or bitget_state.get("position"),
+    toolkit: dict[str, Any] = {
+        "running": False,
         "latest_text": latest_text,
-        "recent_trades": trades[-8:] if isinstance(trades, list) else [],
-        "condition_meters": _build_condition_meters(bs),
+        "recent_trades": [],
+        "condition_meters": [],
     }
+    if bitget_state or bitget_status:
+        bs = bitget_status or {}
+        trades = bitget_state.get("trades") or []
+        cash = bs.get("cash")
+        if cash is None:
+            cash = bs.get("usdt")
+        if cash is None:
+            cash = bitget_state.get("cash")
+        toolkit = {
+            "running": True,
+            "exchange": "bitget",
+            "mode": bs.get("mode") or bitget_state.get("mode"),
+            "strategy": bs.get("strategy") or bitget_state.get("strategy"),
+            "market": bs.get("market") or bitget_state.get("market"),
+            "signal": bs.get("signal"),
+            "cash": cash,
+            "position": bs.get("position") or bitget_state.get("position"),
+            "latest_text": latest_text,
+            "recent_trades": trades[-8:] if isinstance(trades, list) else [],
+            "condition_meters": _build_condition_meters(bs),
+            "source": "toolkit",
+        }
+
+    ft = _load_freqtrade_scalp()
+    if ft:
+        out = {**toolkit, **ft}
+        if toolkit.get("cash") is not None:
+            out["cash"] = toolkit["cash"]
+        # Never keep toolkit SMA meters — FT scalp sleeve owns this panel.
+        out["condition_meters"] = ft.get("condition_meters") or _build_trend_short_meters(
+            adx_min=15
+        )
+        out["source"] = "freqtrade"
+        if not out.get("recent_trades"):
+            out["recent_trades"] = toolkit.get("recent_trades") or []
+        return out
+
+    if _scalp_map_live():
+        # Flat FT DB missing, but scalp map still live — TrendShort meters only.
+        scalp_map = _load_json(SCALP_MAP_PATH)
+        bear = ((scalp_map.get("map") or {}).get("bear")) or None
+        return {
+            "running": True,
+            "exchange": "bitget",
+            "mode": "LIVE",
+            "strategy": _basename(bear) if bear else "TrendShortV1Lev3Px",
+            "market": "BTC/USDT:USDT",
+            "signal": None,
+            "cash": toolkit.get("cash"),
+            "position": None,
+            "latest_text": toolkit.get("latest_text")
+            or "SCALP map LIVE (Freqtrade flat / no open trade in DB)",
+            "recent_trades": toolkit.get("recent_trades") or [],
+            "condition_meters": _build_trend_short_meters(adx_min=15),
+            "source": "scalp-map",
+        }
+    return toolkit
 
 
 def api_status(_: None = Depends(require_auth)) -> dict[str, Any]:
@@ -767,7 +1067,11 @@ def api_equity(
         }
     _maybe_sample_equity(status, state)
 
-    history = _read_equity_history()
+    history = _inflate_legacy_equity_points(_read_equity_history(), status)
+    # Prefer continuous portfolio samples — legacy KRW-only rows create a fake cliff.
+    portfolio_only = [p for p in history if p.get("portfolio")]
+    if len(portfolio_only) >= 2:
+        history = portfolio_only
     market = str(status.get("market") or state.get("market") or "KRW-BTC")
     source = "history"
     range_key = (range or "30d").strip().lower()
@@ -794,13 +1098,14 @@ def api_equity(
             if rebuilt:
                 history = rebuilt
                 source = "trades_mtm"
-                tip = _mark_upbit_equity(status, state)
+                tip = _mark_portfolio_equity(status, state)
                 if tip is not None:
                     history.append(
                         {
                             "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
                             "equity": round(tip, 2),
                             "price": status.get("price"),
+                            "portfolio": True,
                             "source": "live",
                         }
                     )
@@ -828,10 +1133,23 @@ def api_equity(
                 filtered.append(p)
         history = filtered or history[-1:]
 
+    flows = normalize_equity_flows(_load_json(EQUITY_FLOWS_PATH))
+    # Chart / 현재·시작 = actual wallet. Return/MDD/alpha silently ignore external flows.
+    wallet_history = copy.deepcopy(history)
+    for p in wallet_history:
+        if p.get("wallet_equity") is None:
+            p["wallet_equity"] = float(p["equity"])
+        p["equity"] = float(p["wallet_equity"])
+
+    perf_history = copy.deepcopy(wallet_history)
+    flow_adjust = 0.0
+    if flows:
+        perf_history, flow_adjust = apply_external_flows(perf_history, flows, _parse_iso_ts)
+
     bh_on = bool(int(bh))
-    if bh_on and len(history) >= 2:
+    if bh_on and len(perf_history) >= 2:
         price_by_day: dict[str, float] = {}
-        for p in history:
+        for p in perf_history:
             if p.get("price") is not None:
                 day = str(p.get("ts") or "")[:10]
                 if len(day) == 10:
@@ -844,8 +1162,8 @@ def api_equity(
         except Exception:
             pass
 
-        start_eq = float(history[0]["equity"])
-        start_day = str(history[0].get("ts") or "")[:10]
+        start_eq = float(perf_history[0]["equity"])
+        start_day = str(perf_history[0].get("ts") or "")[:10]
         start_px = price_by_day.get(start_day)
         if start_px is None:
             for day in sorted(price_by_day):
@@ -853,7 +1171,7 @@ def api_equity(
                     start_px = price_by_day[day]
                     break
         if start_px and start_px > 0:
-            for p in history:
+            for p in perf_history:
                 day = str(p.get("ts") or "")[:10]
                 px = p.get("price")
                 if px is None:
@@ -861,12 +1179,18 @@ def api_equity(
                 if px is None:
                     continue
                 p["bh_equity"] = round(start_eq * (float(px) / start_px), 2)
+            # Mirror BH onto wallet points for optional overlay (scaled to wallet start).
+            w_start = float(wallet_history[0]["equity"])
+            scale = (w_start / start_eq) if start_eq else 1.0
+            for wp, pp in zip(wallet_history, perf_history):
+                if pp.get("bh_equity") is not None:
+                    wp["bh_equity"] = round(float(pp["bh_equity"]) * scale, 2)
 
-    sum_bot = equity_summary(history)
-    paired = [p for p in history if p.get("bh_equity") is not None]
-    # Alpha only on overlapping bot+BH points so windows match.
+    sum_wallet = equity_summary(wallet_history)
+    sum_perf = equity_summary(perf_history)
+    paired = [p for p in perf_history if p.get("bh_equity") is not None]
     sum_bh = equity_summary([{"equity": p["bh_equity"]} for p in paired]) if len(paired) >= 2 else {"n": 0}
-    sum_bot_vs_bh = equity_summary(paired) if len(paired) >= 2 else sum_bot
+    sum_bot_vs_bh = equity_summary(paired) if len(paired) >= 2 else sum_perf
     alpha = None
     if sum_bot_vs_bh.get("n") and sum_bh.get("n"):
         alpha = round(float(sum_bot_vs_bh["ret_pct"]) - float(sum_bh["ret_pct"]), 2)
@@ -878,12 +1202,21 @@ def api_equity(
         "source": source,
         "range": range_key,
         "bh": bh_on,
-        "points": history,
+        "points": wallet_history,
         "summary": {
-            **sum_bot,
+            "n": sum_wallet.get("n", 0),
+            "start": sum_wallet.get("start"),
+            "end": sum_wallet.get("end"),
+            "high": sum_wallet.get("high"),
+            "low": sum_wallet.get("low"),
+            # Return / drawdown exclude external cash flows; curve shows wallet.
+            "ret_pct": sum_perf.get("ret_pct"),
+            "mdd_pct": sum_perf.get("mdd_pct"),
             "bh_ret_pct": sum_bh.get("ret_pct"),
             "alpha_pct": alpha,
+            "flow_adjust_krw": flow_adjust,
         },
+        "flows": flows,
         "bitget_usdt": bg.get("cash"),
         "scalp_running": bool(bg.get("running")),
     }

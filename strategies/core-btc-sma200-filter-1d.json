@@ -1,0 +1,36 @@
+{
+  "name": "CORE BTC SMA200 Filter 1d",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "1d",
+  "history_bars": 260,
+  "stop_loss": null,
+  "take_profit": null,
+  "indicators": [
+    {
+      "type": "moving_average",
+      "ref": "sma200",
+      "params": { "type": "SMA", "period": 200 }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "gt",
+        "right": { "type": "indicator", "ref": "sma200.value" }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": { "type": "field", "field": "close" },
+        "op": "lte",
+        "right": { "type": "indicator", "ref": "sma200.value" }
+      }
+    ]
+  }
+}

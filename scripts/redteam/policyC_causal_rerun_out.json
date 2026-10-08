@@ -1,0 +1,42 @@
+{
+  "IS hindsight": {
+    "ret_pct": 425.9,
+    "mdd_pct": -32.2,
+    "n_segments": 36
+  },
+  "IS hind_shift1": {
+    "ret_pct": 493.7,
+    "mdd_pct": -30.7,
+    "n_segments": 36
+  },
+  "IS live_raw": {
+    "ret_pct": 428.5,
+    "mdd_pct": -27.7,
+    "n_segments": 94
+  },
+  "IS live_conf14": {
+    "ret_pct": 221.0,
+    "mdd_pct": -75.5,
+    "n_segments": 25
+  },
+  "OOS hindsight": {
+    "ret_pct": 387.4,
+    "mdd_pct": -36.7,
+    "n_segments": 25
+  },
+  "OOS hind_shift1": {
+    "ret_pct": 352.6,
+    "mdd_pct": -39.9,
+    "n_segments": 25
+  },
+  "OOS live_raw": {
+    "ret_pct": 283.3,
+    "mdd_pct": -37.2,
+    "n_segments": 54
+  },
+  "OOS live_conf14": {
+    "ret_pct": 214.3,
+    "mdd_pct": -36.7,
+    "n_segments": 21
+  }
+}

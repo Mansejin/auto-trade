@@ -4,9 +4,10 @@ OCI VPS 대신 회사 NAS Docker에서 실행.
 
 ## Layout
 
-- Host path: `/volume1/docker/p3f8c1a2` (opaque; mapping only in local `name-map.local.md`)
+- Host path: `/volume1/docker/p3f8c1a2` (opaque names — see agent map below)
 - Compose: `docker-compose.nas.yml` (edge/LE 없음), project `p3f8c1a2`
-- Containers: `p3f8c1a2-w1`…`w4` (CF Tunnel still resolves alias `desk` → w3)
+- Containers: `p3f8c1a2-w1`…`w5` (CF Tunnel alias `desk` → w3; scalp = profile `scalp` / w5)
+- **Agent map (English, canonical):** [`docs/agents/nas-opaque-names.md`](../../docs/agents/nas-opaque-names.md) · NAS copy: `deploy/nas/opaque-names.agent.md`
 - Public: Cloudflare Tunnel → `http://desk:8080`
 - Worker `mansejin.com/autotrade` ORIGIN → tunnel hostname
 
@@ -42,7 +43,8 @@ curl -sS http://127.0.0.1:18080/autotrade/healthz
 ```
 
 Name remapping helper (NAS): `deploy/nas/obfuscate-nas.sh`  
-Local-only map: `deploy/nas/name-map.local.md` (gitignored).
+Opaque name map for agents: `docs/agents/nas-opaque-names.md` (committed).  
+Optional local duplicate: `deploy/nas/name-map.local.md` (gitignored).
 
 SSH: `ssh nas` (Tailscale; works from office and home). Connection guide lives only in the private repo `Mansejin/ohola-nas`.
 
@@ -63,5 +65,6 @@ curl -sS https://api.ipify.org && echo
 
 - Use `sudo docker` (`/usr/local/bin/docker`).
 - Prefer `user: "0:0"` on bots; avoid `read_only` on shared folders.
+- `w1`/`w2` mount `./bot:/app/bot:ro` — Python bot 코드 수정은 이미지 리빌드 없이 host `bot/` 동기화 후 `restart`/`up -d` 로 반영.
 - If `data/` / `logs/` files are owned by uid 10001 and unwritable, wipe via a root container then recreate.
 - `.env` must be real LF newlines (not literal `\n`). Helper: `deploy/nas/merge_env.py`.

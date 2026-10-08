@@ -14,6 +14,7 @@ cache/
 reports/bt-cache/
 reports/.bt-work/
 data/
+!scripts/data/
 logs/
 strategies/_eth_policyC_xfer/
 reports/ae12-collect/*.jsonl
@@ -27,6 +28,7 @@ freqtrade-research/user_data/config.bitget-scalp.secrets.json
 !.cursor/rules/**
 !.cursor/skills/
 !.cursor/skills/**
+!.cursor/agents/
 .cursor/mcp.json
 *.tmp
 deploy/nas/name-map.local.md
