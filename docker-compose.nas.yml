@@ -19,7 +19,7 @@ services:
     environment:
       TZ: Asia/Seoul
       PAPER: ${PAPER:-true}
-      STRATEGY_PATH: ${STRATEGY_PATH:-/app/strategies/sma_cross_btc.json}
+      STRATEGY_PATH: ${STRATEGY_PATH:-/app/strategies/core-btc-sma200-filter-1d.json}
       STATE_PATH: ${STATE_PATH:-/app/data/state.json}
       LOG_DIR: ${LOG_DIR:-/app/logs}
       POLL_SECONDS: ${POLL_SECONDS:-300}

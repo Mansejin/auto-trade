@@ -2,6 +2,9 @@
 # Daily Policy C regime switch for NAS opaque compose.
 # Synology Task Scheduler: run as root, daily 00:20 KST (after 1d bar close).
 set -e
+# Disabled 2026-10-08: CORE is the single SMA200 filter (docs/research/redteam/policyC.md VETO).
+# Running the switcher would overwrite STRATEGY_PATH back to a Policy C sleeve.
+exit 0
 export AUTO_TRADE_ROOT=/volume1/docker/p3f8c1a2
 export COMPOSE_PROJECT_NAME=p3f8c1a2
 export COMPOSE_FILE=docker-compose.nas.yml

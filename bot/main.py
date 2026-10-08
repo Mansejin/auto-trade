@@ -169,7 +169,9 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
             private = UpbitPrivate(settings.upbit_access_key, settings.upbit_secret_key)
 
         logger.info("캔들 조회 중… market=%s timeframe=%s", strategy.market, strategy.timeframe)
-        candles = public.candles(strategy.market, strategy.timeframe, count=200)
+        candles = public.candles(
+            strategy.market, strategy.timeframe, count=int(strategy.raw.get("history_bars") or 200)
+        )
         ohlcv = OHLCV.from_upbit_candles(candles)
         bar_key = _closed_bar_key(candles)
         logger.info("캔들 조회 성공 (%d개, 완성봉=%s)", len(candles), bar_key or "-")

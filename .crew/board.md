@@ -39,9 +39,10 @@ auto: off
   - 완료 기준: docs/research/redteam/upbit-listing-fade.md 판정(VETO/PASS-WITH-CAVEATS/PASS)
   - 결과: 신호 PASS-WITH-CAVEATS / 자동 숏 상품 VETO. 재현 일치. 공지+24h PF 1.93, D+2 1.72, 알트지수 숏 대비 초과 +4.15%/건(무작위 100pct), 무기한 나이>180일 PF 2.27, 상위5 제거 PF 1.65, 펀딩 부호 정확(평균 −3.6%/건). 1배 현실 사이징 MDD −72%·월 −63%, 2·3배 파산. 상폐 무기한 5건+모호 날짜 2건 결함(제거 시 PF 2.02). 2025~26 집중 79% → docs/research/redteam/upbit-listing-fade.md, scripts/redteam/listing_fade_redteam.py
 
-- [ ] T-007 | to: user | from: red-team | blocked | 라이브 CORE(Policy C) 유지 여부 결정
+- [x] T-007 | to: user | from: red-team | done | 라이브 CORE(Policy C) 유지 여부 결정
   - 참고: docs/research/redteam/policyC.md — VETO. 라이브식 재현 OOS +283% < B&H +394% < SMA200 필터 +639%. 라이브 횡보 슬리브 williams-v1은 백테스트 없음.
   - 결정할 것: CORE 유지 / SMA200 필터로 교체 / 일시 정지
+  - 결과: 사용자 결정 2026-10-08 — SMA200 필터로 교체. w1 STRATEGY_PATH=core-btc-sma200-filter-1d.json, 레짐 스위치 크론 비활성(scripts/nas_regime_cron.sh exit 0). Upbit 캔들 200개 초과 페이지네이션 추가(history_bars).
   - T-008 결과 반영: SMA200은 PASS-WITH-CAVEATS(BTC/ETH 낙폭 축소 오버레이로만). 수익 우위 주장은 불가 — 9년 중 6년 B&H 열세, USD 거래소 기준 1.16배. Policy C보다는 단순·라이브식 성과 우위.
 
 - [x] T-008 | to: red-team | from: lead | done | SMA200 필터(일봉 종가>SMA200이면 BTC 보유, 아니면 현금) 반증
