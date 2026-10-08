@@ -12,3 +12,9 @@
   - 재제안 금지 우물 9개는 원장 §2 목록 참조. BTC OHLCV 파생 카드는 내지 말 것.
   - 덜 판 우물: 펀딩(출처 정합), 호가 불균형(AE12 H2 데이터 미수집), 김프(소표본), 크로스섹션 알트, OI·청산, 상장/공지, 거래소 지연, 변동성 프리미엄.
   - 같은 계열 카드는 사이클당 최대 2장.
+
+## 2026-10-08 — T-002 카드 5장
+- 한 일: docs/research/cards/ 에 funding-negative-consensus, funding-carry-btc-eth, kimchi-rich-fade-pooled, xs-alt-momentum-weekly, upbit-listing-fade.
+- 결정: AE12는 Binance+Bybit 합의 + 단독 부호 일치로 출처 의존성 차단. AE13은 BTC/ETH/XRP 합산으로 n 확대. 공통 OOS 분할 ≈2023 전후 고정, 무작위 1,000회 상위 5% 기준.
+- 데이터 주의: OKX 펀딩 이력은 ~3개월뿐(제외), Binance OI 이력 ~30일(제외). USDKRW는 frankfurter.app(ECB). 업비트 상폐 마켓은 market/all에 없음 → 생존편향 명시.
+- 다음: T-005 결과 보고 KILL 카드는 변형 재제안 금지. 남은 우물: OI·청산(무료 장기 이력 확보가 관건), 거래소 지연, 변동성 프리미엄(Deribit DVOL 공개 API 검토).

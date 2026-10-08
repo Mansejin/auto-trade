@@ -1,0 +1,355 @@
+{
+  "period": "2021-07-27 ~ 2026-07-26",
+  "initial_krw": 10000000.0,
+  "method": "policyC_segment_BT_trades_marked_daily_scaled_to_path_ret",
+  "A_policyC_continuous": {
+    "pnl_pct": 4.258455072527615,
+    "multiple": 5.258455072527615,
+    "mdd": -0.3223989652104505,
+    "n_points": 1826,
+    "start": "2021-07-27",
+    "end": "2026-07-26"
+  },
+  "B_50_50_pm12_cd30": {
+    "pnl_pct": 0.7740648002754755,
+    "multiple": 1.7740648002754755,
+    "mdd": -0.4529395537606766
+  },
+  "C_80_20_pm10_cd14": {
+    "pnl_pct": 1.0529902982980608,
+    "multiple": 2.052990298298061,
+    "mdd": -0.6575791094801582
+  },
+  "D_100pct_btc_hold": {
+    "pnl_pct": 1.0925469840780462,
+    "multiple": 2.092546984078046,
+    "mdd": -0.7412748915887621
+  },
+  "segments": [
+    {
+      "start": "2021-07-27",
+      "end": "2021-09-30",
+      "regime": "transition",
+      "n_trades_csv": 9,
+      "toolkit_total_return": 0.045216000000000006,
+      "path_ret": 0.0452,
+      "equity_end": 10452000.0
+    },
+    {
+      "start": "2021-10-01",
+      "end": "2021-12-03",
+      "regime": "bull",
+      "n_trades_csv": 9,
+      "toolkit_total_return": -0.034752,
+      "path_ret": -0.0348,
+      "equity_end": 10088270.4
+    },
+    {
+      "start": "2021-12-04",
+      "end": "2022-01-17",
+      "regime": "transition",
+      "n_trades_csv": 7,
+      "toolkit_total_return": -0.083673,
+      "path_ret": -0.0837,
+      "equity_end": 9243882.16752
+    },
+    {
+      "start": "2022-01-18",
+      "end": "2022-03-08",
+      "regime": "bear",
+      "n_trades_csv": 9,
+      "toolkit_total_return": -0.043583,
+      "path_ret": -0.0436,
+      "equity_end": 8840848.905016128
+    },
+    {
+      "start": "2022-03-09",
+      "end": "2022-05-08",
+      "regime": "sideways",
+      "n_trades_csv": 3,
+      "toolkit_total_return": 0.092202,
+      "path_ret": 0.0922,
+      "equity_end": 9655975.174058616
+    },
+    {
+      "start": "2022-05-09",
+      "end": "2022-09-29",
+      "regime": "bear",
+      "n_trades_csv": 21,
+      "toolkit_total_return": 0.012191,
+      "path_ret": 0.012199999999999999,
+      "equity_end": 9773778.071182132
+    },
+    {
+      "start": "2022-09-30",
+      "end": "2022-11-07",
+      "regime": "sideways",
+      "n_trades_csv": 1,
+      "toolkit_total_return": 0.032153999999999995,
+      "path_ret": 0.0322,
+      "equity_end": 10088493.725074196
+    },
+    {
+      "start": "2022-11-08",
+      "end": "2023-01-10",
+      "regime": "bear",
+      "n_trades_csv": 4,
+      "toolkit_total_return": -0.02511,
+      "path_ret": -0.025099999999999997,
+      "equity_end": 9835272.532574834
+    },
+    {
+      "start": "2023-01-11",
+      "end": "2023-02-17",
+      "regime": "transition",
+      "n_trades_csv": 5,
+      "toolkit_total_return": 0.15312099999999998,
+      "path_ret": 0.1531,
+      "equity_end": 11341052.75731204
+    },
+    {
+      "start": "2023-02-18",
+      "end": "2023-05-03",
+      "regime": "bull",
+      "n_trades_csv": 11,
+      "toolkit_total_return": 0.21404900000000002,
+      "path_ret": 0.214,
+      "equity_end": 13768038.047376817
+    },
+    {
+      "start": "2023-05-04",
+      "end": "2023-06-19",
+      "regime": "sideways",
+      "n_trades_csv": 6,
+      "toolkit_total_return": 0.09381600000000001,
+      "path_ret": 0.09380000000000001,
+      "equity_end": 15059480.016220763
+    },
+    {
+      "start": "2023-06-20",
+      "end": "2023-07-26",
+      "regime": "bull",
+      "n_trades_csv": 7,
+      "toolkit_total_return": -0.049889,
+      "path_ret": -0.0499,
+      "equity_end": 14308011.963411346
+    },
+    {
+      "start": "2023-07-27",
+      "end": "2023-10-02",
+      "regime": "sideways",
+      "n_trades_csv": 3,
+      "toolkit_total_return": 0.018647,
+      "path_ret": 0.018600000000000002,
+      "equity_end": 14574140.985930797
+    },
+    {
+      "start": "2023-10-03",
+      "end": "2023-10-26",
+      "regime": "transition",
+      "n_trades_csv": 2,
+      "toolkit_total_return": 0.25503,
+      "path_ret": 0.255,
+      "equity_end": 18290546.937343147
+    },
+    {
+      "start": "2023-10-27",
+      "end": "2024-01-03",
+      "regime": "bull",
+      "n_trades_csv": 11,
+      "toolkit_total_return": 0.16322399999999998,
+      "path_ret": 0.1632,
+      "equity_end": 21275564.197517548
+    },
+    {
+      "start": "2024-01-04",
+      "end": "2024-02-11",
+      "regime": "sideways",
+      "n_trades_csv": 0,
+      "toolkit_total_return": 0.0,
+      "path_ret": 0.0,
+      "equity_end": 21275564.197517548
+    },
+    {
+      "start": "2024-02-12",
+      "end": "2024-04-16",
+      "regime": "bull",
+      "n_trades_csv": 7,
+      "toolkit_total_return": 0.331475,
+      "path_ret": 0.33149999999999996,
+      "equity_end": 28328413.72899461
+    },
+    {
+      "start": "2024-04-17",
+      "end": "2024-05-14",
+      "regime": "transition",
+      "n_trades_csv": 5,
+      "toolkit_total_return": -0.044479,
+      "path_ret": -0.044500000000000005,
+      "equity_end": 27067799.318054352
+    },
+    {
+      "start": "2024-05-15",
+      "end": "2024-06-18",
+      "regime": "bull",
+      "n_trades_csv": 7,
+      "toolkit_total_return": 0.043963999999999996,
+      "path_ret": 0.044000000000000004,
+      "equity_end": 28258782.488048743
+    },
+    {
+      "start": "2024-06-19",
+      "end": "2024-07-14",
+      "regime": "transition",
+      "n_trades_csv": 3,
+      "toolkit_total_return": 0.007911,
+      "path_ret": 0.0079,
+      "equity_end": 28482026.86970433
+    },
+    {
+      "start": "2024-07-15",
+      "end": "2024-08-08",
+      "regime": "bull",
+      "n_trades_csv": 1,
+      "toolkit_total_return": -0.004011,
+      "path_ret": -0.004,
+      "equity_end": 28368098.762225512
+    },
+    {
+      "start": "2024-08-09",
+      "end": "2024-10-03",
+      "regime": "bear",
+      "n_trades_csv": 8,
+      "toolkit_total_return": -0.012223999999999999,
+      "path_ret": -0.012199999999999999,
+      "equity_end": 28022007.95732636
+    },
+    {
+      "start": "2024-10-04",
+      "end": "2024-10-17",
+      "regime": "sideways",
+      "n_trades_csv": 1,
+      "toolkit_total_return": 0.038957,
+      "path_ret": 0.039,
+      "equity_end": 29114866.267662086
+    },
+    {
+      "start": "2024-10-18",
+      "end": "2024-11-02",
+      "regime": "transition",
+      "n_trades_csv": 1,
+      "toolkit_total_return": 0.053743,
+      "path_ret": 0.0537,
+      "equity_end": 30678334.58623554
+    },
+    {
+      "start": "2024-11-03",
+      "end": "2024-12-17",
+      "regime": "bull",
+      "n_trades_csv": 5,
+      "toolkit_total_return": 0.454923,
+      "path_ret": 0.4549,
+      "equity_end": 44633908.98951409
+    },
+    {
+      "start": "2024-12-18",
+      "end": "2025-01-06",
+      "regime": "transition",
+      "n_trades_csv": 2,
+      "toolkit_total_return": 0.017236,
+      "path_ret": 0.0172,
+      "equity_end": 45401612.22413374
+    },
+    {
+      "start": "2025-01-07",
+      "end": "2025-02-05",
+      "regime": "sideways",
+      "n_trades_csv": 1,
+      "toolkit_total_return": 0.038958,
+      "path_ret": 0.039,
+      "equity_end": 47172275.10087495
+    },
+    {
+      "start": "2025-02-06",
+      "end": "2025-07-11",
+      "regime": "transition",
+      "n_trades_csv": 27,
+      "toolkit_total_return": 0.022023,
+      "path_ret": 0.022000000000000002,
+      "equity_end": 48210065.1530942
+    },
+    {
+      "start": "2025-07-12",
+      "end": "2025-11-03",
+      "regime": "bull",
+      "n_trades_csv": 20,
+      "toolkit_total_return": 0.011238999999999999,
+      "path_ret": 0.011200000000000002,
+      "equity_end": 48750017.882808864
+    },
+    {
+      "start": "2025-11-04",
+      "end": "2025-11-26",
+      "regime": "transition",
+      "n_trades_csv": 3,
+      "toolkit_total_return": -0.043407999999999995,
+      "path_ret": -0.0434,
+      "equity_end": 46634267.10669496
+    },
+    {
+      "start": "2025-11-27",
+      "end": "2026-01-03",
+      "regime": "bear",
+      "n_trades_csv": 5,
+      "toolkit_total_return": 0.010657000000000002,
+      "path_ret": 0.010700000000000001,
+      "equity_end": 47133253.76473659
+    },
+    {
+      "start": "2026-01-04",
+      "end": "2026-01-19",
+      "regime": "transition",
+      "n_trades_csv": 1,
+      "toolkit_total_return": 0.030819,
+      "path_ret": 0.0308,
+      "equity_end": 48584957.98069048
+    },
+    {
+      "start": "2026-01-20",
+      "end": "2026-03-23",
+      "regime": "bear",
+      "n_trades_csv": 12,
+      "toolkit_total_return": 0.065639,
+      "path_ret": 0.06559999999999999,
+      "equity_end": 51772131.22422377
+    },
+    {
+      "start": "2026-03-24",
+      "end": "2026-04-21",
+      "regime": "sideways",
+      "n_trades_csv": 1,
+      "toolkit_total_return": 0.011881,
+      "path_ret": 0.011899999999999999,
+      "equity_end": 52388219.585792035
+    },
+    {
+      "start": "2026-04-22",
+      "end": "2026-05-25",
+      "regime": "transition",
+      "n_trades_csv": 6,
+      "toolkit_total_return": -0.028641999999999997,
+      "path_ret": -0.0286,
+      "equity_end": 50889916.50563838
+    },
+    {
+      "start": "2026-05-26",
+      "end": "2026-07-26",
+      "regime": "bear",
+      "n_trades_csv": 8,
+      "toolkit_total_return": 0.033278,
+      "path_ret": 0.0333,
+      "equity_end": 52584550.72527615
+    }
+  ],
+  "prior_segment_mark_mdd": -0.1541
+}
