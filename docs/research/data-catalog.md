@@ -1,15 +1,16 @@
 # 리서치 데이터 카탈로그
 
-T-004 (quant-data, 2026-10-08). 파일은 `data/research/` (gitignored). 스크립트는 `scripts/data/`, 의존성은 표준 라이브러리 + httpx만 사용. 공개 무인증 엔드포인트만.
+T-004, T-030 (quant-data, 2026-10-08). 파일은 `data/research/` (gitignored). 스크립트는 `scripts/data/`, 의존성은 표준 라이브러리 + httpx만 사용. 공개 무인증 엔드포인트만.
 모든 fetcher는 재실행하면 이어받는다(키별 마지막 시각 이후만 추가). 저장하는 건 마감된 캔들뿐. 점검: `python scripts/data/verify.py`.
 
 시각 규약: 일봉 `date_utc` = UTC 00:00에 열리는 날(업비트 일봉은 09:00 KST = 00:00 UTC라 같은 날로 맞춰진다). 펀딩 `funding_time_*` = **정산 시각**(그 시각에 확정·적용된다. 신호에 쓰려면 정산 시각 이후에만 알 수 있다).
 
 | 이름 (csv) | 출처 | 기간 | 해상도 | 행 수 | 결측 | 재실행 명령 | 쓰는 카드 |
 |---|---|---|---|---|---|---|---|
-| `funding` | `fapi.binance.com/fapi/v1/fundingRate`, `api.bybit.com/v5/market/funding/history` (linear) | Binance BTC 2019-09-10~, ETH 2019-11-27~; Bybit BTC 2020-03-25~, ETH 2020-10-21~ (~2026-10-08) | 8h 정산 | 28,973 | 9h 넘는 간격 0, 중복 0 | `python scripts/data/fetch_funding.py` | funding-negative-consensus, funding-carry-btc-eth |
+| `funding` | `fapi.binance.com/fapi/v1/fundingRate`, `api.bybit.com/v5/market/funding/history` (linear) | Binance BTC 2019-09-10~, ETH 2019-11-27~, SOL 2020-09-13~ (T-030 추가); Bybit BTC 2020-03-25~, ETH 2020-10-21~ (~2026-10-08) | 8h 정산 | 35,696 | 9h 넘는 간격 0, 중복 0 | `python scripts/data/fetch_funding.py` (SOL: `--exchanges binance --symbols SOLUSDT`) | funding-negative-consensus, funding-carry-btc-eth, oi-flush-rebound(Bitget 실행 펀딩 대용) |
 | `binance_spot_1d` | `api.binance.com/api/v3/klines` BTC/ETH/XRP USDT | BTC·ETH 2017-08-17~, XRP 2018-05-04~ (~2026-10-07) | 1d | 9,757 | 0 | `python scripts/data/fetch_binance_klines.py --market spot --symbols BTCUSDT,ETHUSDT,XRPUSDT --out binance_spot_1d` | funding-carry, kimchi-rich-fade |
-| `binance_perp_1d` | `fapi.binance.com/fapi/v1/klines` BTC/ETH/XRP USDT | BTC 2019-09-08~, ETH 2019-11-27~, XRP 2020-01-06~ | 1d | 7,561 | 0 | `python scripts/data/fetch_binance_klines.py --market perp --symbols BTCUSDT,ETHUSDT,XRPUSDT --out binance_perp_1d` | funding-carry (베이시스) |
+| `binance_perp_1d` | `fapi.binance.com/fapi/v1/klines` BTC/ETH/XRP/SOL USDT | BTC 2019-09-08~, ETH 2019-11-27~, XRP 2020-01-06~, SOL 2020-09-14~ (T-030 추가) | 1d | 9,776 | 0 | `python scripts/data/fetch_binance_klines.py --market perp --symbols BTCUSDT,ETHUSDT,XRPUSDT,SOLUSDT --out binance_perp_1d` | funding-carry (베이시스), oi-flush-rebound |
+| `binance_oi_1d` | `data.binance.vision/data/futures/um/daily/metrics/<SYM>/` 일별 zip (5분 `sum_open_interest`), BTC/ETH/SOL USDT-M | BTC 2020-09-02~, ETH·SOL 2021-12-02~ (~2026-10-08) | 1d (UTC 00:00 스냅샷) | 5,772 | 빠진 날 0, 0값 0. 스냅샷이 60분 넘게 낡은 날 3개(아래), 5분 행이 288개 미만인 원본 파일 BTC 94·ETH 30·SOL 33일(대부분 1~20행 부족) | `python scripts/data/fetch_oi_metrics.py` (`--symbols XRPUSDT`로 추가) | oi-flush-rebound |
 | `upbit_krw_1d` | `api.upbit.com/v1/candles/days`, 현재 KRW 마켓 전체(`/v1/market/all`) | 2017-09-25~2026-10-07 | 1d | 324,099 (292개 마켓) | 결측 65일: 2017~18 거래소 점검으로 대부분 3일씩, KRW-ARDR 20일. 상폐 마켓은 404라 **없음** | `python scripts/data/fetch_upbit_daily.py` (`--markets KRW-BTC,...`로 일부만) | kimchi-rich-fade, funding-negative-consensus, upbit-listing-fade |
 | `upbit_listings` | `upbit_krw_1d`에서 계산(마켓별 첫 일봉) | 첫 일봉 2017-09-25~ | 이벤트 | 292 (launch_cohort 17개, 2020년 이후 첫 일봉 240개) | 상폐 마켓 없음. 티커 변경(POLY→POLYX, STRAT→STRAX 등)은 예전 이력을 그대로 가져간다 | `fetch_upbit_daily.py`가 같이 만든다 | upbit-listing-fade |
 | `upbit_announcements`, `upbit_listing_notices` | `api-manager.upbit.com/api/v1/announcements?category=trade` (비공식) | 공지 785건 2017-10-27~; KRW 상장 공지 211건은 **2022-01-11~**만 | 이벤트(KST) | 785 / 211 | 비공식 API라 2022년 이전 상장 공지가 거의 없다. 제목 정규식으로 파싱 | `python scripts/data/fetch_upbit_announcements.py` | upbit-listing-fade (보조, 상폐 보충) |
@@ -24,4 +25,12 @@ T-004 (quant-data, 2026-10-08). 파일은 `data/research/` (gitignored). 스크�
 - **funding-carry-btc-eth**: 데이터 완비. 단 Binance ETH 펀딩/무기한은 2019-11-27부터라 train 앞부분의 ETH 구간이 3개월 짧다.
 - **kimchi-rich-fade-pooled**: 데이터 완비. USDT≈USD 가정. 디페그 플래그가 필요하면 `binance_spot_usdt_1d`의 USDCUSDT 종가 등으로 대용한다(별도 fetch 없음).
 - **xs-alt-momentum-weekly**: 테스트 가능. 생존편향이 크게 줄었다. Binance가 상폐 USDT 페어를 `BREAK` 상태로 남기고 REST로도 이력을 주기 때문이다(vision 목록 757개 중 레버리지 토큰을 빼면 전부 확보, vision에만 있는 건 1개). 남은 편향은 두 가지다. (1) Binance에 한 번도 USDT로 상장되지 않은 코인은 없다. (2) 2017~2019년 초기 유니버스가 작다(USDT 페어 수). 상폐 처리용 마지막 날짜는 `binance_spot_usdt_symbols.csv` status=BREAK + 마지막 `date_utc`로 정한다. 스테이블 코인 제외는 리서치에서 한다.
+- **oi-flush-rebound** (T-030): 데이터 완비. `binance_oi_1d` + `binance_perp_1d`(SOL 추가) + `upbit_krw_1d`(KRW-SOL 2021-10-15~) + `funding`(SOL 추가).
+  - **일간 집계 규칙**: D일 OI = 스냅샷 시각 ≤ D 00:00 UTC인 마지막 5분 값(`oi`, 보통 정확히 00:00). 없으면 그 전 값을 쓰고 `stale_min`에 낡은 정도(분)를 적는다. `oi_pre`는 그 바로 앞 값(~23:55)으로, 00:00 발표 지연이 걱정되면 쓰는 보수 버전. 카드의 ΔOI_D = `oi`(D+1)/`oi`(D) − 1.
+  - **시각 보정(중요)**: vision 파일의 `create_time`은 같은 값의 REST `openInterestHist` `timestamp`보다 **5분 이르다**(2026-10-01 대조: vision 23:55 행 = REST 00:00 값). 그래서 `snap_time = create_time + 5분`으로 바꿔 저장한다. 보정 없이 vision "00:00" 행을 쓰면 실제로는 00:05 값이라 00:00 진입에 5분 룩어헤드가 생긴다. REST가 30일뿐이라 2026-09 이전 구간의 오프셋은 직접 확인하지 못했다(파일 형식은 같다).
+  - 단위: `oi`는 코인 수량(계약 수), `oi_value`는 USDT 명목. 명목은 가격 하락만으로도 줄어 "가격만" 비교와 섞이므로 신호에는 `oi`를 쓴다.
+  - 낡은 스냅샷(>60분): 2021-02-20(BTC, 235분), 2022-03-08(전 코인, 510분), 2024-02-17(전 코인, 625분). 그 날과 다음 날 ΔOI는 결측 처리 권장. SOL 2023-12-09·12-13은 35·40분.
+  - 원본 이상: 2020~21 BTC 파일은 같은 행이 두 번씩 들어 있고, 일부 파일에 OI 0 행이 있다(BTC 2022-03-08, 2024-07-11·13, ETH/SOL 2022-03-08). 중복 제거·0 제외 후 집계했다.
+  - 큰 일간 변화(|ΔOI|>30%): BTC 2021-05-20 −41%, 2021-12-05 −35%(실제 청산일); SOL 2022-05-12 +56%, 2022-11-08~11 (+32%, +108%, −45%, FTX), 2023-04-12 +38%, 2023-07-07 +38%. 오류로 보이지 않아 그대로 둔다.
+  - 시작일: ETH·SOL은 2021-12-02(첫 파일 2021-12-01 + 하루). train(~2023-06)은 19개월로 18개월 기준을 겨우 넘는다. BTC만 2020-09부터 있다 — 코인별 시작을 다르게 쓸지 2021-12로 맞출지는 카드에 정해져 있지 않다.
 - **upbit-listing-fade**: 부분. 상장일은 현재 KRW 마켓의 첫 일봉으로 정했다. **상폐된 KRW 마켓은 캔들 API가 404**라 빠지고, 공지 API는 2022년 이후 상장 공지만 있어 보충이 10개 티커에 그친다. 2020~2021 상장 중 이후 상폐된 코인이 없어 펌프 후 하락(=숏에 유리) 이벤트가 덜 잡힐 가능성이 높다. 결과에 명시할 것. 티커 변경은 공지와 대조해야 한다.
