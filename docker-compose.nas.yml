@@ -256,6 +256,37 @@ services:
         max-size: "10m"
         max-file: "5"
 
+  # Upbit listing alert (information only, no orders). Reuses the w1 image; code is bind-mounted.
+  # Live sending: set LISTING_ALERT_DRY_RUN=false + LISTING_ALERT_CHAT_ID in .env, then up -d w6.
+  w6:
+    image: p3f8c1a2-w1:latest
+    container_name: p3f8c1a2-w6
+    restart: unless-stopped
+    user: "0:0"
+    command: ["python", "-m", "alerts.listing_alert"]
+    environment:
+      TZ: Asia/Seoul
+      BOT_ROOT: /app
+      LISTING_ALERT_DRY_RUN: ${LISTING_ALERT_DRY_RUN:-true}
+      LISTING_ALERT_POLL_MINUTES: ${LISTING_ALERT_POLL_MINUTES:-3}
+      LISTING_ALERT_CHAT_ID: ${LISTING_ALERT_CHAT_ID:-}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+    volumes:
+      - ./alerts:/app/alerts:ro
+      - ./bot:/app/bot:ro
+      - ./scripts:/app/scripts:ro
+      - ./config:/app/config:ro
+      - ./docs/sales/upbit-listing-alert:/app/docs/sales/upbit-listing-alert:ro
+      - ./data:/app/data
+      - ./logs:/app/logs
+    networks:
+      - net
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
 networks:
   net:
     name: p3f8c1a2-net

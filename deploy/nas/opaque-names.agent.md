@@ -10,7 +10,7 @@
 
 1. **There is no** `/volume1/docker/auto-trade` on the NAS. The live stack lives at **`/volume1/docker/p3f8c1a2`**.
 2. Compose **project name** and **directory basename** are both `p3f8c1a2`. Always pass `-p p3f8c1a2`.
-3. Service keys in compose are `w1`…`w5`, **not** `bot` / `bot-bitget` / `desk` / `cloudflared`.
+3. Service keys in compose are `w1`…`w6`, **not** `bot` / `bot-bitget` / `desk` / `cloudflared`.
 4. Cloudflare Tunnel still targets Docker DNS alias **`desk`** → service **`w3`**. Do **not** remove `networks.net.aliases: [desk]` from `w3`.
 5. Do **not** place `AGENTS.md`, `README.md`, or `ARCHITECTURE.md` at the **root** of `/volume1/docker/p3f8c1a2` — `deploy/nas/obfuscate-nas.sh` deletes those on purpose. Keep agent docs under `deploy/nas/` or in git (`docs/agents/`).
 6. Secrets stay in `.env` (gitignored). Never commit API keys, tunnel tokens, or `DASHBOARD_TOKEN`.
@@ -29,6 +29,7 @@
 | `p3f8c1a2-w3` / service `w3` | Desk (FastAPI dashboard) | Alias **`desk`**; LAN debug `127.0.0.1:18080→8080` |
 | `p3f8c1a2-w4` / service `w4` | cloudflared | Compose profile **`tunnel`** |
 | `p3f8c1a2-w5` / service `w5` | Freqtrade Bitget scalp | Compose profile **`scalp`** |
+| `p3f8c1a2-w6` / service `w6` | Upbit listing alert (`python -m alerts.listing_alert`) | **DRY RUN** (logs only); reuses image `p3f8c1a2-w1:latest`; record `logs/listing-alerts.jsonl` |
 
 ### Compose cheat sheet
 
@@ -50,7 +51,7 @@ curl -sS http://127.0.0.1:18080/autotrade/healthz
 
 Public desk: Worker `https://mansejin.com/autotrade` → tunnel hostname → `http://desk:8080`.
 
-SSH host alias (from operator machine): `saenggibu-nas-local` (link-local). Prefer `sudo -n docker` / `/usr/local/bin/docker` on the NAS.
+SSH host alias (from operator machine): `ssh nas` (Tailscale, works from home and office). Prefer `sudo -n docker` / `/usr/local/bin/docker` on the NAS.
 
 ### Related host paths (not under docker/)
 
@@ -67,7 +68,7 @@ Agents that list `/volume1/docker` will only see opaque `p*` directories. Decode
 
 | Host directory | Human purpose | Containers / services |
 |----------------|---------------|------------------------|
-| `/volume1/docker/p3f8c1a2` | **auto-trade** (this repo) | `w1` Upbit, `w2` Bitget, `w3` desk, `w4` tunnel, `w5` scalp FT |
+| `/volume1/docker/p3f8c1a2` | **auto-trade** (this repo) | `w1` Upbit, `w2` Bitget, `w3` desk, `w4` tunnel, `w5` scalp FT, `w6` listing alert |
 | `/volume1/docker/p91b4e07` | receipt-bot | `p91b4e07-w1` |
 | `/volume1/docker/p2c6d9e1` | saenggibu | `w1` api (`sgb-api` DNS), `w2` gateway (`sgb-gateway`), `w3` tunnel |
 | `/volume1/docker/p5a0f33c` | siyan-upload-api | `p5a0f33c-w1` |
