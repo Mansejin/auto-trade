@@ -127,6 +127,18 @@ auto: off
   - 완료 기준: 로그 파일 생성·셀프체크 1개, 데스크 읽기 전용 표 또는 정적 파일
   - 결과:
 
+- [x] T-028 | to: edge-scout | from: user | done | SMA200 위에 얹을 고빈도(월 2회 이상) 구조적 엣지 가설 발굴
+  - 참고: docs/motto.md, docs/research/strategy-ledger.md(기각 목록 — 재탕 금지), docs/research/redteam/sma200-filter.md, docs/research/cards/
+  - 내용: SMA200은 하락장 바닥 필터로 고정(연 6.5회 전환). 그 위에서 더 자주 거래할 전략을 찾는다. 차트 지표 튜닝이 아니라 구조적 이유(펀딩·청산·김프·상장/상폐·세션·리밸런스 등)가 있는 가설만. 평균선 길이 바꾸기 금지.
+  - 완료 기준: freeze 카드 2~3개(docs/research/cards/), 각 카드에 하이퍼 ≤3·기각 기준·예상 거래 수(연 24회 이상)·필요 데이터·SMA200 필터와 결합 방식(켜짐/꺼짐 구간)
+  - 결과: 카드 3장, 전부 SMA200과 독립 슬리브(게이트 없음, 위/아래 성과는 보고만). ① weekend-gap-fade-btc-eth(주말 ±2% → 월요일 1일 되돌림, 연 30~45회, 데이터 완비 → 먼저 테스트) ② oi-flush-rebound(OI 하위 5% 감소+하락일 → 2일 롱, BTC/ETH/SOL 연 25~35회, OI 이력 quant-data 필요, 가격만 버전 대비 검증 필수) ③ xs-funding-crowding-weekly(알트 펀딩 상위5 숏·하위5 롱, 연 52회, 상폐 포함 전체 무기한 유니버스 quant-data 필요, 역모멘텀 대비 검증 필수) → docs/research/cards/{weekend-gap-fade-btc-eth,oi-flush-rebound,xs-funding-crowding-weekly}.md
+
+- [ ] T-029 | to: quant-researcher | from: edge-scout | open | weekend-gap-fade-btc-eth 카드 그대로 백테스트·반증
+  - 참고: docs/research/cards/weekend-gap-fade-btc-eth.md, docs/research/data-catalog.md, scripts/bt_*.py(기존 카드 백테스트 패턴)
+  - 완료 기준: docs/research/results/weekend-gap-fade-btc-eth.md + reports/research-cards/*.json, 카드의 기각 기준별 PASS/KILL. 파라미터 튜닝 금지.
+  - 결과:
+  - 메모: oi-flush-rebound·xs-funding-crowding-weekly는 데이터(quant-data) 필요 → 이 결과 본 뒤 착수
+
 - [ ] T-027 | to: user | from: product-strategist | blocked | SMA200 포워드 기록 방식·법무 송부 결정
   - 결정할 것: (1) Upbit에 소액(예: 30만~50만원) 투입해 실체결 기록을 남길지, 신호 전용 기록만 할지 (2) docs/legal/sma200-subscription/lawyer-questions.md를 상장 알림 질의서(T-015)와 함께 송부할지
   - 결과:
