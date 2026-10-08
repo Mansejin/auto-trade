@@ -39,6 +39,7 @@ STATS = CODE / "config" / "listing-alert-stats.json"
 TEMPLATES = CODE / "docs" / "sales" / "upbit-listing-alert" / "templates.json"
 DRY_RUN = os.getenv("LISTING_ALERT_DRY_RUN", "true").strip().lower() not in ("0", "false", "no", "off")
 POLL_MIN = float(os.getenv("LISTING_ALERT_POLL_MINUTES", "3"))
+DELAY_MIN = float(os.getenv("LISTING_ALERT_DELAY_MINUTES", "0"))
 FAPI = "https://fapi.binance.com/fapi/v1"
 
 RECORD_URL = os.getenv("LISTING_ALERT_RECORD_URL", "(공개 기록 주소 준비 중)")
@@ -50,7 +51,7 @@ FALLBACK = {
     "alert": (
         "[상장 이벤트 #{alert_id}] {ticker}\n공지: {notice_title}\n시각: {notice_time_kst} KST\n원문: {notice_url}\n\n"
         "해외 무기한: Binance {perp_binance} / Bybit {perp_bybit} / Bitget {perp_bitget}\n"
-        "무기한 상장 {perp_age_days}일째 · 24h 거래대금 ${quote_volume_24h} · 펀딩 {funding_rate_pct}% ({funding_source})\n\n"
+        "무기한 상장 {perp_age_days}일째 · 24h 거래대금 {quote_volume_24h} · 펀딩 {funding_rate_pct} ({funding_source})\n\n"
         "과거 비슷한 상장 {hist_n}건, 다음 날부터 7일 가격 변화\n"
         "하위10% {hist_p10_pct}% · 중앙 {hist_p50_pct}% · 상위10% {hist_p90_pct}%\n"
         "7일 안에 +30% 이상 오른 경우: {hist_up30_share_pct}%\n\n{disclaimer}"
@@ -236,13 +237,29 @@ def build_alert(nid: str, at_kst: str, t: str, title: str, stats: dict, template
          "perp_binance": snap.get("binance_symbol") or ("확인 실패" if snap.get("binance_error") else "없음"),
          "perp_bybit": snap.get("bybit", "-"),
          "perp_bitget": snap.get("bitget", "-"), "perp_age_days": snap.get("perp_age_days", "-"),
-         "quote_volume_24h": f"{snap['quote_volume_musd']}M" if "quote_volume_musd" in snap else "-",
-         "funding_rate_pct": snap.get("funding_pct", "-"), "funding_source": "Binance 직전 정산",
+         "quote_volume_24h": vol_band(snap.get("quote_volume_musd")),
+         "funding_rate_pct": funding_sign(snap.get("funding_pct")), "funding_source": "Binance 직전 정산",
          **hist_vars(stats, snap.get("perp_age_days"))}
     text = render("alert" if _eligible(snap) else "alert_no_perp", v, templates)
     rec = {"alert_id": alert_id, "ticker": t, "notice_id": nid, "title": title, "notice_at_kst": at_kst,
            "d0_kst": str(d0), "followup_due_utc": f"{d0 + timedelta(8)}T00:10:00+00:00", "snapshot": snap}
     return text, rec
+
+
+def vol_band(musd) -> str:
+    """Exchange data is shown as bands/signs, not raw feed values (docs/legal/upbit-listing-alert/issues.md)."""
+    if musd is None:
+        return "-"
+    for hi, label in ((1, "100만 달러 미만"), (10, "100만~1천만 달러"), (100, "1천만~1억 달러")):
+        if musd < hi:
+            return label
+    return "1억 달러 이상"
+
+
+def funding_sign(pct) -> str:
+    if pct is None or pct == "-":
+        return "-"
+    return "양(+)" if float(pct) > 0 else "음(−)" if float(pct) < 0 else "0"
 
 
 def _eligible(snap: dict) -> bool:
@@ -363,6 +380,9 @@ def run_once() -> None:
     if boot:
         append_record({"kind": "bootstrap", "skipped": [f"{n[0]}:{n[2]}" for n in new], "dry_run": DRY_RUN})
         state["bootstrapped"], new = True, []
+    if new and DELAY_MIN:
+        # ponytail: blocking sleep is fine at ~5 listings/month; a pending queue would be needed if polls must stay live.
+        time.sleep(DELAY_MIN * 60)
     for nid, at, t, title in new:
         try:
             alert_id = len(_mine(read_records(), "alert")) + 1
