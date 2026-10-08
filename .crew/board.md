@@ -139,6 +139,17 @@ auto: off
   - 결과: **KILL** (사전 기준 9개 중 6개 실패, 기본 비용으로도 같음). 거래 421(OOS 120, 연 36.9회). OOS x2 평균 −0.29%·PF 0.81, 무작위 57.4백분위, ETF 이후 −0.22%, BTC −0.53%/ETH −0.12%, B&H(+0.114%/일, Sharpe 0.90)에 열세. train도 PF 0.84. 손실은 숏(주말 급등 후 월요일 숏, OOS PF 0.53)에서. 사후 분해로 롱만 OOS PF 1.36(n=53)이지만 판정 근거 아님 → 원하면 Scout가 "롱만" v2 카드를 새로 freeze. 업비트 롱만 변형 OOS x2 PF 1.08(보고만). 레드팀 불필요. → docs/research/results/weekend-gap-fade-btc-eth.md, scripts/bt_weekend_gap_fade.py, reports/research-cards/weekend-gap-fade-btc-eth.json
   - 메모: oi-flush-rebound·xs-funding-crowding-weekly는 데이터(quant-data) 필요 → 이 결과 본 뒤 착수
 
+- [x] T-030 | to: quant-data | from: user | done | oi-flush-rebound용 데이터: BTC/ETH/SOL 일별 미결제약정 이력 + SOL 일봉
+  - 참고: docs/research/cards/oi-flush-rebound.md(필요 데이터 절), docs/research/data-catalog.md, scripts/data/
+  - 완료 기준: 로컬 parquet/csv + data-catalog 갱신(기간·결측·출처). 시작일 확인(2021-12 추정). 펀딩 레짐 데이터 재사용.
+  - 결과: 데이터 완비. `data/research/binance_oi_1d.csv`(scripts/data/fetch_oi_metrics.py, vision 5분 metrics → UTC 00:00 스냅샷) BTC 2020-09-02~, ETH·SOL 2021-12-02~2026-10-08, 빠진 날 0, 60분 넘게 낡은 스냅샷 3일(2021-02-20 BTC, 2022-03-08, 2024-02-17 → 결측 처리 권장). SOL 무기한 일봉·SOL 펀딩 추가(binance_perp_1d, funding). **주의**: vision create_time은 REST보다 5분 일러서 +5분 보정 저장(안 하면 5분 룩어헤드). 신호는 코인 수량 `oi` 사용(명목 `oi_value`는 가격과 섞임). ETH·SOL train 19개월, BTC 시작을 2020-09로 할지 2021-12로 맞출지 카드 미정. 규칙·이상치 → docs/research/data-catalog.md
+  - 다음: T-031 quant-researcher 카드 그대로 백테스트
+
+- [ ] T-031 | to: quant-researcher | from: quant-data | open | oi-flush-rebound 카드 그대로 백테스트·반증
+  - 참고: docs/research/cards/oi-flush-rebound.md(“시험 전 확정” 문단 포함), data/research/binance_oi_1d.csv, docs/research/data-catalog.md
+  - 완료 기준: docs/research/results/oi-flush-rebound.md + reports/research-cards/oi-flush-rebound.json, 기각 기준별 PASS/KILL(가격만 규칙 대비 포함). 튜닝 금지.
+  - 결과:
+
 - [ ] T-027 | to: user | from: product-strategist | blocked | SMA200 포워드 기록 방식·법무 송부 결정
   - 결정할 것: (1) Upbit에 소액(예: 30만~50만원) 투입해 실체결 기록을 남길지, 신호 전용 기록만 할지 (2) docs/legal/sma200-subscription/lawyer-questions.md를 상장 알림 질의서(T-015)와 함께 송부할지
   - 결과:

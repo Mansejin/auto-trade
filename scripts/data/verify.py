@@ -11,7 +11,7 @@ from _common import OUT, ms_to_iso, read_rows
 
 DAILY = {"binance_spot_1d.csv": ("symbol", "date_utc"), "binance_perp_1d.csv": ("symbol", "date_utc"),
          "binance_spot_usdt_1d.csv": ("symbol", "date_utc"), "upbit_krw_1d.csv": ("market", "date_utc"),
-         "binance_perp_listing_1d.csv": ("symbol", "date_utc")}
+         "binance_perp_listing_1d.csv": ("symbol", "date_utc"), "binance_oi_1d.csv": ("symbol", "date_utc")}
 
 
 def daily(name, key, col):
