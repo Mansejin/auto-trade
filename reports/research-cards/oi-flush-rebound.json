@@ -1,0 +1,2356 @@
+{
+ "card": "docs/research/cards/oi-flush-rebound.md",
+ "fees_per_side": {
+  "upbit": {
+   "base": 0.0005,
+   "x2": 0.001
+  },
+  "perp": {
+   "base": 0.0006,
+   "x2": 0.0012
+  }
+ },
+ "slip_per_side": {
+  "BTC": 0.0005,
+  "ETH": 0.0005,
+  "SOL": 0.001
+ },
+ "periods": {
+  "train": [
+   "2021-12-02",
+   "2023-06-30"
+  ],
+  "oos": [
+   "2023-07-01",
+   "2026-09-30"
+  ]
+ },
+ "thresholds_train": {
+  "BTC": {
+   "doi_q05": -0.06745,
+   "ret_q05": -0.05124,
+   "train_n_doi": 573,
+   "train_n_ret": 576
+  },
+  "ETH": {
+   "doi_q05": -0.07218,
+   "ret_q05": -0.06582,
+   "train_n_doi": 573,
+   "train_n_ret": 576
+  },
+  "SOL": {
+   "doi_q05": -0.09936,
+   "ret_q05": -0.09282,
+   "train_n_doi": 573,
+   "train_n_ret": 576
+  }
+ },
+ "stale_snapshots": {
+  "BTC": [
+   "2022-03-08",
+   "2024-02-17"
+  ],
+  "ETH": [
+   "2022-03-08",
+   "2024-02-17"
+  ],
+  "SOL": [
+   "2022-03-08",
+   "2024-02-17"
+  ]
+ },
+ "signal_counts": {
+  "BTC": {
+   "train": 15,
+   "oos": 24
+  },
+  "ETH": {
+   "train": 21,
+   "oos": 21
+  },
+  "SOL": {
+   "train": 17,
+   "oos": 13
+  }
+ },
+ "upbit": {
+  "n_trades": {
+   "full": 106,
+   "train": 51,
+   "oos": 55,
+   "oos_BTC": 23,
+   "oos_ETH": 20,
+   "oos_SOL": 12,
+   "train_BTC": 14,
+   "train_ETH": 20,
+   "train_SOL": 17
+  },
+  "full_base": {
+   "n": 106,
+   "pf": 1.6,
+   "ret_pct": 89.77,
+   "mean_pct": 0.707,
+   "win_pct": 53.8,
+   "mdd_pct": -27.92,
+   "mean_per_exp_day_pct": 0.354,
+   "sharpe_per_exp_day": 2.06
+  },
+  "train_base": {
+   "n": 51,
+   "pf": 1.743,
+   "ret_pct": 55.77,
+   "mean_pct": 1.026,
+   "win_pct": 60.8,
+   "mdd_pct": -24.22,
+   "mean_per_exp_day_pct": 0.513,
+   "sharpe_per_exp_day": 2.4
+  },
+  "oos_base": {
+   "n": 55,
+   "pf": 1.416,
+   "ret_pct": 21.83,
+   "mean_pct": 0.412,
+   "win_pct": 47.3,
+   "mdd_pct": -20.85,
+   "mean_per_exp_day_pct": 0.206,
+   "sharpe_per_exp_day": 1.68
+  },
+  "full_x2": {
+   "n": 106,
+   "pf": 1.496,
+   "ret_pct": 70.77,
+   "mean_pct": 0.607,
+   "win_pct": 52.8,
+   "mdd_pct": -29.79,
+   "mean_per_exp_day_pct": 0.304,
+   "sharpe_per_exp_day": 1.77
+  },
+  "train_x2": {
+   "n": 51,
+   "pf": 1.652,
+   "ret_pct": 48.07,
+   "mean_pct": 0.926,
+   "win_pct": 58.8,
+   "mdd_pct": -25.44,
+   "mean_per_exp_day_pct": 0.463,
+   "sharpe_per_exp_day": 2.17
+  },
+  "oos_x2": {
+   "n": 55,
+   "pf": 1.299,
+   "ret_pct": 15.32,
+   "mean_pct": 0.312,
+   "win_pct": 47.3,
+   "mdd_pct": -21.42,
+   "mean_per_exp_day_pct": 0.156,
+   "sharpe_per_exp_day": 1.27
+  },
+  "full_h1_x2": {
+   "n": 74,
+   "pf": 1.748,
+   "ret_pct": 74.17,
+   "mean_pct": 0.872,
+   "win_pct": 56.8,
+   "mdd_pct": -29.79,
+   "mean_per_exp_day_pct": 0.436,
+   "sharpe_per_exp_day": 2.33
+  },
+  "full_h2_x2": {
+   "n": 32,
+   "pf": 0.997,
+   "ret_pct": -1.95,
+   "mean_pct": -0.004,
+   "win_pct": 43.8,
+   "mdd_pct": -21.42,
+   "mean_per_exp_day_pct": -0.002,
+   "sharpe_per_exp_day": -0.01
+  },
+  "oos_h1_x2": {
+   "n": 33,
+   "pf": 2.206,
+   "ret_pct": 30.92,
+   "mean_pct": 0.873,
+   "win_pct": 54.5,
+   "mdd_pct": -7.71,
+   "mean_per_exp_day_pct": 0.436,
+   "sharpe_per_exp_day": 3.5
+  },
+  "oos_h2_x2": {
+   "n": 22,
+   "pf": 0.653,
+   "ret_pct": -11.91,
+   "mean_pct": -0.529,
+   "win_pct": 36.4,
+   "mdd_pct": -21.42,
+   "mean_per_exp_day_pct": -0.264,
+   "sharpe_per_exp_day": -2.3
+  },
+  "oos_BTC_x2": {
+   "n": 23,
+   "pf": 1.395,
+   "ret_pct": 6.0,
+   "mean_pct": 0.275,
+   "win_pct": 52.2,
+   "mdd_pct": -7.45,
+   "mean_per_exp_day_pct": 0.137,
+   "sharpe_per_exp_day": 1.77
+  },
+  "train_BTC_x2": {
+   "n": 14,
+   "pf": 0.955,
+   "ret_pct": -1.11,
+   "mean_pct": -0.043,
+   "win_pct": 64.3,
+   "mdd_pct": -8.8,
+   "mean_per_exp_day_pct": -0.022,
+   "sharpe_per_exp_day": -0.21
+  },
+  "oos_ETH_x2": {
+   "n": 20,
+   "pf": 0.526,
+   "ret_pct": -16.26,
+   "mean_pct": -0.836,
+   "win_pct": 30.0,
+   "mdd_pct": -20.48,
+   "mean_per_exp_day_pct": -0.418,
+   "sharpe_per_exp_day": -3.57
+  },
+  "train_ETH_x2": {
+   "n": 20,
+   "pf": 2.026,
+   "ret_pct": 24.83,
+   "mean_pct": 1.239,
+   "win_pct": 60.0,
+   "mdd_pct": -11.7,
+   "mean_per_exp_day_pct": 0.619,
+   "sharpe_per_exp_day": 3.21
+  },
+  "oos_SOL_x2": {
+   "n": 12,
+   "pf": 5.485,
+   "ret_pct": 29.92,
+   "mean_pct": 2.297,
+   "win_pct": 66.7,
+   "mdd_pct": -3.47,
+   "mean_per_exp_day_pct": 1.148,
+   "sharpe_per_exp_day": 6.77
+  },
+  "train_SOL_x2": {
+   "n": 17,
+   "pf": 1.662,
+   "ret_pct": 19.96,
+   "mean_pct": 1.356,
+   "win_pct": 52.9,
+   "mdd_pct": -23.15,
+   "mean_per_exp_day_pct": 0.678,
+   "sharpe_per_exp_day": 2.29
+  },
+  "sma200_report_only": {
+   "oos_below_x2": {
+    "n": 23,
+    "pf": 0.47,
+    "ret_pct": -21.5,
+    "mean_pct": -0.992,
+    "win_pct": 21.7,
+    "mdd_pct": -24.35,
+    "mean_per_exp_day_pct": -0.496,
+    "sharpe_per_exp_day": -3.92
+   },
+   "oos_above_x2": {
+    "n": 32,
+    "pf": 3.79,
+    "ret_pct": 46.91,
+    "mean_pct": 1.249,
+    "win_pct": 65.6,
+    "mdd_pct": -5.34,
+    "mean_per_exp_day_pct": 0.625,
+    "sharpe_per_exp_day": 5.75
+   },
+   "full_below_x2": {
+    "n": 54,
+    "pf": 1.307,
+    "ret_pct": 20.76,
+    "mean_pct": 0.499,
+    "win_pct": 38.9,
+    "mdd_pct": -32.11,
+    "mean_per_exp_day_pct": 0.249,
+    "sharpe_per_exp_day": 1.18
+   },
+   "full_above_x2": {
+    "n": 50,
+    "pf": 1.966,
+    "ret_pct": 39.25,
+    "mean_pct": 0.71,
+    "win_pct": 68.0,
+    "mdd_pct": -22.1,
+    "mean_per_exp_day_pct": 0.355,
+    "sharpe_per_exp_day": 3.11
+   }
+  },
+  "price_only_control": {
+   "full_x2": {
+    "n": 137,
+    "pf": 0.579,
+    "ret_pct": -85.31,
+    "mean_pct": -1.183,
+    "win_pct": 40.1,
+    "mdd_pct": -89.66,
+    "mean_per_exp_day_pct": -0.592,
+    "sharpe_per_exp_day": -2.56
+   },
+   "train_x2": {
+    "n": 78,
+    "pf": 0.446,
+    "ret_pct": -82.58,
+    "mean_pct": -1.94,
+    "win_pct": 37.2,
+    "mdd_pct": -83.28,
+    "mean_per_exp_day_pct": -0.97,
+    "sharpe_per_exp_day": -3.66
+   },
+   "oos_x2": {
+    "n": 59,
+    "pf": 0.904,
+    "ret_pct": -15.65,
+    "mean_pct": -0.183,
+    "win_pct": 44.1,
+    "mdd_pct": -46.87,
+    "mean_per_exp_day_pct": -0.091,
+    "sharpe_per_exp_day": -0.53
+   },
+   "oos_BTC_x2": {
+    "n": 23,
+    "pf": 0.949,
+    "ret_pct": -3.11,
+    "mean_pct": -0.074,
+    "win_pct": 47.8,
+    "mdd_pct": -17.28,
+    "mean_per_exp_day_pct": -0.037,
+    "sharpe_per_exp_day": -0.28
+   },
+   "oos_ETH_x2": {
+    "n": 26,
+    "pf": 0.795,
+    "ret_pct": -16.09,
+    "mean_pct": -0.523,
+    "win_pct": 42.3,
+    "mdd_pct": -36.99,
+    "mean_per_exp_day_pct": -0.262,
+    "sharpe_per_exp_day": -1.26
+   },
+   "oos_SOL_x2": {
+    "n": 10,
+    "pf": 1.371,
+    "ret_pct": 3.76,
+    "mean_pct": 0.454,
+    "win_pct": 40.0,
+    "mdd_pct": -6.96,
+    "mean_per_exp_day_pct": 0.227,
+    "sharpe_per_exp_day": 1.38
+   }
+  },
+  "bh_oos": {
+   "BTC": {
+    "n": 1188,
+    "mean_pct": 0.109,
+    "sharpe": 0.98
+   },
+   "ETH": {
+    "n": 1188,
+    "mean_pct": 0.075,
+    "sharpe": 0.47
+   },
+   "SOL": {
+    "n": 1188,
+    "mean_pct": 0.234,
+    "sharpe": 1.13
+   },
+   "basket": {
+    "n": 1188,
+    "mean_pct": 0.139,
+    "sharpe": 0.98
+   }
+  },
+  "random_oos_x2": {
+   "pct_rank": 79.2,
+   "p50_pct": -0.098,
+   "p95_pct": 0.771
+  },
+  "oos_trades_per_year": 16.9,
+  "criteria": [
+   {
+    "criterion": "OOS 거래당 평균 > 0 (x2)",
+    "value": 0.312,
+    "pass": true,
+    "kills": true
+   },
+   {
+    "criterion": "OOS PF >= 1.1 (x2+slip)",
+    "value": 1.299,
+    "pass": true,
+    "kills": true
+   },
+   {
+    "criterion": "전체 거래 >= 30",
+    "value": 106,
+    "pass": true,
+    "kills": false
+   },
+   {
+    "criterion": "OOS 연환산 거래 >= 24 (빈도 표기)",
+    "value": 16.9,
+    "pass": false,
+    "kills": false
+   },
+   {
+    "criterion": "무작위 1,000회 95백분위 이상",
+    "value": 79.2,
+    "pass": false,
+    "kills": true
+   },
+   {
+    "criterion": "OOS 평균 > 가격만 버전 OOS 평균 (OI 정보)",
+    "value": {
+     "oi_rule": 0.312,
+     "price_only": -0.183
+    },
+    "pass": true,
+    "kills": true
+   },
+   {
+    "criterion": "코인 OOS 평균 음수 2개 미만",
+    "value": {
+     "BTC": 0.275,
+     "ETH": -0.836,
+     "SOL": 2.297
+    },
+    "pass": true,
+    "kills": true
+   },
+   {
+    "criterion": "노출일당 수익·Sharpe >= B&H(3코인 동일비중)",
+    "value": {
+     "strategy": [
+      0.156,
+      1.27
+     ],
+     "bh": [
+      0.139,
+      0.98
+     ]
+    },
+    "pass": true,
+    "kills": true
+   }
+  ],
+  "verdict": "KILL",
+  "reasons": [
+   "무작위 1,000회 95백분위 이상"
+  ],
+  "trades": [
+   {
+    "sym": "BTC",
+    "date": "2021-12-04",
+    "base": 0.0053,
+    "x2": 0.0043,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2021-12-04",
+    "base": 0.03378,
+    "x2": 0.03278,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2021-12-04",
+    "base": -0.05132,
+    "x2": -0.05232,
+    "below_sma200": null
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-01-27",
+    "base": 0.07263,
+    "x2": 0.07163,
+    "below_sma200": null
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-05-12",
+    "base": 0.01637,
+    "x2": 0.01537,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-06-07",
+    "base": -0.02997,
+    "x2": -0.03097,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-06-07",
+    "base": 0.01281,
+    "x2": 0.01181,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-07-01",
+    "base": 0.00802,
+    "x2": 0.00702,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-07-17",
+    "base": 0.14482,
+    "x2": 0.14382,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-07-19",
+    "base": 0.01773,
+    "x2": 0.01673,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-07-25",
+    "base": 0.11187,
+    "x2": 0.11087,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-07-29",
+    "base": 0.0042,
+    "x2": 0.0032,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-07-30",
+    "base": -0.03633,
+    "x2": -0.03733,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-08-09",
+    "base": 0.09182,
+    "x2": 0.09082,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-08-14",
+    "base": -0.03749,
+    "x2": -0.03849,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-08-19",
+    "base": 0.00071,
+    "x2": -0.00029,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-08-26",
+    "base": -0.05377,
+    "x2": -0.05477,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-09-13",
+    "base": -0.01405,
+    "x2": -0.01505,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-09-13",
+    "base": 0.00197,
+    "x2": 0.00097,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-10-05",
+    "base": -0.0181,
+    "x2": -0.0191,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-10-24",
+    "base": 0.04523,
+    "x2": 0.04423,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-10-27",
+    "base": 0.01552,
+    "x2": 0.01452,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-11-02",
+    "base": 0.06671,
+    "x2": 0.06571,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-11-08",
+    "base": -0.0725,
+    "x2": -0.0735,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-11-08",
+    "base": -0.04634,
+    "x2": -0.04734,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-11-21",
+    "base": 0.17478,
+    "x2": 0.17378,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-12-03",
+    "base": 0.00336,
+    "x2": 0.00236,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-12-05",
+    "base": -0.01014,
+    "x2": -0.01114,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-12-16",
+    "base": -0.00357,
+    "x2": -0.00457,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-12-16",
+    "base": -0.00056,
+    "x2": -0.00156,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-01-18",
+    "base": 0.21609,
+    "x2": 0.21509,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-01-30",
+    "base": 0.02846,
+    "x2": 0.02746,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-01-30",
+    "base": 0.03684,
+    "x2": 0.03584,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-01-30",
+    "base": 0.03047,
+    "x2": 0.02947,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-02-05",
+    "base": 0.02618,
+    "x2": 0.02518,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-02-22",
+    "base": -0.03818,
+    "x2": -0.03918,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-03-03",
+    "base": 0.00136,
+    "x2": 0.00036,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-03-09",
+    "base": 0.00227,
+    "x2": 0.00127,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-03-09",
+    "base": 0.02032,
+    "x2": 0.01932,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-03-22",
+    "base": 0.00839,
+    "x2": 0.00739,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-03-22",
+    "base": -0.03277,
+    "x2": -0.03377,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-03-24",
+    "base": 0.00312,
+    "x2": 0.00212,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-03-30",
+    "base": 0.00981,
+    "x2": 0.00881,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-04-03",
+    "base": 0.00683,
+    "x2": 0.00583,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-04-06",
+    "base": -0.01129,
+    "x2": -0.01229,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-04-19",
+    "base": -0.04474,
+    "x2": -0.04574,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-04-19",
+    "base": -0.06395,
+    "x2": -0.06495,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-04-26",
+    "base": 0.01003,
+    "x2": 0.00903,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-05-06",
+    "base": -0.02365,
+    "x2": -0.02465,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-06-05",
+    "base": -0.07574,
+    "x2": -0.07674,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-06-10",
+    "base": -0.04011,
+    "x2": -0.04111,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-07-03",
+    "base": -0.0144,
+    "x2": -0.0154,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-07-06",
+    "base": 0.00527,
+    "x2": 0.00427,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-07-09",
+    "base": 0.02438,
+    "x2": 0.02338,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-07-14",
+    "base": -0.00573,
+    "x2": -0.00673,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-07-14",
+    "base": -0.0108,
+    "x2": -0.0118,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-08-17",
+    "base": -0.01613,
+    "x2": -0.01713,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-08-17",
+    "base": -0.0046,
+    "x2": -0.0056,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-08-17",
+    "base": 0.01109,
+    "x2": 0.01009,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-08-31",
+    "base": -0.01039,
+    "x2": -0.01139,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-12-09",
+    "base": -0.02764,
+    "x2": -0.02864,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-12-11",
+    "base": 0.03498,
+    "x2": 0.03398,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-12-11",
+    "base": 0.01102,
+    "x2": 0.01002,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-12-29",
+    "base": -0.00362,
+    "x2": -0.00462,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-01-03",
+    "base": 0.01114,
+    "x2": 0.01014,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-01-03",
+    "base": 0.0066,
+    "x2": 0.0056,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-01-03",
+    "base": -0.00523,
+    "x2": -0.00623,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-01-23",
+    "base": -0.02028,
+    "x2": -0.02128,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-03-05",
+    "base": 0.02834,
+    "x2": 0.02734,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-03-05",
+    "base": 0.12367,
+    "x2": 0.12267,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-04-02",
+    "base": 0.03331,
+    "x2": 0.03231,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-04-13",
+    "base": -0.0078,
+    "x2": -0.0088,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-04-13",
+    "base": 0.03082,
+    "x2": 0.02982,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-04-13",
+    "base": 0.00176,
+    "x2": 0.00076,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-05-01",
+    "base": 0.03304,
+    "x2": 0.03204,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-05-23",
+    "base": 0.01215,
+    "x2": 0.01115,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-06-07",
+    "base": -0.01019,
+    "x2": -0.01119,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-07-05",
+    "base": -0.02612,
+    "x2": -0.02712,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-08-05",
+    "base": 0.00571,
+    "x2": 0.00471,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-08-05",
+    "base": -0.04418,
+    "x2": -0.04518,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-08-05",
+    "base": 0.09609,
+    "x2": 0.09509,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-10-02",
+    "base": 0.02001,
+    "x2": 0.01901,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-10-07",
+    "base": -0.01669,
+    "x2": -0.01769,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2025-01-20",
+    "base": 0.05535,
+    "x2": 0.05435,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-03-03",
+    "base": 0.03551,
+    "x2": 0.03451,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-03-20",
+    "base": -0.00344,
+    "x2": -0.00444,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2025-06-13",
+    "base": -0.01902,
+    "x2": -0.02002,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-10-07",
+    "base": 0.01011,
+    "x2": 0.00911,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-10-10",
+    "base": 0.0076,
+    "x2": 0.0066,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2025-10-10",
+    "base": 0.06156,
+    "x2": 0.06056,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2025-10-10",
+    "base": 0.01271,
+    "x2": 0.01171,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-10-22",
+    "base": 0.01363,
+    "x2": 0.01263,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-01-31",
+    "base": -0.00782,
+    "x2": -0.00882,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-01-31",
+    "base": -0.05195,
+    "x2": -0.05295,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-02-10",
+    "base": -0.04868,
+    "x2": -0.04968,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-03-05",
+    "base": -0.04522,
+    "x2": -0.04622,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-03-05",
+    "base": -0.04347,
+    "x2": -0.04447,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-03-18",
+    "base": -0.00767,
+    "x2": -0.00867,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-03-18",
+    "base": -0.02395,
+    "x2": -0.02495,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-04-12",
+    "base": 0.03714,
+    "x2": 0.03614,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-04-12",
+    "base": 0.04837,
+    "x2": 0.04737,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-04-18",
+    "base": -0.00166,
+    "x2": -0.00266,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-04-18",
+    "base": -0.01891,
+    "x2": -0.01991,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-04-23",
+    "base": -0.00632,
+    "x2": -0.00732,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-05-15",
+    "base": -0.02143,
+    "x2": -0.02243,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-09-23",
+    "base": -0.02143,
+    "x2": -0.02243,
+    "below_sma200": false
+   }
+  ]
+ },
+ "perp": {
+  "n_trades": {
+   "full": 106,
+   "train": 51,
+   "oos": 55,
+   "oos_BTC": 23,
+   "oos_ETH": 20,
+   "oos_SOL": 12,
+   "train_BTC": 14,
+   "train_ETH": 20,
+   "train_SOL": 17
+  },
+  "full_base": {
+   "n": 106,
+   "pf": 2.047,
+   "ret_pct": 215.7,
+   "mean_pct": 1.212,
+   "win_pct": 53.8,
+   "mdd_pct": -28.79,
+   "mean_per_exp_day_pct": 0.606,
+   "sharpe_per_exp_day": 3.2
+  },
+  "train_base": {
+   "n": 51,
+   "pf": 2.143,
+   "ret_pct": 101.28,
+   "mean_pct": 1.56,
+   "win_pct": 62.7,
+   "mdd_pct": -24.73,
+   "mean_per_exp_day_pct": 0.78,
+   "sharpe_per_exp_day": 3.37
+  },
+  "oos_base": {
+   "n": 55,
+   "pf": 1.921,
+   "ret_pct": 56.85,
+   "mean_pct": 0.89,
+   "win_pct": 45.5,
+   "mdd_pct": -21.03,
+   "mean_per_exp_day_pct": 0.445,
+   "sharpe_per_exp_day": 3.16
+  },
+  "full_x2": {
+   "n": 106,
+   "pf": 1.9,
+   "ret_pct": 178.32,
+   "mean_pct": 1.092,
+   "win_pct": 52.8,
+   "mdd_pct": -31.01,
+   "mean_per_exp_day_pct": 0.546,
+   "sharpe_per_exp_day": 2.88
+  },
+  "train_x2": {
+   "n": 51,
+   "pf": 2.02,
+   "ret_pct": 89.46,
+   "mean_pct": 1.44,
+   "win_pct": 60.8,
+   "mdd_pct": -26.19,
+   "mean_per_exp_day_pct": 0.72,
+   "sharpe_per_exp_day": 3.11
+  },
+  "oos_x2": {
+   "n": 55,
+   "pf": 1.747,
+   "ret_pct": 46.9,
+   "mean_pct": 0.77,
+   "win_pct": 45.5,
+   "mdd_pct": -21.71,
+   "mean_per_exp_day_pct": 0.385,
+   "sharpe_per_exp_day": 2.73
+  },
+  "full_h1_x2": {
+   "n": 74,
+   "pf": 2.123,
+   "ret_pct": 139.37,
+   "mean_pct": 1.328,
+   "win_pct": 58.1,
+   "mdd_pct": -31.01,
+   "mean_per_exp_day_pct": 0.664,
+   "sharpe_per_exp_day": 3.24
+  },
+  "full_h2_x2": {
+   "n": 32,
+   "pf": 1.426,
+   "ret_pct": 16.27,
+   "mean_pct": 0.548,
+   "win_pct": 40.6,
+   "mdd_pct": -21.71,
+   "mean_per_exp_day_pct": 0.274,
+   "sharpe_per_exp_day": 1.85
+  },
+  "oos_h1_x2": {
+   "n": 33,
+   "pf": 2.718,
+   "ret_pct": 48.46,
+   "mean_pct": 1.271,
+   "win_pct": 54.5,
+   "mdd_pct": -8.4,
+   "mean_per_exp_day_pct": 0.636,
+   "sharpe_per_exp_day": 4.52
+  },
+  "oos_h2_x2": {
+   "n": 22,
+   "pf": 1.013,
+   "ret_pct": -1.06,
+   "mean_pct": 0.019,
+   "win_pct": 31.8,
+   "mdd_pct": -21.71,
+   "mean_per_exp_day_pct": 0.009,
+   "sharpe_per_exp_day": 0.07
+  },
+  "oos_BTC_x2": {
+   "n": 23,
+   "pf": 2.009,
+   "ret_pct": 16.74,
+   "mean_pct": 0.708,
+   "win_pct": 47.8,
+   "mdd_pct": -7.06,
+   "mean_per_exp_day_pct": 0.354,
+   "sharpe_per_exp_day": 3.68
+  },
+  "train_BTC_x2": {
+   "n": 14,
+   "pf": 1.678,
+   "ret_pct": 8.23,
+   "mean_pct": 0.613,
+   "win_pct": 71.4,
+   "mdd_pct": -6.29,
+   "mean_per_exp_day_pct": 0.306,
+   "sharpe_per_exp_day": 2.62
+  },
+  "oos_ETH_x2": {
+   "n": 20,
+   "pf": 0.71,
+   "ret_pct": -10.47,
+   "mean_pct": -0.494,
+   "win_pct": 30.0,
+   "mdd_pct": -17.3,
+   "mean_per_exp_day_pct": -0.247,
+   "sharpe_per_exp_day": -1.9
+  },
+  "train_ETH_x2": {
+   "n": 20,
+   "pf": 2.319,
+   "ret_pct": 34.17,
+   "mean_pct": 1.623,
+   "win_pct": 60.0,
+   "mdd_pct": -9.97,
+   "mean_per_exp_day_pct": 0.811,
+   "sharpe_per_exp_day": 3.91
+  },
+  "oos_SOL_x2": {
+   "n": 12,
+   "pf": 6.469,
+   "ret_pct": 40.55,
+   "mean_pct": 2.998,
+   "win_pct": 66.7,
+   "mdd_pct": -3.45,
+   "mean_per_exp_day_pct": 1.499,
+   "sharpe_per_exp_day": 7.67
+  },
+  "train_SOL_x2": {
+   "n": 17,
+   "pf": 1.933,
+   "ret_pct": 30.47,
+   "mean_pct": 1.905,
+   "win_pct": 52.9,
+   "mdd_pct": -23.56,
+   "mean_per_exp_day_pct": 0.953,
+   "sharpe_per_exp_day": 2.96
+  },
+  "sma200_report_only": {
+   "oos_below_x2": {
+    "n": 26,
+    "pf": 0.603,
+    "ret_pct": -17.9,
+    "mean_pct": -0.694,
+    "win_pct": 23.1,
+    "mdd_pct": -23.42,
+    "mean_per_exp_day_pct": -0.347,
+    "sharpe_per_exp_day": -2.59
+   },
+   "oos_above_x2": {
+    "n": 29,
+    "pf": 6.367,
+    "ret_pct": 78.92,
+    "mean_pct": 2.084,
+    "win_pct": 65.5,
+    "mdd_pct": -4.64,
+    "mean_per_exp_day_pct": 1.042,
+    "sharpe_per_exp_day": 7.97
+   },
+   "full_below_x2": {
+    "n": 58,
+    "pf": 1.661,
+    "ret_pct": 63.34,
+    "mean_pct": 1.019,
+    "win_pct": 43.1,
+    "mdd_pct": -30.7,
+    "mean_per_exp_day_pct": 0.509,
+    "sharpe_per_exp_day": 2.26
+   },
+   "full_above_x2": {
+    "n": 48,
+    "pf": 2.444,
+    "ret_pct": 70.39,
+    "mean_pct": 1.181,
+    "win_pct": 64.6,
+    "mdd_pct": -21.24,
+    "mean_per_exp_day_pct": 0.591,
+    "sharpe_per_exp_day": 4.34
+   }
+  },
+  "price_only_control": {
+   "full_x2": {
+    "n": 137,
+    "pf": 0.779,
+    "ret_pct": -65.2,
+    "mean_pct": -0.572,
+    "win_pct": 43.1,
+    "mdd_pct": -77.81,
+    "mean_per_exp_day_pct": -0.286,
+    "sharpe_per_exp_day": -1.25
+   },
+   "train_x2": {
+    "n": 78,
+    "pf": 0.615,
+    "ret_pct": -66.18,
+    "mean_pct": -1.146,
+    "win_pct": 39.7,
+    "mdd_pct": -69.0,
+    "mean_per_exp_day_pct": -0.573,
+    "sharpe_per_exp_day": -2.29
+   },
+   "oos_x2": {
+    "n": 59,
+    "pf": 1.089,
+    "ret_pct": 2.91,
+    "mean_pct": 0.185,
+    "win_pct": 47.5,
+    "mdd_pct": -46.48,
+    "mean_per_exp_day_pct": 0.093,
+    "sharpe_per_exp_day": 0.47
+   },
+   "oos_BTC_x2": {
+    "n": 23,
+    "pf": 1.116,
+    "ret_pct": 2.47,
+    "mean_pct": 0.19,
+    "win_pct": 47.8,
+    "mdd_pct": -16.92,
+    "mean_per_exp_day_pct": 0.095,
+    "sharpe_per_exp_day": 0.61
+   },
+   "oos_ETH_x2": {
+    "n": 26,
+    "pf": 0.904,
+    "ret_pct": -11.35,
+    "mean_pct": -0.27,
+    "win_pct": 46.2,
+    "mdd_pct": -39.35,
+    "mean_per_exp_day_pct": -0.135,
+    "sharpe_per_exp_day": -0.57
+   },
+   "oos_SOL_x2": {
+    "n": 10,
+    "pf": 2.173,
+    "ret_pct": 13.29,
+    "mean_pct": 1.358,
+    "win_pct": 50.0,
+    "mdd_pct": -6.69,
+    "mean_per_exp_day_pct": 0.679,
+    "sharpe_per_exp_day": 3.77
+   }
+  },
+  "bh_oos": {
+   "BTC": {
+    "n": 1188,
+    "mean_pct": 0.114,
+    "sharpe": 0.9
+   },
+   "ETH": {
+    "n": 1188,
+    "mean_pct": 0.084,
+    "sharpe": 0.48
+   },
+   "SOL": {
+    "n": 1188,
+    "mean_pct": 0.246,
+    "sharpe": 1.09
+   },
+   "basket": {
+    "n": 1188,
+    "mean_pct": 0.148,
+    "sharpe": 0.92
+   }
+  },
+  "random_oos_x2": {
+   "pct_rank": 95.3,
+   "p50_pct": -0.178,
+   "p95_pct": 0.738
+  },
+  "oos_trades_per_year": 16.9,
+  "criteria": [
+   {
+    "criterion": "OOS 거래당 평균 > 0 (x2)",
+    "value": 0.77,
+    "pass": true,
+    "kills": true
+   },
+   {
+    "criterion": "OOS PF >= 1.1 (x2+slip)",
+    "value": 1.747,
+    "pass": true,
+    "kills": true
+   },
+   {
+    "criterion": "전체 거래 >= 30",
+    "value": 106,
+    "pass": true,
+    "kills": false
+   },
+   {
+    "criterion": "OOS 연환산 거래 >= 24 (빈도 표기)",
+    "value": 16.9,
+    "pass": false,
+    "kills": false
+   },
+   {
+    "criterion": "무작위 1,000회 95백분위 이상",
+    "value": 95.3,
+    "pass": true,
+    "kills": true
+   },
+   {
+    "criterion": "OOS 평균 > 가격만 버전 OOS 평균 (OI 정보)",
+    "value": {
+     "oi_rule": 0.77,
+     "price_only": 0.185
+    },
+    "pass": true,
+    "kills": true
+   },
+   {
+    "criterion": "코인 OOS 평균 음수 2개 미만",
+    "value": {
+     "BTC": 0.708,
+     "ETH": -0.494,
+     "SOL": 2.998
+    },
+    "pass": true,
+    "kills": true
+   },
+   {
+    "criterion": "노출일당 수익·Sharpe >= B&H(3코인 동일비중)",
+    "value": {
+     "strategy": [
+      0.385,
+      2.73
+     ],
+     "bh": [
+      0.148,
+      0.92
+     ]
+    },
+    "pass": true,
+    "kills": true
+   }
+  ],
+  "verdict": "SURVIVE",
+  "reasons": [],
+  "trades": [
+   {
+    "sym": "BTC",
+    "date": "2021-12-04",
+    "base": 0.02344,
+    "x2": 0.02224,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2021-12-04",
+    "base": 0.053,
+    "x2": 0.0518,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2021-12-04",
+    "base": -0.039,
+    "x2": -0.0402,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-01-27",
+    "base": 0.07165,
+    "x2": 0.07045,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-05-12",
+    "base": 0.03384,
+    "x2": 0.03264,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-06-07",
+    "base": -0.03572,
+    "x2": -0.03692,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-06-07",
+    "base": 0.0133,
+    "x2": 0.0121,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-07-01",
+    "base": 0.0134,
+    "x2": 0.0122,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-07-17",
+    "base": 0.14922,
+    "x2": 0.14802,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-07-19",
+    "base": 0.01946,
+    "x2": 0.01826,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-07-25",
+    "base": 0.13283,
+    "x2": 0.13163,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-07-29",
+    "base": 0.00607,
+    "x2": 0.00487,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-07-30",
+    "base": -0.04234,
+    "x2": -0.04354,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-08-09",
+    "base": 0.10172,
+    "x2": 0.10052,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-08-14",
+    "base": -0.04381,
+    "x2": -0.04501,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-08-19",
+    "base": 0.00346,
+    "x2": 0.00226,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-08-26",
+    "base": -0.05479,
+    "x2": -0.05599,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-09-13",
+    "base": -0.02581,
+    "x2": -0.02701,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-09-13",
+    "base": 0.00014,
+    "x2": -0.00106,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-10-05",
+    "base": -0.01803,
+    "x2": -0.01923,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-10-24",
+    "base": 0.07213,
+    "x2": 0.07093,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-10-27",
+    "base": 0.0229,
+    "x2": 0.0217,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-11-02",
+    "base": 0.09234,
+    "x2": 0.09114,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-11-08",
+    "base": -0.05024,
+    "x2": -0.05144,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-11-08",
+    "base": -0.02639,
+    "x2": -0.02759,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-11-21",
+    "base": 0.2126,
+    "x2": 0.2114,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2022-12-03",
+    "base": 0.01289,
+    "x2": 0.01169,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-12-05",
+    "base": -0.01002,
+    "x2": -0.01122,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2022-12-16",
+    "base": 0.00383,
+    "x2": 0.00263,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2022-12-16",
+    "base": 0.00958,
+    "x2": 0.00838,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-01-18",
+    "base": 0.22255,
+    "x2": 0.22135,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-01-30",
+    "base": 0.03709,
+    "x2": 0.03589,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-01-30",
+    "base": 0.04566,
+    "x2": 0.04446,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-01-30",
+    "base": 0.04032,
+    "x2": 0.03912,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-02-05",
+    "base": 0.02269,
+    "x2": 0.02149,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-02-22",
+    "base": -0.04865,
+    "x2": -0.04985,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-03-03",
+    "base": -0.00546,
+    "x2": -0.00666,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-03-09",
+    "base": 0.00269,
+    "x2": 0.00149,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-03-09",
+    "base": 0.02189,
+    "x2": 0.02069,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-03-22",
+    "base": 0.00495,
+    "x2": 0.00375,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-03-22",
+    "base": -0.03878,
+    "x2": -0.03998,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-03-24",
+    "base": 0.01136,
+    "x2": 0.01016,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-03-30",
+    "base": 0.01261,
+    "x2": 0.01141,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-04-03",
+    "base": 0.01089,
+    "x2": 0.00969,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-04-06",
+    "base": -0.01485,
+    "x2": -0.01605,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-04-19",
+    "base": -0.0464,
+    "x2": -0.0476,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-04-19",
+    "base": -0.06571,
+    "x2": -0.06691,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-04-26",
+    "base": 0.01087,
+    "x2": 0.00967,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-05-06",
+    "base": -0.0282,
+    "x2": -0.0294,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-06-05",
+    "base": -0.07201,
+    "x2": -0.07321,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-06-10",
+    "base": -0.02973,
+    "x2": -0.03093,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-07-03",
+    "base": -0.01766,
+    "x2": -0.01886,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-07-06",
+    "base": 0.01085,
+    "x2": 0.00965,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-07-09",
+    "base": 0.03131,
+    "x2": 0.03011,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-07-14",
+    "base": -0.00495,
+    "x2": -0.00615,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-07-14",
+    "base": -0.01068,
+    "x2": -0.01188,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-08-17",
+    "base": -0.02175,
+    "x2": -0.02295,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-08-17",
+    "base": -0.00931,
+    "x2": -0.01051,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-08-17",
+    "base": 0.00697,
+    "x2": 0.00577,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-08-31",
+    "base": -0.0052,
+    "x2": -0.0064,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2023-12-09",
+    "base": -0.03334,
+    "x2": -0.03454,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2023-12-11",
+    "base": 0.03602,
+    "x2": 0.03482,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-12-11",
+    "base": 0.01325,
+    "x2": 0.01205,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2023-12-29",
+    "base": -0.01116,
+    "x2": -0.01236,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-01-03",
+    "base": 0.02744,
+    "x2": 0.02624,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-01-03",
+    "base": 0.02368,
+    "x2": 0.02248,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-01-03",
+    "base": 0.00995,
+    "x2": 0.00875,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-01-23",
+    "base": -0.01335,
+    "x2": -0.01455,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-03-05",
+    "base": 0.04435,
+    "x2": 0.04315,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-03-05",
+    "base": 0.1427,
+    "x2": 0.1415,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-04-02",
+    "base": 0.04281,
+    "x2": 0.04161,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-04-13",
+    "base": -0.01123,
+    "x2": -0.01243,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-04-13",
+    "base": 0.02898,
+    "x2": 0.02778,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-04-13",
+    "base": -0.00368,
+    "x2": -0.00488,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-05-01",
+    "base": 0.04132,
+    "x2": 0.04012,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-05-23",
+    "base": 0.01653,
+    "x2": 0.01533,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-06-07",
+    "base": -0.00631,
+    "x2": -0.00751,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-07-05",
+    "base": -0.01943,
+    "x2": -0.02063,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2024-08-05",
+    "base": 0.01816,
+    "x2": 0.01696,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-08-05",
+    "base": -0.03386,
+    "x2": -0.03506,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-08-05",
+    "base": 0.11208,
+    "x2": 0.11088,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2024-10-02",
+    "base": 0.01865,
+    "x2": 0.01745,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2024-10-07",
+    "base": -0.02422,
+    "x2": -0.02542,
+    "below_sma200": true
+   },
+   {
+    "sym": "SOL",
+    "date": "2025-01-20",
+    "base": 0.06026,
+    "x2": 0.05906,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-03-03",
+    "base": 0.04837,
+    "x2": 0.04717,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-03-20",
+    "base": -0.00686,
+    "x2": -0.00806,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2025-06-13",
+    "base": -0.01477,
+    "x2": -0.01597,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-10-07",
+    "base": -3e-05,
+    "x2": -0.00123,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-10-10",
+    "base": 0.01718,
+    "x2": 0.01598,
+    "below_sma200": false
+   },
+   {
+    "sym": "ETH",
+    "date": "2025-10-10",
+    "base": 0.08445,
+    "x2": 0.08325,
+    "below_sma200": false
+   },
+   {
+    "sym": "SOL",
+    "date": "2025-10-10",
+    "base": 0.05322,
+    "x2": 0.05202,
+    "below_sma200": false
+   },
+   {
+    "sym": "BTC",
+    "date": "2025-10-22",
+    "base": 0.02953,
+    "x2": 0.02833,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-01-31",
+    "base": -0.00232,
+    "x2": -0.00352,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-01-31",
+    "base": -0.04442,
+    "x2": -0.04562,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-02-10",
+    "base": -0.03858,
+    "x2": -0.03978,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-03-05",
+    "base": -0.05323,
+    "x2": -0.05443,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-03-05",
+    "base": -0.05203,
+    "x2": -0.05323,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-03-18",
+    "base": -0.01244,
+    "x2": -0.01364,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-03-18",
+    "base": -0.02792,
+    "x2": -0.02912,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-04-12",
+    "base": 0.04605,
+    "x2": 0.04485,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-04-12",
+    "base": 0.05708,
+    "x2": 0.05588,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-04-18",
+    "base": -0.0,
+    "x2": -0.0012,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-04-18",
+    "base": -0.01729,
+    "x2": -0.01849,
+    "below_sma200": true
+   },
+   {
+    "sym": "ETH",
+    "date": "2026-04-23",
+    "base": -0.0065,
+    "x2": -0.0077,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-05-15",
+    "base": -0.02307,
+    "x2": -0.02427,
+    "below_sma200": true
+   },
+   {
+    "sym": "BTC",
+    "date": "2026-09-23",
+    "base": -0.00585,
+    "x2": -0.00705,
+    "below_sma200": false
+   }
+  ]
+ },
+ "info_oi_pre_upbit": {
+  "thresholds": {
+   "BTC": {
+    "doi_q05": -0.06738,
+    "ret_q05": -0.05124,
+    "train_n_doi": 573,
+    "train_n_ret": 576
+   },
+   "ETH": {
+    "doi_q05": -0.07093,
+    "ret_q05": -0.06582,
+    "train_n_doi": 573,
+    "train_n_ret": 576
+   },
+   "SOL": {
+    "doi_q05": -0.09889,
+    "ret_q05": -0.09282,
+    "train_n_doi": 573,
+    "train_n_ret": 576
+   }
+  },
+  "oos_x2": {
+   "n": 53,
+   "pf": 1.308,
+   "ret_pct": 15.75,
+   "mean_pct": 0.331,
+   "win_pct": 47.2,
+   "mdd_pct": -21.42,
+   "mean_per_exp_day_pct": 0.165,
+   "sharpe_per_exp_day": 1.33
+  },
+  "train_x2": {
+   "n": 52,
+   "pf": 1.322,
+   "ret_pct": 21.36,
+   "mean_pct": 0.561,
+   "win_pct": 57.7,
+   "mdd_pct": -25.44,
+   "mean_per_exp_day_pct": 0.281,
+   "sharpe_per_exp_day": 1.21
+  }
+ },
+ "verdict": "KILL",
+ "primary": "upbit"
+}
