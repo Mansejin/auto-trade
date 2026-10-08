@@ -1,0 +1,4773 @@
+{
+ "card": "docs/research/cards/weekend-gap-fade-btc-eth.md",
+ "cost_per_side": {
+  "base": 0.0010999999999999998,
+  "x2": 0.0017
+ },
+ "periods": {
+  "train": [
+   "2018-01-01",
+   "2023-06-30"
+  ],
+  "oos": [
+   "2023-07-01",
+   "2026-09-30"
+  ],
+  "etf": [
+   "2024-01-01",
+   "2026-09-30"
+  ]
+ },
+ "full_base": {
+  "n": 421,
+  "pf": 0.888,
+  "ret_pct": -77.27,
+  "mean_pct": -0.22,
+  "win_pct": 52.0,
+  "mdd_pct": -88.86,
+  "sharpe_per_exp_day": -0.82,
+  "n_long": 185,
+  "n_short": 236
+ },
+ "train_base": {
+  "n": 301,
+  "pf": 0.89,
+  "ret_pct": -69.59,
+  "mean_pct": -0.24,
+  "win_pct": 52.5,
+  "mdd_pct": -76.87,
+  "sharpe_per_exp_day": -0.83,
+  "n_long": 132,
+  "n_short": 169
+ },
+ "oos_base": {
+  "n": 120,
+  "pf": 0.884,
+  "ret_pct": -25.27,
+  "mean_pct": -0.17,
+  "win_pct": 50.8,
+  "mdd_pct": -60.72,
+  "sharpe_per_exp_day": -0.85,
+  "n_long": 53,
+  "n_short": 67
+ },
+ "etf_base": {
+  "n": 110,
+  "pf": 0.931,
+  "ret_pct": -17.58,
+  "mean_pct": -0.101,
+  "win_pct": 51.8,
+  "mdd_pct": -57.01,
+  "sharpe_per_exp_day": -0.49,
+  "n_long": 51,
+  "n_short": 59
+ },
+ "full_x2": {
+  "n": 421,
+  "pf": 0.833,
+  "ret_pct": -86.32,
+  "mean_pct": -0.34,
+  "win_pct": 50.6,
+  "mdd_pct": -91.97,
+  "sharpe_per_exp_day": -1.27,
+  "n_long": 185,
+  "n_short": 236
+ },
+ "train_x2": {
+  "n": 301,
+  "pf": 0.839,
+  "ret_pct": -78.85,
+  "mean_pct": -0.36,
+  "win_pct": 51.2,
+  "mdd_pct": -81.5,
+  "sharpe_per_exp_day": -1.24,
+  "n_long": 132,
+  "n_short": 169
+ },
+ "oos_x2": {
+  "n": 120,
+  "pf": 0.81,
+  "ret_pct": -35.33,
+  "mean_pct": -0.29,
+  "win_pct": 49.2,
+  "mdd_pct": -62.92,
+  "sharpe_per_exp_day": -1.45,
+  "n_long": 53,
+  "n_short": 67
+ },
+ "etf_x2": {
+  "n": 110,
+  "pf": 0.854,
+  "ret_pct": -27.8,
+  "mean_pct": -0.221,
+  "win_pct": 50.9,
+  "mdd_pct": -58.93,
+  "sharpe_per_exp_day": -1.08,
+  "n_long": 51,
+  "n_short": 59
+ },
+ "full_h1_x2": {
+  "n": 249,
+  "pf": 0.938,
+  "ret_pct": -49.99,
+  "mean_pct": -0.131,
+  "win_pct": 51.8,
+  "mdd_pct": -64.64,
+  "sharpe_per_exp_day": -0.46,
+  "n_long": 105,
+  "n_short": 144
+ },
+ "full_h2_x2": {
+  "n": 172,
+  "pf": 0.666,
+  "ret_pct": -72.66,
+  "mean_pct": -0.643,
+  "win_pct": 48.8,
+  "mdd_pct": -83.49,
+  "sharpe_per_exp_day": -2.68,
+  "n_long": 80,
+  "n_short": 92
+ },
+ "oos_h1_x2": {
+  "n": 62,
+  "pf": 0.579,
+  "ret_pct": -47.62,
+  "mean_pct": -0.937,
+  "win_pct": 38.7,
+  "mdd_pct": -62.92,
+  "sharpe_per_exp_day": -3.95,
+  "n_long": 27,
+  "n_short": 35
+ },
+ "oos_h2_x2": {
+  "n": 58,
+  "pf": 1.513,
+  "ret_pct": 23.47,
+  "mean_pct": 0.402,
+  "win_pct": 60.3,
+  "mdd_pct": -15.11,
+  "sharpe_per_exp_day": 2.77,
+  "n_long": 26,
+  "n_short": 32
+ },
+ "pre_perp_trades": 108,
+ "oos_BTCUSDT_x2": {
+  "n": 50,
+  "pf": 0.637,
+  "ret_pct": -25.39,
+  "mean_pct": -0.531,
+  "win_pct": 48.0,
+  "mdd_pct": -35.76,
+  "sharpe_per_exp_day": -3.09,
+  "n_long": 25,
+  "n_short": 25
+ },
+ "oos_BTCUSDT_base": {
+  "n": 50,
+  "pf": 0.706,
+  "ret_pct": -20.75,
+  "mean_pct": -0.411,
+  "win_pct": 50.0,
+  "mdd_pct": -34.08,
+  "sharpe_per_exp_day": -2.39,
+  "n_long": 25,
+  "n_short": 25
+ },
+ "full_BTCUSDT_x2": {
+  "n": 179,
+  "pf": 0.795,
+  "ret_pct": -59.72,
+  "mean_pct": -0.394,
+  "win_pct": 49.7,
+  "mdd_pct": -64.81,
+  "sharpe_per_exp_day": -1.6,
+  "n_long": 83,
+  "n_short": 96
+ },
+ "oos_ETHUSDT_x2": {
+  "n": 70,
+  "pf": 0.925,
+  "ret_pct": -13.32,
+  "mean_pct": -0.118,
+  "win_pct": 50.0,
+  "mdd_pct": -43.32,
+  "sharpe_per_exp_day": -0.54,
+  "n_long": 28,
+  "n_short": 42
+ },
+ "oos_ETHUSDT_base": {
+  "n": 70,
+  "pf": 1.001,
+  "ret_pct": -5.7,
+  "mean_pct": 0.002,
+  "win_pct": 51.4,
+  "mdd_pct": -41.42,
+  "sharpe_per_exp_day": 0.01,
+  "n_long": 28,
+  "n_short": 42
+ },
+ "full_ETHUSDT_x2": {
+  "n": 242,
+  "pf": 0.858,
+  "ret_pct": -66.05,
+  "mean_pct": -0.3,
+  "win_pct": 51.2,
+  "mdd_pct": -79.75,
+  "sharpe_per_exp_day": -1.06,
+  "n_long": 102,
+  "n_short": 140
+ },
+ "oos_long_x2": {
+  "n": 53,
+  "pf": 1.364,
+  "ret_pct": 20.96,
+  "mean_pct": 0.422,
+  "win_pct": 58.5,
+  "mdd_pct": -27.99,
+  "sharpe_per_exp_day": 2.27,
+  "n_long": 53,
+  "n_short": 0
+ },
+ "oos_short_x2": {
+  "n": 67,
+  "pf": 0.531,
+  "ret_pct": -46.53,
+  "mean_pct": -0.853,
+  "win_pct": 41.8,
+  "mdd_pct": -53.38,
+  "sharpe_per_exp_day": -4.11,
+  "n_long": 0,
+  "n_short": 67
+ },
+ "sma200_report_only": {
+  "oos_below_x2": {
+   "n": 57,
+   "pf": 1.364,
+   "ret_pct": 24.81,
+   "mean_pct": 0.481,
+   "win_pct": 57.9,
+   "mdd_pct": -23.62,
+   "sharpe_per_exp_day": 2.12,
+   "n_long": 33,
+   "n_short": 24
+  },
+  "oos_above_x2": {
+   "n": 63,
+   "pf": 0.425,
+   "ret_pct": -48.18,
+   "mean_pct": -0.988,
+   "win_pct": 41.3,
+   "mdd_pct": -51.46,
+   "sharpe_per_exp_day": -5.95,
+   "n_long": 20,
+   "n_short": 43
+  },
+  "full_below_x2": {
+   "n": 193,
+   "pf": 0.969,
+   "ret_pct": -32.92,
+   "mean_pct": -0.061,
+   "win_pct": 55.4,
+   "mdd_pct": -64.15,
+   "sharpe_per_exp_day": -0.22,
+   "n_long": 103,
+   "n_short": 90
+  },
+  "full_above_x2": {
+   "n": 215,
+   "pf": 0.704,
+   "ret_pct": -76.81,
+   "mean_pct": -0.573,
+   "win_pct": 46.0,
+   "mdd_pct": -81.19,
+   "sharpe_per_exp_day": -2.39,
+   "n_long": 74,
+   "n_short": 141
+  }
+ },
+ "portfolio_weekly_x2": {
+  "full": {
+   "n": 274,
+   "pf": 0.827,
+   "ret_pct": -60.64,
+   "mean_pct": -0.261,
+   "win_pct": 50.7,
+   "mdd_pct": -69.9
+  },
+  "oos": {
+   "n": 81,
+   "pf": 0.809,
+   "ret_pct": -19.0,
+   "mean_pct": -0.215,
+   "win_pct": 50.6,
+   "mdd_pct": -38.72
+  }
+ },
+ "monday_uncond_oos_x2": {
+  "long": {
+   "n": 340,
+   "mean_pct": 0.13
+  },
+  "short": {
+   "n": 340,
+   "mean_pct": -0.81
+  }
+ },
+ "btc_bh_oos_per_day": {
+  "n": 1188,
+  "mean_pct": 0.114,
+  "sharpe": 0.9
+ },
+ "random_oos_x2": {
+  "pct_rank": 57.4,
+  "p50_pct": -0.348,
+  "p95_pct": 0.152
+ },
+ "oos_trades_per_year": 36.9,
+ "transfer_XRPUSDT_info": {
+  "full_x2": {
+   "n": 229,
+   "pf": 0.675,
+   "ret_pct": -93.17,
+   "mean_pct": -0.877,
+   "win_pct": 45.9,
+   "mdd_pct": -93.6,
+   "sharpe_per_exp_day": -2.31,
+   "n_long": 116,
+   "n_short": 113
+  },
+  "oos_x2": {
+   "n": 79,
+   "pf": 0.598,
+   "ret_pct": -55.49,
+   "mean_pct": -0.894,
+   "win_pct": 39.2,
+   "mdd_pct": -56.13,
+   "sharpe_per_exp_day": -3.4,
+   "n_long": 35,
+   "n_short": 44
+  }
+ },
+ "upbit_long_only_report": {
+  "full_base": {
+   "n": 171,
+   "pf": 0.917,
+   "ret_pct": -40.37,
+   "mean_pct": -0.163,
+   "win_pct": 52.0,
+   "mdd_pct": -55.66,
+   "sharpe_per_exp_day": -0.59,
+   "n_long": 171,
+   "n_short": 0
+  },
+  "full_x2": {
+   "n": 171,
+   "pf": 0.869,
+   "ret_pct": -49.79,
+   "mean_pct": -0.263,
+   "win_pct": 51.5,
+   "mdd_pct": -61.88,
+   "sharpe_per_exp_day": -0.95,
+   "n_long": 171,
+   "n_short": 0
+  },
+  "train_x2": {
+   "n": 121,
+   "pf": 0.829,
+   "ret_pct": -50.95,
+   "mean_pct": -0.409,
+   "win_pct": 49.6,
+   "mdd_pct": -53.59,
+   "sharpe_per_exp_day": -1.3,
+   "n_long": 121,
+   "n_short": 0
+  },
+  "oos_base": {
+   "n": 50,
+   "pf": 1.182,
+   "ret_pct": 7.61,
+   "mean_pct": 0.189,
+   "win_pct": 56.0,
+   "mdd_pct": -24.09,
+   "sharpe_per_exp_day": 1.23,
+   "n_long": 50,
+   "n_short": 0
+  },
+  "oos_x2": {
+   "n": 50,
+   "pf": 1.083,
+   "ret_pct": 2.36,
+   "mean_pct": 0.089,
+   "win_pct": 56.0,
+   "mdd_pct": -25.84,
+   "sharpe_per_exp_day": 0.58,
+   "n_long": 50,
+   "n_short": 0
+  },
+  "etf_x2": {
+   "n": 46,
+   "pf": 1.048,
+   "ret_pct": 0.44,
+   "mean_pct": 0.055,
+   "win_pct": 56.5,
+   "mdd_pct": -25.84,
+   "sharpe_per_exp_day": 0.35,
+   "n_long": 46,
+   "n_short": 0
+  },
+  "oos_below_sma200_x2": {
+   "n": 32,
+   "pf": 1.202,
+   "ret_pct": 5.96,
+   "mean_pct": 0.237,
+   "win_pct": 62.5,
+   "mdd_pct": -21.91,
+   "sharpe_per_exp_day": 1.34,
+   "n_long": 32,
+   "n_short": 0
+  },
+  "oos_above_sma200_x2": {
+   "n": 18,
+   "pf": 0.813,
+   "ret_pct": -3.39,
+   "mean_pct": -0.173,
+   "win_pct": 44.4,
+   "mdd_pct": -8.48,
+   "sharpe_per_exp_day": -1.65,
+   "n_long": 18,
+   "n_short": 0
+  },
+  "full_below_sma200_x2": {
+   "n": 92,
+   "pf": 0.801,
+   "ret_pct": -41.71,
+   "mean_pct": -0.438,
+   "win_pct": 54.3,
+   "mdd_pct": -55.42,
+   "sharpe_per_exp_day": -1.55,
+   "n_long": 92,
+   "n_short": 0
+  },
+  "oos_KRW-BTC_x2": {
+   "n": 22,
+   "pf": 1.431,
+   "ret_pct": 7.09,
+   "mean_pct": 0.338,
+   "win_pct": 59.1,
+   "mdd_pct": -10.82,
+   "sharpe_per_exp_day": 2.77,
+   "n_long": 22,
+   "n_short": 0
+  },
+  "oos_KRW-ETH_x2": {
+   "n": 28,
+   "pf": 0.92,
+   "ret_pct": -4.42,
+   "mean_pct": -0.106,
+   "win_pct": 53.6,
+   "mdd_pct": -19.81,
+   "sharpe_per_exp_day": -0.6,
+   "n_long": 28,
+   "n_short": 0
+  }
+ },
+ "criteria": [
+  {
+   "criterion": "OOS 거래당 평균 > 0 (x2)",
+   "value": -0.29,
+   "pass": false,
+   "kills": true
+  },
+  {
+   "criterion": "OOS PF >= 1.1 (x2+slip+funding)",
+   "value": 0.81,
+   "pass": false,
+   "kills": true
+  },
+  {
+   "criterion": "전체 거래 >= 30",
+   "value": 421,
+   "pass": true,
+   "kills": false
+  },
+  {
+   "criterion": "OOS 연환산 거래 >= 24 (빈도 표기)",
+   "value": 36.9,
+   "pass": true,
+   "kills": false
+  },
+  {
+   "criterion": "무작위 1,000회 95백분위 이상",
+   "value": 57.4,
+   "pass": false,
+   "kills": true
+  },
+  {
+   "criterion": "월요일 무조건 롱·숏 둘 다보다 낮지 않음",
+   "value": {
+    "strategy": -0.29,
+    "long": 0.13,
+    "short": -0.81
+   },
+   "pass": true,
+   "kills": true
+  },
+  {
+   "criterion": "ETF 이후(2024-01~) 평균 > 0 (x2)",
+   "value": -0.221,
+   "pass": false,
+   "kills": true
+  },
+  {
+   "criterion": "BTC·ETH OOS 평균 부호 둘 다 양수 (x2)",
+   "value": {
+    "BTCUSDT": -0.531,
+    "ETHUSDT": -0.118
+   },
+   "pass": false,
+   "kills": true
+  },
+  {
+   "criterion": "노출일당 수익·Sharpe가 BTC B&H 이상",
+   "value": {
+    "strategy": [
+     -0.29,
+     -1.45
+    ],
+    "bh": [
+     0.114,
+     0.9
+    ]
+   },
+   "pass": false,
+   "kills": true
+  }
+ ],
+ "verdict": "KILL",
+ "reasons": [
+  "OOS 거래당 평균 > 0 (x2)",
+  "OOS PF >= 1.1 (x2+slip+funding)",
+  "무작위 1,000회 95백분위 이상",
+  "ETF 이후(2024-01~) 평균 > 0 (x2)",
+  "BTC·ETH OOS 평균 부호 둘 다 양수 (x2)",
+  "노출일당 수익·Sharpe가 BTC B&H 이상"
+ ],
+ "n_trades": {
+  "full": 421,
+  "train": 301,
+  "oos": 120,
+  "etf": 110
+ },
+ "trades": [
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-01-01",
+   "side": 1,
+   "W": -0.0461,
+   "base": -0.02651,
+   "x2": -0.02771,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-01-08",
+   "side": 1,
+   "W": -0.0478,
+   "base": -0.08336,
+   "x2": -0.08456,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-01-08",
+   "side": -1,
+   "W": 0.1723,
+   "base": -0.01118,
+   "x2": -0.01238,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-01-15",
+   "side": -1,
+   "W": 0.0743,
+   "base": 0.05664,
+   "x2": 0.05544,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-01-29",
+   "side": -1,
+   "W": 0.0713,
+   "base": 0.05082,
+   "x2": 0.04962,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-01-29",
+   "side": -1,
+   "W": 0.1912,
+   "base": 0.05767,
+   "x2": 0.05647,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-02-05",
+   "side": 1,
+   "W": -0.0776,
+   "base": -0.15383,
+   "x2": -0.15503,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-02-05",
+   "side": 1,
+   "W": -0.1084,
+   "base": -0.15272,
+   "x2": -0.15392,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-02-12",
+   "side": 1,
+   "W": -0.0714,
+   "base": 0.10187,
+   "x2": 0.10067,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-02-12",
+   "side": 1,
+   "W": -0.0768,
+   "base": 0.0693,
+   "x2": 0.0681,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-02-19",
+   "side": -1,
+   "W": 0.0224,
+   "base": -0.07662,
+   "x2": -0.07782,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-02-19",
+   "side": 1,
+   "W": -0.0294,
+   "base": 0.02872,
+   "x2": 0.02752,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-02-26",
+   "side": 1,
+   "W": -0.0534,
+   "base": 0.07403,
+   "x2": 0.07283,
+   "perp": false,
+   "below_sma200": null
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-03-05",
+   "side": -1,
+   "W": 0.0431,
+   "base": 0.00301,
+   "x2": 0.00181,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-03-12",
+   "side": -1,
+   "W": 0.0329,
+   "base": 0.03999,
+   "x2": 0.03879,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-03-19",
+   "side": 1,
+   "W": -0.1036,
+   "base": 0.03407,
+   "x2": 0.03287,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-03-26",
+   "side": 1,
+   "W": -0.0481,
+   "base": -0.04186,
+   "x2": -0.04306,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-03-26",
+   "side": 1,
+   "W": -0.0358,
+   "base": -0.07654,
+   "x2": -0.07774,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-04-02",
+   "side": 1,
+   "W": -0.0352,
+   "base": 0.01476,
+   "x2": 0.01356,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-04-09",
+   "side": -1,
+   "W": 0.0631,
+   "base": 0.03053,
+   "x2": 0.02933,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-04-09",
+   "side": -1,
+   "W": 0.0854,
+   "base": 0.00067,
+   "x2": -0.00053,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-04-16",
+   "side": -1,
+   "W": 0.0606,
+   "base": 0.03253,
+   "x2": 0.03133,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-04-16",
+   "side": -1,
+   "W": 0.0792,
+   "base": 0.03861,
+   "x2": 0.03741,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-04-30",
+   "side": -1,
+   "W": 0.0565,
+   "base": 0.01596,
+   "x2": 0.01476,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-04-30",
+   "side": -1,
+   "W": 0.0737,
+   "base": 0.02685,
+   "x2": 0.02565,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-05-14",
+   "side": -1,
+   "W": 0.0326,
+   "base": -0.00032,
+   "x2": -0.00152,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-05-14",
+   "side": -1,
+   "W": 0.077,
+   "base": -2e-05,
+   "x2": -0.00122,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-05-21",
+   "side": -1,
+   "W": 0.0351,
+   "base": 0.01423,
+   "x2": 0.01303,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-05-21",
+   "side": -1,
+   "W": 0.033,
+   "base": 0.02441,
+   "x2": 0.02321,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-05-28",
+   "side": 1,
+   "W": -0.0259,
+   "base": -0.1061,
+   "x2": -0.1073,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-06-04",
+   "side": -1,
+   "W": 0.0257,
+   "base": 0.02726,
+   "x2": 0.02606,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-06-04",
+   "side": -1,
+   "W": 0.0702,
+   "base": 0.04402,
+   "x2": 0.04282,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-06-11",
+   "side": 1,
+   "W": -0.1103,
+   "base": 0.01362,
+   "x2": 0.01242,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-06-11",
+   "side": 1,
+   "W": -0.1254,
+   "base": 0.01008,
+   "x2": 0.00888,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-07-02",
+   "side": -1,
+   "W": 0.0256,
+   "base": -0.04221,
+   "x2": -0.04341,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-07-02",
+   "side": -1,
+   "W": 0.0399,
+   "base": -0.05568,
+   "x2": -0.05688,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-07-09",
+   "side": -1,
+   "W": 0.0346,
+   "base": 0.02826,
+   "x2": 0.02706,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-07-16",
+   "side": -1,
+   "W": 0.0223,
+   "base": -0.0603,
+   "x2": -0.0615,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-07-16",
+   "side": -1,
+   "W": 0.0401,
+   "base": -0.06601,
+   "x2": -0.06721,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-08-06",
+   "side": 1,
+   "W": -0.0524,
+   "base": -0.0149,
+   "x2": -0.0161,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-08-06",
+   "side": 1,
+   "W": -0.021,
+   "base": -0.01096,
+   "x2": -0.01216,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-08-13",
+   "side": -1,
+   "W": 0.0261,
+   "base": 0.00736,
+   "x2": 0.00616,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-08-13",
+   "side": 1,
+   "W": -0.0422,
+   "base": -0.1096,
+   "x2": -0.1108,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-08-20",
+   "side": 1,
+   "W": -0.057,
+   "base": -0.09839,
+   "x2": -0.09959,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-08-27",
+   "side": 1,
+   "W": -0.0241,
+   "base": 0.04719,
+   "x2": 0.04599,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-09-03",
+   "side": -1,
+   "W": 0.0415,
+   "base": 0.00314,
+   "x2": 0.00194,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-09-03",
+   "side": -1,
+   "W": 0.0496,
+   "base": 0.01953,
+   "x2": 0.01833,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-09-10",
+   "side": 1,
+   "W": -0.0226,
+   "base": 0.00735,
+   "x2": 0.00615,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-09-10",
+   "side": 1,
+   "W": -0.0901,
+   "base": 0.00336,
+   "x2": 0.00216,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-09-17",
+   "side": -1,
+   "W": 0.0557,
+   "base": 0.10673,
+   "x2": 0.10553,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-10-01",
+   "side": -1,
+   "W": 0.0498,
+   "base": 0.00389,
+   "x2": 0.00269,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-11-05",
+   "side": -1,
+   "W": 0.0484,
+   "base": 0.00482,
+   "x2": 0.00362,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-11-26",
+   "side": 1,
+   "W": -0.0747,
+   "base": -0.05704,
+   "x2": -0.05824,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-11-26",
+   "side": 1,
+   "W": -0.0506,
+   "base": -0.06954,
+   "x2": -0.07074,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-12-03",
+   "side": -1,
+   "W": 0.0296,
+   "base": 0.06409,
+   "x2": 0.06289,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-12-03",
+   "side": -1,
+   "W": 0.0252,
+   "base": 0.06528,
+   "x2": 0.06408,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-12-10",
+   "side": -1,
+   "W": 0.0417,
+   "base": 0.03006,
+   "x2": 0.02886,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2018-12-24",
+   "side": -1,
+   "W": 0.0233,
+   "base": -0.02266,
+   "x2": -0.02386,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2018-12-24",
+   "side": -1,
+   "W": 0.1984,
+   "base": -0.0718,
+   "x2": -0.073,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-01-07",
+   "side": -1,
+   "W": 0.0521,
+   "base": 0.00052,
+   "x2": -0.00068,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-01-14",
+   "side": 1,
+   "W": -0.0346,
+   "base": 0.04051,
+   "x2": 0.03931,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-01-14",
+   "side": 1,
+   "W": -0.0843,
+   "base": 0.10974,
+   "x2": 0.10854,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-01-28",
+   "side": 1,
+   "W": -0.0268,
+   "base": -0.06066,
+   "x2": -0.06186,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-02-11",
+   "side": -1,
+   "W": 0.0486,
+   "base": 0.03169,
+   "x2": 0.03049,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-02-18",
+   "side": -1,
+   "W": 0.0994,
+   "base": -0.09131,
+   "x2": -0.09251,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-02-25",
+   "side": 1,
+   "W": -0.0551,
+   "base": 0.02047,
+   "x2": 0.01927,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-02-25",
+   "side": 1,
+   "W": -0.1038,
+   "base": 0.04155,
+   "x2": 0.04035,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-03-04",
+   "side": 1,
+   "W": -0.0349,
+   "base": -0.03987,
+   "x2": -0.04107,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-04-08",
+   "side": -1,
+   "W": 0.033,
+   "base": -0.01537,
+   "x2": -0.01657,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-04-08",
+   "side": -1,
+   "W": 0.0568,
+   "base": -0.02756,
+   "x2": -0.02876,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-04-15",
+   "side": -1,
+   "W": 0.0247,
+   "base": 0.04146,
+   "x2": 0.04026,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-04-22",
+   "side": 1,
+   "W": -0.0236,
+   "base": 0.00925,
+   "x2": 0.00805,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-05-06",
+   "side": 1,
+   "W": -0.03,
+   "base": 0.0587,
+   "x2": 0.0575,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-05-13",
+   "side": -1,
+   "W": 0.0929,
+   "base": -0.12094,
+   "x2": -0.12214,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-05-13",
+   "side": -1,
+   "W": 0.0878,
+   "base": -0.04346,
+   "x2": -0.04466,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-05-20",
+   "side": -1,
+   "W": 0.1078,
+   "base": 0.02367,
+   "x2": 0.02247,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-05-20",
+   "side": -1,
+   "W": 0.0622,
+   "base": 0.03208,
+   "x2": 0.03088,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-05-27",
+   "side": -1,
+   "W": 0.0816,
+   "base": -0.01845,
+   "x2": -0.01965,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-05-27",
+   "side": -1,
+   "W": 0.0627,
+   "base": -0.02622,
+   "x2": -0.02742,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-06-10",
+   "side": 1,
+   "W": -0.044,
+   "base": 0.04414,
+   "x2": 0.04294,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-06-10",
+   "side": 1,
+   "W": -0.0715,
+   "base": 0.06528,
+   "x2": 0.06408,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-06-17",
+   "side": -1,
+   "W": 0.035,
+   "base": -0.04231,
+   "x2": -0.04351,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-06-17",
+   "side": -1,
+   "W": 0.02,
+   "base": -0.02241,
+   "x2": -0.02361,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-06-24",
+   "side": -1,
+   "W": 0.0734,
+   "base": -0.01601,
+   "x2": -0.01721,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-06-24",
+   "side": -1,
+   "W": 0.0485,
+   "base": -0.01267,
+   "x2": -0.01387,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-07-01",
+   "side": 1,
+   "W": -0.1252,
+   "base": -0.02332,
+   "x2": -0.02452,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-07-01",
+   "side": 1,
+   "W": -0.0587,
+   "base": 0.00511,
+   "x2": 0.00391,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-07-08",
+   "side": -1,
+   "W": 0.0386,
+   "base": -0.07482,
+   "x2": -0.07602,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-07-08",
+   "side": -1,
+   "W": 0.0606,
+   "base": -0.02596,
+   "x2": -0.02716,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-07-15",
+   "side": 1,
+   "W": -0.1346,
+   "base": 0.06263,
+   "x2": 0.06143,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-07-15",
+   "side": 1,
+   "W": -0.1773,
+   "base": 0.00829,
+   "x2": 0.00709,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-07-22",
+   "side": -1,
+   "W": 0.0206,
+   "base": 0.03283,
+   "x2": 0.03163,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-07-29",
+   "side": 1,
+   "W": -0.0288,
+   "base": -0.0056,
+   "x2": -0.0068,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-07-29",
+   "side": 1,
+   "W": -0.0329,
+   "base": -0.0057,
+   "x2": -0.0069,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-08-05",
+   "side": -1,
+   "W": 0.0385,
+   "base": -0.08454,
+   "x2": -0.08574,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-08-12",
+   "side": 1,
+   "W": -0.0278,
+   "base": -0.0144,
+   "x2": -0.0156,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-08-12",
+   "side": -1,
+   "W": 0.028,
+   "base": 0.02012,
+   "x2": 0.01892,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-08-19",
+   "side": -1,
+   "W": 0.0514,
+   "base": -0.04296,
+   "x2": -0.04416,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-08-26",
+   "side": 1,
+   "W": -0.0236,
+   "base": 0.02057,
+   "x2": 0.01937,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-08-26",
+   "side": 1,
+   "W": -0.0386,
+   "base": 0.0089,
+   "x2": 0.0077,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-09-09",
+   "side": -1,
+   "W": 0.0714,
+   "base": 0.00144,
+   "x2": 0.00024,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-09-16",
+   "side": -1,
+   "W": 0.0446,
+   "base": -0.04547,
+   "x2": -0.04667,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-09-23",
+   "side": 1,
+   "W": -0.0312,
+   "base": -0.04931,
+   "x2": -0.05051,
+   "perp": false,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-09-30",
+   "side": 1,
+   "W": -0.0264,
+   "base": 0.06651,
+   "x2": 0.06531,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-10-07",
+   "side": 1,
+   "W": -0.0348,
+   "base": 0.04114,
+   "x2": 0.03994,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-10-07",
+   "side": 1,
+   "W": -0.031,
+   "base": 0.05542,
+   "x2": 0.05422,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-10-21",
+   "side": -1,
+   "W": 0.0348,
+   "base": 0.0002,
+   "x2": -0.001,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-10-28",
+   "side": -1,
+   "W": 0.101,
+   "base": 0.03327,
+   "x2": 0.03207,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-11-11",
+   "side": -1,
+   "W": 0.0303,
+   "base": 0.03254,
+   "x2": 0.03134,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-11-11",
+   "side": -1,
+   "W": 0.0286,
+   "base": 0.01886,
+   "x2": 0.01766,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-11-18",
+   "side": -1,
+   "W": 0.0213,
+   "base": 0.02837,
+   "x2": 0.02717,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-11-25",
+   "side": 1,
+   "W": -0.0502,
+   "base": 0.02753,
+   "x2": 0.02633,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-11-25",
+   "side": 1,
+   "W": -0.0641,
+   "base": 0.03937,
+   "x2": 0.03817,
+   "perp": false,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-12-02",
+   "side": 1,
+   "W": -0.0452,
+   "base": -0.01536,
+   "x2": -0.01656,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-12-02",
+   "side": 1,
+   "W": -0.0247,
+   "base": -0.01663,
+   "x2": -0.01783,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2019-12-23",
+   "side": -1,
+   "W": 0.0436,
+   "base": 0.02328,
+   "x2": 0.02208,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-12-23",
+   "side": -1,
+   "W": 0.0304,
+   "base": 0.03161,
+   "x2": 0.03041,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2019-12-30",
+   "side": -1,
+   "W": 0.064,
+   "base": 0.01814,
+   "x2": 0.01694,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-01-20",
+   "side": 1,
+   "W": -0.0237,
+   "base": -0.00896,
+   "x2": -0.01016,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-01-27",
+   "side": -1,
+   "W": 0.0209,
+   "base": -0.03702,
+   "x2": -0.03822,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-01-27",
+   "side": -1,
+   "W": 0.0329,
+   "base": -0.01541,
+   "x2": -0.01661,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-02-03",
+   "side": -1,
+   "W": 0.0472,
+   "base": -0.00826,
+   "x2": -0.00946,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-02-10",
+   "side": -1,
+   "W": 0.0344,
+   "base": 0.03015,
+   "x2": 0.02895,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-02-10",
+   "side": -1,
+   "W": 0.023,
+   "base": 0.02866,
+   "x2": 0.02746,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-02-17",
+   "side": 1,
+   "W": -0.0413,
+   "base": -0.02474,
+   "x2": -0.02594,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-02-17",
+   "side": 1,
+   "W": -0.0921,
+   "base": 0.03138,
+   "x2": 0.03018,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-02-24",
+   "side": -1,
+   "W": 0.0268,
+   "base": 0.02655,
+   "x2": 0.02535,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-02-24",
+   "side": -1,
+   "W": 0.0345,
+   "base": 0.03135,
+   "x2": 0.03015,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-03-02",
+   "side": 1,
+   "W": -0.0395,
+   "base": 0.06272,
+   "x2": 0.06152,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-03-09",
+   "side": 1,
+   "W": -0.1202,
+   "base": -0.01575,
+   "x2": -0.01695,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-03-09",
+   "side": 1,
+   "W": -0.1858,
+   "base": 0.01436,
+   "x2": 0.01316,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-03-16",
+   "side": 1,
+   "W": -0.0385,
+   "base": -0.06189,
+   "x2": -0.06309,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-03-16",
+   "side": 1,
+   "W": -0.0767,
+   "base": -0.10575,
+   "x2": -0.10695,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-03-23",
+   "side": 1,
+   "W": -0.0626,
+   "base": 0.11013,
+   "x2": 0.10893,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-03-23",
+   "side": 1,
+   "W": -0.0837,
+   "base": 0.10947,
+   "x2": 0.10827,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-03-30",
+   "side": 1,
+   "W": -0.0751,
+   "base": 0.0856,
+   "x2": 0.0844,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-03-30",
+   "side": 1,
+   "W": -0.052,
+   "base": 0.05918,
+   "x2": 0.05798,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-04-20",
+   "side": -1,
+   "W": 0.0552,
+   "base": 0.05239,
+   "x2": 0.05119,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-04-27",
+   "side": -1,
+   "W": 0.0251,
+   "base": -0.01235,
+   "x2": -0.01355,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-04-27",
+   "side": -1,
+   "W": 0.0521,
+   "base": 0.00352,
+   "x2": 0.00232,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-05-11",
+   "side": 1,
+   "W": -0.1099,
+   "base": -0.02113,
+   "x2": -0.02233,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-05-11",
+   "side": 1,
+   "W": -0.1125,
+   "base": -0.0121,
+   "x2": -0.0133,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-05-18",
+   "side": -1,
+   "W": 0.0391,
+   "base": -0.00763,
+   "x2": -0.00883,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-05-18",
+   "side": -1,
+   "W": 0.0622,
+   "base": -0.04023,
+   "x2": -0.04143,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-05-25",
+   "side": 1,
+   "W": -0.049,
+   "base": 0.01904,
+   "x2": 0.01784,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-05-25",
+   "side": 1,
+   "W": -0.036,
+   "base": 0.01953,
+   "x2": 0.01833,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-06-01",
+   "side": -1,
+   "W": 0.0496,
+   "base": -0.07663,
+   "x2": -0.07783,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-06-15",
+   "side": 1,
+   "W": -0.0243,
+   "base": -0.00711,
+   "x2": -0.00831,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-06-29",
+   "side": 1,
+   "W": -0.0206,
+   "base": 0.01093,
+   "x2": 0.00973,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-07-20",
+   "side": -1,
+   "W": 0.0277,
+   "base": 0.01131,
+   "x2": 0.01011,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-07-27",
+   "side": -1,
+   "W": 0.0412,
+   "base": -0.11088,
+   "x2": -0.11208,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-07-27",
+   "side": -1,
+   "W": 0.1141,
+   "base": -0.03452,
+   "x2": -0.03572,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-08-03",
+   "side": 1,
+   "W": -0.0233,
+   "base": 0.0098,
+   "x2": 0.0086,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-08-03",
+   "side": -1,
+   "W": 0.0754,
+   "base": -0.03653,
+   "x2": -0.03773,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-08-10",
+   "side": -1,
+   "W": 0.0285,
+   "base": -0.01366,
+   "x2": -0.01486,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-08-31",
+   "side": -1,
+   "W": 0.0856,
+   "base": -0.01334,
+   "x2": -0.01454,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-09-07",
+   "side": 1,
+   "W": -0.0843,
+   "base": 0.0,
+   "x2": -0.0012,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-09-21",
+   "side": 1,
+   "W": -0.0348,
+   "base": -0.08482,
+   "x2": -0.08602,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-10-12",
+   "side": -1,
+   "W": 0.0288,
+   "base": -0.01604,
+   "x2": -0.01724,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-10-12",
+   "side": -1,
+   "W": 0.0251,
+   "base": -0.03471,
+   "x2": -0.03591,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-10-19",
+   "side": -1,
+   "W": 0.0345,
+   "base": -0.00503,
+   "x2": -0.00623,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-11-02",
+   "side": -1,
+   "W": 0.0368,
+   "base": 0.03292,
+   "x2": 0.03172,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-11-16",
+   "side": 1,
+   "W": -0.0222,
+   "base": 0.04483,
+   "x2": 0.04363,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-11-16",
+   "side": 1,
+   "W": -0.0595,
+   "base": 0.02548,
+   "x2": 0.02428,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-11-23",
+   "side": -1,
+   "W": 0.0978,
+   "base": -0.08648,
+   "x2": -0.08768,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-11-30",
+   "side": -1,
+   "W": 0.061,
+   "base": -0.08614,
+   "x2": -0.08734,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-11-30",
+   "side": -1,
+   "W": 0.1113,
+   "base": -0.07187,
+   "x2": -0.07307,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-12-07",
+   "side": -1,
+   "W": 0.038,
+   "base": 0.00853,
+   "x2": 0.00733,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-12-07",
+   "side": -1,
+   "W": 0.0605,
+   "base": 0.01494,
+   "x2": 0.01374,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-12-14",
+   "side": -1,
+   "W": 0.0631,
+   "base": -0.00689,
+   "x2": -0.00809,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-12-14",
+   "side": -1,
+   "W": 0.0849,
+   "base": 0.00588,
+   "x2": 0.00468,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-12-21",
+   "side": 1,
+   "W": -0.0238,
+   "base": -0.04994,
+   "x2": -0.05114,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2020-12-28",
+   "side": -1,
+   "W": 0.0635,
+   "base": -0.03115,
+   "x2": -0.03235,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2020-12-28",
+   "side": -1,
+   "W": 0.0931,
+   "base": -0.06556,
+   "x2": -0.06676,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-01-04",
+   "side": -1,
+   "W": 0.1251,
+   "base": 0.0326,
+   "x2": 0.0314,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-01-04",
+   "side": -1,
+   "W": 0.3421,
+   "base": -0.06073,
+   "x2": -0.06193,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-01-11",
+   "side": 1,
+   "W": -0.06,
+   "base": -0.077,
+   "x2": -0.0782,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-01-11",
+   "side": -1,
+   "W": 0.0308,
+   "base": 0.13498,
+   "x2": 0.13378,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-01-18",
+   "side": 1,
+   "W": -0.0247,
+   "base": 0.01835,
+   "x2": 0.01715,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-01-18",
+   "side": -1,
+   "W": 0.0547,
+   "base": -0.02343,
+   "x2": -0.02463,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-01-25",
+   "side": 1,
+   "W": -0.0209,
+   "base": -0.00394,
+   "x2": -0.00514,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-01-25",
+   "side": -1,
+   "W": 0.1297,
+   "base": 0.05443,
+   "x2": 0.05323,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-02-01",
+   "side": 1,
+   "W": -0.0337,
+   "base": 0.0091,
+   "x2": 0.0079,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-02-01",
+   "side": 1,
+   "W": -0.0486,
+   "base": 0.0446,
+   "x2": 0.0434,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-02-08",
+   "side": 1,
+   "W": -0.0624,
+   "base": 0.08136,
+   "x2": 0.08016,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-02-15",
+   "side": -1,
+   "W": 0.0271,
+   "base": 0.01373,
+   "x2": 0.01253,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-02-15",
+   "side": 1,
+   "W": -0.0216,
+   "base": -0.01676,
+   "x2": -0.01796,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-02-22",
+   "side": -1,
+   "W": 0.0269,
+   "base": 0.05803,
+   "x2": 0.05683,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-03-01",
+   "side": 1,
+   "W": -0.0247,
+   "base": 0.09564,
+   "x2": 0.09444,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-03-08",
+   "side": -1,
+   "W": 0.0456,
+   "base": -0.02933,
+   "x2": -0.03053,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-03-08",
+   "side": -1,
+   "W": 0.1296,
+   "base": -0.06282,
+   "x2": -0.06402,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-03-15",
+   "side": -1,
+   "W": 0.0305,
+   "base": 0.05667,
+   "x2": 0.05547,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-03-15",
+   "side": -1,
+   "W": 0.0464,
+   "base": 0.02879,
+   "x2": 0.02759,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-04-05",
+   "side": 1,
+   "W": -0.0272,
+   "base": 0.01025,
+   "x2": 0.00905,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-04-12",
+   "side": -1,
+   "W": 0.032,
+   "base": 0.00368,
+   "x2": 0.00248,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-04-12",
+   "side": -1,
+   "W": 0.0407,
+   "base": 0.00794,
+   "x2": 0.00674,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-04-19",
+   "side": 1,
+   "W": -0.0845,
+   "base": -0.01151,
+   "x2": -0.01271,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-04-19",
+   "side": 1,
+   "W": -0.0771,
+   "base": -0.03538,
+   "x2": -0.03658,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-04-26",
+   "side": 1,
+   "W": -0.04,
+   "base": 0.09779,
+   "x2": 0.09659,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-05-03",
+   "side": -1,
+   "W": 0.0639,
+   "base": -0.16477,
+   "x2": -0.16597,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-05-10",
+   "side": -1,
+   "W": 0.1276,
+   "base": -0.00609,
+   "x2": -0.00729,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-05-17",
+   "side": 1,
+   "W": -0.0685,
+   "base": -0.06567,
+   "x2": -0.06687,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-05-17",
+   "side": 1,
+   "W": -0.121,
+   "base": -0.08667,
+   "x2": -0.08787,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-05-24",
+   "side": 1,
+   "W": -0.07,
+   "base": 0.11686,
+   "x2": 0.11566,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-05-24",
+   "side": 1,
+   "W": -0.1376,
+   "base": 0.2612,
+   "x2": 0.26,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-06-07",
+   "side": 1,
+   "W": -0.028,
+   "base": -0.06537,
+   "x2": -0.06657,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-06-14",
+   "side": -1,
+   "W": 0.0452,
+   "base": -0.0404,
+   "x2": -0.0416,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-06-14",
+   "side": -1,
+   "W": 0.0659,
+   "base": -0.03036,
+   "x2": -0.03156,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-06-28",
+   "side": -1,
+   "W": 0.0989,
+   "base": 0.00381,
+   "x2": 0.00261,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-06-28",
+   "side": -1,
+   "W": 0.0958,
+   "base": -0.0538,
+   "x2": -0.055,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-07-05",
+   "side": -1,
+   "W": 0.0444,
+   "base": 0.04335,
+   "x2": 0.04215,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-07-05",
+   "side": -1,
+   "W": 0.0783,
+   "base": 0.05259,
+   "x2": 0.05139,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-07-26",
+   "side": -1,
+   "W": 0.0519,
+   "base": -0.05413,
+   "x2": -0.05533,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-07-26",
+   "side": -1,
+   "W": 0.0308,
+   "base": -0.01986,
+   "x2": -0.02106,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-08-02",
+   "side": 1,
+   "W": -0.0559,
+   "base": -0.02005,
+   "x2": -0.02125,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-08-02",
+   "side": -1,
+   "W": 0.0382,
+   "base": -0.0224,
+   "x2": -0.0236,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-08-09",
+   "side": -1,
+   "W": 0.0224,
+   "base": -0.05835,
+   "x2": -0.05955,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-08-09",
+   "side": -1,
+   "W": 0.0416,
+   "base": -0.05099,
+   "x2": -0.05219,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-09-06",
+   "side": -1,
+   "W": 0.0352,
+   "base": -0.01897,
+   "x2": -0.02017,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-09-13",
+   "side": -1,
+   "W": 0.0264,
+   "base": 0.02138,
+   "x2": 0.02018,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-09-13",
+   "side": -1,
+   "W": 0.0609,
+   "base": 0.03377,
+   "x2": 0.03257,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-09-20",
+   "side": 1,
+   "W": -0.021,
+   "base": -0.10783,
+   "x2": -0.10903,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-09-27",
+   "side": -1,
+   "W": 0.0448,
+   "base": 0.04183,
+   "x2": 0.04063,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-10-04",
+   "side": -1,
+   "W": 0.0326,
+   "base": 0.00749,
+   "x2": 0.00629,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-10-11",
+   "side": 1,
+   "W": -0.0418,
+   "base": 0.03477,
+   "x2": 0.03357,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-10-25",
+   "side": -1,
+   "W": 0.0277,
+   "base": -0.03501,
+   "x2": -0.03621,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-11-01",
+   "side": 1,
+   "W": -0.0298,
+   "base": 0.00508,
+   "x2": 0.00388,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-11-08",
+   "side": -1,
+   "W": 0.0383,
+   "base": -0.0686,
+   "x2": -0.0698,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-11-08",
+   "side": -1,
+   "W": 0.0309,
+   "base": -0.04439,
+   "x2": -0.04559,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-11-15",
+   "side": -1,
+   "W": 0.0218,
+   "base": 0.02797,
+   "x2": 0.02677,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-11-29",
+   "side": -1,
+   "W": 0.0661,
+   "base": -0.01055,
+   "x2": -0.01175,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-11-29",
+   "side": -1,
+   "W": 0.0627,
+   "base": -0.03636,
+   "x2": -0.03756,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-12-06",
+   "side": 1,
+   "W": -0.0784,
+   "base": 0.01878,
+   "x2": 0.01758,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2021-12-13",
+   "side": -1,
+   "W": 0.0618,
+   "base": 0.06546,
+   "x2": 0.06426,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2021-12-13",
+   "side": -1,
+   "W": 0.0594,
+   "base": 0.08221,
+   "x2": 0.08101,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-01-03",
+   "side": -1,
+   "W": 0.0231,
+   "base": 0.01574,
+   "x2": 0.01454,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-01-03",
+   "side": -1,
+   "W": 0.0414,
+   "base": 0.01424,
+   "x2": 0.01304,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-01-31",
+   "side": -1,
+   "W": 0.0223,
+   "base": -0.03486,
+   "x2": -0.03606,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-02-07",
+   "side": -1,
+   "W": 0.02,
+   "base": -0.0296,
+   "x2": -0.0308,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-02-21",
+   "side": 1,
+   "W": -0.0397,
+   "base": -0.03807,
+   "x2": -0.03927,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-02-21",
+   "side": 1,
+   "W": -0.0566,
+   "base": -0.02268,
+   "x2": -0.02388,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-02-28",
+   "side": 1,
+   "W": -0.0388,
+   "base": 0.14339,
+   "x2": 0.14219,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-02-28",
+   "side": 1,
+   "W": -0.0546,
+   "base": 0.11397,
+   "x2": 0.11277,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-03-07",
+   "side": 1,
+   "W": -0.027,
+   "base": -0.02552,
+   "x2": -0.02672,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-03-14",
+   "side": 1,
+   "W": -0.0246,
+   "base": 0.04835,
+   "x2": 0.04715,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-03-21",
+   "side": 1,
+   "W": -0.0264,
+   "base": 0.00748,
+   "x2": 0.00628,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-03-28",
+   "side": -1,
+   "W": 0.0567,
+   "base": -0.00833,
+   "x2": -0.00953,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-03-28",
+   "side": -1,
+   "W": 0.0624,
+   "base": -0.01362,
+   "x2": -0.01482,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-04-18",
+   "side": 1,
+   "W": -0.0215,
+   "base": 0.02659,
+   "x2": 0.02539,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-05-09",
+   "side": 1,
+   "W": -0.0549,
+   "base": -0.11933,
+   "x2": -0.12053,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-05-09",
+   "side": 1,
+   "W": -0.0643,
+   "base": -0.11817,
+   "x2": -0.11937,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-05-16",
+   "side": -1,
+   "W": 0.0697,
+   "base": 0.04458,
+   "x2": 0.04338,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-05-16",
+   "side": -1,
+   "W": 0.0675,
+   "base": 0.05448,
+   "x2": 0.05328,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-05-23",
+   "side": -1,
+   "W": 0.0374,
+   "base": 0.03705,
+   "x2": 0.03585,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-05-23",
+   "side": -1,
+   "W": 0.0429,
+   "base": 0.03228,
+   "x2": 0.03108,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-05-30",
+   "side": -1,
+   "W": 0.0293,
+   "base": -0.07911,
+   "x2": -0.08031,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-05-30",
+   "side": -1,
+   "W": 0.05,
+   "base": -0.1043,
+   "x2": -0.1055,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-06-13",
+   "side": 1,
+   "W": -0.0865,
+   "base": -0.15629,
+   "x2": -0.15749,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-06-13",
+   "side": 1,
+   "W": -0.1372,
+   "base": -0.15919,
+   "x2": -0.16039,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-06-20",
+   "side": -1,
+   "W": 0.0383,
+   "base": -0.00202,
+   "x2": -0.00322,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-06-27",
+   "side": 1,
+   "W": -0.0222,
+   "base": -0.00657,
+   "x2": -0.00777,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-07-11",
+   "side": 1,
+   "W": -0.0339,
+   "base": -0.04557,
+   "x2": -0.04677,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-07-11",
+   "side": 1,
+   "W": -0.0376,
+   "base": -0.06396,
+   "x2": -0.06516,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-07-18",
+   "side": -1,
+   "W": 0.0872,
+   "base": -0.18275,
+   "x2": -0.18395,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-07-25",
+   "side": -1,
+   "W": 0.0407,
+   "base": 0.09642,
+   "x2": 0.09522,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-08-01",
+   "side": 1,
+   "W": -0.0204,
+   "base": -0.00386,
+   "x2": -0.00506,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-08-01",
+   "side": 1,
+   "W": -0.0253,
+   "base": -0.03118,
+   "x2": -0.03238,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-08-08",
+   "side": 1,
+   "W": -0.0211,
+   "base": 0.04283,
+   "x2": 0.04163,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-08-22",
+   "side": -1,
+   "W": 0.0327,
+   "base": 0.00329,
+   "x2": 0.00209,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-08-29",
+   "side": 1,
+   "W": -0.0338,
+   "base": 0.03519,
+   "x2": 0.03399,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-08-29",
+   "side": 1,
+   "W": -0.054,
+   "base": 0.08533,
+   "x2": 0.08413,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-09-12",
+   "side": -1,
+   "W": 0.0218,
+   "base": -0.02784,
+   "x2": -0.02904,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-09-12",
+   "side": -1,
+   "W": 0.0279,
+   "base": 0.02509,
+   "x2": 0.02389,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-09-19",
+   "side": 1,
+   "W": -0.0693,
+   "base": 0.02903,
+   "x2": 0.02783,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-09-26",
+   "side": 1,
+   "W": -0.0249,
+   "base": 0.01986,
+   "x2": 0.01866,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-09-26",
+   "side": 1,
+   "W": -0.0246,
+   "base": 0.02959,
+   "x2": 0.02839,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-10-03",
+   "side": 1,
+   "W": -0.0391,
+   "base": 0.03425,
+   "x2": 0.03305,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-10-24",
+   "side": -1,
+   "W": 0.0212,
+   "base": 0.01036,
+   "x2": 0.00916,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-10-24",
+   "side": -1,
+   "W": 0.0496,
+   "base": 0.013,
+   "x2": 0.0118,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-10-31",
+   "side": -1,
+   "W": 0.0232,
+   "base": 0.00915,
+   "x2": 0.00795,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-11-07",
+   "side": 1,
+   "W": -0.0465,
+   "base": -0.00218,
+   "x2": -0.00338,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-11-14",
+   "side": 1,
+   "W": -0.0434,
+   "base": 0.0154,
+   "x2": 0.0142,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-11-14",
+   "side": 1,
+   "W": -0.0526,
+   "base": 0.01593,
+   "x2": 0.01473,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2022-11-21",
+   "side": 1,
+   "W": -0.0251,
+   "base": -0.03285,
+   "x2": -0.03405,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2022-11-21",
+   "side": 1,
+   "W": -0.058,
+   "base": -0.03246,
+   "x2": -0.03366,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-01-16",
+   "side": -1,
+   "W": 0.0472,
+   "base": -0.01653,
+   "x2": -0.01773,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-01-16",
+   "side": -1,
+   "W": 0.0698,
+   "base": -0.0172,
+   "x2": -0.0184,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-01-30",
+   "side": -1,
+   "W": 0.029,
+   "base": 0.03687,
+   "x2": 0.03567,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-01-30",
+   "side": -1,
+   "W": 0.0295,
+   "base": 0.04655,
+   "x2": 0.04535,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-02-06",
+   "side": 1,
+   "W": -0.0213,
+   "base": -0.00998,
+   "x2": -0.01118,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-02-06",
+   "side": 1,
+   "W": -0.0207,
+   "base": -0.01176,
+   "x2": -0.01296,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-02-27",
+   "side": -1,
+   "W": 0.0209,
+   "base": 0.0028,
+   "x2": 0.0016,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-03-13",
+   "side": -1,
+   "W": 0.0916,
+   "base": -0.09892,
+   "x2": -0.10012,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-03-13",
+   "side": -1,
+   "W": 0.1079,
+   "base": -0.06183,
+   "x2": -0.06303,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-03-20",
+   "side": -1,
+   "W": 0.0211,
+   "base": 0.00708,
+   "x2": 0.00588,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-05-08",
+   "side": 1,
+   "W": -0.0365,
+   "base": -0.02903,
+   "x2": -0.03023,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-05-08",
+   "side": 1,
+   "W": -0.0617,
+   "base": -0.01463,
+   "x2": -0.01583,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-05-29",
+   "side": -1,
+   "W": 0.0509,
+   "base": 0.00996,
+   "x2": 0.00876,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-05-29",
+   "side": -1,
+   "W": 0.0442,
+   "base": 0.00693,
+   "x2": 0.00573,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-06-12",
+   "side": 1,
+   "W": -0.0209,
+   "base": -0.00295,
+   "x2": -0.00415,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-06-12",
+   "side": 1,
+   "W": -0.0476,
+   "base": -0.00822,
+   "x2": -0.00942,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-10-02",
+   "side": -1,
+   "W": 0.0403,
+   "base": 0.01584,
+   "x2": 0.01464,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-10-02",
+   "side": -1,
+   "W": 0.0398,
+   "base": 0.03941,
+   "x2": 0.03821,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-10-23",
+   "side": -1,
+   "W": 0.0373,
+   "base": -0.06433,
+   "x2": -0.06553,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-11-06",
+   "side": -1,
+   "W": 0.0322,
+   "base": -0.00678,
+   "x2": -0.00798,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-11-20",
+   "side": -1,
+   "W": 0.0204,
+   "base": -0.00422,
+   "x2": -0.00542,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-11-20",
+   "side": -1,
+   "W": 0.0258,
+   "base": -0.00685,
+   "x2": -0.00805,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-12-04",
+   "side": -1,
+   "W": 0.0333,
+   "base": -0.05226,
+   "x2": -0.05346,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-12-04",
+   "side": -1,
+   "W": 0.0506,
+   "base": -0.02489,
+   "x2": -0.02609,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2023-12-25",
+   "side": 1,
+   "W": -0.0222,
+   "base": 0.01092,
+   "x2": 0.00972,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2023-12-25",
+   "side": 1,
+   "W": -0.026,
+   "base": 3e-05,
+   "x2": -0.00117,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-01-08",
+   "side": 1,
+   "W": -0.0209,
+   "base": 0.04714,
+   "x2": 0.04594,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-01-15",
+   "side": 1,
+   "W": -0.0246,
+   "base": 0.01619,
+   "x2": 0.01499,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-02-12",
+   "side": -1,
+   "W": 0.0248,
+   "base": -0.03586,
+   "x2": -0.03706,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-02-19",
+   "side": -1,
+   "W": 0.0283,
+   "base": -0.02358,
+   "x2": -0.02478,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-02-26",
+   "side": -1,
+   "W": 0.0651,
+   "base": -0.02187,
+   "x2": -0.02307,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-03-18",
+   "side": 1,
+   "W": -0.026,
+   "base": -0.03692,
+   "x2": -0.03812,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-03-25",
+   "side": -1,
+   "W": 0.0535,
+   "base": -0.04107,
+   "x2": -0.04227,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-03-25",
+   "side": -1,
+   "W": 0.0356,
+   "base": -0.04075,
+   "x2": -0.04195,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-04-01",
+   "side": -1,
+   "W": 0.0205,
+   "base": 0.02182,
+   "x2": 0.02062,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-04-01",
+   "side": -1,
+   "W": 0.0386,
+   "base": 0.0375,
+   "x2": 0.0363,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-04-08",
+   "side": -1,
+   "W": 0.0227,
+   "base": -0.03492,
+   "x2": -0.03612,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-04-08",
+   "side": -1,
+   "W": 0.0411,
+   "base": -0.07144,
+   "x2": -0.07264,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-04-15",
+   "side": 1,
+   "W": -0.0217,
+   "base": -0.03626,
+   "x2": -0.03746,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-04-15",
+   "side": 1,
+   "W": -0.0254,
+   "base": -0.01904,
+   "x2": -0.02024,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-04-22",
+   "side": -1,
+   "W": 0.0298,
+   "base": -0.01899,
+   "x2": -0.02019,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-04-29",
+   "side": -1,
+   "W": 0.0422,
+   "base": 0.01245,
+   "x2": 0.01125,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-05-27",
+   "side": -1,
+   "W": 0.0263,
+   "base": -0.01981,
+   "x2": -0.02101,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-06-17",
+   "side": -1,
+   "W": 0.041,
+   "base": 0.02936,
+   "x2": 0.02816,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-06-24",
+   "side": 1,
+   "W": -0.0277,
+   "base": -0.02218,
+   "x2": -0.02338,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-07-01",
+   "side": -1,
+   "W": 0.0388,
+   "base": -0.00377,
+   "x2": -0.00497,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-07-15",
+   "side": -1,
+   "W": 0.0502,
+   "base": -0.06664,
+   "x2": -0.06784,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-07-15",
+   "side": -1,
+   "W": 0.0355,
+   "base": -0.07549,
+   "x2": -0.07669,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-07-22",
+   "side": -1,
+   "W": 0.0226,
+   "base": 0.00731,
+   "x2": 0.00611,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-08-05",
+   "side": 1,
+   "W": -0.0543,
+   "base": -0.07356,
+   "x2": -0.07476,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-08-05",
+   "side": 1,
+   "W": -0.1006,
+   "base": -0.1022,
+   "x2": -0.1034,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-08-12",
+   "side": 1,
+   "W": -0.0349,
+   "base": 0.00842,
+   "x2": 0.00722,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-09-02",
+   "side": 1,
+   "W": -0.0308,
+   "base": 0.02994,
+   "x2": 0.02874,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-09-02",
+   "side": 1,
+   "W": -0.0397,
+   "base": 0.04391,
+   "x2": 0.04271,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-09-09",
+   "side": -1,
+   "W": 0.0324,
+   "base": -0.0293,
+   "x2": -0.0305,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-09-16",
+   "side": 1,
+   "W": -0.0226,
+   "base": -0.01785,
+   "x2": -0.01905,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-09-16",
+   "side": 1,
+   "W": -0.0505,
+   "base": -0.01094,
+   "x2": -0.01214,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-10-21",
+   "side": -1,
+   "W": 0.0396,
+   "base": 0.02735,
+   "x2": 0.02615,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-10-28",
+   "side": -1,
+   "W": 0.0275,
+   "base": -0.02554,
+   "x2": -0.02674,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-11-04",
+   "side": 1,
+   "W": -0.0214,
+   "base": -0.02689,
+   "x2": -0.02809,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-11-11",
+   "side": -1,
+   "W": 0.0505,
+   "base": -0.10497,
+   "x2": -0.10617,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-11-11",
+   "side": -1,
+   "W": 0.0748,
+   "base": -0.06126,
+   "x2": -0.06246,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-12-02",
+   "side": -1,
+   "W": 0.0321,
+   "base": 0.01615,
+   "x2": 0.01495,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-12-16",
+   "side": -1,
+   "W": 0.03,
+   "base": -0.01689,
+   "x2": -0.01809,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2024-12-23",
+   "side": 1,
+   "W": -0.0268,
+   "base": -0.00556,
+   "x2": -0.00676,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2024-12-23",
+   "side": 1,
+   "W": -0.0548,
+   "base": 0.04021,
+   "x2": 0.03901,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-01-20",
+   "side": 1,
+   "W": -0.0264,
+   "base": 0.00674,
+   "x2": 0.00554,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-01-20",
+   "side": 1,
+   "W": -0.0744,
+   "base": 0.01898,
+   "x2": 0.01778,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-01-27",
+   "side": 1,
+   "W": -0.0215,
+   "base": -0.00759,
+   "x2": -0.00879,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-01-27",
+   "side": 1,
+   "W": -0.0234,
+   "base": -0.01769,
+   "x2": -0.01889,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-02-03",
+   "side": 1,
+   "W": -0.0462,
+   "base": 0.03478,
+   "x2": 0.03358,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-02-03",
+   "side": 1,
+   "W": -0.1307,
+   "base": 0.00203,
+   "x2": 0.00083,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-02-17",
+   "side": 1,
+   "W": -0.0237,
+   "base": 0.02879,
+   "x2": 0.02759,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-02-24",
+   "side": -1,
+   "W": 0.0588,
+   "base": 0.10647,
+   "x2": 0.10527,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-03-03",
+   "side": -1,
+   "W": 0.1176,
+   "base": 0.08306,
+   "x2": 0.08186,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-03-03",
+   "side": -1,
+   "W": 0.1254,
+   "base": 0.14435,
+   "x2": 0.14315,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-03-10",
+   "side": 1,
+   "W": -0.0699,
+   "base": -0.02861,
+   "x2": -0.02981,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-03-10",
+   "side": 1,
+   "W": -0.0566,
+   "base": -0.07889,
+   "x2": -0.08009,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-03-24",
+   "side": -1,
+   "W": 0.0237,
+   "base": -0.01868,
+   "x2": -0.01988,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-03-24",
+   "side": -1,
+   "W": 0.0205,
+   "base": -0.03961,
+   "x2": -0.04081,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-03-31",
+   "side": 1,
+   "W": -0.0241,
+   "base": -0.00032,
+   "x2": -0.00152,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-03-31",
+   "side": 1,
+   "W": -0.047,
+   "base": 0.00584,
+   "x2": 0.00464,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-04-07",
+   "side": 1,
+   "W": -0.0651,
+   "base": 0.00721,
+   "x2": 0.00601,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-04-07",
+   "side": 1,
+   "W": -0.13,
+   "base": -0.01958,
+   "x2": -0.02078,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-05-05",
+   "side": 1,
+   "W": -0.0269,
+   "base": 0.00272,
+   "x2": 0.00152,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-05-12",
+   "side": -1,
+   "W": 0.0723,
+   "base": 0.00571,
+   "x2": 0.00451,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-05-19",
+   "side": -1,
+   "W": 0.0289,
+   "base": 0.0062,
+   "x2": 0.005,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-06-23",
+   "side": 1,
+   "W": -0.0226,
+   "base": 0.04124,
+   "x2": 0.04004,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-06-23",
+   "side": 1,
+   "W": -0.0743,
+   "base": 0.08047,
+   "x2": 0.07927,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-06-30",
+   "side": -1,
+   "W": 0.0317,
+   "base": 0.00396,
+   "x2": 0.00276,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-07-07",
+   "side": -1,
+   "W": 0.0248,
+   "base": 0.00876,
+   "x2": 0.00756,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-07-21",
+   "side": -1,
+   "W": 0.0591,
+   "base": -0.0033,
+   "x2": -0.0045,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-07-28",
+   "side": -1,
+   "W": 0.0395,
+   "base": 0.01754,
+   "x2": 0.01634,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-08-11",
+   "side": -1,
+   "W": 0.0224,
+   "base": 0.00324,
+   "x2": 0.00204,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-08-11",
+   "side": -1,
+   "W": 0.0601,
+   "base": 0.00449,
+   "x2": 0.00329,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-08-25",
+   "side": 1,
+   "W": -0.0294,
+   "base": -0.03224,
+   "x2": -0.03344,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-09-15",
+   "side": 1,
+   "W": -0.0228,
+   "base": -0.01983,
+   "x2": -0.02103,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-09-29",
+   "side": -1,
+   "W": 0.023,
+   "base": -0.02123,
+   "x2": -0.02243,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-09-29",
+   "side": -1,
+   "W": 0.0273,
+   "base": -0.01993,
+   "x2": -0.02113,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-10-13",
+   "side": -1,
+   "W": 0.0842,
+   "base": -0.02365,
+   "x2": -0.02485,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-10-20",
+   "side": -1,
+   "W": 0.0208,
+   "base": -0.01961,
+   "x2": -0.02081,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-10-20",
+   "side": -1,
+   "W": 0.0394,
+   "base": -0.00128,
+   "x2": -0.00248,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-10-27",
+   "side": -1,
+   "W": 0.032,
+   "base": 0.00182,
+   "x2": 0.00062,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-10-27",
+   "side": -1,
+   "W": 0.0568,
+   "base": 0.00714,
+   "x2": 0.00594,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2025-11-10",
+   "side": -1,
+   "W": 0.0429,
+   "base": 0.00217,
+   "x2": 0.00097,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2025-12-15",
+   "side": 1,
+   "W": -0.0232,
+   "base": -0.02192,
+   "x2": -0.02312,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-01-26",
+   "side": 1,
+   "W": -0.0327,
+   "base": 0.01697,
+   "x2": 0.01577,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-01-26",
+   "side": 1,
+   "W": -0.0472,
+   "base": 0.03793,
+   "x2": 0.03673,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-02-02",
+   "side": 1,
+   "W": -0.0865,
+   "base": 0.0208,
+   "x2": 0.0196,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-02-02",
+   "side": 1,
+   "W": -0.1615,
+   "base": 0.03187,
+   "x2": 0.03067,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-02-16",
+   "side": 1,
+   "W": -0.0401,
+   "base": 0.01406,
+   "x2": 0.01286,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-03-09",
+   "side": 1,
+   "W": -0.0315,
+   "base": 0.03521,
+   "x2": 0.03401,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-03-09",
+   "side": 1,
+   "W": -0.021,
+   "base": 0.02676,
+   "x2": 0.02556,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-03-16",
+   "side": -1,
+   "W": 0.0266,
+   "base": -0.03052,
+   "x2": -0.03172,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-03-16",
+   "side": -1,
+   "W": 0.0411,
+   "base": -0.08185,
+   "x2": -0.08305,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-03-23",
+   "side": 1,
+   "W": -0.0376,
+   "base": 0.04253,
+   "x2": 0.04133,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-03-23",
+   "side": 1,
+   "W": -0.043,
+   "base": 0.04552,
+   "x2": 0.04432,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-04-06",
+   "side": -1,
+   "W": 0.0309,
+   "base": 0.00047,
+   "x2": -0.00073,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-04-06",
+   "side": -1,
+   "W": 0.0274,
+   "base": -0.00063,
+   "x2": -0.00183,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-04-13",
+   "side": 1,
+   "W": -0.0305,
+   "base": 0.04987,
+   "x2": 0.04867,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-04-13",
+   "side": 1,
+   "W": -0.0238,
+   "base": 0.07898,
+   "x2": 0.07778,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-04-20",
+   "side": 1,
+   "W": -0.0424,
+   "base": 0.0255,
+   "x2": 0.0243,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-04-20",
+   "side": 1,
+   "W": -0.0644,
+   "base": 0.02012,
+   "x2": 0.01892,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-04-27",
+   "side": -1,
+   "W": 0.0235,
+   "base": 0.02537,
+   "x2": 0.02417,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-05-11",
+   "side": -1,
+   "W": 0.0252,
+   "base": 0.00369,
+   "x2": 0.00249,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-05-11",
+   "side": -1,
+   "W": 0.0278,
+   "base": 0.01122,
+   "x2": 0.01002,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-05-18",
+   "side": 1,
+   "W": -0.0209,
+   "base": -0.00842,
+   "x2": -0.00962,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-05-18",
+   "side": 1,
+   "W": -0.0421,
+   "base": -0.00278,
+   "x2": -0.00398,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-05-25",
+   "side": -1,
+   "W": 0.0202,
+   "base": -0.00533,
+   "x2": -0.00653,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-06-08",
+   "side": -1,
+   "W": 0.0373,
+   "base": 0.00163,
+   "x2": 0.00043,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-06-08",
+   "side": -1,
+   "W": 0.0676,
+   "base": -0.00208,
+   "x2": -0.00328,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "BTCUSDT",
+   "date": "2026-06-15",
+   "side": -1,
+   "W": 0.0341,
+   "base": -0.01114,
+   "x2": -0.01234,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-06-15",
+   "side": -1,
+   "W": 0.0355,
+   "base": -0.04293,
+   "x2": -0.04413,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-07-27",
+   "side": -1,
+   "W": 0.0501,
+   "base": 0.02983,
+   "x2": 0.02863,
+   "perp": true,
+   "below_sma200": true
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-08-24",
+   "side": 1,
+   "W": -0.021,
+   "base": 0.005,
+   "x2": 0.0038,
+   "perp": true,
+   "below_sma200": false
+  },
+  {
+   "sym": "ETHUSDT",
+   "date": "2026-09-07",
+   "side": -1,
+   "W": 0.0239,
+   "base": 0.00765,
+   "x2": 0.00645,
+   "perp": true,
+   "below_sma200": false
+  }
+ ]
+}

@@ -116,6 +116,7 @@
 |---|---|---|---|---|---|
 | cal-event vol reclaim R10 (FOMC/CPI/NFP) | 캘린더 이벤트 | Binance BTC 15m 2021–26 | KILL | n=113, PF 0.51, TP 4/113 | `docs/research/cal-event-vol-reclaim-r10-v1.md` |
 | cal-event sweep fade R3 | 캘린더 이벤트 | Binance BTC 15m | PARTIAL | train PF 0.78; holdout PF 1.12 n=18 | `docs/research/cal-event-sweep-fade-r3-v1.md` |
+| weekend-gap-fade-btc-eth (주말 ±2% → 월요일 1일 되돌림) | 세션·주말 | Binance BTC/ETH 무기한 1d 2018–26 | KILL | n=421; OOS n=120 x2 평균 −0.29% PF 0.81, 무작위 57백분위, ETF 이후 −0.22%, BTC·ETH 둘 다 음수; 업비트 롱만 OOS PF 1.08 | `docs/research/results/weekend-gap-fade-btc-eth.md` |
 
 ### 1-7. 리밸런스·배분
 
