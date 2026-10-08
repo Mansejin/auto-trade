@@ -74,7 +74,7 @@
 | `funding_rate_pct` | 현재 펀딩비(정산 1회분) | 같은 거래소 현재 펀딩, ×100 | `+0.0100` |
 | `funding_source` | 펀딩·거래대금을 가져온 거래소 | 우선순위 Binance → Bybit → Bitget | `Binance` |
 | `hist_n` | 과거 표본 수 | 고정 `133` (OOS 상장일 2023-07~2026-09) | `133` |
-| `hist_p10_pct` / `hist_p50_pct` / `hist_p90_pct` | 과거 7일 가격 변화 분위수 | `reports/research-cards/upbit-listing-fade.json`의 `events` 중 `listing >= 2023-07-01`, 값 = `-gross × 100`(비용·펀딩 제외 가격 변화). 2026-10-08 계산값 `-28.2` / `-9.1` / `+15.0`. 시작 시 1회 계산해 고정 | `-9.1` |
+| `hist_p10_pct` / `hist_p50_pct` / `hist_p90_pct` | 과거 7일 가격 변화 분위수 | `config/listing-alert-stats.json`(`scripts/build_listing_alert_stats.py`로 생성, 비용·펀딩 제외 가격 변화). 고정값 `-32.9` / `-11.2` / `+12.2` | `-11.2` |
 | `hist_up30_share_pct` | 보유 7일 중 고가 기준 +30% 이상 오른 비율 | 고정 `14.3` (19/133, 레드팀 보고서 3절) | `14.3` |
 | `alert_sent_kst` | 원 알림 발송 시각 | 기록의 발송 시각 | |
 | `entry_date` / `exit_date` | 측정 구간 | 공지+24h 이후 첫 UTC 일봉 시가 → 7일 뒤 시가(백테스트와 같은 정의) | `2026-10-10` |
