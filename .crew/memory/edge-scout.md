@@ -18,3 +18,10 @@
 - 결정: AE12는 Binance+Bybit 합의 + 단독 부호 일치로 출처 의존성 차단. AE13은 BTC/ETH/XRP 합산으로 n 확대. 공통 OOS 분할 ≈2023 전후 고정, 무작위 1,000회 상위 5% 기준.
 - 데이터 주의: OKX 펀딩 이력은 ~3개월뿐(제외), Binance OI 이력 ~30일(제외). USDKRW는 frankfurter.app(ECB). 업비트 상폐 마켓은 market/all에 없음 → 생존편향 명시.
 - 다음: T-005 결과 보고 KILL 카드는 변형 재제안 금지. 남은 우물: OI·청산(무료 장기 이력 확보가 관건), 거래소 지연, 변동성 프리미엄(Deribit DVOL 공개 API 검토).
+
+## 2026-10-08 — T-028 SMA200 위 고빈도 카드 3장
+- T-005 결과: listing-fade SURVIVE, funding-carry·kimchi-rich·xs-momentum KILL, funding-negative-consensus INCONCLUSIVE(20건). 이 넷의 변형 재제안 금지.
+- 한 일: weekend-gap-fade-btc-eth(세션), oi-flush-rebound(OI), xs-funding-crowding-weekly(펀딩×크로스섹션). 전부 연 ≥24회 목표, 하이퍼 2~3.
+- 결정: SMA200과 전부 독립 슬리브. 롱 전용 BTC 전략은 SMA200 위에선 CORE가 이미 100% 보유라 별도 자본 필요 → 게이트 대신 위/아래 성과 보고만(사후 게이트 = 노브 쇼핑).
+- 결정: 죽은 카드와 겹칠 위험은 비교 기준으로 사전 차단 — OI 카드는 "가격만 버전"(덤프 페이드 KILL), 펀딩 XS는 "역모멘텀"(xs-momentum KILL의 거울)보다 나아야 생존.
+- 다음: weekend 카드는 데이터 완비라 먼저. OI(vision metrics 2021-12~ 확인)와 전체 무기한 유니버스(상폐 포함)는 quant-data 작업 필요. funding_alts 207개는 업비트 상장 선택 편향이라 XS 판정에 쓰면 안 됨.
