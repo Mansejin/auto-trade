@@ -1,0 +1,223 @@
+{
+ "sleeves": {
+  "BTCUSDT": {
+   "cycles_total": 11,
+   "cycles_oos": 4,
+   "cycles_x2_full": {
+    "n": 11,
+    "pf": 113.797,
+    "ret_pct": 90.14,
+    "mean_pct": 6.315,
+    "win_pct": 81.8,
+    "mdd_pct": -0.33
+   },
+   "cycles_x2_oos": {
+    "n": 4,
+    "pf": Infinity,
+    "ret_pct": 20.95,
+    "mean_pct": 4.941,
+    "win_pct": 100.0,
+    "mdd_pct": 0.0
+   },
+   "cycles_base_oos": {
+    "n": 4,
+    "pf": Infinity,
+    "ret_pct": 22.42,
+    "mean_pct": 5.257,
+    "win_pct": 100.0,
+    "mdd_pct": 0.0
+   },
+   "oos_x2_curve": {
+    "ret_pct": 9.98,
+    "ann_pct": 2.57,
+    "mdd_pct": -0.34
+   },
+   "always_on_oos_x2": {
+    "ret_pct": 14.46,
+    "ann_pct": 3.67,
+    "mdd_pct": -0.21
+   },
+   "worst_basis_days_lt_-3pct": 0,
+   "cycles": [
+    [
+     "2019-09-18",
+     "2019-10-06"
+    ],
+    [
+     "2019-10-15",
+     "2019-11-27"
+    ],
+    [
+     "2020-01-12",
+     "2020-03-14"
+    ],
+    [
+     "2020-05-01",
+     "2020-09-20"
+    ],
+    [
+     "2020-10-17",
+     "2020-11-02"
+    ],
+    [
+     "2020-11-11",
+     "2021-06-24"
+    ],
+    [
+     "2021-08-12",
+     "2022-02-02"
+    ],
+    [
+     "2023-01-17",
+     "2023-08-26"
+    ],
+    [
+     "2023-10-31",
+     "2024-08-17"
+    ],
+    [
+     "2024-10-24",
+     "2025-04-29"
+    ],
+    [
+     "2025-07-22",
+     "2025-10-17"
+    ]
+   ]
+  },
+  "ETHUSDT": {
+   "cycles_total": 8,
+   "cycles_oos": 4,
+   "cycles_x2_full": {
+    "n": 8,
+    "pf": Infinity,
+    "ret_pct": 121.11,
+    "mean_pct": 11.64,
+    "win_pct": 100.0,
+    "mdd_pct": 0.0
+   },
+   "cycles_x2_oos": {
+    "n": 4,
+    "pf": Infinity,
+    "ret_pct": 20.29,
+    "mean_pct": 4.815,
+    "win_pct": 100.0,
+    "mdd_pct": 0.0
+   },
+   "cycles_base_oos": {
+    "n": 4,
+    "pf": Infinity,
+    "ret_pct": 21.75,
+    "mean_pct": 5.131,
+    "win_pct": 100.0,
+    "mdd_pct": 0.0
+   },
+   "oos_x2_curve": {
+    "ret_pct": 9.68,
+    "ann_pct": 2.5,
+    "mdd_pct": -0.33
+   },
+   "always_on_oos_x2": {
+    "ret_pct": 14.65,
+    "ann_pct": 3.72,
+    "mdd_pct": -0.31
+   },
+   "worst_basis_days_lt_-3pct": 0,
+   "cycles": [
+    [
+     "2019-12-26",
+     "2020-03-17"
+    ],
+    [
+     "2020-03-24",
+     "2021-05-25"
+    ],
+    [
+     "2021-05-27",
+     "2021-06-25"
+    ],
+    [
+     "2021-08-10",
+     "2022-01-28"
+    ],
+    [
+     "2023-01-15",
+     "2023-08-23"
+    ],
+    [
+     "2023-10-31",
+     "2024-08-10"
+    ],
+    [
+     "2024-10-22",
+     "2025-02-08"
+    ],
+    [
+     "2025-07-23",
+     "2025-09-26"
+    ]
+   ]
+  }
+ },
+ "portfolio": {
+  "full_base": {
+   "ret_pct": 44.98,
+   "ann_pct": 5.58,
+   "mdd_pct": -0.67
+  },
+  "full_x2": {
+   "ret_pct": 43.14,
+   "ann_pct": 5.38,
+   "mdd_pct": -0.78
+  },
+  "train_base": {
+   "ret_pct": 31.22,
+   "ann_pct": 9.17,
+   "mdd_pct": -0.67
+  },
+  "oos_base": {
+   "ret_pct": 10.49,
+   "ann_pct": 2.7,
+   "mdd_pct": -0.16
+  },
+  "oos_x2": {
+   "ret_pct": 9.83,
+   "ann_pct": 2.53,
+   "mdd_pct": -0.31
+  },
+  "oos_h1_x2": {
+   "ret_pct": 7.85,
+   "ann_pct": 4.12,
+   "mdd_pct": -0.31
+  },
+  "oos_h2_x2": {
+   "ret_pct": 1.83,
+   "ann_pct": 0.97,
+   "mdd_pct": -0.21
+  },
+  "always_on_oos_x2": {
+   "ret_pct": 14.56,
+   "ann_pct": 3.7,
+   "mdd_pct": -0.26
+  }
+ },
+ "oos_cycles_x2_pooled": {
+  "n": 8,
+  "pf": Infinity,
+  "ret_pct": 45.5,
+  "mean_pct": 4.878,
+  "win_pct": 100.0,
+  "mdd_pct": 0.0
+ },
+ "oos_random_pct_x2": 97.0,
+ "oos_sum_cycle_ret_on_N_pct": 39.02,
+ "random_p95_sum_pct": 37.82,
+ "oos_x2_ann_on_notional_pct_approx": 5.06,
+ "cycles_total": 19,
+ "verdict": "KILL",
+ "reasons": [
+  "OOS ann x2 2.53% <= 4% (capital 2N)",
+  "OOS ann base 2.7% <= 4%",
+  "vs always-on: ret 9.83 vs 14.56, mdd -0.31 vs -0.26"
+ ]
+}

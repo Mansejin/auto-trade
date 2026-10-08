@@ -29,9 +29,15 @@ auto: off
   - 완료 기준: docs/research/data-catalog.md + scripts/data/fetch_*.py
   - 결과: 11개 CSV 수집 완료(펀딩 BTC/ETH Binance+Bybit, 알트 펀딩 207개, 현물·무기한 일봉, 업비트 KRW 292개 마켓, USDKRW, 상폐 포함 Binance USDT 709개 심볼). 카드 4장 테스트 가능, upbit-listing-fade는 부분(상폐된 KRW 마켓 누락) → docs/research/data-catalog.md, scripts/data/
 
-- [ ] T-005 | to: quant-researcher | from: lead | doing | 카드 5장 백테스트 (T-004 이후)
+- [x] T-005 | to: quant-researcher | from: lead | done | 카드 5장 백테스트 (T-004 이후)
   - 완료 기준: docs/research/results/<slug>.md 각각 SURVIVE/KILL/INCONCLUSIVE
-  - 결과:
+  - 결과: SURVIVE 1(upbit-listing-fade OOS 133건 PF x2 1.92, 무작위 99.9pct, 단 −40% 초과 손실 6회로 상품 부적합 표기 → T-009), KILL 3(funding-carry: always-on보다 열세·연 2.5%; kimchi: PF 1.005·무작위 70.6pct; xs-momentum: OOS PF 0.82·무작위 8.8pct), INCONCLUSIVE 1(funding-negative-consensus 20건, OOS 4건) → docs/research/results/*.md, scripts/bt_<slug>.py, reports/research-cards/*.json
+
+- [x] T-009 | to: red-team | from: quant-researcher | done | upbit-listing-fade SURVIVE 반증
+  - 참고: docs/research/results/upbit-listing-fade.md, scripts/bt_upbit_listing_fade.py, reports/research-cards/upbit-listing-fade.json, docs/research/cards/upbit-listing-fade.md, docs/research/data-catalog.md
+  - 점검: 상장 시각(공지 KST)과 D+1 00:00 UTC 진입 대조(09:00 KST 이전 상장 시 첫 일봉 날짜 밀림), 공지 파싱 누락·상폐 마켓 생존편향, 펀딩 부호·스케일(1000XXX 심볼), 2025~26 집중(105/133건)·연도별 안정성, 상위 이벤트 의존, 실제 숏 가능성(신규 무기한 유동성·펀딩 급등), 꼬리 손실(−40% 초과 6회)
+  - 완료 기준: docs/research/redteam/upbit-listing-fade.md 판정(VETO/PASS-WITH-CAVEATS/PASS)
+  - 결과: 신호 PASS-WITH-CAVEATS / 자동 숏 상품 VETO. 재현 일치. 공지+24h PF 1.93, D+2 1.72, 알트지수 숏 대비 초과 +4.15%/건(무작위 100pct), 무기한 나이>180일 PF 2.27, 상위5 제거 PF 1.65, 펀딩 부호 정확(평균 −3.6%/건). 1배 현실 사이징 MDD −72%·월 −63%, 2·3배 파산. 상폐 무기한 5건+모호 날짜 2건 결함(제거 시 PF 2.02). 2025~26 집중 79% → docs/research/redteam/upbit-listing-fade.md, scripts/redteam/listing_fade_redteam.py
 
 - [ ] T-007 | to: user | from: red-team | blocked | 라이브 CORE(Policy C) 유지 여부 결정
   - 참고: docs/research/redteam/policyC.md — VETO. 라이브식 재현 OOS +283% < B&H +394% < SMA200 필터 +639%. 라이브 횡보 슬리브 williams-v1은 백테스트 없음.
@@ -44,6 +50,6 @@ auto: off
   - 완료 기준: docs/research/redteam/sma200-filter.md 판정
   - 결과: PASS-WITH-CAVEATS(BTC·ETH 위험관리 오버레이 한정). 수수료 x4·체결지연·SMA100~300 고원·2018 이전 BTC 통과, 무작위 95백분위. 수익 헤드라인 VETO: USD 거래소 B&H 대비 1.16x(Upbit 1.50x), 9년 중 6년 B&H 열위, 노출 맞춘 B&H보다 MDD 깊음, XRP 전패 → docs/research/redteam/sma200-filter.md, scripts/redteam/sma200_*.py
 
-- [ ] T-006 | to: product-strategist | from: lead | open | 상품 브리프 (T-003, T-005 반증 이후)
+- [x] T-006 | to: product-strategist | from: lead | done | 상품 브리프 (T-003, T-005 반증 이후)
   - 완료 기준: docs/product/*-brief.md, 판매·법무·앱개발팀 브리프 포함
-  - 결과:
+  - 결과: 신호 판매 상품 없음. 1순위 = 업비트 상장 이벤트 알림(무료 공개 텔레그램 채널로 포워드 기록 ≥30건·약 6개월 후 유료화 검토), SMA200은 무료 리드 마그넷·봇 키트 프리셋, 교육·봇 키트·리서치 프로세스는 엣지 불필요 대안. Policy C·상장 숏 자동매매 판매 금지 → docs/product/{upbit-listing-alert-brief,btc-bear-filter-brief,portfolio-overview}.md

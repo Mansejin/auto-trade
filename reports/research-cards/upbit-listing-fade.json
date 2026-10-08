@@ -1,0 +1,1550 @@
+{
+ "skipped": {
+  "no_perp": 41,
+  "perp_after_listing": 51,
+  "before_2020_or_after_end": 4,
+  "no_bars": 0
+ },
+ "n_events": 154,
+ "by_source": {
+  "first": 15,
+  "first+notice": 133,
+  "notice": 6
+ },
+ "full": {
+  "base": {
+   "n": 154,
+   "pf": 1.948,
+   "ret_pct": -73.38,
+   "mean_pct": 5.113,
+   "win_pct": 65.6,
+   "mdd_pct": -99.78
+  },
+  "x2": {
+   "n": 154,
+   "pf": 1.899,
+   "ret_pct": -95.41,
+   "mean_pct": 4.913,
+   "win_pct": 63.6,
+   "mdd_pct": -99.95
+  }
+ },
+ "train": {
+  "base": {
+   "n": 21,
+   "pf": 1.789,
+   "ret_pct": 63.31,
+   "mean_pct": 3.989,
+   "win_pct": 61.9,
+   "mdd_pct": -48.99
+  },
+  "x2": {
+   "n": 21,
+   "pf": 1.738,
+   "ret_pct": 56.64,
+   "mean_pct": 3.789,
+   "win_pct": 61.9,
+   "mdd_pct": -49.38
+  }
+ },
+ "oos": {
+  "base": {
+   "n": 133,
+   "pf": 1.971,
+   "ret_pct": -83.7,
+   "mean_pct": 5.29,
+   "win_pct": 66.2,
+   "mdd_pct": -99.78
+  },
+  "x2": {
+   "n": 133,
+   "pf": 1.922,
+   "ret_pct": -97.07,
+   "mean_pct": 5.09,
+   "win_pct": 63.9,
+   "mdd_pct": -99.95
+  }
+ },
+ "oos_h1": {
+  "base": {
+   "n": 30,
+   "pf": 2.412,
+   "ret_pct": 197.66,
+   "mean_pct": 5.317,
+   "win_pct": 63.3,
+   "mdd_pct": -61.83
+  },
+  "x2": {
+   "n": 30,
+   "pf": 2.329,
+   "ret_pct": 180.63,
+   "mean_pct": 5.117,
+   "win_pct": 56.7,
+   "mdd_pct": -62.53
+  }
+ },
+ "oos_h2": {
+  "base": {
+   "n": 103,
+   "pf": 1.889,
+   "ret_pct": -94.52,
+   "mean_pct": 5.283,
+   "win_pct": 67.0,
+   "mdd_pct": -99.78
+  },
+  "x2": {
+   "n": 103,
+   "pf": 1.846,
+   "ret_pct": -98.96,
+   "mean_pct": 5.083,
+   "win_pct": 66.0,
+   "mdd_pct": -99.95
+  }
+ },
+ "oos_excess_vs_btc_short_x2_mean_pct": 5.519,
+ "oos_btc_short_mean_pct": -0.428,
+ "oos_tail_losses_gt_40pct": 6,
+ "oos_x2_fixed_stake": {
+  "sum_pct": 677.0,
+  "median_pct": 8.68,
+  "mean_ex_top5_pct": 3.718,
+  "worst5_pct": [
+   -99.9,
+   -86.1,
+   -66.7,
+   -54.3,
+   -53.5
+  ],
+  "best5_pct": [
+   33.0,
+   38.9,
+   39.3,
+   41.6,
+   48.3
+  ]
+ },
+ "by_year_x2": {
+  "2020": {
+   "n": 4,
+   "mean_pct": -13.31
+  },
+  "2021": {
+   "n": 7,
+   "mean_pct": 3.43
+  },
+  "2022": {
+   "n": 3,
+   "mean_pct": 15.0
+  },
+  "2023": {
+   "n": 10,
+   "mean_pct": 7.49
+  },
+  "2024": {
+   "n": 25,
+   "mean_pct": 2.99
+  },
+  "2025": {
+   "n": 62,
+   "mean_pct": 5.5
+  },
+  "2026": {
+   "n": 43,
+   "mean_pct": 5.82
+  }
+ },
+ "oos_notice_only_events": 6,
+ "oos_events_from_notice_era": 133,
+ "oos_random_pct_x2": 99.9,
+ "random_p95_mean_pct": 1.901,
+ "events": [
+  {
+   "ticker": "VET",
+   "source": "first",
+   "listing": "2020-04-07",
+   "entry": "2020-04-08",
+   "sym": "VETUSDT",
+   "gross": 0.05546,
+   "btc_short": 0.04571
+  },
+  {
+   "ticker": "LINK",
+   "source": "first",
+   "listing": "2020-08-04",
+   "entry": "2020-08-05",
+   "sym": "LINKUSDT",
+   "gross": -0.32295,
+   "btc_short": -0.01719
+  },
+  {
+   "ticker": "XTZ",
+   "source": "first",
+   "listing": "2020-08-04",
+   "entry": "2020-08-05",
+   "sym": "XTZUSDT",
+   "gross": -0.21187,
+   "btc_short": -0.01719
+  },
+  {
+   "ticker": "DOT",
+   "source": "first",
+   "listing": "2020-10-05",
+   "entry": "2020-10-06",
+   "sym": "DOTUSDT",
+   "gross": -0.03684,
+   "btc_short": -0.06911
+  },
+  {
+   "ticker": "DOGE",
+   "source": "first",
+   "listing": "2021-02-24",
+   "entry": "2021-02-25",
+   "sym": "DOGEUSDT",
+   "gross": 0.10994,
+   "btc_short": -0.01351
+  },
+  {
+   "ticker": "AXS",
+   "source": "first",
+   "listing": "2021-04-05",
+   "entry": "2021-04-06",
+   "sym": "AXSUSDT",
+   "gross": 0.2,
+   "btc_short": -0.01127
+  },
+  {
+   "ticker": "SOL",
+   "source": "first",
+   "listing": "2021-10-15",
+   "entry": "2021-10-16",
+   "sym": "SOLUSDT",
+   "gross": -0.1972,
+   "btc_short": 0.01569
+  },
+  {
+   "ticker": "1INCH",
+   "source": "first",
+   "listing": "2021-10-27",
+   "entry": "2021-10-28",
+   "sym": "1INCHUSDT",
+   "gross": 0.22875,
+   "btc_short": -0.07694
+  },
+  {
+   "ticker": "AAVE",
+   "source": "first",
+   "listing": "2021-10-27",
+   "entry": "2021-10-28",
+   "sym": "AAVEUSDT",
+   "gross": 0.00639,
+   "btc_short": -0.07694
+  },
+  {
+   "ticker": "ALGO",
+   "source": "first",
+   "listing": "2021-11-18",
+   "entry": "2021-11-19",
+   "sym": "ALGOUSDT",
+   "gross": 0.01825,
+   "btc_short": -0.03632
+  },
+  {
+   "ticker": "NEAR",
+   "source": "first",
+   "listing": "2021-12-15",
+   "entry": "2021-12-16",
+   "sym": "NEARUSDT",
+   "gross": -0.09783,
+   "btc_short": 0.00615
+  },
+  {
+   "ticker": "AVAX",
+   "source": "first",
+   "listing": "2022-02-08",
+   "entry": "2022-02-09",
+   "sym": "AVAXUSDT",
+   "gross": -0.07602,
+   "btc_short": -0.01154
+  },
+  {
+   "ticker": "CELO",
+   "source": "first+notice",
+   "listing": "2022-03-17",
+   "entry": "2022-03-18",
+   "sym": "CELOUSDT",
+   "gross": -0.06521,
+   "btc_short": -0.07519
+  },
+  {
+   "ticker": "GMT",
+   "source": "first+notice",
+   "listing": "2022-05-04",
+   "entry": "2022-05-05",
+   "sym": "GMTUSDT",
+   "gross": 0.60323,
+   "btc_short": 0.26727
+  },
+  {
+   "ticker": "SHIB",
+   "source": "first",
+   "listing": "2023-01-18",
+   "entry": "2023-01-19",
+   "sym": "1000SHIBUSDT",
+   "gross": -0.03828,
+   "btc_short": -0.11511
+  },
+  {
+   "ticker": "MASK",
+   "source": "first",
+   "listing": "2023-03-07",
+   "entry": "2023-03-08",
+   "sym": "MASKUSDT",
+   "gross": 0.0849,
+   "btc_short": -0.11247
+  },
+  {
+   "ticker": "ARB",
+   "source": "first+notice",
+   "listing": "2023-03-30",
+   "entry": "2023-03-31",
+   "sym": "ARBUSDT",
+   "gross": 0.12109,
+   "btc_short": -0.00028
+  },
+  {
+   "ticker": "EGLD",
+   "source": "first+notice",
+   "listing": "2023-04-27",
+   "entry": "2023-04-28",
+   "sym": "EGLDUSDT",
+   "gross": 0.10955,
+   "btc_short": 0.02149
+  },
+  {
+   "ticker": "SUI",
+   "source": "first+notice",
+   "listing": "2023-05-04",
+   "entry": "2023-05-05",
+   "sym": "SUIUSDT",
+   "gross": 0.1869,
+   "btc_short": 0.06486
+  },
+  {
+   "ticker": "GRT",
+   "source": "first+notice",
+   "listing": "2023-06-01",
+   "entry": "2023-06-02",
+   "sym": "GRTUSDT",
+   "gross": 0.11549,
+   "btc_short": 0.01191
+  },
+  {
+   "ticker": "BLUR",
+   "source": "first+notice",
+   "listing": "2023-06-27",
+   "entry": "2023-06-28",
+   "sym": "BLURUSDT",
+   "gross": 0.08595,
+   "btc_short": -0.00238
+  },
+  {
+   "ticker": "IMX",
+   "source": "first+notice",
+   "listing": "2023-07-28",
+   "entry": "2023-07-29",
+   "sym": "IMXUSDT",
+   "gross": 0.00613,
+   "btc_short": 0.00679
+  },
+  {
+   "ticker": "MINA",
+   "source": "first+notice",
+   "listing": "2023-10-24",
+   "entry": "2023-10-25",
+   "sym": "MINAUSDT",
+   "gross": 0.19099,
+   "btc_short": -0.02165
+  },
+  {
+   "ticker": "ASTR",
+   "source": "first+notice",
+   "listing": "2023-12-18",
+   "entry": "2023-12-19",
+   "sym": "ASTRUSDT",
+   "gross": -0.0738,
+   "btc_short": -0.02203
+  },
+  {
+   "ticker": "ID",
+   "source": "first+notice",
+   "listing": "2024-02-07",
+   "entry": "2024-02-08",
+   "sym": "IDUSDT",
+   "gross": -0.13913,
+   "btc_short": -0.16913
+  },
+  {
+   "ticker": "PYTH",
+   "source": "first",
+   "listing": "2024-02-27",
+   "entry": "2024-02-28",
+   "sym": "PYTHUSDT",
+   "gross": 0.20263,
+   "btc_short": -0.11692
+  },
+  {
+   "ticker": "OMNI",
+   "source": "notice",
+   "listing": "2024-05-03",
+   "entry": "2024-05-04",
+   "sym": "OMNIUSDT",
+   "gross": 0.13648,
+   "btc_short": 0.03302
+  },
+  {
+   "ticker": "ZETA",
+   "source": "first+notice",
+   "listing": "2024-05-03",
+   "entry": "2024-05-04",
+   "sym": "ZETAUSDT",
+   "gross": -0.05722,
+   "btc_short": 0.03302
+  },
+  {
+   "ticker": "AUCTION",
+   "source": "first+notice",
+   "listing": "2024-05-29",
+   "entry": "2024-05-30",
+   "sym": "AUCTIONUSDT",
+   "gross": 0.09672,
+   "btc_short": -0.05092
+  },
+  {
+   "ticker": "STG",
+   "source": "notice",
+   "listing": "2024-05-30",
+   "entry": "2024-05-31",
+   "sym": "STGUSDT",
+   "gross": 0.10858,
+   "btc_short": -0.03549
+  },
+  {
+   "ticker": "ONDO",
+   "source": "first+notice",
+   "listing": "2024-06-14",
+   "entry": "2024-06-15",
+   "sym": "ONDOUSDT",
+   "gross": -0.00532,
+   "btc_short": 0.02901
+  },
+  {
+   "ticker": "JUP",
+   "source": "first+notice",
+   "listing": "2024-07-04",
+   "entry": "2024-07-05",
+   "sym": "JUPUSDT",
+   "gross": -0.00925,
+   "btc_short": -0.00473
+  },
+  {
+   "ticker": "ENS",
+   "source": "first+notice",
+   "listing": "2024-07-09",
+   "entry": "2024-07-10",
+   "sym": "ENSUSDT",
+   "gross": 0.01975,
+   "btc_short": -0.12042
+  },
+  {
+   "ticker": "GAL",
+   "source": "notice",
+   "listing": "2024-07-11",
+   "entry": "2024-07-12",
+   "sym": "GALUSDT",
+   "gross": 0.0021,
+   "btc_short": -0.11592
+  },
+  {
+   "ticker": "PENDLE",
+   "source": "first+notice",
+   "listing": "2024-08-06",
+   "entry": "2024-08-07",
+   "sym": "PENDLEUSDT",
+   "gross": -0.06365,
+   "btc_short": -0.08143
+  },
+  {
+   "ticker": "USDC",
+   "source": "first+notice",
+   "listing": "2024-08-30",
+   "entry": "2024-08-31",
+   "sym": "USDCUSDT",
+   "gross": -0.00031,
+   "btc_short": 0.08746
+  },
+  {
+   "ticker": "BIGTIME",
+   "source": "first+notice",
+   "listing": "2024-09-05",
+   "entry": "2024-09-06",
+   "sym": "BIGTIMEUSDT",
+   "gross": -0.41291,
+   "btc_short": -0.03476
+  },
+  {
+   "ticker": "CKB",
+   "source": "first+notice",
+   "listing": "2024-09-13",
+   "entry": "2024-09-14",
+   "sym": "CKBUSDT",
+   "gross": -0.29756,
+   "btc_short": -0.04498
+  },
+  {
+   "ticker": "W",
+   "source": "first+notice",
+   "listing": "2024-10-02",
+   "entry": "2024-10-03",
+   "sym": "WUSDT",
+   "gross": 0.12053,
+   "btc_short": 0.00027
+  },
+  {
+   "ticker": "INJ",
+   "source": "first+notice",
+   "listing": "2024-10-17",
+   "entry": "2024-10-18",
+   "sym": "INJUSDT",
+   "gross": 0.04553,
+   "btc_short": -0.01146
+  },
+  {
+   "ticker": "MEW",
+   "source": "first+notice",
+   "listing": "2024-10-21",
+   "entry": "2024-10-22",
+   "sym": "MEWUSDT",
+   "gross": -0.04946,
+   "btc_short": -0.03817
+  },
+  {
+   "ticker": "UNI",
+   "source": "first+notice",
+   "listing": "2024-10-22",
+   "entry": "2024-10-23",
+   "sym": "UNIUSDT",
+   "gross": 0.00948,
+   "btc_short": -0.07912
+  },
+  {
+   "ticker": "AGLD",
+   "source": "first+notice",
+   "listing": "2024-11-13",
+   "entry": "2024-11-14",
+   "sym": "AGLDUSDT",
+   "gross": 0.32614,
+   "btc_short": -0.04286
+  },
+  {
+   "ticker": "PEPE",
+   "source": "first+notice",
+   "listing": "2024-11-14",
+   "entry": "2024-11-15",
+   "sym": "1000PEPEUSDT",
+   "gross": 0.00239,
+   "btc_short": -0.1257
+  },
+  {
+   "ticker": "BONK",
+   "source": "notice",
+   "listing": "2024-11-20",
+   "entry": "2024-11-21",
+   "sym": "1000BONKUSDT",
+   "gross": 0.11805,
+   "btc_short": -0.01715
+  },
+  {
+   "ticker": "RENDER",
+   "source": "first+notice",
+   "listing": "2024-12-05",
+   "entry": "2024-12-06",
+   "sym": "RENDERUSDT",
+   "gross": 0.06648,
+   "btc_short": -0.03073
+  },
+  {
+   "ticker": "MOVE",
+   "source": "first+notice",
+   "listing": "2024-12-10",
+   "entry": "2024-12-11",
+   "sym": "MOVEUSDT",
+   "gross": 0.14001,
+   "btc_short": -0.09805
+  },
+  {
+   "ticker": "ME",
+   "source": "first+notice",
+   "listing": "2024-12-11",
+   "entry": "2024-12-12",
+   "sym": "MEUSDT",
+   "gross": 0.48737,
+   "btc_short": 0.00924
+  },
+  {
+   "ticker": "VANA",
+   "source": "first+notice",
+   "listing": "2024-12-17",
+   "entry": "2024-12-18",
+   "sym": "VANAUSDT",
+   "gross": 0.00075,
+   "btc_short": 0.07021
+  },
+  {
+   "ticker": "ANIME",
+   "source": "first+notice",
+   "listing": "2025-01-24",
+   "entry": "2025-01-25",
+   "sym": "ANIMEUSDT",
+   "gross": 0.26375,
+   "btc_short": 0.02317
+  },
+  {
+   "ticker": "VIRTUAL",
+   "source": "first+notice",
+   "listing": "2025-01-31",
+   "entry": "2025-02-01",
+   "sym": "VIRTUALUSDT",
+   "gross": 0.41981,
+   "btc_short": 0.05788
+  },
+  {
+   "ticker": "LAYER",
+   "source": "first+notice",
+   "listing": "2025-02-12",
+   "entry": "2025-02-13",
+   "sym": "LAYERUSDT",
+   "gross": 0.29694,
+   "btc_short": 0.01246
+  },
+  {
+   "ticker": "TRUMP",
+   "source": "first+notice",
+   "listing": "2025-02-13",
+   "entry": "2025-02-14",
+   "sym": "TRUMPUSDT",
+   "gross": -0.04736,
+   "btc_short": -0.01752
+  },
+  {
+   "ticker": "JTO",
+   "source": "first+notice",
+   "listing": "2025-02-21",
+   "entry": "2025-02-22",
+   "sym": "JTOUSDT",
+   "gross": 0.13419,
+   "btc_short": 0.12305
+  },
+  {
+   "ticker": "COW",
+   "source": "first+notice",
+   "listing": "2025-02-25",
+   "entry": "2025-02-26",
+   "sym": "COWUSDT",
+   "gross": 0.27844,
+   "btc_short": 0.01572
+  },
+  {
+   "ticker": "KAITO",
+   "source": "first+notice",
+   "listing": "2025-03-05",
+   "entry": "2025-03-06",
+   "sym": "KAITOUSDT",
+   "gross": 0.13238,
+   "btc_short": 0.07647
+  },
+  {
+   "ticker": "ARKM",
+   "source": "first+notice",
+   "listing": "2025-03-11",
+   "entry": "2025-03-12",
+   "sym": "ARKMUSDT",
+   "gross": -0.04764,
+   "btc_short": 0.00277
+  },
+  {
+   "ticker": "ORCA",
+   "source": "first+notice",
+   "listing": "2025-03-21",
+   "entry": "2025-03-22",
+   "sym": "ORCAUSDT",
+   "gross": -0.00728,
+   "btc_short": -0.00393
+  },
+  {
+   "ticker": "WAL",
+   "source": "first+notice",
+   "listing": "2025-03-28",
+   "entry": "2025-03-29",
+   "sym": "WALUSDT",
+   "gross": -0.18138,
+   "btc_short": 0.00616
+  },
+  {
+   "ticker": "COMP",
+   "source": "first+notice",
+   "listing": "2025-04-01",
+   "entry": "2025-04-02",
+   "sym": "COMPUSDT",
+   "gross": 0.15406,
+   "btc_short": 0.10365
+  },
+  {
+   "ticker": "FIL",
+   "source": "first+notice",
+   "listing": "2025-04-04",
+   "entry": "2025-04-05",
+   "sym": "FILUSDT",
+   "gross": 0.11355,
+   "btc_short": 0.00576
+  },
+  {
+   "ticker": "WCT",
+   "source": "first+notice",
+   "listing": "2025-04-16",
+   "entry": "2025-04-17",
+   "sym": "WCTUSDT",
+   "gross": 0.06468,
+   "btc_short": -0.1148
+  },
+  {
+   "ticker": "SIGN",
+   "source": "first+notice",
+   "listing": "2025-04-29",
+   "entry": "2025-04-30",
+   "sym": "SIGNUSDT",
+   "gross": 0.17228,
+   "btc_short": -0.02759
+  },
+  {
+   "ticker": "TIA",
+   "source": "first+notice",
+   "listing": "2025-05-08",
+   "entry": "2025-05-09",
+   "sym": "TIAUSDT",
+   "gross": -0.00316,
+   "btc_short": -0.00471
+  },
+  {
+   "ticker": "PENGU",
+   "source": "first+notice",
+   "listing": "2025-05-09",
+   "entry": "2025-05-10",
+   "sym": "PENGUUSDT",
+   "gross": 0.09897,
+   "btc_short": -0.00457
+  },
+  {
+   "ticker": "OM",
+   "source": "notice",
+   "listing": "2025-05-21",
+   "entry": "2025-05-22",
+   "sym": "OMUSDT",
+   "gross": 0.05657,
+   "btc_short": 0.01721
+  },
+  {
+   "ticker": "LPT",
+   "source": "first+notice",
+   "listing": "2025-05-30",
+   "entry": "2025-05-31",
+   "sym": "LPTUSDT",
+   "gross": 0.23561,
+   "btc_short": -0.00279
+  },
+  {
+   "ticker": "RVN",
+   "source": "first+notice",
+   "listing": "2025-06-05",
+   "entry": "2025-06-06",
+   "sym": "RVNUSDT",
+   "gross": -0.5391,
+   "btc_short": -0.04091
+  },
+  {
+   "ticker": "AXL",
+   "source": "first+notice",
+   "listing": "2025-06-10",
+   "entry": "2025-06-11",
+   "sym": "AXLUSDT",
+   "gross": 0.1093,
+   "btc_short": 0.05196
+  },
+  {
+   "ticker": "ALT",
+   "source": "first+notice",
+   "listing": "2025-06-16",
+   "entry": "2025-06-17",
+   "sym": "ALTUSDT",
+   "gross": 0.10143,
+   "btc_short": 0.01367
+  },
+  {
+   "ticker": "RAY",
+   "source": "first+notice",
+   "listing": "2025-06-19",
+   "entry": "2025-06-20",
+   "sym": "RAYUSDT",
+   "gross": 0.0,
+   "btc_short": -0.02205
+  },
+  {
+   "ticker": "NEWT",
+   "source": "first+notice",
+   "listing": "2025-06-24",
+   "entry": "2025-06-25",
+   "sym": "NEWTUSDT",
+   "gross": 0.11816,
+   "btc_short": 0.00374
+  },
+  {
+   "ticker": "MOODENG",
+   "source": "first+notice",
+   "listing": "2025-07-03",
+   "entry": "2025-07-04",
+   "sym": "MOODENGUSDT",
+   "gross": -0.13777,
+   "btc_short": -0.05873
+  },
+  {
+   "ticker": "HYPER",
+   "source": "first+notice",
+   "listing": "2025-07-10",
+   "entry": "2025-07-11",
+   "sym": "HYPERUSDT",
+   "gross": 0.23077,
+   "btc_short": -0.02757
+  },
+  {
+   "ticker": "ENA",
+   "source": "first+notice",
+   "listing": "2025-07-11",
+   "entry": "2025-07-12",
+   "sym": "ENAUSDT",
+   "gross": -0.15272,
+   "btc_short": -0.00337
+  },
+  {
+   "ticker": "SYRUP",
+   "source": "first+notice",
+   "listing": "2025-07-25",
+   "entry": "2025-07-26",
+   "sym": "SYRUPUSDT",
+   "gross": 0.2628,
+   "btc_short": 0.0369
+  },
+  {
+   "ticker": "OP",
+   "source": "first+notice",
+   "listing": "2025-07-28",
+   "entry": "2025-07-29",
+   "sym": "OPUSDT",
+   "gross": 0.07053,
+   "btc_short": 0.02575
+  },
+  {
+   "ticker": "PROVE",
+   "source": "first+notice",
+   "listing": "2025-08-06",
+   "entry": "2025-08-07",
+   "sym": "PROVEUSDT",
+   "gross": -0.35918,
+   "btc_short": -0.07293
+  },
+  {
+   "ticker": "IP",
+   "source": "notice",
+   "listing": "2025-08-08",
+   "entry": "2025-08-09",
+   "sym": "IPUSDT",
+   "gross": 0.1443,
+   "btc_short": -0.00558
+  },
+  {
+   "ticker": "CYBER",
+   "source": "first+notice",
+   "listing": "2025-08-12",
+   "entry": "2025-08-13",
+   "sym": "CYBERUSDT",
+   "gross": 0.23636,
+   "btc_short": 0.06043
+  },
+  {
+   "ticker": "API3",
+   "source": "first+notice",
+   "listing": "2025-08-19",
+   "entry": "2025-08-20",
+   "sym": "API3USDT",
+   "gross": -0.07458,
+   "btc_short": 0.00987
+  },
+  {
+   "ticker": "AERO",
+   "source": "first+notice",
+   "listing": "2025-08-22",
+   "entry": "2025-08-23",
+   "sym": "AEROUSDT",
+   "gross": 0.25485,
+   "btc_short": 0.07327
+  },
+  {
+   "ticker": "TREE",
+   "source": "first+notice",
+   "listing": "2025-08-28",
+   "entry": "2025-08-29",
+   "sym": "TREEUSDT",
+   "gross": 0.15603,
+   "btc_short": 0.01625
+  },
+  {
+   "ticker": "WLFI",
+   "source": "first+notice",
+   "listing": "2025-09-01",
+   "entry": "2025-09-02",
+   "sym": "WLFIUSDT",
+   "gross": 0.09168,
+   "btc_short": -0.02587
+  },
+  {
+   "ticker": "RED",
+   "source": "first+notice",
+   "listing": "2025-09-05",
+   "entry": "2025-09-06",
+   "sym": "REDUSDT",
+   "gross": -0.05894,
+   "btc_short": -0.04849
+  },
+  {
+   "ticker": "WLD",
+   "source": "first+notice",
+   "listing": "2025-09-09",
+   "entry": "2025-09-10",
+   "sym": "WLDUSDT",
+   "gross": 0.21648,
+   "btc_short": -0.04706
+  },
+  {
+   "ticker": "LINEA",
+   "source": "first+notice",
+   "listing": "2025-09-10",
+   "entry": "2025-09-11",
+   "sym": "LINEAUSDT",
+   "gross": -0.10494,
+   "btc_short": -0.022
+  },
+  {
+   "ticker": "OPEN",
+   "source": "first+notice",
+   "listing": "2025-09-10",
+   "entry": "2025-09-11",
+   "sym": "OPENUSDT",
+   "gross": 0.17301,
+   "btc_short": -0.022
+  },
+  {
+   "ticker": "PUMP",
+   "source": "first+notice",
+   "listing": "2025-09-11",
+   "entry": "2025-09-12",
+   "sym": "PUMPUSDT",
+   "gross": -0.32223,
+   "btc_short": -0.01378
+  },
+  {
+   "ticker": "AVNT",
+   "source": "first+notice",
+   "listing": "2025-09-15",
+   "entry": "2025-09-16",
+   "sym": "AVNTUSDT",
+   "gross": -0.66338,
+   "btc_short": 0.02338
+  },
+  {
+   "ticker": "LA",
+   "source": "first+notice",
+   "listing": "2025-09-18",
+   "entry": "2025-09-19",
+   "sym": "LAUSDT",
+   "gross": 0.10098,
+   "btc_short": 0.06907
+  },
+  {
+   "ticker": "0G",
+   "source": "first+notice",
+   "listing": "2025-09-22",
+   "entry": "2025-09-23",
+   "sym": "0GUSDT",
+   "gross": 0.29858,
+   "btc_short": -0.01467
+  },
+  {
+   "ticker": "SUN",
+   "source": "first+notice",
+   "listing": "2025-09-22",
+   "entry": "2025-09-23",
+   "sym": "SUNUSDT",
+   "gross": 0.21669,
+   "btc_short": -0.01467
+  },
+  {
+   "ticker": "XPL",
+   "source": "first+notice",
+   "listing": "2025-09-25",
+   "entry": "2025-09-26",
+   "sym": "XPLUSDT",
+   "gross": 0.27103,
+   "btc_short": -0.106
+  },
+  {
+   "ticker": "SUPER",
+   "source": "first+notice",
+   "listing": "2025-09-29",
+   "entry": "2025-09-30",
+   "sym": "SUPERUSDT",
+   "gross": 0.06286,
+   "btc_short": -0.09077
+  },
+  {
+   "ticker": "SOMI",
+   "source": "first+notice",
+   "listing": "2025-10-01",
+   "entry": "2025-10-02",
+   "sym": "SOMIUSDT",
+   "gross": -0.01508,
+   "btc_short": -0.03952
+  },
+  {
+   "ticker": "DOOD",
+   "source": "first+notice",
+   "listing": "2025-10-07",
+   "entry": "2025-10-08",
+   "sym": "DOODUSDT",
+   "gross": 0.23151,
+   "btc_short": 0.06846
+  },
+  {
+   "ticker": "IN",
+   "source": "first+notice",
+   "listing": "2025-10-10",
+   "entry": "2025-10-11",
+   "sym": "INUSDT",
+   "gross": 0.20792,
+   "btc_short": 0.05622
+  },
+  {
+   "ticker": "YGG",
+   "source": "first+notice",
+   "listing": "2025-10-15",
+   "entry": "2025-10-16",
+   "sym": "YGGUSDT",
+   "gross": 0.19608,
+   "btc_short": 0.02861
+  },
+  {
+   "ticker": "ZORA",
+   "source": "first+notice",
+   "listing": "2025-10-17",
+   "entry": "2025-10-18",
+   "sym": "ZORAUSDT",
+   "gross": -0.05017,
+   "btc_short": -0.04312
+  },
+  {
+   "ticker": "BIO",
+   "source": "first+notice",
+   "listing": "2025-10-20",
+   "entry": "2025-10-21",
+   "sym": "BIOUSDT",
+   "gross": -0.02262,
+   "btc_short": -0.03254
+  },
+  {
+   "ticker": "F",
+   "source": "first+notice",
+   "listing": "2025-10-21",
+   "entry": "2025-10-22",
+   "sym": "FUSDT",
+   "gross": -0.99538,
+   "btc_short": -0.04231
+  },
+  {
+   "ticker": "ORDER",
+   "source": "first+notice",
+   "listing": "2025-10-24",
+   "entry": "2025-10-25",
+   "sym": "ORDERUSDT",
+   "gross": 0.29323,
+   "btc_short": 0.01269
+  },
+  {
+   "ticker": "KERNEL",
+   "source": "first+notice",
+   "listing": "2025-10-28",
+   "entry": "2025-10-29",
+   "sym": "KERNELUSDT",
+   "gross": 0.39685,
+   "btc_short": 0.10089
+  },
+  {
+   "ticker": "ENSO",
+   "source": "first+notice",
+   "listing": "2025-10-29",
+   "entry": "2025-10-30",
+   "sym": "ENSOUSDT",
+   "gross": 0.3198,
+   "btc_short": 0.0559
+  },
+  {
+   "ticker": "KITE",
+   "source": "first+notice",
+   "listing": "2025-11-03",
+   "entry": "2025-11-04",
+   "sym": "KITEUSDT",
+   "gross": -0.14647,
+   "btc_short": 0.00542
+  },
+  {
+   "ticker": "MMT",
+   "source": "first+notice",
+   "listing": "2025-11-05",
+   "entry": "2025-11-06",
+   "sym": "MMTUSDT",
+   "gross": 0.39345,
+   "btc_short": 0.02149
+  },
+  {
+   "ticker": "MON",
+   "source": "first+notice",
+   "listing": "2025-11-24",
+   "entry": "2025-11-25",
+   "sym": "MONUSDT",
+   "gross": -0.00498,
+   "btc_short": 0.02273
+  },
+  {
+   "ticker": "PLUME",
+   "source": "first+notice",
+   "listing": "2025-11-26",
+   "entry": "2025-11-27",
+   "sym": "PLUMEUSDT",
+   "gross": 0.14555,
+   "btc_short": -0.0325
+  },
+  {
+   "ticker": "WET",
+   "source": "first+notice",
+   "listing": "2025-12-15",
+   "entry": "2025-12-16",
+   "sym": "WETUSDT",
+   "gross": -0.22156,
+   "btc_short": -0.02537
+  },
+  {
+   "ticker": "ZKP",
+   "source": "first+notice",
+   "listing": "2025-12-26",
+   "entry": "2025-12-27",
+   "sym": "ZKPUSDT",
+   "gross": 0.09083,
+   "btc_short": -0.03016
+  },
+  {
+   "ticker": "ZK",
+   "source": "first+notice",
+   "listing": "2026-01-06",
+   "entry": "2026-01-07",
+   "sym": "ZKUSDT",
+   "gross": 0.00321,
+   "btc_short": -0.01779
+  },
+  {
+   "ticker": "BREV",
+   "source": "first+notice",
+   "listing": "2026-01-07",
+   "entry": "2026-01-08",
+   "sym": "BREVUSDT",
+   "gross": 0.13919,
+   "btc_short": -0.0611
+  },
+  {
+   "ticker": "SENT",
+   "source": "first+notice",
+   "listing": "2026-01-29",
+   "entry": "2026-01-30",
+   "sym": "SENTUSDT",
+   "gross": -0.53129,
+   "btc_short": 0.25692
+  },
+  {
+   "ticker": "BIRB",
+   "source": "first+notice",
+   "listing": "2026-02-03",
+   "entry": "2026-02-04",
+   "sym": "BIRBUSDT",
+   "gross": 0.03386,
+   "btc_short": 0.09147
+  },
+  {
+   "ticker": "TAO",
+   "source": "first+notice",
+   "listing": "2026-02-16",
+   "entry": "2026-02-17",
+   "sym": "TAOUSDT",
+   "gross": 0.14148,
+   "btc_short": 0.06153
+  },
+  {
+   "ticker": "AZTEC",
+   "source": "first+notice",
+   "listing": "2026-02-20",
+   "entry": "2026-02-21",
+   "sym": "AZTECUSDT",
+   "gross": 0.1863,
+   "btc_short": 0.03153
+  },
+  {
+   "ticker": "ESP",
+   "source": "first+notice",
+   "listing": "2026-02-24",
+   "entry": "2026-02-25",
+   "sym": "ESPUSDT",
+   "gross": 0.21088,
+   "btc_short": -0.06659
+  },
+  {
+   "ticker": "SKR",
+   "source": "first+notice",
+   "listing": "2026-02-24",
+   "entry": "2026-02-25",
+   "sym": "SKRUSDT",
+   "gross": 0.0368,
+   "btc_short": -0.06659
+  },
+  {
+   "ticker": "ICP",
+   "source": "first+notice",
+   "listing": "2026-03-11",
+   "entry": "2026-03-12",
+   "sym": "ICPUSDT",
+   "gross": 0.03077,
+   "btc_short": -0.01501
+  },
+  {
+   "ticker": "ETHFI",
+   "source": "first+notice",
+   "listing": "2026-03-19",
+   "entry": "2026-03-20",
+   "sym": "ETHFIUSDT",
+   "gross": 0.03774,
+   "btc_short": 0.01573
+  },
+  {
+   "ticker": "KAT",
+   "source": "first+notice",
+   "listing": "2026-03-26",
+   "entry": "2026-03-27",
+   "sym": "KATUSDT",
+   "gross": 0.255,
+   "btc_short": 0.0279
+  },
+  {
+   "ticker": "SKY",
+   "source": "first+notice",
+   "listing": "2026-03-31",
+   "entry": "2026-04-01",
+   "sym": "SKYUSDT",
+   "gross": -0.052,
+   "btc_short": -0.05347
+  },
+  {
+   "ticker": "ZAMA",
+   "source": "first+notice",
+   "listing": "2026-04-14",
+   "entry": "2026-04-15",
+   "sym": "ZAMAUSDT",
+   "gross": 0.10727,
+   "btc_short": -0.02944
+  },
+  {
+   "ticker": "CC",
+   "source": "first+notice",
+   "listing": "2026-04-15",
+   "entry": "2026-04-16",
+   "sym": "CCUSDT",
+   "gross": -0.01146,
+   "btc_short": -0.04498
+  },
+  {
+   "ticker": "SOON",
+   "source": "first+notice",
+   "listing": "2026-04-17",
+   "entry": "2026-04-18",
+   "sym": "SOONUSDT",
+   "gross": 0.11278,
+   "btc_short": -0.00473
+  },
+  {
+   "ticker": "PIEVERSE",
+   "source": "first+notice",
+   "listing": "2026-04-20",
+   "entry": "2026-04-21",
+   "sym": "PIEVERSEUSDT",
+   "gross": 0.25062,
+   "btc_short": -0.02033
+  },
+  {
+   "ticker": "CHIP",
+   "source": "first+notice",
+   "listing": "2026-04-21",
+   "entry": "2026-04-22",
+   "sym": "CHIPUSDT",
+   "gross": -0.20453,
+   "btc_short": -0.00013
+  },
+  {
+   "ticker": "SPK",
+   "source": "first+notice",
+   "listing": "2026-04-23",
+   "entry": "2026-04-24",
+   "sym": "SPKUSDT",
+   "gross": 0.28257,
+   "btc_short": 0.02444
+  },
+  {
+   "ticker": "PRL",
+   "source": "first+notice",
+   "listing": "2026-04-27",
+   "entry": "2026-04-28",
+   "sym": "PRLUSDT",
+   "gross": 0.10547,
+   "btc_short": -0.03226
+  },
+  {
+   "ticker": "XCN",
+   "source": "first+notice",
+   "listing": "2026-04-27",
+   "entry": "2026-04-28",
+   "sym": "XCNUSDT",
+   "gross": 0.0,
+   "btc_short": -0.03226
+  },
+  {
+   "ticker": "MEGA",
+   "source": "first+notice",
+   "listing": "2026-04-30",
+   "entry": "2026-05-01",
+   "sym": "MEGAUSDT",
+   "gross": 0.27005,
+   "btc_short": -0.04802
+  },
+  {
+   "ticker": "WIF",
+   "source": "first+notice",
+   "listing": "2026-05-06",
+   "entry": "2026-05-07",
+   "sym": "WIFUSDT",
+   "gross": 0.02357,
+   "btc_short": 0.02582
+  },
+  {
+   "ticker": "B3",
+   "source": "first+notice",
+   "listing": "2026-05-07",
+   "entry": "2026-05-08",
+   "sym": "B3USDT",
+   "gross": 0.0,
+   "btc_short": -0.0135
+  },
+  {
+   "ticker": "VVV",
+   "source": "first+notice",
+   "listing": "2026-05-12",
+   "entry": "2026-05-13",
+   "sym": "VVVUSDT",
+   "gross": -0.01505,
+   "btc_short": 0.0455
+  },
+  {
+   "ticker": "IRYS",
+   "source": "first+notice",
+   "listing": "2026-05-15",
+   "entry": "2026-05-16",
+   "sym": "IRYSUSDT",
+   "gross": 0.33444,
+   "btc_short": 0.04503
+  },
+  {
+   "ticker": "IO",
+   "source": "first+notice",
+   "listing": "2026-05-29",
+   "entry": "2026-05-30",
+   "sym": "IOUSDT",
+   "gross": 0.18155,
+   "btc_short": 0.16896
+  },
+  {
+   "ticker": "BABY",
+   "source": "first+notice",
+   "listing": "2026-06-05",
+   "entry": "2026-06-06",
+   "sym": "BABYUSDT",
+   "gross": 0.19612,
+   "btc_short": -0.04138
+  },
+  {
+   "ticker": "SPX",
+   "source": "first+notice",
+   "listing": "2026-06-16",
+   "entry": "2026-06-17",
+   "sym": "SPXUSDT",
+   "gross": 0.11399,
+   "btc_short": 0.04491
+  },
+  {
+   "ticker": "RE",
+   "source": "first+notice",
+   "listing": "2026-06-19",
+   "entry": "2026-06-20",
+   "sym": "REUSDT",
+   "gross": 0.29556,
+   "btc_short": 0.05417
+  },
+  {
+   "ticker": "AI",
+   "source": "first+notice",
+   "listing": "2026-06-30",
+   "entry": "2026-07-01",
+   "sym": "AIUSDT",
+   "gross": 0.0,
+   "btc_short": -0.08071
+  },
+  {
+   "ticker": "OPG",
+   "source": "first+notice",
+   "listing": "2026-07-07",
+   "entry": "2026-07-08",
+   "sym": "OPGUSDT",
+   "gross": 0.13837,
+   "btc_short": -0.02651
+  },
+  {
+   "ticker": "O",
+   "source": "first+notice",
+   "listing": "2026-07-23",
+   "entry": "2026-07-24",
+   "sym": "OUSDT",
+   "gross": 0.05708,
+   "btc_short": 0.00491
+  },
+  {
+   "ticker": "MORPHO",
+   "source": "first+notice",
+   "listing": "2026-07-25",
+   "entry": "2026-07-26",
+   "sym": "MORPHOUSDT",
+   "gross": 0.0186,
+   "btc_short": 0.02402
+  },
+  {
+   "ticker": "EUL",
+   "source": "first+notice",
+   "listing": "2026-07-26",
+   "entry": "2026-07-27",
+   "sym": "EULUSDT",
+   "gross": 0.32273,
+   "btc_short": 0.02792
+  },
+  {
+   "ticker": "CFX",
+   "source": "first+notice",
+   "listing": "2026-07-31",
+   "entry": "2026-08-01",
+   "sym": "CFXUSDT",
+   "gross": 0.03214,
+   "btc_short": -0.03222
+  },
+  {
+   "ticker": "HOME",
+   "source": "first+notice",
+   "listing": "2026-08-04",
+   "entry": "2026-08-05",
+   "sym": "HOMEUSDT",
+   "gross": -0.12511,
+   "btc_short": 0.00786
+  },
+  {
+   "ticker": "GRVT",
+   "source": "first+notice",
+   "listing": "2026-08-05",
+   "entry": "2026-08-06",
+   "sym": "GRVTUSDT",
+   "gross": -0.05152,
+   "btc_short": 0.01825
+  },
+  {
+   "ticker": "CAP",
+   "source": "first+notice",
+   "listing": "2026-08-06",
+   "entry": "2026-08-07",
+   "sym": "CAPUSDT",
+   "gross": -0.85679,
+   "btc_short": 0.01311
+  },
+  {
+   "ticker": "BSB",
+   "source": "first+notice",
+   "listing": "2026-08-07",
+   "entry": "2026-08-08",
+   "sym": "BSBUSDT",
+   "gross": 0.28135,
+   "btc_short": 0.02883
+  },
+  {
+   "ticker": "KMNO",
+   "source": "first+notice",
+   "listing": "2026-08-07",
+   "entry": "2026-08-08",
+   "sym": "KMNOUSDT",
+   "gross": 0.04094,
+   "btc_short": 0.02883
+  },
+  {
+   "ticker": "PROM",
+   "source": "first+notice",
+   "listing": "2026-08-12",
+   "entry": "2026-08-13",
+   "sym": "PROMUSDT",
+   "gross": 0.21393,
+   "btc_short": -0.09228
+  },
+  {
+   "ticker": "CRV",
+   "source": "first+notice",
+   "listing": "2026-08-21",
+   "entry": "2026-08-22",
+   "sym": "CRVUSDT",
+   "gross": 0.11345,
+   "btc_short": 0.00643
+  },
+  {
+   "ticker": "LIT",
+   "source": "first+notice",
+   "listing": "2026-08-24",
+   "entry": "2026-08-25",
+   "sym": "LITUSDT",
+   "gross": -0.04562,
+   "btc_short": 0.00511
+  }
+ ],
+ "verdict": "SURVIVE",
+ "reasons": []
+}
