@@ -71,7 +71,7 @@ auto: off
   - 완료 기준: docs/sales/upbit-listing-alert/ 에 채널 운영안, 알림·7일 결과 회신 메시지 템플릿(앱개발이 그대로 쓸 수 있게 변수 표기), 커뮤니티 글 2편, 지표·가격 실험안
   - 결과: 채널명 추천 "상장공지 7일 기록"(후보 3), 고정 공지·운영 규칙·6개월 KPI(M6 구독 1,500·포워드 ≥30건)·퍼널, 템플릿 3종(alert/alert_no_perp/followup, 변수 매핑표, 과거 분위수 −28.2/−9.1/+15.0% 가격 기준), 커뮤니티 글 2편, 결제 없는 수요 실험(대기자·설문·A/B). 분포·포워드 집계를 비용 제외 가격 변화로 통일 — 중단 기준 정의 팀장 확인 필요 → docs/sales/upbit-listing-alert/{channel-plan,message-templates,community-posts,pricing-experiments}.md, templates.json
 
-- [ ] T-016 | to: user | from: sales-marketer | blocked | 채널 개설·게시 결정
+- [x] T-016 | to: user | from: sales-marketer | done | 채널 개설·게시 결정 — 2026-10-08 @listing7d_kr 개설, 소개글·고정 공지(docs/sales/upbit-listing-alert/pinned.txt) 게시. 커뮤니티 글 게시는 미정.
   - 결정할 것: 채널 이름(추천 "상장공지 7일 기록"), 핸들 확보, 커뮤니티 글 2편 게시 여부·시점. 법무 T-010 고지 문구 확정 후 게시 권장.
   - 참고: docs/sales/upbit-listing-alert/channel-plan.md, community-posts.md
   - 팀장 결정(2026-10-08): 공개 집계·중단 기준(30건 하락 비율 < 50%)은 **비용·펀딩 미포함 단순 가격 변화** 기준(누구나 검증 가능). 기록에는 비용·펀딩 포함 값도 함께 남긴다. 과거 기준값: 단순 93/133(69.9%, D+1 시가→D+8 시가) 하락, 비용 포함 63.9%.
@@ -92,7 +92,7 @@ auto: off
   - 완료 기준: 새 서비스(난독 이름 규칙 준수) DRY_RUN으로 기동, 로그 확인. 실제 채널 발송 전환은 to: user.
   - 결과: 2026-10-08 NAS `p3f8c1a2-w6` 기동(DRY_RUN=true, CHAT_ID 미설정, w1 이미지 재사용·코드 바인드 마운트, env_file 없이 필요한 env만). bootstrap 기록(기존 공지 8건 skip) + 이후 폴링 정상, `logs/listing-alerts.jsonl`·`data/listing-alert-state.json` 생성. 코드 갱신은 sync-files 후 `restart w6`만 → docker-compose.nas.yml(w6), docs/agents/nas-opaque-names.md, deploy/nas/opaque-names.agent.md
 
-- [ ] T-018 | to: user | from: devops | blocked | 상장 알림 실제 발송 전환
+- [x] T-018 | to: user | from: devops | done | 상장 알림 실제 발송 전환 — 2026-10-08 19:10 KST LISTING_ALERT_DRY_RUN=false, CHAT_ID=@listing7d_kr(-1003757343147). 무료 채널만, 유료는 법무 답변 전 금지.
   - 선행: T-015(법무 결정), T-016(채널 개설). 텔레그램 채널 만들고 봇(TELEGRAM_BOT_TOKEN의 봇)을 관리자로 추가.
   - 전환 방법: NAS `/volume1/docker/p3f8c1a2/.env`에 `LISTING_ALERT_CHAT_ID=<채널 ID 또는 @핸들>`, `LISTING_ALERT_DRY_RUN=false` 추가 → `sudo -n /usr/local/bin/docker compose -p p3f8c1a2 -f docker-compose.nas.yml up -d --no-deps w6`. 공개 기록 주소가 생기면 `LISTING_ALERT_RECORD_URL`도(compose w6 environment에 한 줄 추가 필요).
   - 주의: DRY_RUN 기록은 dry_run=true로 남아 라이브 집계(alert_id·fwd_n)와 섞이지 않음. 
