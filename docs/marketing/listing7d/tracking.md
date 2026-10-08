@@ -9,7 +9,7 @@
 | 링크 이름(32자 이내) | 쓰는 곳 | 링크 |
 |---|---|---|
 | 네이버블로그 | 네이버 블로그 (기둥 글·월간 결산 공용) | https://t.me/+Xld0lgKJnSE4OGY1 |
-| x | X 프로필 + 스레드 마지막 트윗 공용 | https://t.me/+4-pPWmt4CoRkNTQ1 |
+| x | X 개인 계정 [@mansejin_](https://x.com/mansejin_) 소개 트윗 첫 답글·스레드 마지막 트윗 공용 | https://t.me/+4-pPWmt4CoRkNTQ1 |
 | 코인판 | 코인판(운영진 허락 받은 경우만) | https://t.me/+CyQ1jvQnTR0wMGY9 |
 | `yt-profile` | 유튜브 채널 프로필 링크 (쇼츠 설명란 링크는 클릭 불가) | 미생성 |
 | `threads-profile` | 스레드 프로필 | 미생성 |
