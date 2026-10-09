@@ -11,7 +11,7 @@
     "entry": "limit",
     "exit": "limit",
     "stoploss": "market",
-    "stoploss_on_exchange": true,
+    "stoploss_on_exchange": false,
     "stoploss_on_exchange_interval": 60,
     "emergency_exit": "market"
   },
