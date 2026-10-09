@@ -24,7 +24,15 @@ class TrendShortV1Lev3Px(TrendShortV1Lev3):
             held = [p for p in self.dp._exchange.fetch_positions(pair) if float(p.get("contracts") or 0)]
         except Exception:
             return False
-        return not held
+        if held:
+            return False
+        # freqtrade's set_leverage omits marginMode, so Bitget only updates the crossed setting and
+        # isolated orders open at the account default (20x). Set isolated explicitly; fail closed.
+        try:
+            self.dp._exchange._api.set_leverage(3, pair, params={"marginMode": "isolated"})
+        except Exception:
+            return False
+        return True
 
 
 if __name__ == "__main__":
