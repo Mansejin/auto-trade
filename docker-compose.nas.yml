@@ -81,6 +81,8 @@ services:
     build: .
     image: p3f8c1a2-w2:latest
     container_name: p3f8c1a2-w2
+    # Off since 2026-10-10 (strategy KILLed, T-033). Start only with --profile bitget.
+    profiles: ["bitget"]
     restart: unless-stopped
     user: "0:0"
     env_file:
