@@ -157,10 +157,10 @@ auto: off
   - 완료 기준: docs/research/redteam/oi-flush-rebound.md, VETO/PASS
   - 결과: **VETO** → 카드 전체 KILL. 수치 정확히 재현(OOS 55건 +0.77% PF 1.75 무작위 95.3). ① 95.3은 시드 20개 중 최댓값(중앙 92.9, 95 이상 1/20), 세 코인 같은 날 군집을 살린 무작위 86~90, 날짜 군집 t 0.97(37개 날짜) ② 카드가 주 판정 실행처를 안 정했고 진입·SMA200 결합이 업비트 전제 → 업비트 KILL 뒤 무기한 통과는 문턱 두 번 쏘기 ③ 2026 PF 0.34(n=14), 롤링 20건 마지막 PF 0.89, 상위 5건 제거 −0.05%, SOL 2건(2024-03-05, 2024-08-05)이 SOL 수익 70%. 룩어헤드는 깨끗(oi_pre 23:55 +0.82%, 낡은 날 전날 제외 영향 0건, 임계값 train 전용). 비용 4배 슬리피지도 PF 1.33. 허용: 자본 0 신호 기록 페이퍼만(포워드 30건+ 군집 무작위 95 이상일 때만 재심), 변형 금지 → docs/research/redteam/oi-flush-rebound.md, scripts/redteam/oi_flush_redteam.py
 
-- [ ] T-033 | to: quant-researcher | from: user | open | w2 Bitget SMA5/20 1h 교차(SL3/TP6) 실거래 전 반증
+- [x] T-033 | to: quant-researcher | from: user | done | w2 Bitget SMA5/20 1h 교차(SL3/TP6) 실거래 전 반증
   - 참고: strategies/bitget_btc_usdt_sma.json(현재 값 그대로 freeze), docs/motto.md, scripts/bt_*.py
   - 완료 기준: 카드 docs/research/cards/w2-bitget-sma5-20-1h.md(현행 값 고정) + 결과/JSON, 공통 기각 기준. 통과 전까지 w2 PAPER 유지.
-  - 결과:
+  - 결과: **KILL** (기준 6개 중 5개 실패, 레드팀 불필요). Binance BTCUSDT 무기한 1h 2019-09~2026-09, n=2,044(OOS 954, 연 293회). OOS 스트레스 PF 0.66 평균 −0.27%, 기본 수수료(0.06%)만도 PF 0.92; 무작위 56백분위(중앙값 −0.28%로 전략과 같음 = 교차 정보 없음); 2019~2026 연도 전부 PF<1; 노출 Sharpe −3.66 vs B&H 0.75(+174%); ETH 전이 OOS −0.29%. SL/TP는 거의 안 걸림(OOS 교차 청산 900/954). w2 LIVE 금지, PAPER 유지 → docs/research/results/w2-bitget-sma5-20-1h.md, scripts/bt_w2_sma5_20_1h.py, reports/research-cards/w2-bitget-sma5-20-1h.json. 데이터 `binance_perp_1h` 추가(fetcher `--interval 1h`).
 
 - [ ] T-027 | to: user | from: product-strategist | blocked | SMA200 포워드 기록 방식·법무 송부 결정
   - 결정할 것: (1) Upbit에 소액(예: 30만~50만원) 투입해 실체결 기록을 남길지, 신호 전용 기록만 할지 (2) docs/legal/sma200-subscription/lawyer-questions.md를 상장 알림 질의서(T-015)와 함께 송부할지

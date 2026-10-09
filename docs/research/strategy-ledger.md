@@ -50,7 +50,7 @@
 | AE11 daily BB breakout | 모멘텀·추세 | KRW-BTC 1d | KILL | 최근 1년 WR 0% | `reports/improve/20260729-ae11-daily-bb-breakout.md` |
 | daytrade bull pullback v1–v9 | 모멘텀·추세 | KRW-BTC 10m/15m | KILL | 종료·재개 금지 | `docs/research/regime-daytrade-edge-pack-frozen.md` |
 | SMA 5/20 골든크로스 (+filtered v1–v3), sma_cross_btc | 모멘텀·추세 | KRW-BTC 1d | 미검증 (초기 봇, 교체됨) | 판정 문서 없음 | `strategies/sma-5-20-*.json`, `reports/review-state/` |
-| Bitget SMA (`bitget_btc_usdt_sma`) | 모멘텀·추세 | BTCUSDT-F 1h | **PAPER** / 미검증 | 판정 문서 없음 | `VERSION.md` |
+| Bitget SMA (`bitget_btc_usdt_sma`, w2) SMA5/20 교차 SL3/TP6 | 모멘텀·추세 | Binance BTCUSDT 무기한 1h 2019-09~2026-09 (Bitget 대용) | **KILL** (T-033, 현행 값 freeze) | n=2,044(OOS 954, 연 293회); OOS x2 PF 0.66 평균 −0.27%, 기본 수수료만도 PF 0.92; 무작위 56백분위; 8개 연도 전부 PF<1; 노출 Sharpe −3.66 vs B&H 0.75; ETH OOS −0.29% | `docs/research/results/w2-bitget-sma5-20-1h.md` |
 | bear short scalp v1–v12 (RSI×EMA, HTF fade, BB breakdown, failed reclaim, −DI, Donchian, 4h gate, EMA50, Stoch fade) | 모멘텀·추세 | Bitget BTC 5m–1h | KILL | 전부 3창 중 ≥2 실패 (PF 0.10–0.98) | `reports/improve/20260729-bear-short-scalp.md` |
 | BearShortDivAtrV13 | 모멘텀·추세 | Bitget BTC | KILL | PF 0.04 / 0.93 | `reports/improve/20260730-bear-short-div-atr-v13.md` |
 | TrendShortV1 di_cloud ADX15 5m SL3/TP9 | 모멘텀·추세 | Bitget BTCUSDT 5m | **LIVE** (PARTIAL) | h1 PF 1.44 n=27, h2 PF 1.20 n=33; 10–12bps에서 실패 | `reports/bitget-btc-short-swing-hit/README.md`, `reports/bitget-btc-short-swing-deep-20260805/README.md` |
