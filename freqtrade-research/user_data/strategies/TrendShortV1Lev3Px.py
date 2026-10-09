@@ -16,6 +16,16 @@ class TrendShortV1Lev3Px(TrendShortV1Lev3):
     stoploss = -0.09
     minimal_roi = {"0": 0.27}
 
+    def confirm_trade_entry(self, pair, order_type, amount, rate, time_in_force,
+                            current_time, entry_tag, side, **kwargs) -> bool:
+        # Bitget account is shared with the w2 bot (one-way mode): skip entry while any
+        # position already exists on this pair, or our short would net against it. Fail closed.
+        try:
+            held = [p for p in self.dp._exchange.fetch_positions(pair) if float(p.get("contracts") or 0)]
+        except Exception:
+            return False
+        return not held
+
 
 if __name__ == "__main__":
     assert TrendShortV1Lev3Px.stoploss == -0.09

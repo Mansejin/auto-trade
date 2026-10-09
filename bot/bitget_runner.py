@@ -363,6 +363,14 @@ def run_once_bitget(settings: Settings, trades: logging.Logger, notify: Telegram
         assert private is not None
         # LIVE futures: BUY = open long, SELL = close long (one-way)
         if is_buy:
+            # Shared Bitget account with w5 (freqtrade, priority): one-way mode would net our long
+            # against its short, so never open while any foreign position exists on this symbol.
+            if not portfolio.in_position and private.futures_positions(symbol=symbol):
+                logger.warning("매수 생략 — 같은 계정에 다른 봇(w5) 포지션 있음 (%s)", symbol)
+                trades.info("LIVE BUY SKIP | %s | reason=foreign_position", symbol)
+                risk = record_success(risk)
+                save_risk(settings.state_path, risk, integrity_key=settings.risk_integrity_key)
+                return
             avail = usdt if usdt is not None else private.available_usdt(symbol)
             min_need = funding.min_trade_usdt
             if avail < min_need and funding.enabled and not force_buy:
