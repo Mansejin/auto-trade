@@ -74,6 +74,7 @@
 | Upbit scalp 5m RSI-BB v1–v4, 1m RSI-Ichi v1–v3, 5m RSI-Ichi v4 | 평균회귀 | KRW-BTC 1m/5m | KILL | — | `strategies/krw-btc-*-scalp-*.json` |
 | RsiBbScalpLongShortV4 (FT) | 평균회귀 | Bitget BTC 5m | KILL | 3창 모두 PF<1 | `freqtrade-research/reports/20260729-rsi-bb-longshort-v4.md` |
 | RSI-Ichi 5m long | 평균회귀 | Bitget BTC 5m | PARTIAL (수수료 전) | OOS 반쪽 PF 1.46/1.53 (fee 전), n~180 | `strategies/bitget-btc-5m-rsi-ichi-long-short-v1.notes.md` |
+| maker-fill-rsi-ichi-5m-long (RSI-Ichi 5m long 원본 값, 지정가 관통 체결 N=1 vs 테이커) | 체결 방식 × 평균회귀 | Binance BTC/ETH 무기한 5m, OOS 2020-01~2025-08 ∪ 2026-08~10 | **KILL** (T-035) | 신호 1,605, 진입 체결률 98.0%, 청산 지정가 96.0%; B x2 PF 0.265(A 0.061), 수수료 0도 A 0.886 / B 0.609; 무작위 0백분위; 절반 0.27/0.26; ETH 0.32; 역선택: 미체결 반사실 +0.19% vs 체결 −0.017% (t −6.05); IS 재현 수수료 0 PF 1.145(업비트 원본 1.46~1.53) | `docs/research/results/maker-fill-rsi-ichi-5m-long.md` |
 | RSI-Ichi short v1–v4, RSI-BB short v5, 5m/1m 스캘프 그리드 | 평균회귀 | Bitget BTC 1m/5m | KILL | 수수료 후 최고 minPF 0.86–0.93; PF≥1.10@n150 0건 | `reports/scalp-pf-threshold-20260805/NOTES.md` |
 | daytrade side BB fade v1–v8; `SidewaysEdge15mBbFadeV5` | 평균회귀 | KRW-BTC/Bitget 10m/15m | KILL (v5는 SCALP LIVE 후 정지) | 07-30 수수료·슬리피지로 정지 | `config/scalp-live-map.json` |
 | SidewaysScalp15mBbV1 | 평균회귀 | Bitget BTC 15m | KILL | 샘플 창 기각 | `reports/improve/20260729-dual-sleeve-allocation.md` |

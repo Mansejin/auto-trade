@@ -26,7 +26,7 @@ VISION = "https://data.binance.vision"
 S3 = "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision"
 LEVERAGED = re.compile(r"(UP|DOWN|BULL|BEAR)USDT$")
 START_MS = iso_to_ms("2017-01-01")
-STEP_MS = {"1d": DAY_MS, "1h": 3_600_000}
+STEP_MS = {"1d": DAY_MS, "1h": 3_600_000, "5m": 300_000}
 INTERVAL = "1d"
 
 

@@ -1,0 +1,328 @@
+{
+ "card": "docs/research/cards/maker-fill-rsi-ichi-5m-long.md",
+ "n_wait": 1,
+ "cost": {
+  "x0": {
+   "taker": 0.0,
+   "maker": 0.0,
+   "slip": 0.0
+  },
+  "x1": {
+   "taker": 0.0006,
+   "maker": 0.0002,
+   "slip": 0.0002
+  },
+  "x2": {
+   "taker": 0.0012,
+   "maker": 0.0004,
+   "slip": 0.0004
+  }
+ },
+ "data_BTCUSDT": {
+  "bars": 745323,
+  "first": "2019-09-08T17:55:00+00:00",
+  "last": "2026-10-09T16:05:00+00:00",
+  "gaps": 0,
+  "signals_all": 2063
+ },
+ "data_ETHUSDT": {
+  "bars": 722406,
+  "first": "2019-11-27T07:45:00+00:00",
+  "last": "2026-10-09T16:10:00+00:00",
+  "gaps": 0,
+  "signals_all": 2173
+ },
+ "is_replication_toolkit_fee0": {
+  "BTC_IS": {
+   "n": 346,
+   "pf": 1.145,
+   "ret_pct": 3.5,
+   "mean_pct": 0.01,
+   "win_pct": 52.0,
+   "mdd_pct": -4.45,
+   "sum_pct": 3.52,
+   "signals": 346,
+   "fill_rate_pct": 100.0,
+   "exit_kinds": {
+    "toolkit": 346
+   }
+  },
+  "BTC_OOS": {
+   "n": 1605,
+   "pf": 0.888,
+   "ret_pct": -18.45,
+   "mean_pct": -0.012,
+   "win_pct": 48.5,
+   "mdd_pct": -26.04,
+   "sum_pct": -19.7,
+   "signals": 1605,
+   "fill_rate_pct": 100.0,
+   "exit_kinds": {
+    "toolkit": 1605
+   }
+  }
+ },
+ "BTC_OOS_A_x0": {
+  "n": 1605,
+  "pf": 0.886,
+  "ret_pct": -18.81,
+  "mean_pct": -0.013,
+  "win_pct": 48.3,
+  "mdd_pct": -25.94,
+  "sum_pct": -20.14,
+  "signals": 1605,
+  "fill_rate_pct": 100.0,
+  "exit_kinds": {
+   "sig": 1441,
+   "sl": 161,
+   "tp": 3
+  }
+ },
+ "BTC_OOS_A_x1": {
+  "n": 1605,
+  "pf": 0.205,
+  "ret_pct": -93.84,
+  "mean_pct": -0.173,
+  "win_pct": 20.2,
+  "mdd_pct": -93.84,
+  "sum_pct": -277.84,
+  "signals": 1605,
+  "fill_rate_pct": 100.0,
+  "exit_kinds": {
+   "sig": 1425,
+   "sl": 177,
+   "tp": 3
+  }
+ },
+ "BTC_OOS_A_x2": {
+  "n": 1605,
+  "pf": 0.061,
+  "ret_pct": -99.54,
+  "mean_pct": -0.335,
+  "win_pct": 8.7,
+  "mdd_pct": -99.54,
+  "sum_pct": -536.92,
+  "signals": 1605,
+  "fill_rate_pct": 100.0,
+  "exit_kinds": {
+   "sig": 1409,
+   "sl": 195,
+   "tp": 1
+  }
+ },
+ "BTC_IS_A_x1": {
+  "n": 346,
+  "pf": 0.158,
+  "ret_pct": -40.58,
+  "mean_pct": -0.15,
+  "win_pct": 19.4,
+  "mdd_pct": -40.59,
+  "sum_pct": -51.92,
+  "signals": 346,
+  "fill_rate_pct": 100.0,
+  "exit_kinds": {
+   "sig": 329,
+   "sl": 17
+  }
+ },
+ "BTC_OOS_B_x0": {
+  "n": 1573,
+  "pf": 0.609,
+  "ret_pct": -59.74,
+  "mean_pct": -0.057,
+  "win_pct": 44.8,
+  "mdd_pct": -60.33,
+  "sum_pct": -90.18,
+  "signals": 1605,
+  "fill_rate_pct": 98.0,
+  "exit_kinds": {
+   "sig_maker": 1194,
+   "sl_ambiguous": 157,
+   "sl": 171,
+   "sig_taker_fallback": 50,
+   "tp": 1
+  }
+ },
+ "BTC_OOS_B_x1": {
+  "n": 1573,
+  "pf": 0.395,
+  "ret_pct": -82.92,
+  "mean_pct": -0.112,
+  "win_pct": 36.5,
+  "mdd_pct": -82.98,
+  "sum_pct": -175.75,
+  "signals": 1605,
+  "fill_rate_pct": 98.0,
+  "exit_kinds": {
+   "sig_maker": 1194,
+   "sl_ambiguous": 157,
+   "sl": 171,
+   "sig_taker_fallback": 50,
+   "tp": 1
+  }
+ },
+ "BTC_OOS_B_x2": {
+  "n": 1573,
+  "pf": 0.265,
+  "ret_pct": -92.76,
+  "mean_pct": -0.166,
+  "win_pct": 29.1,
+  "mdd_pct": -92.76,
+  "sum_pct": -261.32,
+  "signals": 1605,
+  "fill_rate_pct": 98.0,
+  "exit_kinds": {
+   "sig_maker": 1194,
+   "sl_ambiguous": 157,
+   "sl": 171,
+   "sig_taker_fallback": 50,
+   "tp": 1
+  }
+ },
+ "BTC_IS_B_x1": {
+  "n": 335,
+  "pf": 0.501,
+  "ret_pct": -17.91,
+  "mean_pct": -0.059,
+  "win_pct": 35.2,
+  "mdd_pct": -18.47,
+  "sum_pct": -19.63,
+  "signals": 346,
+  "fill_rate_pct": 96.8,
+  "exit_kinds": {
+   "sig_maker": 293,
+   "sl": 16,
+   "sl_ambiguous": 12,
+   "sig_taker_fallback": 14
+  }
+ },
+ "BTC_OOS_B_x2_halves": {
+  "h1": {
+   "n": 786,
+   "pf": 0.267,
+   "ret_pct": -78.01,
+   "mean_pct": -0.192,
+   "win_pct": 29.1,
+   "mdd_pct": -78.01,
+   "sum_pct": -150.71,
+   "signals": 786,
+   "fill_rate_pct": 100.0,
+   "exit_kinds": {
+    "sig_maker": 558,
+    "sl_ambiguous": 98,
+    "sl": 113,
+    "sig_taker_fallback": 17
+   }
+  },
+  "h2": {
+   "n": 787,
+   "pf": 0.262,
+   "ret_pct": -67.06,
+   "mean_pct": -0.141,
+   "win_pct": 29.1,
+   "mdd_pct": -67.17,
+   "sum_pct": -110.6,
+   "signals": 787,
+   "fill_rate_pct": 100.0,
+   "exit_kinds": {
+    "sig_maker": 636,
+    "sl_ambiguous": 59,
+    "sig_taker_fallback": 33,
+    "sl": 58,
+    "tp": 1
+   }
+  }
+ },
+ "exit_maker_fill_rate_pct": 96.0,
+ "funding_crossings_B_x2": 19,
+ "adverse_selection_BTC": {
+  "n_filled": 1573,
+  "n_unfilled": 32,
+  "cf_mean_pct_filled": -0.0167,
+  "cf_mean_pct_unfilled": 0.1919,
+  "cf_pf_filled": 0.851,
+  "cf_pf_unfilled": 398.304,
+  "welch_t_filled_minus_unfilled": -6.05
+ },
+ "ETH_OOS_B_x2": {
+  "n": 1738,
+  "pf": 0.316,
+  "ret_pct": -94.67,
+  "mean_pct": -0.168,
+  "win_pct": 32.7,
+  "mdd_pct": -94.67,
+  "sum_pct": -291.48,
+  "signals": 1775,
+  "fill_rate_pct": 97.9,
+  "exit_kinds": {
+   "sig_maker": 1244,
+   "sl_ambiguous": 156,
+   "sl": 289,
+   "sig_taker_fallback": 48,
+   "tp": 1
+  }
+ },
+ "ETH_OOS_A_x2": {
+  "n": 1775,
+  "pf": 0.1,
+  "ret_pct": -99.7,
+  "mean_pct": -0.327,
+  "win_pct": 10.6,
+  "mdd_pct": -99.7,
+  "sum_pct": -580.39,
+  "signals": 1775,
+  "fill_rate_pct": 100.0,
+  "exit_kinds": {
+   "sig": 1445,
+   "sl": 319,
+   "tp": 11
+  }
+ },
+ "ETH_OOS_B_x0": {
+  "n": 1738,
+  "pf": 0.67,
+  "ret_pct": -61.16,
+  "mean_pct": -0.054,
+  "win_pct": 45.7,
+  "mdd_pct": -61.28,
+  "sum_pct": -93.37,
+  "signals": 1775,
+  "fill_rate_pct": 97.9,
+  "exit_kinds": {
+   "sig_maker": 1244,
+   "sl_ambiguous": 156,
+   "sl": 289,
+   "sig_taker_fallback": 48,
+   "tp": 1
+  }
+ },
+ "adverse_selection_ETH": {
+  "n_filled": 1738,
+  "n_unfilled": 37,
+  "cf_mean_pct_filled": -0.0124,
+  "cf_mean_pct_unfilled": 0.36,
+  "cf_pf_filled": 0.904,
+  "cf_pf_unfilled": 82.903,
+  "welch_t_filled_minus_unfilled": -5.6
+ },
+ "bh_BTC_OOS_pct": {
+  "2020-01-01~2025-08-03": 1487.76,
+  "2026-08-05~2026-10-09": 29.28
+ },
+ "random_BTC_B_x2": {
+  "actual_mean_pct": -0.1661,
+  "random_p50_pct": -0.1247,
+  "random_p99_pct": -0.1071,
+  "percentile": 0.0,
+  "signals_below_cloud_share_pct": 99.8
+ },
+ "criteria": {
+  "1_B_pf_x2_ge_1.1": false,
+  "2_B_trades_ge_150": true,
+  "3_random_ge_99pct": false,
+  "4_B_beats_A_pf_and_sum": true,
+  "5_halves_pf_ge_1.0": false,
+  "6_eth_pf_x2_ge_1.0": false
+ },
+ "verdict": "KILL"
+}

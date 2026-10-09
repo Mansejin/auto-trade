@@ -16,10 +16,10 @@ auto: off
   - 완료 기준: 셀프체크 1개, NAS 배포는 팀장. 이후 모든 후보 카드가 같은 형식 사용.
   - 결과: `bot/forward_log.py` `record_forward()` + `bot/main.py` run_once에서 evaluate 직후 1줄 호출(주문·잔고와 무관, 예외 삼킴). 파일 `logs/forward/<전략파일명>.jsonl`, 줄 = bar, close, 지표값(sma200), signal, state(규칙 기준 in_position/cash, 직전 줄에서 이어감), switched, recorded_at(UTC), mode, strategy. 마지막 줄 bar가 같으면 안 씀(재시작·5분 폴링 중복 없음). 셀프체크 `python -m bot.forward_log` 통과. NAS: bot/ 바인드 마운트 → bot/forward_log.py, bot/main.py 동기화 후 w1 재시작(팀장). 미구현: 전환 텔레그램·공개 표(T-026 잔여, 필요 시 새 작업).
 
-- [ ] T-035 | to: quant-researcher | from: user | open | 지정가(메이커) 체결 실험 — 수수료로 죽은 스캘프 1개
+- [x] T-035 | to: quant-researcher | from: user | done | 지정가(메이커) 체결 실험 — 수수료로 죽은 스캘프 1개
   - 내용: 원장에서 "수수료 전 PF≥1.1인데 수수료로 KILL" 전략 중 1개를 결과 보기 전에 고정. 시장가 vs 지정가(체결은 가격이 지정가를 관통할 때만, 미체결 시 신호 버림, 메이커 0.02%) 비교. 다중검정(원장 시도 수) 반영해 통과선 상향.
   - 완료 기준: 카드 + 결과 + JSON + 원장 1줄
-  - 결과:
+  - 결과: KILL. 선정 = RSI-Ichi 5m long(기록된 수수료 전 min-half PF 1.455, n≥150 유일). Binance 무기한 OOS에선 수수료 0 테이커 PF 0.886으로 엣지 자체가 없음. 메이커 B x2 PF 0.265(A 0.061), 체결률 98%, 무작위 0백분위, ETH 0.32. 역선택 뚜렷(미체결 반사실 +0.19% vs 체결 −0.017%, t −6.05). 레드팀 불필요. 카드 `docs/research/cards/maker-fill-rsi-ichi-5m-long.md`, 결과 `docs/research/results/maker-fill-rsi-ichi-5m-long.md`, JSON `reports/research-cards/maker-fill-rsi-ichi-5m-long.json`, 코드 `scripts/bt_maker_fill.py`, 데이터 `binance_perp_5m`(카탈로그 추가).
 
 - [ ] T-036 | to: edge-scout | from: user | open | 한국어 공지·이벤트 엣지 카드 2장 (빗썸 공지, 유의종목·상폐 지정 등)
   - 내용: 반대편(누가 강제로/늦게 사고파나) 설명 필수, 시간~일 단위, 필요한 데이터 명시. 이미 기각된 카드 재탕 금지. 데이터 수집은 카드 확정 후 quant-data.
