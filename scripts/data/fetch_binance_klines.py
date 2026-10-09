@@ -26,6 +26,8 @@ VISION = "https://data.binance.vision"
 S3 = "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision"
 LEVERAGED = re.compile(r"(UP|DOWN|BULL|BEAR)USDT$")
 START_MS = iso_to_ms("2017-01-01")
+STEP_MS = {"1d": DAY_MS, "1h": 3_600_000}
+INTERVAL = "1d"
 
 
 def row(sym, k):
@@ -36,13 +38,13 @@ def rest(market, sym, since):
     """list of rows, or None if the symbol is unknown to REST."""
     out, t, cutoff = [], since, now_ms()
     while True:
-        data = get(BASE[market], {"symbol": sym, "interval": "1d", "startTime": t, "limit": 1000}, sleep=0.12)
+        data = get(BASE[market], {"symbol": sym, "interval": INTERVAL, "startTime": t, "limit": 1000}, sleep=0.12)
         if data is None:
             return None if not out and t == since else out
         out += [row(sym, k) for k in data if int(k[6]) < cutoff]
         if len(data) < 1000:
             return out
-        t = int(data[-1][0]) + DAY_MS
+        t = int(data[-1][0]) + STEP_MS[INTERVAL]
 
 
 def s3_list(prefix):
@@ -60,7 +62,7 @@ def s3_list(prefix):
 def vision_zips(market, sym, since):
     root = {"spot": "data/spot", "perp": "data/futures/um"}[market]
     out = []
-    for key in sorted(k for k in s3_list(f"{root}/monthly/klines/{sym}/1d/") if k.endswith(".zip")):
+    for key in sorted(k for k in s3_list(f"{root}/monthly/klines/{sym}/{INTERVAL}/") if k.endswith(".zip")):
         r = _client.get(f"{VISION}/{key}")
         if r.status_code != 200:
             continue
@@ -97,7 +99,11 @@ def main():
     ap.add_argument("--symbols-file")
     ap.add_argument("--universe", action="store_true")
     ap.add_argument("--out", required=True)
+    ap.add_argument("--interval", choices=list(STEP_MS), default="1d")
     a = ap.parse_args()
+    global INTERVAL
+    INTERVAL = a.interval
+    step = STEP_MS[INTERVAL]
     syms = a.symbols.split(",")
     if a.symbols_file:
         with open(a.symbols_file, encoding="utf-8") as f:
@@ -107,8 +113,8 @@ def main():
     path = OUT / f"{a.out}.csv"
     last = last_by_key(path, ["symbol"], "open_time_ms")
     for i, sym in enumerate(syms, 1):
-        since = last[(sym,)] + DAY_MS if (sym,) in last else START_MS
-        if since > now_ms() - 2 * DAY_MS:
+        since = last[(sym,)] + step if (sym,) in last else START_MS
+        if since > now_ms() - 2 * step:
             continue
         rows, src = rest(a.market, sym, since), "rest"
         if rows is None:
