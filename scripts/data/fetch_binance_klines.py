@@ -28,6 +28,7 @@ LEVERAGED = re.compile(r"(UP|DOWN|BULL|BEAR)USDT$")
 START_MS = iso_to_ms("2017-01-01")
 STEP_MS = {"1d": DAY_MS, "1h": 3_600_000, "5m": 300_000}
 INTERVAL = "1d"
+PAGE_CAP = 5000  # hard stop for paging loops (BTC 5m since 2019 is ~750 pages)
 
 
 def row(sym, k):
@@ -37,7 +38,7 @@ def row(sym, k):
 def rest(market, sym, since):
     """list of rows, or None if the symbol is unknown to REST."""
     out, t, cutoff = [], since, now_ms()
-    while True:
+    for _ in range(PAGE_CAP):
         data = get(BASE[market], {"symbol": sym, "interval": INTERVAL, "startTime": t, "limit": 1000}, sleep=0.12)
         if data is None:
             return None if not out and t == since else out
@@ -45,24 +46,36 @@ def rest(market, sym, since):
         if len(data) < 1000:
             return out
         t = int(data[-1][0]) + STEP_MS[INTERVAL]
+    return out
 
 
 def s3_list(prefix):
     """Common prefixes / keys under an S3 prefix (paginated)."""
     keys, marker = [], ""
-    while True:
+    for _ in range(PAGE_CAP):
         xml = get(S3, {"delimiter": "/", "prefix": prefix, "marker": marker}, sleep=0.1)
         page = re.findall(r"<Prefix>([^<]+)</Prefix>", xml)[1:] + re.findall(r"<Key>([^<]+)</Key>", xml)
         keys += page
         if "<IsTruncated>true</IsTruncated>" not in xml:
             return keys
         marker = re.search(r"<NextMarker>([^<]+)</NextMarker>", xml).group(1)
+    return keys
 
 
 def vision_zips(market, sym, since):
+    """Monthly zips from since's month, then daily zips after the last monthly day (delisted mid-month)."""
     root = {"spot": "data/spot", "perp": "data/futures/um"}[market]
+    month0 = ms_to_iso(since)[:7]
+    out = read_zips(sym, since, [k for k in s3_list(f"{root}/monthly/klines/{sym}/{INTERVAL}/")
+                                 if k.endswith(".zip") and k[-11:-4] >= month0])
+    day0 = ms_to_iso(max((r[1] for r in out), default=since - STEP_MS[INTERVAL]) + STEP_MS[INTERVAL])[:10]
+    return out + read_zips(sym, since, [k for k in s3_list(f"{root}/daily/klines/{sym}/{INTERVAL}/")
+                                        if k.endswith(".zip") and k[-14:-4] >= day0])
+
+
+def read_zips(sym, since, keys):
     out = []
-    for key in sorted(k for k in s3_list(f"{root}/monthly/klines/{sym}/{INTERVAL}/") if k.endswith(".zip")):
+    for key in sorted(keys):
         r = _client.get(f"{VISION}/{key}")
         if r.status_code != 200:
             continue
@@ -117,11 +130,11 @@ def main():
         if since > now_ms() - 2 * step:
             continue
         rows, src = rest(a.market, sym, since), "rest"
-        if rows is None:
+        if not rows:  # unknown to REST, or delisted perp REST answers with []
             rows, src = vision_zips(a.market, sym, since), "vision"
         rows = sorted(set(rows or []), key=lambda r: r[1])
         append_rows(path, HEADER, rows)
-        print(f"[{i}/{len(syms)}] {sym}: +{len(rows)} ({src})")
+        print(f"[{i}/{len(syms)}] {sym}: +{len(rows)} ({src})", flush=True)
 
 
 if __name__ == "__main__":
