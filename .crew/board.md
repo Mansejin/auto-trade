@@ -21,9 +21,9 @@ auto: off
   - 완료 기준: 카드 + 결과 + JSON + 원장 1줄
   - 결과: KILL. 선정 = RSI-Ichi 5m long(기록된 수수료 전 min-half PF 1.455, n≥150 유일). Binance 무기한 OOS에선 수수료 0 테이커 PF 0.886으로 엣지 자체가 없음. 메이커 B x2 PF 0.265(A 0.061), 체결률 98%, 무작위 0백분위, ETH 0.32. 역선택 뚜렷(미체결 반사실 +0.19% vs 체결 −0.017%, t −6.05). 레드팀 불필요. 카드 `docs/research/cards/maker-fill-rsi-ichi-5m-long.md`, 결과 `docs/research/results/maker-fill-rsi-ichi-5m-long.md`, JSON `reports/research-cards/maker-fill-rsi-ichi-5m-long.json`, 코드 `scripts/bt_maker_fill.py`, 데이터 `binance_perp_5m`(카탈로그 추가).
 
-- [ ] T-036 | to: edge-scout | from: user | open | 한국어 공지·이벤트 엣지 카드 2장 (빗썸 공지, 유의종목·상폐 지정 등)
+- [x] T-036 | to: edge-scout | from: user | done | 한국어 공지·이벤트 엣지 카드 2장 (빗썸 공지, 유의종목·상폐 지정 등)
   - 내용: 반대편(누가 강제로/늦게 사고파나) 설명 필수, 시간~일 단위, 필요한 데이터 명시. 이미 기각된 카드 재탕 금지. 데이터 수집은 카드 확정 후 quant-data.
-  - 결과:
+  - 결과: 카드 2장 frozen (2026-10-10, 백테스트 없음). ① `docs/research/cards/upbit-caution-perp-short.md` — 업비트 유의종목 최초 지정 공지(`first_listed_at`) 후 첫 UTC 00:00 시가 → Binance 무기한 1배 14일 숏(펀딩 포함), 반대편=상폐 마감 앞둔 국내 현물 보유자(헤지·해외 출금 수단 없음), 연 8~30건(2026 페이스 ~40), 주 판정 Binance 무기한(Bitget은 보고만). 기각: 날짜 묶음 달력 이동 1,000회 99백분위, BTC·알트 바스켓 숏 대비 초과수익, 꼬리 −40%×2. ② `docs/research/cards/upbit-suspension-discount-revert.md` — 출금 중단 24h 뒤 코인별 상대 프리미엄 ≤−3% → 업비트 매수+무기한 숏 헤지, 재개(P≥0) 또는 14일 청산, 반대편=출금 막혀 업비트에서만 파는 보유자, 연 8~25건(추정, 개수 먼저 세서 <30이면 INCONCLUSIVE). 확인: 업비트 공지 API `category=all`은 5,880건(2017-10~, 입출금 범주 1,590건)인데 현재 수집은 `trade` 786건뿐. 빗썸 상장은 VETO된 listing-fade 변형이라 제외. 빗썸 `api.bithumb.com/v1/notices`(JSON, categories, published_at)는 존재하나 페이징·이력 깊이 미확인(반복 요청 시 302). 다음: quant-data에 공지 전체·1h 캔들(상폐 심볼 포함) 수집 요청.
 
 - [x] T-001 | to: edge-scout | from: user | done | 과거 전략 전수 목록(전략 묘지 + 생존자) 작성
   - 참고: docs/research/, freqtrade-research/reports/, reports/, strategies/, freqtrade-research/user_data/strategies/, docs/*.md(playbook류), VERSION.md
