@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "data" / "research"
 OUT.mkdir(parents=True, exist_ok=True)
 
-_client = httpx.Client(timeout=30, follow_redirects=True, headers={"User-Agent": "auto-trade-research/1.0"})
+_client = httpx.Client(timeout=20, follow_redirects=True, headers={"User-Agent": "auto-trade-research/1.0"})
 
 
 def get(url, params=None, sleep=0.15, tries=6):
