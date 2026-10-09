@@ -5,14 +5,13 @@ from __future__ import annotations
 import base64
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path("/usr/syno/etc/synoschedule.d/root")
-NAME = "autotrade-regime-switch-daily"
-# After KST daily close (00:00). Matches former Oracle ~15:20 UTC.
-SCRIPT = "sh /volume1/docker/p3f8c1a2/scripts/nas_regime_cron.sh"
-HOUR = "0"
-MINUTE = "20"
+# Defaults = regime switch after KST daily close. Other daily tasks: argv NAME "SCRIPT" HOUR MINUTE.
+NAME, SCRIPT, HOUR, MINUTE = (sys.argv[1:5] if len(sys.argv) >= 5 else (
+    "autotrade-regime-switch-daily", "sh /volume1/docker/p3f8c1a2/scripts/nas_regime_cron.sh", "0", "20"))
 
 
 def parse_task(text: str) -> dict[str, str]:
