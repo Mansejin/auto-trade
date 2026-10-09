@@ -7,7 +7,23 @@ auto: off
 파이프라인: 과거 전략 목록 → 발굴(Scout) + 데이터 → 리서치 → 반증 → 상품 기획
 2단계(2026-10-08~): 첫 상품 "업비트 상장 이벤트 알림" 실체화 — 판매(sales-marketer)·법무(legal-compliance)·앱개발(backend-dev, devops, qa-tester)
 
+3단계(2026-10-10~): AI 전략 크루 원칙 — 속도 경쟁 안 함(시간~일 단위), 모델은 연구만·매매는 고정 규칙 코드, 우리만의 데이터(실시간 신호 장부·한국어 공지), 체결 개선(지정가), 시도 수 기반 통과선 상향. 실돈 전 실시간 기록 30건.
+
 ## 작업
+
+- [x] T-034 | to: backend-dev | from: user | done | 실시간 신호 장부(forward log) — SMA200부터 (T-026 흡수)
+  - 내용: `bot/` 공통 함수 1개로 append-only JSONL(`logs/forward/<strategy>.jsonl`): 닫힌 봉 1회 1줄(date, close, 지표값, signal, state, switched, recorded_at). 재시작 중복 금지. w1 run_once에서 호출. 주문 로직 변경 없음.
+  - 완료 기준: 셀프체크 1개, NAS 배포는 팀장. 이후 모든 후보 카드가 같은 형식 사용.
+  - 결과: `bot/forward_log.py` `record_forward()` + `bot/main.py` run_once에서 evaluate 직후 1줄 호출(주문·잔고와 무관, 예외 삼킴). 파일 `logs/forward/<전략파일명>.jsonl`, 줄 = bar, close, 지표값(sma200), signal, state(규칙 기준 in_position/cash, 직전 줄에서 이어감), switched, recorded_at(UTC), mode, strategy. 마지막 줄 bar가 같으면 안 씀(재시작·5분 폴링 중복 없음). 셀프체크 `python -m bot.forward_log` 통과. NAS: bot/ 바인드 마운트 → bot/forward_log.py, bot/main.py 동기화 후 w1 재시작(팀장). 미구현: 전환 텔레그램·공개 표(T-026 잔여, 필요 시 새 작업).
+
+- [ ] T-035 | to: quant-researcher | from: user | open | 지정가(메이커) 체결 실험 — 수수료로 죽은 스캘프 1개
+  - 내용: 원장에서 "수수료 전 PF≥1.1인데 수수료로 KILL" 전략 중 1개를 결과 보기 전에 고정. 시장가 vs 지정가(체결은 가격이 지정가를 관통할 때만, 미체결 시 신호 버림, 메이커 0.02%) 비교. 다중검정(원장 시도 수) 반영해 통과선 상향.
+  - 완료 기준: 카드 + 결과 + JSON + 원장 1줄
+  - 결과:
+
+- [ ] T-036 | to: edge-scout | from: user | open | 한국어 공지·이벤트 엣지 카드 2장 (빗썸 공지, 유의종목·상폐 지정 등)
+  - 내용: 반대편(누가 강제로/늦게 사고파나) 설명 필수, 시간~일 단위, 필요한 데이터 명시. 이미 기각된 카드 재탕 금지. 데이터 수집은 카드 확정 후 quant-data.
+  - 결과:
 
 - [x] T-001 | to: edge-scout | from: user | done | 과거 전략 전수 목록(전략 묘지 + 생존자) 작성
   - 참고: docs/research/, freqtrade-research/reports/, reports/, strategies/, freqtrade-research/user_data/strategies/, docs/*.md(playbook류), VERSION.md

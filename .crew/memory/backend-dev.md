@@ -7,4 +7,5 @@
 - 결정: 템플릿 변수명은 sales templates.json에 맞춤. no-perp 알림은 7일 회신 없음(판매 문구 "집계 제외"), 그래서 Upbit 캔들 경로 삭제. 첫 실행은 bootstrap 줄만 남기고 기존 공지 발송 안 함. 소스 장애는 down/recovered 전환 시 1줄씩만 기록.
 - 금지어(BANNED) 포함 템플릿은 내장 fallback으로 대체, DISCLAIMER 없으면 자동 추가.
 - 2026-10-08 T-019: QA 테스트 `python -m alerts._test_listing_alert`(수정 금지, B7 문서 1건만 실패 예상). jsonl이 정본(시작 시 seen 병합), state의 `bootstrapped` 플래그, binance_error=미확인(대상 유지·회신 때 재확인), 공개 회신은 live+sent 알림만, 하락 판정은 ret_7d_raw.
+- 2026-10-10 T-034 forward log: `bot/forward_log.record_forward(log_dir, slug, strategy, ohlcv, bar_key, mode)` → `logs/forward/<slug>.jsonl`. slug=전략 파일 stem. state는 지갑이 아니라 규칙 상태(직전 줄 state로 evaluate 재호출, entry_price=None → SL/TP 무시, ponytail 주석). 중복 방지=마지막 줄 bar 비교(파일 끝 4KB만 읽음). 지표 키는 `.value` 접미사 제거. 지표값 없으면(워밍업) 안 씀. w1만 연결, Bitget 미연결. NAS는 ./bot 바인드 마운트라 재빌드 불필요(동기화+w1 재시작).
 - 한계: replay의 거래대금·펀딩은 현재값(과거 시점 아님). Binance 펀딩은 lastFundingRate(직전 정산, 주기 4h/8h 구분 안 함).
