@@ -1,28 +1,9 @@
 # quant-researcher 기억
 
-## 2026-10-08 T-005 카드 5장 백테스트
-- 결과: upbit-listing-fade SURVIVE(→ T-009 red-team), funding-carry / kimchi-rich-fade / xs-alt-momentum KILL, funding-negative-consensus INCONCLUSIVE(20건).
-- 코드: `scripts/bt_cards_common.py`(stdlib 전용 로더·PF·요약·백분위, pandas 없음) + `scripts/bt_<slug>.py`. JSON은 `reports/research-cards/<slug>.json`.
-- 결정
-  - 표본 게이트(<30)는 거래 통계 검정(PF, 무작위)보다 우선해 INCONCLUSIVE로 둔다. 일별 곡선으로 재는 구간 기준(연 4% 허들, always-on 비교)은 게이트와 무관하게 KILL 근거가 된다(carry 판정에 적용).
-  - 캐리: 명목을 매일 자기자본/2로 재설정. 고정 수량 1배 숏은 2020~21년 ETH 20배 상승 때 청산되고 펀딩이 부풀려진다.
-  - 이벤트가 겹치는 카드(listing)는 전액 순차 복리가 무의미 → 고정 금액 합·중앙값·상위 5건 제외 평균으로 본다.
-  - 김프: USDKRW ECB는 D일 고시(13:15 UTC)가 D 종가 전이라 그날 값 사용, 이후 forward-fill만.
-- 다음에 알 것
-  - 비용 해석: 카드의 "슬리피지 Xbps"는 왕복으로 읽었다(카드 1 문구 기준). 편도로 읽으면 listing x2 비용이 0.6%가 되는데 PF 여유(1.92)가 커서 판정은 같다.
-  - 업비트 상장 이벤트는 2022-01 이후 공지가 있어 OOS 생존편향은 묶인다. train(2020~21)은 묶이지 않는다.
-  - 2023년 이후 Binance·Bybit 동시 음수 펀딩은 거의 없다(OOS 4건).
-
-## 2026-10-08 T-029 weekend-gap-fade-btc-eth
-- 결과: KILL. n=421(OOS 120), OOS x2 평균 −0.29% PF 0.81, 무작위 57백분위, ETF 이후·BTC·ETH 모두 음수. train도 음수. 비용 전 OOS 평균 ≈ +0.05%라 되돌림 자체가 없다.
-- 결정
-  - 카드가 "편도 5bps"라고 명시해서 이번엔 슬리피지를 편도로 적용(왕복 x2 0.34%).
-  - 무기한 이전(2018~2019) train 거래는 현물 체결·펀딩 0으로 대체. OOS는 전부 무기한+펀딩.
-  - "월요일 무조건 롱·숏 둘 다보다 낮으면 KILL"은 문구대로(min 기준) 판정하고, max 기준(엄격) 실패는 리포트에 따로 적었다.
-  - B&H 기준은 노출일당 평균과 Sharpe 둘 다 이상이어야 통과로 읽었다.
-- 다음에 알 것
-  - 2023~26년 월요일은 무조건 롱 +0.13%/일(x2 후). 월요일 롱이 들어간 규칙은 이 계절성과 분리해서 봐야 한다.
-  - 주말 급등 후 월요일 숏은 OOS PF 0.53. 주말 급등은 되돌리지 않고 이어지는 쪽이었다(추세 지속 방향 카드는 별도 freeze 필요).
+## 2026-10-08 T-005 / T-029 (요약)
+- T-005: listing-fade SURVIVE(→T-009), carry·kimchi·xs-alt KILL, funding-consensus INCONCLUSIVE. 공용 `scripts/bt_cards_common.py`(stdlib), JSON `reports/research-cards/<slug>.json`.
+- 규칙: 표본<30은 INCONCLUSIVE 우선, 일별 곡선 기준(허들·always-on)은 게이트와 무관하게 KILL 근거. 겹치는 이벤트는 고정 금액 합·중앙값. 슬리피지 왕복/편도는 카드 문구대로.
+- T-029 weekend-gap-fade KILL(OOS PF 0.81). 월요일 무조건 롱 +0.13%/일 계절성 주의. 주말 급등은 이어지는 쪽.
 
 ## 2026-10-08 T-031 oi-flush-rebound
 - 결과: 업비트 현물 KILL(무작위 79백분위), Binance 무기한 대용은 사전 기준 전부 통과(무작위 95.3, 경계) → T-032 red-team. n=106(OOS 55), 연 16.9회.
@@ -45,3 +26,14 @@
 - 다음에 알 것
   - `fetch_binance_klines.py`에 `--interval 1h` 추가, `binance_perp_1h`(BTC·ETH) 있음. 다른 1h 카드는 이걸 재사용.
   - 1h 교차류는 비용 전 평균 ≈ +0.07%/거래(=BTC 드리프트)라 왕복 0.12% 수수료를 못 넘는다. 1h 빈도 OHLCV 지표 카드는 비용 단계에서 거의 확실히 죽는다.
+
+## 2026-10-10 T-035 maker-fill-rsi-ichi-5m-long
+- 결과: KILL. Binance 무기한 OOS(2020-01~2025-08 ∪ 2026-08~)에서 수수료 0 테이커 PF 0.886 → 엣지 자체 없음. 메이커 B x2 PF 0.265, 체결률 98%, 무작위 0백분위, ETH 0.32.
+- 결정
+  - 선정 규칙(결과 전 고정): 기록된 수수료 전 PF 두 반쪽 n≥150 중 min-half 최대 → RSI-Ichi 5m long(1.455). 숏 프록시는 자기 노트가 "PF 쓰지 말 것"이라 제외.
+  - 원본 "OOS 반쪽"은 그리드 구간 자체라 IS로 보고 판정에서 뺐다. 업비트는 메이커=테이커 0.05%라 실행처를 Bitget(대용 Binance 무기한)으로 바꿨다.
+  - 메이커 모델: 신호봉 종가 지정가, 다음 1봉 관통(low<L)만 체결, 청산 지정가 1봉 뒤 테이커 대체, 봉 안 순서 손절 먼저. `_selfcheck()`가 규칙 4개를 assert.
+- 다음에 알 것
+  - `binance_perp_5m`(BTC·ETH 2019~) 있음. `fetch_binance_klines.py`에 5m 추가.
+  - 업비트 5m에서 나온 1봉 되돌림 엣지는 Binance에서 PF 1.46→1.15(IS)로 줄었다. 업비트 단타 수수료 전 PF는 호가 튐을 먼저 의심.
+  - 관통 체결 역선택: 미체결 신호 반사실 +0.19% vs 체결 −0.017%(t −6). 메이커로 수수료 엣지를 "만드는" 카드는 체결 모델에서 이만큼 잃는다고 보고 시작.
