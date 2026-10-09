@@ -139,6 +139,7 @@
 | AE13 H_cheap 역김프 → 반등 | 김프·프리미엄 | Upbit KRW-BTC 1d | KILL | holdout 평균·적중 모두 기준 이하 | 같은 파일 |
 | kimchi-rich 매수 스킵 오버레이 | 김프·프리미엄 | Upbit 라우팅 | 미검증 (AE14 페이퍼 스펙만) | — | `strategies/kimchi-rich-preposition-skip-v1.notes.md`, `reports/improve/20260729-ae14-paper-log-spec.md` |
 | oi-flush-rebound (ΔOI 하위 5%+하락일 → 2일 롱) | OI·청산 | BTC/ETH/SOL 1d 2021-12~2026-09 | **KILL** (업비트 현물 KILL, 무기한은 레드팀 VETO: 시드 20개 중앙 92.9·날짜 묶음 85.6~89.6백분위, 거래소 두 번 시도, 2026 PF 0.34) | n=106(OOS 55, 연 16.9회); 업비트 OOS x2 +0.31% PF 1.30 무작위 79백분위; 무기한 +0.77% PF 1.75 무작위 95.3; 가격만 대비 OI 우위 통과; OOS 뒤 절반 PF 0.65/1.01, SOL 의존 | `docs/research/results/oi-flush-rebound.md` |
+| upbit-caution-perp-short (업비트 유의종목 최초 지정 → 다음 UTC 시가 Binance 무기한 1배 14일 숏, 펀딩 포함) | 한국어 공지 이벤트 | Binance USDT-M 무기한 1d, 공지 2022-05~2026-09 | **KILL** (T-036 카드 → T-037 데이터 → 리서치, 사전 기준 8개 중 5개 실패) | n=32(train 4 / OOS 28, 2026에 21); OOS x2(왕복 0.8%)+펀딩 평균 −2.95%, 중앙 −0.11%, PF 0.72, 승률 50%; 날짜 묶음 달력 이동 17.3백분위(99 필요), 독립 무작위 28.3; BTC 숏 대비 −0.75%p, 알트 바스켓 숏 대비 −1.36%p; 펀딩 평균 −4.2%/건; 2026 PF 0.45 vs 2026 이전 OOS 7건 PF 8.2; −40% 초과 손실 2건(TAIKO 청산, DRIFT −75%) | `docs/research/results/upbit-caution-perp-short.md` |
 
 ---
 

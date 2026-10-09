@@ -24,10 +24,12 @@ auto: off
 - [x] T-036 | to: edge-scout | from: user | done | 한국어 공지·이벤트 엣지 카드 2장 (빗썸 공지, 유의종목·상폐 지정 등)
   - 내용: 반대편(누가 강제로/늦게 사고파나) 설명 필수, 시간~일 단위, 필요한 데이터 명시. 이미 기각된 카드 재탕 금지. 데이터 수집은 카드 확정 후 quant-data.
   - 결과: 카드 2장 frozen (2026-10-10, 백테스트 없음). ① `docs/research/cards/upbit-caution-perp-short.md` — 업비트 유의종목 최초 지정 공지(`first_listed_at`) 후 첫 UTC 00:00 시가 → Binance 무기한 1배 14일 숏(펀딩 포함), 반대편=상폐 마감 앞둔 국내 현물 보유자(헤지·해외 출금 수단 없음), 연 8~30건(2026 페이스 ~40), 주 판정 Binance 무기한(Bitget은 보고만). 기각: 날짜 묶음 달력 이동 1,000회 99백분위, BTC·알트 바스켓 숏 대비 초과수익, 꼬리 −40%×2. ② `docs/research/cards/upbit-suspension-discount-revert.md` — 출금 중단 24h 뒤 코인별 상대 프리미엄 ≤−3% → 업비트 매수+무기한 숏 헤지, 재개(P≥0) 또는 14일 청산, 반대편=출금 막혀 업비트에서만 파는 보유자, 연 8~25건(추정, 개수 먼저 세서 <30이면 INCONCLUSIVE). 확인: 업비트 공지 API `category=all`은 5,880건(2017-10~, 입출금 범주 1,590건)인데 현재 수집은 `trade` 786건뿐. 빗썸 상장은 VETO된 listing-fade 변형이라 제외. 빗썸 `api.bithumb.com/v1/notices`(JSON, categories, published_at)는 존재하나 페이징·이력 깊이 미확인(반복 요청 시 302). 다음: quant-data에 공지 전체·1h 캔들(상폐 심볼 포함) 수집 요청.
+  - ① 판정(2026-10-10, quant-researcher): upbit-caution-perp-short **KILL** (OOS PF 0.72, 달력 이동 무작위 17.3백분위, BTC·알트 바스켓 숏 대비 열세). 상세는 T-037 줄. v2(예: 2020~21 "(N종)" 보충)는 판정 근거가 아님 — 원하면 새 카드로.
 
 - [x] T-037 | to: quant-data | from: edge-scout | done | upbit-caution-perp-short 데이터 (공지 전체 + 유의 지정 이벤트 + 무기한 일봉·펀딩)
   - 결과: `upbit_announcements_all`(5,880건, `fetch_upbit_announcements.py --category all`), `upbit_caution_events`(93 이벤트/76 공지, `build_caution_events.py`), `binance_perp_caution_1d`(44심볼 70,006행), `funding_caution`(236,038행). 무기한 매칭 45, 공지 전 상장 40, 그중 진입일에 실제 거래 중 **32건(train 4 / OOS 28, 2026에 21건)**. 주의: 상폐 무기한은 REST가 거래량 0 평평한 캔들·고정 펀딩을 계속 준다 → `quote_volume`>0 구간만. 카드 정의로 빠지는 지정 공지 10건(2020~21 "(N종)" 9건 ≈98티커, IOST, **LUNA**) — 본문 API로 보충할지 edge-scout 결정 → docs/research/data-catalog.md
   - 다음: quant-researcher 카드 그대로 백테스트
+  - 리서치 결과(2026-10-10, quant-researcher): **KILL**, 레드팀 불필요. n=32(train 4 / OOS 28). OOS x2+펀딩 평균 −2.95%·중앙 −0.11%·PF 0.72·승률 50%, 날짜 묶음 달력 이동 17.3백분위(99 필요), BTC 숏 대비 −0.75%p·알트 바스켓 숏 대비 −1.36%p. 2026 21건 PF 0.45 vs 2026 이전 OOS 7건 PF 8.2(소표본). TAIKO 청산(−100%)·DRIFT −75%(펀딩 −51%) 꼬리 2건 → 상품 부적합 표기. 상폐 중 보유 1건(UXLINK), 진입일 상폐 8건 제외 → docs/research/results/upbit-caution-perp-short.md, scripts/bt_upbit_caution_short.py, reports/research-cards/upbit-caution-perp-short.json
 
 - [x] T-001 | to: edge-scout | from: user | done | 과거 전략 전수 목록(전략 묘지 + 생존자) 작성
   - 참고: docs/research/, freqtrade-research/reports/, reports/, strategies/, freqtrade-research/user_data/strategies/, docs/*.md(playbook류), VERSION.md
