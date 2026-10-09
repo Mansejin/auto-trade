@@ -3,6 +3,8 @@
 Default: Binance USDT-M + Bybit linear, BTCUSDT/ETHUSDT  -> funding.csv
 Alts:    python scripts/data/fetch_funding.py --exchanges binance --symbols-file data/research/listing_perp_symbols.txt --out funding_alts
 Chunked: add --slice 0:40, --slice 40:80 ... (each run resumable)
+Full USDT-M universe (after fetch_binance_klines --universe wrote binance_um_symbols.txt):
+  python -u scripts/data/fetch_funding.py --exchanges binance --symbols-file data/research/binance_um_symbols.txt --start 2020-01-01 --out funding_um_all --slice 0:60
 
 Rows: exchange,symbol,funding_time_ms,funding_time_utc,funding_rate
 funding_time = settlement time (rate applies to positions held at that instant; known at that instant).
@@ -19,7 +21,6 @@ from _common import OUT, _client, append_rows, get, iso_to_ms, last_by_key, ms_t
 from fetch_binance_klines import VISION, s3_list
 
 HEADER = ["exchange", "symbol", "funding_time_ms", "funding_time_utc", "funding_rate"]
-START_MS = iso_to_ms("2019-09-01")
 PAGE_CAP = 200
 
 
@@ -75,7 +76,10 @@ def main():
     ap.add_argument("--symbols-file")
     ap.add_argument("--slice", default=":", help="python slice of the symbol list, e.g. 0:40")
     ap.add_argument("--out", default="funding")
+    ap.add_argument("--start", default="2019-09-01", help="first settlement date (UTC) for keys with nothing stored")
     a = ap.parse_args()
+    start = iso_to_ms(a.start)
+    failed = []
     syms = a.symbols.split(",")
     if a.symbols_file:
         with open(a.symbols_file, encoding="utf-8") as f:
@@ -87,13 +91,20 @@ def main():
     fns = {"binance": binance, "bybit": bybit}
     for ex in a.exchanges.split(","):
         for i, sym in enumerate(syms, 1):
-            since = last.get((ex, sym), START_MS - 1) + 1
-            rows, src = fns[ex](sym, since), "rest"
-            if not rows and ex == "binance" and (ex, sym) not in last:
-                rows, src = binance_vision(sym), "vision"
+            since = last.get((ex, sym), start - 1) + 1
+            try:
+                rows, src = fns[ex](sym, since), "rest"
+                if not rows and ex == "binance" and (ex, sym) not in last:
+                    rows, src = [x for x in binance_vision(sym) if x[0] >= since], "vision"
+            except Exception as e:  # get() gave up or a vision zip failed: skip, re-run resumes
+                failed.append((ex, sym))
+                print(f"[{i}/{len(syms)}] {ex} {sym}: FAILED {e!r}", flush=True)
+                continue
             rows = sorted(set(rows))
             append_rows(path, HEADER, [(ex, sym, t, ms_to_iso(t), r) for t, r in rows])
-            print(f"[{i}/{len(syms)}] {ex} {sym}: +{len(rows)} ({src})", flush=True)
+            if len(syms) <= 40 or i % 20 == 0 or src == "vision" or not rows:
+                print(f"[{i}/{len(syms)}] {ex} {sym}: +{len(rows)} ({src})", flush=True)
+    print(f"done {len(syms)} symbols, failed={failed}", flush=True)
 
 
 if __name__ == "__main__":

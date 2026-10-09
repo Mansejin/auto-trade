@@ -66,6 +66,11 @@ def last_by_key(path, key_cols, ts_col):
 
 def append_rows(path, header, rows):
     new = not path.exists()
+    if not new:  # file may carry derived columns (e.g. build_um_universe `tradable`): pad blanks
+        with open(path, encoding="utf-8", newline="") as f:
+            extra = len(next(csv.reader(f), header)) - len(header)
+        if extra > 0:
+            rows = [list(r) + [""] * extra for r in rows]
     with open(path, "a", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
         if new:

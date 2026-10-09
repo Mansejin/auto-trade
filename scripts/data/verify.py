@@ -12,7 +12,23 @@ from _common import OUT, ms_to_iso, read_rows
 DAILY = {"binance_spot_1d.csv": ("symbol", "date_utc"), "binance_perp_1d.csv": ("symbol", "date_utc"),
          "binance_spot_usdt_1d.csv": ("symbol", "date_utc"), "upbit_krw_1d.csv": ("market", "date_utc"),
          "binance_perp_listing_1d.csv": ("symbol", "date_utc"), "binance_oi_1d.csv": ("symbol", "date_utc"),
-         "binance_perp_caution_1d.csv": ("symbol", "date_utc")}
+         "binance_perp_caution_1d.csv": ("symbol", "date_utc"), "binance_um_all_1d.csv": ("symbol", "date_utc")}
+
+
+def um_ghosts():
+    """build_um_universe flags: no tradable row after last_trade_date, no blank flag (= rebuild needed)."""
+    uni = read_rows(OUT / "binance_um_universe.csv")
+    last = {r["symbol"]: r["last_trade_date"] for r in uni if r["status"] != "live"}  # live: today's rows are fine
+    if not uni:
+        return
+    for name, col in (("binance_um_all_1d.csv", "open_time_ms"), ("funding_um_all.csv", "funding_time_ms")):
+        rows = read_rows(OUT / name)
+        held = lambda r: ms_to_iso(int(r[col]) - (col == "funding_time_ms"))[:10]  # funding: day held into settlement
+        leak = sum(r["tradable"] == "1" and r["symbol"] in last and held(r) > last[r["symbol"]] for r in rows)
+        blank = sum(r.get("tradable") in ("", None) for r in rows)
+        ghost = sum(r["tradable"] == "0" for r in rows)
+        print(f"{name}: tradable=0 {ghost}, leak after last_trade_date {leak}, unflagged {blank}")
+        assert leak == 0 and blank == 0, "re-run scripts/data/build_um_universe.py"
 
 
 def daily(name, key, col):
@@ -58,8 +74,9 @@ def funding(name):
 def main():
     for name, (k, c) in DAILY.items():
         daily(name, k, c)
-    for name in ("funding.csv", "funding_alts.csv", "funding_caution.csv"):
+    for name in ("funding.csv", "funding_alts.csv", "funding_caution.csv", "funding_um_all.csv"):
         funding(name)
+    um_ghosts()
     fx = read_rows(OUT / "usdkrw.csv")
     print(f"usdkrw.csv: rows={len(fx)} {fx[0]['date']}..{fx[-1]['date']} (business days)")
     ls = read_rows(OUT / "upbit_listings.csv")
