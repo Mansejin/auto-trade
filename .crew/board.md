@@ -31,6 +31,11 @@ auto: off
   - 다음: quant-researcher 카드 그대로 백테스트
   - 리서치 결과(2026-10-10, quant-researcher): **KILL**, 레드팀 불필요. n=32(train 4 / OOS 28). OOS x2+펀딩 평균 −2.95%·중앙 −0.11%·PF 0.72·승률 50%, 날짜 묶음 달력 이동 17.3백분위(99 필요), BTC 숏 대비 −0.75%p·알트 바스켓 숏 대비 −1.36%p. 2026 21건 PF 0.45 vs 2026 이전 OOS 7건 PF 8.2(소표본). TAIKO 청산(−100%)·DRIFT −75%(펀딩 −51%) 꼬리 2건 → 상품 부적합 표기. 상폐 중 보유 1건(UXLINK), 진입일 상폐 8건 제외 → docs/research/results/upbit-caution-perp-short.md, scripts/bt_upbit_caution_short.py, reports/research-cards/upbit-caution-perp-short.json
 
+- [x] T-038 | to: quant-data | from: lead | done | xs-funding-crowding-weekly 데이터: 상폐 포함 전체 Binance USDT-M 무기한 유니버스 + 일봉 + 펀딩 (2020-01~)
+  - 결과: `binance_um_universe` 906개(exchangeInfo 875 ∪ vision 목록, vision에만 31) = live 741 / delisted 164 / no_data 1. 코인만(`underlying_type` COIN·빈칸) live 521 / delisted 163, TradFi 216개는 열로 구분. `binance_um_all_1d` 670,520행(2020-01-01~2026-10-08), `funding_um_all` 2,775,629행(~2026-10-09). 실패 심볼 0. 상폐 뒤 평평한 캔들·고정 펀딩·상장 전 0.01% 행은 지우지 않고 **`tradable`=0** 열로 표시(일봉 57,695·펀딩 78,831행), verify.py가 누수 0 확인. 재상장 티커 11개는 REST가 재상장일부터만 줘서 vision으로 앞부분 보충. 주의: 2020-06 거래 가능 알트 23개(상위 30 불가, ~2020-08~09부터), 재상장 티커는 다른 코인일 수 있음(LIT 등) → 상장 30일 카운트 재시작 → docs/research/data-catalog.md
+  - 코드: fetch_binance_klines `--universe`(perp) `--slice` `--start` `--backfill-head`, fetch_funding `--start`·실패 건너뛰기, `build_um_universe.py`(tradable·status), _common append_rows가 파생 열 채움.
+  - 다음: quant-researcher 카드 그대로 백테스트
+
 - [x] T-001 | to: edge-scout | from: user | done | 과거 전략 전수 목록(전략 묘지 + 생존자) 작성
   - 참고: docs/research/, freqtrade-research/reports/, reports/, strategies/, freqtrade-research/user_data/strategies/, docs/*.md(playbook류), VERSION.md
   - 산출물: docs/research/strategy-ledger.md — 전략별 1줄: 이름 | 데이터 우물(OHLCV 패턴/레짐/펀딩 등) | 종목·TF | 판정(KILL/SURVIVE/LIVE/미검증) | 핵심 수치 | 근거 파일

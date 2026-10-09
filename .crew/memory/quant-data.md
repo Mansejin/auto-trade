@@ -25,3 +25,12 @@
   - **상폐 무기한도 fapi REST klines가 거래량 0 평평한 캔들을 오늘까지 준다**, fundingRate도 상폐 뒤 고정값(0.005%) 행이 이어진다(AERGO, LOOM 등). 거래 가능 여부는 `quote_volume`>0으로 판정. 기존 binance_perp_listing_1d에도 같은 문제가 있을 것(T-009 "상폐 무기한 5건" 결함과 같은 원인).
   - exchangeInfo에서 빠진 심볼(AERGO, SXP)은 REST가 400 → vision. vision monthly는 상폐 달이 없을 수 있어 daily zip으로 꼬리 보충(vision_zips에 추가). fetch_binance_klines는 이제 REST가 빈 응답이면 매번 vision을 본다(since 달 이후 zip만 받음).
   - 공지 상세 `GET /api/v1/announcements/<id>`에 body가 있다. 2020~21 "(N종)" 지정 공지는 티커가 본문에만 있다.
+
+## 2026-10-10 T-038 xs-funding-crowding 전체 USDT-M 유니버스
+- 한 일: binance_um_universe(906) + binance_um_all_1d(670k행) + funding_um_all(2.78M행). build_um_universe.py가 `tradable` 열·status를 붙인다(재실행 가능, fetch 뒤 항상 다시 돌림). verify.py `um_ghosts()` assert.
+- 시간: klines 906개 REST ≈ 4분(청크 2~3개), 펀딩 80심볼 ≈ 225초(500/5분 제한이 병목) → 12청크 ≈ 45분. vision 대체 거의 없음.
+- 발견:
+  - fapi exchangeInfo는 상폐 무기한을 `SETTLING`으로 남긴다(133개). 주식·원자재는 contractType `TRADIFI_PERPETUAL`(216개) — PERPETUAL만 거르면 vision 목록에서 "vision에만"으로 잘못 잡힌다. `underlyingType`(COIN/EQUITY/…)로 구분.
+  - **재상장 티커는 REST klines가 재상장일부터만 준다**(fundingRate는 옛 이력도 줌) → `--backfill-head`로 vision 앞부분 보충. 펀딩 첫 시각 < 캔들 첫 시각이면 의심.
+  - fundingRate는 상장 전 기본값 0.01% 행을 준다(BNT 2020-12부터 등). 상장 판정은 캔들 `quote_volume`>0으로.
+  - 파생 열을 CSV에 덧붙이면 fetcher append가 열 수가 어긋난다 → _common.append_rows가 기존 헤더 길이만큼 빈칸을 채우게 고침.

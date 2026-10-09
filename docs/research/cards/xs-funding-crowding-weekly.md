@@ -20,7 +20,8 @@
 | Binance USDT-M 전체 무기한 일봉·거래대금 (상폐 포함) | `fapi/v1/klines` + `data.binance.vision/data/futures/um/monthly/klines/<SYMBOL>/1d/` | 2020 ~ | **부분**: `binance_perp_listing_1d` 207개만 |
 | 무기한 심볼 목록 (상폐 포함) | `fapi/v1/exchangeInfo` ∪ vision futures/um 디렉터리 목록 | — | **없음** |
 
-데이터 준비: **부분 → quant-data 요청 필요**(전체 USDT-M 무기한 펀딩·일봉, 상폐 포함). 기존 207개로 먼저 돌리면 유니버스 선택이 미래 정보(나중에 업비트 상장된 코인)라 판정 근거로 쓸 수 없다.
+데이터 준비(2026-10-10, T-038): **완비** — `binance_um_universe`(906개, 코인 live 521·delisted 163) + `binance_um_all_1d` + `funding_um_all`, 행 단위 `tradable` 열. 주의(초기 유니버스 2020-06 알트 23개, 재상장 티커) → `docs/research/data-catalog.md`.
+이전 상태: **부분 → quant-data 요청 필요**(전체 USDT-M 무기한 펀딩·일봉, 상폐 포함). 기존 207개로 먼저 돌리면 유니버스 선택이 미래 정보(나중에 업비트 상장된 코인)라 판정 근거로 쓸 수 없다.
 
 ## 규칙 (하이퍼 3, 값 고정)
 - 유니버스(시점 기준): 매주 직전 30일 무기한 거래대금 상위 30, BTC·ETH·스테이블 제외, 상장 30일 미만 제외.
