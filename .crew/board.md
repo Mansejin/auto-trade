@@ -36,6 +36,10 @@ auto: off
   - 코드: fetch_binance_klines `--universe`(perp) `--slice` `--start` `--backfill-head`, fetch_funding `--start`·실패 건너뛰기, `build_um_universe.py`(tradable·status), _common append_rows가 파생 열 채움.
   - 다음: quant-researcher 카드 그대로 백테스트
 
+- [x] T-039 | to: quant-researcher | from: lead | done | xs-funding-crowding-weekly 카드 그대로 백테스트·반증 (튜닝 금지, 무작위 99백분위)
+  - 참고: docs/research/cards/xs-funding-crowding-weekly.md, data/research/binance_um_{universe,all_1d}.csv, funding_um_all.csv, docs/research/data-catalog.md(T-038)
+  - 결과: **KILL** (사전 기준 7개 중 3개 실패), 레드팀 불필요. 시작 주 2020-08-10(앞 10주 적격 <30), 321주(train 151 / OOS 170). OOS x2+펀딩 주 +0.005%·PF 1.002·승률 48.2%·Sharpe 0.00(BTC B&H 0.94 → KILL), 날짜 묶음 무작위 81.7백분위(95·99 실패, 시드 81~85), 역모멘텀(−1.72%/주)보다는 우위, 분해·이웃값(3일 +0.16%, 14일 +0.005%)은 형식 통과. train PF 1.65 → OOS 앞 절반 2.13 → 뒤 절반 0.67, 2025 PF 0.53. OOS 롱 다리 가격 −2.85%/주 vs 펀딩 +2.59%(캐리를 가격이 되가져감), 숏 다리 +0.58%이지만 1배 청산 OOS 24건(2025~ 23). 상위 3주 합 +71% vs OOS 합 +0.78%. 구현 결정 6개는 결과 전 고정 → docs/research/results/xs-funding-crowding-weekly.md, scripts/bt_xs_funding_crowding.py, reports/research-cards/xs-funding-crowding-weekly.json
+
 - [x] T-001 | to: edge-scout | from: user | done | 과거 전략 전수 목록(전략 묘지 + 생존자) 작성
   - 참고: docs/research/, freqtrade-research/reports/, reports/, strategies/, freqtrade-research/user_data/strategies/, docs/*.md(playbook류), VERSION.md
   - 산출물: docs/research/strategy-ledger.md — 전략별 1줄: 이름 | 데이터 우물(OHLCV 패턴/레짐/펀딩 등) | 종목·TF | 판정(KILL/SURVIVE/LIVE/미검증) | 핵심 수치 | 근거 파일

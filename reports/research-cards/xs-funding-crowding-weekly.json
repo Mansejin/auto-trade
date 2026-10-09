@@ -1,0 +1,6479 @@
+{
+ "card": "docs/research/cards/xs-funding-crowding-weekly.md",
+ "board": "T-039",
+ "decisions": "1. coins only: underlying_type COIN or blank; excluded BTCUSDT, ETHUSDT, USDCUSDT and gold-pegged PAXGUSDT, XAUTUSDT.\n 2. start = first Monday (from 2020-06-01) with >= 30 eligible symbols after dedupe; earlier weeks skipped.\n 3. listed >= 30 days = 30 consecutive tradable days before t (streak restarts after any tradable=0/missing day);\n    returns never span a tradable=0 gap.\n 4. 1000XXX / 1000000XXX / 1MXXX vs XXX: same base name in a week -> keep the higher trailing-volume one (before top-30).\n 5. held symbol stops being tradable before exit open -> exit at last tradable close (card delist rule applied to price).\n 6. random null: same rebalance dates, random 5L/5S from that week's universe (date-clustered), 1,000 runs, pre-cost basis;\n    thresholds 95 (card) and 99 (board: ~175 strategies tried). Pooled independent-leg null is info only.\nFurther encoding details (also fixed before results):\n - signal = sum of tradable funding settlements with time in [t-L days, t) (L=7; neighbours 3, 14) -> daily-equivalent,\n   so 1h/4h/8h interval symbols are comparable. Ties broken by symbol.\n - holding funding = settlements in (t, exit], fixed quantity: rate * open(settlement day) / entry open. Long pays, short receives.\n - 1x short loses 100% (funding ignored) if the daily high reaches 2x entry during the hold.\n - capital split 50/50 between legs, 1x each: weekly return = (mean long leg + mean short leg) / 2.\n - costs per side: x2 = fee 0.12% + slip 0.20% = 0.32%; base = 0.06% + 0.20% = 0.26%. Charged on turnover only (leg entered\n   / exited); unchanged legs pay nothing (weight drift ignored). Full-turnover variant reported.\n - split by rebalance date: train < 2023-07-01 <= OOS.",
+ "start_week": "2020-08-10",
+ "end_week": "2026-09-28",
+ "n_weeks": 321,
+ "n_train": 151,
+ "n_oos": 170,
+ "skipped_weeks_lt30": [
+  [
+   "2020-06-01",
+   22
+  ],
+  [
+   "2020-06-08",
+   22
+  ],
+  [
+   "2020-06-15",
+   22
+  ],
+  [
+   "2020-06-22",
+   22
+  ],
+  [
+   "2020-06-29",
+   23
+  ],
+  [
+   "2020-07-06",
+   23
+  ],
+  [
+   "2020-07-13",
+   23
+  ],
+  [
+   "2020-07-20",
+   25
+  ],
+  [
+   "2020-07-27",
+   27
+  ],
+  [
+   "2020-08-03",
+   29
+  ]
+ ],
+ "dedupe_drops": [
+  [
+   "2025-12-22",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2025-12-29",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-01-05",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-01-12",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-01-19",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-01-26",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-02-02",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-02-09",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-02-16",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-02-23",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-03-02",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-03-09",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-03-16",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-03-23",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-03-30",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-04-06",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-04-13",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-04-20",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ],
+  [
+   "2026-04-27",
+   "BOBUSDT",
+   "1000000BOBUSDT"
+  ]
+ ],
+ "universe_size_min_max": [
+  29,
+  30
+ ],
+ "eligible_symbols_ever": 364,
+ "stats_gross": {
+  "full": {
+   "n": 321,
+   "pf": 1.435,
+   "ret_pct": 568.47,
+   "mean_pct": 0.7785,
+   "win_pct": 56.1,
+   "mdd_pct": -79.29,
+   "median_pct": 0.5129,
+   "sharpe_ann": 0.91,
+   "sum_pct": 249.91
+  },
+  "train": {
+   "n": 151,
+   "pf": 1.981,
+   "ret_pct": 448.04,
+   "mean_pct": 1.2781,
+   "win_pct": 61.6,
+   "mdd_pct": -25.75,
+   "median_pct": 0.8516,
+   "sharpe_ann": 1.67,
+   "sum_pct": 192.99
+  },
+  "oos": {
+   "n": 170,
+   "pf": 1.151,
+   "ret_pct": 21.97,
+   "mean_pct": 0.3348,
+   "win_pct": 51.2,
+   "mdd_pct": -79.29,
+   "median_pct": 0.1791,
+   "sharpe_ann": 0.36,
+   "sum_pct": 56.91
+  },
+  "oos_h1": {
+   "n": 85,
+   "pf": 2.637,
+   "ret_pct": 243.27,
+   "mean_pct": 1.551,
+   "win_pct": 61.2,
+   "mdd_pct": -18.73,
+   "median_pct": 1.0356,
+   "sharpe_ann": 2.6,
+   "sum_pct": 131.83
+  },
+  "oos_h2": {
+   "n": 85,
+   "pf": 0.748,
+   "ret_pct": -64.47,
+   "mean_pct": -0.8814,
+   "win_pct": 41.2,
+   "mdd_pct": -79.29,
+   "median_pct": -1.1678,
+   "sharpe_ann": -0.77,
+   "sum_pct": -74.92
+  }
+ },
+ "stats_base": {
+  "full": {
+   "n": 321,
+   "pf": 1.265,
+   "ret_pct": 180.8,
+   "mean_pct": 0.5075,
+   "win_pct": 52.6,
+   "mdd_pct": -83.16,
+   "median_pct": 0.2437,
+   "sharpe_ann": 0.59,
+   "sum_pct": 162.91
+  },
+  "train": {
+   "n": 151,
+   "pf": 1.708,
+   "ret_pct": 263.53,
+   "mean_pct": 1.004,
+   "win_pct": 57.0,
+   "mdd_pct": -30.2,
+   "median_pct": 0.6176,
+   "sharpe_ann": 1.31,
+   "sum_pct": 151.6
+  },
+  "oos": {
+   "n": 170,
+   "pf": 1.028,
+   "ret_pct": -22.76,
+   "mean_pct": 0.0665,
+   "win_pct": 48.8,
+   "mdd_pct": -83.16,
+   "median_pct": -0.1199,
+   "sharpe_ann": 0.07,
+   "sum_pct": 11.31
+  },
+  "oos_h1": {
+   "n": 85,
+   "pf": 2.217,
+   "ret_pct": 174.22,
+   "mean_pct": 1.2833,
+   "win_pct": 57.6,
+   "mdd_pct": -20.8,
+   "median_pct": 0.8016,
+   "sharpe_ann": 2.15,
+   "sum_pct": 109.08
+  },
+  "oos_h2": {
+   "n": 85,
+   "pf": 0.685,
+   "ret_pct": -71.83,
+   "mean_pct": -1.1503,
+   "win_pct": 40.0,
+   "mdd_pct": -83.16,
+   "median_pct": -1.4018,
+   "sharpe_ann": -1.0,
+   "sum_pct": -97.78
+  }
+ },
+ "stats_x2": {
+  "full": {
+   "n": 321,
+   "pf": 1.229,
+   "ret_pct": 129.78,
+   "mean_pct": 0.445,
+   "win_pct": 51.7,
+   "mdd_pct": -83.95,
+   "median_pct": 0.1609,
+   "sharpe_ann": 0.52,
+   "sum_pct": 142.83
+  },
+  "train": {
+   "n": 151,
+   "pf": 1.651,
+   "ret_pct": 230.62,
+   "mean_pct": 0.9407,
+   "win_pct": 55.6,
+   "mdd_pct": -31.45,
+   "median_pct": 0.5636,
+   "sharpe_ann": 1.23,
+   "sum_pct": 142.05
+  },
+  "oos": {
+   "n": 170,
+   "pf": 1.002,
+   "ret_pct": -30.5,
+   "mean_pct": 0.0046,
+   "win_pct": 48.2,
+   "mdd_pct": -83.95,
+   "median_pct": -0.1889,
+   "sharpe_ann": 0.0,
+   "sum_pct": 0.78
+  },
+  "oos_h1": {
+   "n": 85,
+   "pf": 2.13,
+   "ret_pct": 160.34,
+   "mean_pct": 1.2216,
+   "win_pct": 57.6,
+   "mdd_pct": -21.38,
+   "median_pct": 0.7456,
+   "sharpe_ann": 2.05,
+   "sum_pct": 103.83
+  },
+  "oos_h2": {
+   "n": 85,
+   "pf": 0.672,
+   "ret_pct": -73.3,
+   "mean_pct": -1.2124,
+   "win_pct": 38.8,
+   "mdd_pct": -83.95,
+   "median_pct": -1.4558,
+   "sharpe_ann": -1.06,
+   "sum_pct": -103.05
+  }
+ },
+ "oos_x2_full_turnover": {
+  "n": 170,
+  "pf": 0.88,
+  "ret_pct": -59.1,
+  "mean_pct": -0.3052,
+  "win_pct": 45.3,
+  "mdd_pct": -87.37,
+  "median_pct": -0.4609,
+  "sharpe_ann": -0.33,
+  "sum_pct": -51.89
+ },
+ "oos_x2_delist_actual_close": {
+  "n": 170,
+  "pf": 1.163,
+  "ret_pct": 14.65,
+  "mean_pct": 0.3894,
+  "win_pct": 48.2,
+  "mdd_pct": -77.4,
+  "median_pct": -0.188,
+  "sharpe_ann": 0.34,
+  "sum_pct": 66.2
+ },
+ "held_legs": {
+  "n": 3210,
+  "early_exit": [
+   "2022-05-09 LUNAUSDT L",
+   "2022-11-14 FTTUSDT L",
+   "2023-05-22 COCOSUSDT L",
+   "2024-09-02 MATICUSDT S",
+   "2025-03-17 BNXUSDT S",
+   "2025-04-28 ALPACAUSDT L",
+   "2025-09-29 HIFIUSDT S",
+   "2025-12-08 AIAUSDT L",
+   "2026-08-03 VANRYUSDT L"
+  ],
+  "liquidated": [
+   "2020-11-23 XLMUSDT S",
+   "2021-02-08 IOSTUSDT S",
+   "2021-02-08 VETUSDT S",
+   "2022-07-25 UNFIUSDT S",
+   "2022-10-24 DOGEUSDT S",
+   "2023-12-25 TRBUSDT S",
+   "2024-10-07 NEIROETHUSDT S",
+   "2024-11-04 NEIROUSDT S",
+   "2025-04-07 ALCHUSDT S",
+   "2025-07-07 BANANAS31USDT S",
+   "2025-09-01 MYXUSDT S",
+   "2025-09-08 MYXUSDT S",
+   "2025-10-20 AIAUSDT S",
+   "2025-11-03 BLESSUSDT S",
+   "2025-11-03 AIAUSDT S",
+   "2025-12-01 PIPPINUSDT S",
+   "2025-12-29 LIGHTUSDT S",
+   "2026-02-09 PIPPINUSDT S",
+   "2026-02-23 BULLAUSDT S",
+   "2026-03-02 SIRENUSDT S",
+   "2026-05-04 LABUSDT S",
+   "2026-05-25 LABUSDT S",
+   "2026-06-01 SKYAIUSDT S",
+   "2026-06-08 BEATUSDT S",
+   "2026-06-15 BSBUSDT S",
+   "2026-06-22 VELVETUSDT S",
+   "2026-07-13 ESPORTSUSDT S",
+   "2026-08-10 AKEUSDT S",
+   "2026-08-17 TUTUSDT S"
+  ]
+ },
+ "turnover_new_legs_per_week_mean": 5.2,
+ "legs_x2": {
+  "full": {
+   "long_price_pct": -0.7373,
+   "long_funding_pct": 1.5446,
+   "long_cost_pct": 0.2995,
+   "long_net_pct": 0.5078,
+   "short_price_pct": 0.4026,
+   "short_funding_pct": 0.3472,
+   "short_cost_pct": 0.3677,
+   "short_net_pct": 0.3821,
+   "portfolio_price_pct": -0.1674,
+   "portfolio_funding_pct": 0.9459,
+   "portfolio_cost_pct": 0.3336
+  },
+  "train": {
+   "long_price_pct": 1.6449,
+   "long_funding_pct": 0.3634,
+   "long_cost_pct": 0.2908,
+   "long_net_pct": 1.7175,
+   "short_price_pct": 0.0317,
+   "short_funding_pct": 0.5163,
+   "short_cost_pct": 0.384,
+   "short_net_pct": 0.164,
+   "portfolio_price_pct": 0.8383,
+   "portfolio_funding_pct": 0.4398,
+   "portfolio_cost_pct": 0.3374
+  },
+  "oos": {
+   "long_price_pct": -2.8532,
+   "long_funding_pct": 2.5938,
+   "long_cost_pct": 0.3072,
+   "long_net_pct": -0.5666,
+   "short_price_pct": 0.732,
+   "short_funding_pct": 0.197,
+   "short_cost_pct": 0.3531,
+   "short_net_pct": 0.5758,
+   "portfolio_price_pct": -1.0606,
+   "portfolio_funding_pct": 1.3954,
+   "portfolio_cost_pct": 0.3302
+  }
+ },
+ "by_year_x2": {
+  "2020": {
+   "n": 21,
+   "pf": 1.836,
+   "ret_pct": 19.23,
+   "mean_pct": 0.9488,
+   "win_pct": 52.4,
+   "mdd_pct": -11.18,
+   "median_pct": 0.2203,
+   "sharpe_ann": 1.42,
+   "sum_pct": 19.93
+  },
+  "2021": {
+   "n": 52,
+   "pf": 2.863,
+   "ret_pct": 234.67,
+   "mean_pct": 2.597,
+   "win_pct": 59.6,
+   "mdd_pct": -15.96,
+   "median_pct": 1.0513,
+   "sharpe_ann": 2.56,
+   "sum_pct": 135.04
+  },
+  "2022": {
+   "n": 52,
+   "pf": 0.931,
+   "ret_pct": -9.94,
+   "mean_pct": -0.1143,
+   "win_pct": 53.8,
+   "mdd_pct": -31.45,
+   "median_pct": 0.2432,
+   "sharpe_ann": -0.2,
+   "sum_pct": -5.94
+  },
+  "2023": {
+   "n": 52,
+   "pf": 1.306,
+   "ret_pct": 17.29,
+   "mean_pct": 0.381,
+   "win_pct": 55.8,
+   "mdd_pct": -18.44,
+   "median_pct": 0.4909,
+   "sharpe_ann": 0.71,
+   "sum_pct": 19.81
+  },
+  "2024": {
+   "n": 53,
+   "pf": 1.809,
+   "ret_pct": 58.92,
+   "mean_pct": 0.9645,
+   "win_pct": 52.8,
+   "mdd_pct": -15.92,
+   "median_pct": 0.2571,
+   "sharpe_ann": 1.63,
+   "sum_pct": 51.12
+  },
+  "2025": {
+   "n": 52,
+   "pf": 0.534,
+   "ret_pct": -58.12,
+   "mean_pct": -1.4764,
+   "win_pct": 44.2,
+   "mdd_pct": -67.41,
+   "median_pct": -1.4206,
+   "sharpe_ann": -1.77,
+   "sum_pct": -76.77
+  },
+  "2026": {
+   "n": 39,
+   "pf": 0.998,
+   "ret_pct": -18.08,
+   "mean_pct": -0.0089,
+   "win_pct": 41.0,
+   "mdd_pct": -66.32,
+   "median_pct": -0.6797,
+   "sharpe_ann": -0.01,
+   "sum_pct": -0.35
+  }
+ },
+ "oos_top3_weeks": {
+  "weeks": [
+   {
+    "t": "2026-01-19",
+    "x2_pct": 30.625
+   },
+   {
+    "t": "2026-09-14",
+    "x2_pct": 23.839
+   },
+   {
+    "t": "2026-08-31",
+    "x2_pct": 16.579
+   }
+  ],
+  "share_of_sum": 90.68,
+  "drop_top3": {
+   "n": 167,
+   "pf": 0.827,
+   "ret_pct": -63.15,
+   "mean_pct": -0.4207,
+   "win_pct": 47.3,
+   "mdd_pct": -98.56,
+   "median_pct": -0.264,
+   "sharpe_ann": -0.52,
+   "sum_pct": -70.26
+  },
+  "bottom3": [
+   {
+    "t": "2026-06-15",
+    "x2_pct": -14.973
+   },
+   {
+    "t": "2025-09-08",
+    "x2_pct": -15.141
+   },
+   {
+    "t": "2025-12-29",
+    "x2_pct": -17.457
+   }
+  ]
+ },
+ "anti_momentum_x2": {
+  "full": {
+   "n": 321,
+   "pf": 0.564,
+   "ret_pct": -99.72,
+   "mean_pct": -1.5129,
+   "win_pct": 38.0,
+   "mdd_pct": -99.79,
+   "median_pct": -1.2594,
+   "sharpe_ann": -1.41,
+   "sum_pct": -485.65
+  },
+  "train": {
+   "n": 151,
+   "pf": 0.587,
+   "ret_pct": -90.46,
+   "mean_pct": -1.2818,
+   "win_pct": 39.1,
+   "mdd_pct": -90.66,
+   "median_pct": -1.156,
+   "sharpe_ann": -1.29,
+   "sum_pct": -193.55
+  },
+  "oos": {
+   "n": 170,
+   "pf": 0.547,
+   "ret_pct": -97.02,
+   "mean_pct": -1.7183,
+   "win_pct": 37.1,
+   "mdd_pct": -97.98,
+   "median_pct": -1.4291,
+   "sharpe_ann": -1.5,
+   "sum_pct": -292.1
+  },
+  "oos_weekly_corr_with_card": -0.136
+ },
+ "anti_momentum_leg_overlap_mean_of_10": 1.88,
+ "neighbours_x2_oos": {
+  "lookback_3d": {
+   "n": 170,
+   "pf": 1.068,
+   "ret_pct": -14.36,
+   "mean_pct": 0.1633,
+   "win_pct": 48.8,
+   "mdd_pct": -80.59,
+   "median_pct": -0.0218,
+   "sharpe_ann": 0.16,
+   "sum_pct": 27.77
+  },
+  "lookback_14d": {
+   "n": 170,
+   "pf": 1.002,
+   "ret_pct": -37.03,
+   "mean_pct": 0.0045,
+   "win_pct": 47.6,
+   "mdd_pct": -75.73,
+   "median_pct": -0.2313,
+   "sharpe_ann": 0.0,
+   "sum_pct": 0.77
+  }
+ },
+ "bench_oos": {
+  "btc_bh": {
+   "n": 170,
+   "pf": 1.429,
+   "ret_pct": 182.51,
+   "mean_pct": 0.7958,
+   "win_pct": 51.2,
+   "mdd_pct": -51.75,
+   "median_pct": 0.0843,
+   "sharpe_ann": 0.94,
+   "sum_pct": 135.29
+  },
+  "sma200_core": {
+   "n": 170,
+   "pf": 1.579,
+   "ret_pct": 145.68,
+   "mean_pct": 0.6397,
+   "win_pct": 34.1,
+   "mdd_pct": -29.97,
+   "median_pct": 0.0,
+   "sharpe_ann": 0.97,
+   "sum_pct": 108.75
+  },
+  "corr_card_vs_sma200": 0.1,
+  "corr_card_vs_btc": 0.051
+ },
+ "oos_by_sma200_state_x2": {
+  "above": {
+   "n": 104,
+   "pf": 1.334,
+   "ret_pct": 55.94,
+   "mean_pct": 0.5799,
+   "win_pct": 51.9,
+   "mdd_pct": -44.43,
+   "median_pct": 0.209,
+   "sharpe_ann": 0.75,
+   "sum_pct": 60.31
+  },
+  "below": {
+   "n": 66,
+   "pf": 0.735,
+   "ret_pct": -55.43,
+   "mean_pct": -0.902,
+   "win_pct": 42.4,
+   "mdd_pct": -74.46,
+   "median_pct": -0.6788,
+   "sharpe_ann": -0.81,
+   "sum_pct": -59.53
+  }
+ },
+ "random_oos_precost": {
+  "card_mean_precost_pct": 0.3348,
+  "date_clustered": {
+   "pct_rank": 81.7,
+   "p50_pct": -0.0676,
+   "p95_pct": 0.6854,
+   "p99_pct": 1.0393,
+   "other_seeds_pct_rank": [
+    84.6,
+    81.3,
+    83.1,
+    82.5
+   ]
+  },
+  "independent_pooled_legs": {
+   "pct_rank": 79.6,
+   "p50_pct": -0.0957,
+   "p95_pct": 0.7323,
+   "p99_pct": 1.0366
+  }
+ },
+ "checks": {
+  "oos_pf_x2_ge_1.1": false,
+  "oos_mean_x2_gt_0": true,
+  "random_clustered_ge_95_card": "False",
+  "beats_anti_momentum_oos": true,
+  "decomposition_ok": true,
+  "neighbours_same_sign": true,
+  "sharpe_ge_btc_bh_oos": false
+ },
+ "random_clustered_ge_99_board": "False",
+ "note_corr_sma200_gt_0.5": false,
+ "verdict": "KILL",
+ "weekly_x2": [
+  {
+   "t": "2020-08-10",
+   "ret": -0.002452,
+   "longs": [
+    "BNBUSDT",
+    "DASHUSDT",
+    "DOGEUSDT",
+    "IOTAUSDT",
+    "LINKUSDT"
+   ],
+   "shorts": [
+    "ONTUSDT",
+    "XMRUSDT",
+    "XTZUSDT",
+    "ZILUSDT",
+    "ZRXUSDT"
+   ]
+  },
+  {
+   "t": "2020-08-17",
+   "ret": -0.049564,
+   "longs": [
+    "BNBUSDT",
+    "COMPUSDT",
+    "DASHUSDT",
+    "DOGEUSDT",
+    "LINKUSDT"
+   ],
+   "shorts": [
+    "BATUSDT",
+    "KNCUSDT",
+    "XTZUSDT",
+    "ZILUSDT",
+    "ZRXUSDT"
+   ]
+  },
+  {
+   "t": "2020-08-24",
+   "ret": 0.012448,
+   "longs": [
+    "ATOMUSDT",
+    "COMPUSDT",
+    "DASHUSDT",
+    "OMGUSDT",
+    "THETAUSDT"
+   ],
+   "shorts": [
+    "BATUSDT",
+    "IOSTUSDT",
+    "LINKUSDT",
+    "SXPUSDT",
+    "ZECUSDT"
+   ]
+  },
+  {
+   "t": "2020-08-31",
+   "ret": 0.072435,
+   "longs": [
+    "COMPUSDT",
+    "KNCUSDT",
+    "THETAUSDT",
+    "XRPUSDT",
+    "XTZUSDT"
+   ],
+   "shorts": [
+    "ETCUSDT",
+    "KAVAUSDT",
+    "OMGUSDT",
+    "ONTUSDT",
+    "SXPUSDT"
+   ]
+  },
+  {
+   "t": "2020-09-07",
+   "ret": -0.008064,
+   "longs": [
+    "BANDUSDT",
+    "COMPUSDT",
+    "KNCUSDT",
+    "THETAUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "ALGOUSDT",
+    "ETCUSDT",
+    "KAVAUSDT",
+    "RLCUSDT",
+    "SXPUSDT"
+   ]
+  },
+  {
+   "t": "2020-09-14",
+   "ret": 0.002203,
+   "longs": [
+    "BANDUSDT",
+    "BNBUSDT",
+    "COMPUSDT",
+    "THETAUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "ATOMUSDT",
+    "BATUSDT",
+    "ETCUSDT",
+    "OMGUSDT",
+    "SXPUSDT"
+   ]
+  },
+  {
+   "t": "2020-09-21",
+   "ret": 0.011816,
+   "longs": [
+    "BNBUSDT",
+    "COMPUSDT",
+    "ONTUSDT",
+    "THETAUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "DOTUSDT",
+    "ETCUSDT",
+    "OMGUSDT",
+    "SXPUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2020-09-28",
+   "ret": -0.014759,
+   "longs": [
+    "LENDUSDT",
+    "NEOUSDT",
+    "ONTUSDT",
+    "SNXUSDT",
+    "THETAUSDT"
+   ],
+   "shorts": [
+    "ATOMUSDT",
+    "ETCUSDT",
+    "QTUMUSDT",
+    "SXPUSDT",
+    "VETUSDT"
+   ]
+  },
+  {
+   "t": "2020-10-05",
+   "ret": -0.013599,
+   "longs": [
+    "BNBUSDT",
+    "NEOUSDT",
+    "SXPUSDT",
+    "THETAUSDT",
+    "XMRUSDT"
+   ],
+   "shorts": [
+    "BCHUSDT",
+    "IOSTUSDT",
+    "SUSHIUSDT",
+    "WAVESUSDT",
+    "ZECUSDT"
+   ]
+  },
+  {
+   "t": "2020-10-12",
+   "ret": 0.009141,
+   "longs": [
+    "BNBUSDT",
+    "CRVUSDT",
+    "SUSHIUSDT",
+    "THETAUSDT",
+    "YFIIUSDT"
+   ],
+   "shorts": [
+    "ATOMUSDT",
+    "COMPUSDT",
+    "LTCUSDT",
+    "XRPUSDT",
+    "ZECUSDT"
+   ]
+  },
+  {
+   "t": "2020-10-19",
+   "ret": -0.035299,
+   "longs": [
+    "BNBUSDT",
+    "CRVUSDT",
+    "THETAUSDT",
+    "XMRUSDT",
+    "YFIIUSDT"
+   ],
+   "shorts": [
+    "ATOMUSDT",
+    "LTCUSDT",
+    "SOLUSDT",
+    "VETUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2020-10-26",
+   "ret": -0.00037,
+   "longs": [
+    "AVAXUSDT",
+    "ETCUSDT",
+    "THETAUSDT",
+    "TRBUSDT",
+    "XMRUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "ATOMUSDT",
+    "EOSUSDT",
+    "SXPUSDT",
+    "VETUSDT"
+   ]
+  },
+  {
+   "t": "2020-11-02",
+   "ret": 0.026449,
+   "longs": [
+    "CRVUSDT",
+    "FLMUSDT",
+    "THETAUSDT",
+    "WAVESUSDT",
+    "YFIIUSDT"
+   ],
+   "shorts": [
+    "BCHUSDT",
+    "LTCUSDT",
+    "OMGUSDT",
+    "SXPUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2020-11-09",
+   "ret": 0.123098,
+   "longs": [
+    "COMPUSDT",
+    "CRVUSDT",
+    "THETAUSDT",
+    "TRBUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "ETCUSDT",
+    "OMGUSDT",
+    "SXPUSDT",
+    "ZECUSDT"
+   ]
+  },
+  {
+   "t": "2020-11-16",
+   "ret": -0.010941,
+   "longs": [
+    "AAVEUSDT",
+    "BCHUSDT",
+    "CRVUSDT",
+    "FILUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "BNBUSDT",
+    "ETCUSDT",
+    "OMGUSDT",
+    "SXPUSDT"
+   ]
+  },
+  {
+   "t": "2020-11-23",
+   "ret": -0.086859,
+   "longs": [
+    "CRVUSDT",
+    "FILUSDT",
+    "SUSHIUSDT",
+    "WAVESUSDT",
+    "XMRUSDT"
+   ],
+   "shorts": [
+    "BANDUSDT",
+    "ETCUSDT",
+    "SXPUSDT",
+    "TRBUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2020-11-30",
+   "ret": -0.016499,
+   "longs": [
+    "CRVUSDT",
+    "DASHUSDT",
+    "OMGUSDT",
+    "RSRUSDT",
+    "XMRUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "ADAUSDT",
+    "SXPUSDT",
+    "TRBUSDT",
+    "TRXUSDT"
+   ]
+  },
+  {
+   "t": "2020-12-07",
+   "ret": 0.032458,
+   "longs": [
+    "COMPUSDT",
+    "OMGUSDT",
+    "RSRUSDT",
+    "SUSHIUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "BNBUSDT",
+    "LINKUSDT",
+    "SXPUSDT",
+    "XLMUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2020-12-14",
+   "ret": 0.020017,
+   "longs": [
+    "COMPUSDT",
+    "SUSHIUSDT",
+    "WAVESUSDT",
+    "XRPUSDT",
+    "ZILUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "BANDUSDT",
+    "SXPUSDT",
+    "TRXUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2020-12-21",
+   "ret": 0.115494,
+   "longs": [
+    "COMPUSDT",
+    "EGLDUSDT",
+    "SUSHIUSDT",
+    "XMRUSDT",
+    "ZILUSDT"
+   ],
+   "shorts": [
+    "BNBUSDT",
+    "CRVUSDT",
+    "SXPUSDT",
+    "YFIIUSDT",
+    "YFIUSDT"
+   ]
+  },
+  {
+   "t": "2020-12-28",
+   "ret": 0.0121,
+   "longs": [
+    "CRVUSDT",
+    "FILUSDT",
+    "SNXUSDT",
+    "THETAUSDT",
+    "ZILUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "BCHUSDT",
+    "LTCUSDT",
+    "SXPUSDT",
+    "YFIIUSDT"
+   ]
+  },
+  {
+   "t": "2021-01-04",
+   "ret": -0.0053,
+   "longs": [
+    "COMPUSDT",
+    "CRVUSDT",
+    "FILUSDT",
+    "THETAUSDT",
+    "ZILUSDT"
+   ],
+   "shorts": [
+    "BNBUSDT",
+    "DOTUSDT",
+    "EGLDUSDT",
+    "LTCUSDT",
+    "SXPUSDT"
+   ]
+  },
+  {
+   "t": "2021-01-11",
+   "ret": -0.00339,
+   "longs": [
+    "ADAUSDT",
+    "SOLUSDT",
+    "THETAUSDT",
+    "TRXUSDT",
+    "XMRUSDT"
+   ],
+   "shorts": [
+    "EGLDUSDT",
+    "SXPUSDT",
+    "WAVESUSDT",
+    "YFIUSDT",
+    "ZILUSDT"
+   ]
+  },
+  {
+   "t": "2021-01-18",
+   "ret": 0.043536,
+   "longs": [
+    "CRVUSDT",
+    "GRTUSDT",
+    "THETAUSDT",
+    "TRXUSDT",
+    "XMRUSDT"
+   ],
+   "shorts": [
+    "LINKUSDT",
+    "SXPUSDT",
+    "XLMUSDT",
+    "XRPUSDT",
+    "YFIUSDT"
+   ]
+  },
+  {
+   "t": "2021-01-25",
+   "ret": -0.0422,
+   "longs": [
+    "AVAXUSDT",
+    "CRVUSDT",
+    "GRTUSDT",
+    "THETAUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "LINKUSDT",
+    "SXPUSDT",
+    "XLMUSDT",
+    "XRPUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2021-02-01",
+   "ret": 0.184023,
+   "longs": [
+    "AVAXUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "DOGEUSDT",
+    "GRTUSDT"
+   ],
+   "shorts": [
+    "ALPHAUSDT",
+    "IOSTUSDT",
+    "SXPUSDT",
+    "XLMUSDT",
+    "YFIUSDT"
+   ]
+  },
+  {
+   "t": "2021-02-08",
+   "ret": 0.006364,
+   "longs": [
+    "ADAUSDT",
+    "AVAXUSDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "DOGEUSDT"
+   ],
+   "shorts": [
+    "1INCHUSDT",
+    "ALPHAUSDT",
+    "IOSTUSDT",
+    "VETUSDT",
+    "YFIUSDT"
+   ]
+  },
+  {
+   "t": "2021-02-15",
+   "ret": 0.00096,
+   "longs": [
+    "ADAUSDT",
+    "ALGOUSDT",
+    "ATOMUSDT",
+    "AVAXUSDT",
+    "BCHUSDT"
+   ],
+   "shorts": [
+    "1INCHUSDT",
+    "ALPHAUSDT",
+    "EGLDUSDT",
+    "MKRUSDT",
+    "SXPUSDT"
+   ]
+  },
+  {
+   "t": "2021-02-22",
+   "ret": -0.040587,
+   "longs": [
+    "ATOMUSDT",
+    "AVAXUSDT",
+    "EOSUSDT",
+    "SUSHIUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "ALPHAUSDT",
+    "DOGEUSDT",
+    "EGLDUSDT",
+    "FILUSDT"
+   ]
+  },
+  {
+   "t": "2021-03-01",
+   "ret": 0.027868,
+   "longs": [
+    "AVAXUSDT",
+    "FILUSDT",
+    "GRTUSDT",
+    "IOSTUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "EGLDUSDT",
+    "FTMUSDT",
+    "SXPUSDT",
+    "XLMUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2021-03-08",
+   "ret": -0.005752,
+   "longs": [
+    "DOGEUSDT",
+    "GRTUSDT",
+    "MKRUSDT",
+    "TRXUSDT",
+    "YFIUSDT"
+   ],
+   "shorts": [
+    "ATOMUSDT",
+    "FTMUSDT",
+    "SOLUSDT",
+    "SXPUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2021-03-15",
+   "ret": -0.013632,
+   "longs": [
+    "DASHUSDT",
+    "MKRUSDT",
+    "SUSHIUSDT",
+    "TRXUSDT",
+    "VETUSDT"
+   ],
+   "shorts": [
+    "1INCHUSDT",
+    "AVAXUSDT",
+    "ENJUSDT",
+    "FTMUSDT",
+    "SXPUSDT"
+   ]
+  },
+  {
+   "t": "2021-03-22",
+   "ret": 0.032732,
+   "longs": [
+    "FILUSDT",
+    "LUNAUSDT",
+    "SUSHIUSDT",
+    "TRXUSDT",
+    "VETUSDT"
+   ],
+   "shorts": [
+    "CHZUSDT",
+    "ENJUSDT",
+    "GRTUSDT",
+    "SXPUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-03-29",
+   "ret": 0.163108,
+   "longs": [
+    "BNBUSDT",
+    "FILUSDT",
+    "LUNAUSDT",
+    "STORJUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "AVAXUSDT",
+    "CHZUSDT",
+    "MATICUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-04-05",
+   "ret": 0.057968,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "FILUSDT",
+    "LUNAUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "CHZUSDT",
+    "KSMUSDT",
+    "STORJUSDT",
+    "THETAUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-04-12",
+   "ret": 0.15012,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "ETCUSDT",
+    "FILUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "AVAXUSDT",
+    "ENJUSDT",
+    "THETAUSDT",
+    "XLMUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2021-04-19",
+   "ret": 0.086878,
+   "longs": [
+    "ANKRUSDT",
+    "BCHUSDT",
+    "DOGEUSDT",
+    "ETCUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "AVAXUSDT",
+    "CHZUSDT",
+    "THETAUSDT",
+    "TRXUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2021-04-26",
+   "ret": -0.011962,
+   "longs": [
+    "FILUSDT",
+    "ONTUSDT",
+    "QTUMUSDT",
+    "STORJUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "BNBUSDT",
+    "LTCUSDT",
+    "SUSHIUSDT",
+    "VETUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2021-05-03",
+   "ret": 0.27125,
+   "longs": [
+    "ADAUSDT",
+    "BCHUSDT",
+    "ETCUSDT",
+    "FTMUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "ENJUSDT",
+    "FILUSDT",
+    "VETUSDT",
+    "XLMUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2021-05-10",
+   "ret": 0.057803,
+   "longs": [
+    "BCHUSDT",
+    "ETCUSDT",
+    "FTMUSDT",
+    "MATICUSDT",
+    "MKRUSDT"
+   ],
+   "shorts": [
+    "BTTUSDT",
+    "DENTUSDT",
+    "EOSUSDT",
+    "TRXUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2021-05-17",
+   "ret": 0.051259,
+   "longs": [
+    "ADAUSDT",
+    "DOGEUSDT",
+    "MKRUSDT",
+    "RLCUSDT",
+    "YFIUSDT"
+   ],
+   "shorts": [
+    "DOTUSDT",
+    "EOSUSDT",
+    "VETUSDT",
+    "XLMUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2021-05-24",
+   "ret": 0.012912,
+   "longs": [
+    "AVAXUSDT",
+    "ETCUSDT",
+    "MATICUSDT",
+    "RLCUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "DOTUSDT",
+    "LTCUSDT",
+    "SUSHIUSDT",
+    "XRPUSDT",
+    "YFIUSDT"
+   ]
+  },
+  {
+   "t": "2021-05-31",
+   "ret": -0.0927,
+   "longs": [
+    "ETCUSDT",
+    "MATICUSDT",
+    "QTUMUSDT",
+    "RLCUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "DOTUSDT",
+    "SOLUSDT",
+    "SUSHIUSDT",
+    "SXPUSDT",
+    "ZECUSDT"
+   ]
+  },
+  {
+   "t": "2021-06-07",
+   "ret": -0.008558,
+   "longs": [
+    "BNBUSDT",
+    "CRVUSDT",
+    "ETCUSDT",
+    "RLCUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "FILUSDT",
+    "SXPUSDT",
+    "XLMUSDT",
+    "XRPUSDT",
+    "ZECUSDT"
+   ]
+  },
+  {
+   "t": "2021-06-14",
+   "ret": 0.008114,
+   "longs": [
+    "1000SHIBUSDT",
+    "AVAXUSDT",
+    "ETCUSDT",
+    "RLCUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "LINKUSDT",
+    "SUSHIUSDT",
+    "SXPUSDT",
+    "UNIUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-06-21",
+   "ret": -0.009706,
+   "longs": [
+    "1000SHIBUSDT",
+    "BNBUSDT",
+    "ETCUSDT",
+    "MATICUSDT",
+    "RUNEUSDT"
+   ],
+   "shorts": [
+    "LINKUSDT",
+    "LUNAUSDT",
+    "SUSHIUSDT",
+    "UNIUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-06-28",
+   "ret": -1.9e-05,
+   "longs": [
+    "1INCHUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "DOGEUSDT",
+    "ETCUSDT"
+   ],
+   "shorts": [
+    "LINKUSDT",
+    "SUSHIUSDT",
+    "SXPUSDT",
+    "UNIUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-07-05",
+   "ret": -0.064144,
+   "longs": [
+    "1INCHUSDT",
+    "BNBUSDT",
+    "ETCUSDT",
+    "ICPUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "FILUSDT",
+    "FTMUSDT",
+    "LUNAUSDT",
+    "SUSHIUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-07-12",
+   "ret": 0.041674,
+   "longs": [
+    "AAVEUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "ETCUSDT",
+    "SANDUSDT"
+   ],
+   "shorts": [
+    "KSMUSDT",
+    "LUNAUSDT",
+    "SXPUSDT",
+    "THETAUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-07-19",
+   "ret": 0.144206,
+   "longs": [
+    "1000SHIBUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "ETCUSDT",
+    "SANDUSDT"
+   ],
+   "shorts": [
+    "COMPUSDT",
+    "SUSHIUSDT",
+    "SXPUSDT",
+    "THETAUSDT",
+    "VETUSDT"
+   ]
+  },
+  {
+   "t": "2021-07-26",
+   "ret": -0.078656,
+   "longs": [
+    "1000SHIBUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "CHRUSDT",
+    "SANDUSDT"
+   ],
+   "shorts": [
+    "BCHUSDT",
+    "EOSUSDT",
+    "ICPUSDT",
+    "SUSHIUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-08-02",
+   "ret": -0.032556,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "LUNAUSDT",
+    "SANDUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ALICEUSDT",
+    "DOGEUSDT",
+    "ICPUSDT",
+    "XLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-08-09",
+   "ret": 0.067786,
+   "longs": [
+    "AAVEUSDT",
+    "AXSUSDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "LTCUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ALICEUSDT",
+    "ICPUSDT",
+    "RUNEUSDT",
+    "SANDUSDT"
+   ]
+  },
+  {
+   "t": "2021-08-16",
+   "ret": 0.067005,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "LTCUSDT",
+    "LUNAUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ALICEUSDT",
+    "DOGEUSDT",
+    "ICPUSDT",
+    "TLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-08-23",
+   "ret": -0.081547,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "LTCUSDT",
+    "RUNEUSDT",
+    "UNIUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "AVAXUSDT",
+    "DENTUSDT",
+    "SANDUSDT",
+    "TLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-08-30",
+   "ret": 0.112004,
+   "longs": [
+    "BCHUSDT",
+    "LTCUSDT",
+    "LUNAUSDT",
+    "SOLUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ALICEUSDT",
+    "AVAXUSDT",
+    "MATICUSDT",
+    "TLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-09-06",
+   "ret": 0.005767,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "LINKUSDT",
+    "LTCUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "DOGEUSDT",
+    "ICPUSDT",
+    "LUNAUSDT",
+    "TLMUSDT"
+   ]
+  },
+  {
+   "t": "2021-09-13",
+   "ret": 0.019107,
+   "longs": [
+    "ALICEUSDT",
+    "BNBUSDT",
+    "NEARUSDT",
+    "SANDUSDT",
+    "THETAUSDT"
+   ],
+   "shorts": [
+    "ALGOUSDT",
+    "BCHUSDT",
+    "EOSUSDT",
+    "FTMUSDT",
+    "SOLUSDT"
+   ]
+  },
+  {
+   "t": "2021-09-20",
+   "ret": -0.01526,
+   "longs": [
+    "1000SHIBUSDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "ETCUSDT",
+    "LTCUSDT"
+   ],
+   "shorts": [
+    "ALGOUSDT",
+    "ICPUSDT",
+    "LUNAUSDT",
+    "SOLUSDT",
+    "SRMUSDT"
+   ]
+  },
+  {
+   "t": "2021-09-27",
+   "ret": 0.077034,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "CELRUSDT",
+    "ETCUSDT",
+    "SANDUSDT"
+   ],
+   "shorts": [
+    "C98USDT",
+    "ICPUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2021-10-04",
+   "ret": -0.00352,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "COTIUSDT",
+    "ETCUSDT",
+    "OMGUSDT"
+   ],
+   "shorts": [
+    "ALGOUSDT",
+    "AVAXUSDT",
+    "CELRUSDT",
+    "LUNAUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2021-10-11",
+   "ret": 0.054913,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "LTCUSDT",
+    "OMGUSDT",
+    "XTZUSDT"
+   ],
+   "shorts": [
+    "ATOMUSDT",
+    "CELRUSDT",
+    "DOGEUSDT",
+    "DYDXUSDT",
+    "ONEUSDT"
+   ]
+  },
+  {
+   "t": "2021-10-18",
+   "ret": -0.010898,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "KEEPUSDT",
+    "MATICUSDT",
+    "OMGUSDT"
+   ],
+   "shorts": [
+    "ATOMUSDT",
+    "DYDXUSDT",
+    "ICPUSDT",
+    "LUNAUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2021-10-25",
+   "ret": 0.046951,
+   "longs": [
+    "AXSUSDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "MATICUSDT",
+    "OMGUSDT"
+   ],
+   "shorts": [
+    "ATOMUSDT",
+    "DOGEUSDT",
+    "DYDXUSDT",
+    "ICPUSDT",
+    "KEEPUSDT"
+   ]
+  },
+  {
+   "t": "2021-11-01",
+   "ret": 0.014056,
+   "longs": [
+    "1000SHIBUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "MANAUSDT",
+    "OMGUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "DOGEUSDT",
+    "DYDXUSDT",
+    "ICPUSDT",
+    "KEEPUSDT"
+   ]
+  },
+  {
+   "t": "2021-11-08",
+   "ret": 0.054814,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "LRCUSDT",
+    "OMGUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "DOGEUSDT",
+    "KEEPUSDT",
+    "MANAUSDT",
+    "SANDUSDT"
+   ]
+  },
+  {
+   "t": "2021-11-15",
+   "ret": -0.098348,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "LRCUSDT",
+    "OMGUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ATOMUSDT",
+    "MANAUSDT",
+    "MATICUSDT",
+    "SANDUSDT"
+   ]
+  },
+  {
+   "t": "2021-11-22",
+   "ret": 0.132082,
+   "longs": [
+    "ALGOUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "GALAUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "FTMUSDT",
+    "IOTXUSDT",
+    "MANAUSDT",
+    "OMGUSDT"
+   ]
+  },
+  {
+   "t": "2021-11-29",
+   "ret": 0.044839,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "DOGEUSDT",
+    "DOTUSDT",
+    "MATICUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ALGOUSDT",
+    "ALICEUSDT",
+    "IOTXUSDT",
+    "OMGUSDT"
+   ]
+  },
+  {
+   "t": "2021-12-06",
+   "ret": -0.007505,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "DOTUSDT",
+    "XRPUSDT"
+   ],
+   "shorts": [
+    "ALICEUSDT",
+    "ATOMUSDT",
+    "CHRUSDT",
+    "GALAUSDT",
+    "SANDUSDT"
+   ]
+  },
+  {
+   "t": "2021-12-13",
+   "ret": 0.030184,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "EGLDUSDT",
+    "MANAUSDT"
+   ],
+   "shorts": [
+    "ALGOUSDT",
+    "ALICEUSDT",
+    "ATOMUSDT",
+    "DYDXUSDT",
+    "LINKUSDT"
+   ]
+  },
+  {
+   "t": "2021-12-20",
+   "ret": -0.098566,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "EGLDUSDT",
+    "LUNAUSDT"
+   ],
+   "shorts": [
+    "DYDXUSDT",
+    "NEARUSDT",
+    "SUSHIUSDT",
+    "TLMUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2021-12-27",
+   "ret": 0.00791,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "GTCUSDT",
+    "LUNAUSDT",
+    "XRPUSDT"
+   ],
+   "shorts": [
+    "FILUSDT",
+    "GALAUSDT",
+    "NEARUSDT",
+    "SOLUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2022-01-03",
+   "ret": -0.021213,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "DOTUSDT",
+    "LUNAUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "FILUSDT",
+    "GALAUSDT",
+    "XRPUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2022-01-10",
+   "ret": 0.01991,
+   "longs": [
+    "BNBUSDT",
+    "DOGEUSDT",
+    "DYDXUSDT",
+    "MATICUSDT",
+    "ONEUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "FTMUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2022-01-17",
+   "ret": 0.00942,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "LUNAUSDT",
+    "ONEUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ALGOUSDT",
+    "GALAUSDT",
+    "LRCUSDT",
+    "SOLUSDT"
+   ]
+  },
+  {
+   "t": "2022-01-24",
+   "ret": 0.004167,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "DYDXUSDT",
+    "ONEUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "ALGOUSDT",
+    "GALAUSDT",
+    "ICPUSDT",
+    "LINKUSDT"
+   ]
+  },
+  {
+   "t": "2022-01-31",
+   "ret": 0.029471,
+   "longs": [
+    "AXSUSDT",
+    "CRVUSDT",
+    "MANAUSDT",
+    "ONEUSDT",
+    "SANDUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "ICPUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "SUSHIUSDT"
+   ]
+  },
+  {
+   "t": "2022-02-07",
+   "ret": 0.007464,
+   "longs": [
+    "AXSUSDT",
+    "CRVUSDT",
+    "LRCUSDT",
+    "ONEUSDT",
+    "SANDUSDT"
+   ],
+   "shorts": [
+    "ALICEUSDT",
+    "ICPUSDT",
+    "LINKUSDT",
+    "NEARUSDT",
+    "SUSHIUSDT"
+   ]
+  },
+  {
+   "t": "2022-02-14",
+   "ret": -0.018905,
+   "longs": [
+    "AXSUSDT",
+    "CRVUSDT",
+    "DOTUSDT",
+    "DYDXUSDT",
+    "ONEUSDT"
+   ],
+   "shorts": [
+    "ICPUSDT",
+    "LRCUSDT",
+    "ROSEUSDT",
+    "SUSHIUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2022-02-21",
+   "ret": -0.058358,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "DOTUSDT",
+    "DYDXUSDT"
+   ],
+   "shorts": [
+    "GALAUSDT",
+    "ICPUSDT",
+    "LINKUSDT",
+    "LUNAUSDT",
+    "XTZUSDT"
+   ]
+  },
+  {
+   "t": "2022-02-28",
+   "ret": 0.012137,
+   "longs": [
+    "ALICEUSDT",
+    "AXSUSDT",
+    "LUNAUSDT",
+    "MANAUSDT",
+    "THETAUSDT"
+   ],
+   "shorts": [
+    "ATOMUSDT",
+    "ICPUSDT",
+    "LINKUSDT",
+    "PEOPLEUSDT",
+    "SANDUSDT"
+   ]
+  },
+  {
+   "t": "2022-03-07",
+   "ret": 0.033877,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "FTMUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "DYDXUSDT",
+    "FILUSDT",
+    "LINKUSDT",
+    "SOLUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2022-03-14",
+   "ret": 0.049431,
+   "longs": [
+    "AXSUSDT",
+    "LUNAUSDT",
+    "PEOPLEUSDT",
+    "RUNEUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "LINKUSDT",
+    "MANAUSDT",
+    "SOLUSDT",
+    "THETAUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2022-03-21",
+   "ret": -0.03341,
+   "longs": [
+    "AXSUSDT",
+    "LUNAUSDT",
+    "OGNUSDT",
+    "RUNEUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "FTMUSDT",
+    "IMXUSDT",
+    "LINKUSDT",
+    "MANAUSDT",
+    "SOLUSDT"
+   ]
+  },
+  {
+   "t": "2022-03-28",
+   "ret": 0.096504,
+   "longs": [
+    "AXSUSDT",
+    "DOTUSDT",
+    "LUNAUSDT",
+    "WAVESUSDT",
+    "ZILUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "FILUSDT",
+    "GALAUSDT",
+    "IMXUSDT",
+    "PEOPLEUSDT"
+   ]
+  },
+  {
+   "t": "2022-04-04",
+   "ret": -0.059065,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "LUNAUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "GALAUSDT",
+    "LRCUSDT",
+    "NEARUSDT",
+    "OGNUSDT"
+   ]
+  },
+  {
+   "t": "2022-04-11",
+   "ret": -0.001555,
+   "longs": [
+    "ATOMUSDT",
+    "AXSUSDT",
+    "DOTUSDT",
+    "LUNAUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "GALAUSDT",
+    "LRCUSDT",
+    "RUNEUSDT",
+    "VETUSDT",
+    "ZILUSDT"
+   ]
+  },
+  {
+   "t": "2022-04-18",
+   "ret": 0.014871,
+   "longs": [
+    "AXSUSDT",
+    "DOTUSDT",
+    "KNCUSDT",
+    "SANDUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "GALAUSDT",
+    "RUNEUSDT",
+    "VETUSDT",
+    "ZILUSDT"
+   ]
+  },
+  {
+   "t": "2022-04-25",
+   "ret": 0.016704,
+   "longs": [
+    "AXSUSDT",
+    "KNCUSDT",
+    "LUNAUSDT",
+    "MTLUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "GALAUSDT",
+    "LINKUSDT",
+    "NEARUSDT",
+    "OGNUSDT",
+    "RUNEUSDT"
+   ]
+  },
+  {
+   "t": "2022-05-02",
+   "ret": 0.003529,
+   "longs": [
+    "APEUSDT",
+    "AXSUSDT",
+    "MATICUSDT",
+    "MTLUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "ATOMUSDT",
+    "LINKUSDT",
+    "OGNUSDT",
+    "RUNEUSDT"
+   ]
+  },
+  {
+   "t": "2022-05-09",
+   "ret": -0.016193,
+   "longs": [
+    "AXSUSDT",
+    "KNCUSDT",
+    "LUNAUSDT",
+    "MTLUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "ENSUSDT",
+    "FTMUSDT",
+    "TRXUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2022-05-16",
+   "ret": -0.019084,
+   "longs": [
+    "AXSUSDT",
+    "MTLUSDT",
+    "NEARUSDT",
+    "TRXUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "ALGOUSDT",
+    "ENSUSDT",
+    "EOSUSDT",
+    "SANDUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2022-05-23",
+   "ret": -0.071475,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "KNCUSDT",
+    "PEOPLEUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "ETCUSDT",
+    "JASMYUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "MATICUSDT"
+   ]
+  },
+  {
+   "t": "2022-05-30",
+   "ret": 0.096849,
+   "longs": [
+    "AXSUSDT",
+    "GMTUSDT",
+    "KNCUSDT",
+    "NEARUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "SOLUSDT",
+    "TRXUSDT"
+   ]
+  },
+  {
+   "t": "2022-06-06",
+   "ret": 0.021352,
+   "longs": [
+    "ATOMUSDT",
+    "AXSUSDT",
+    "BELUSDT",
+    "GMTUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "SOLUSDT",
+    "TRXUSDT"
+   ]
+  },
+  {
+   "t": "2022-06-13",
+   "ret": 0.000964,
+   "longs": [
+    "AXSUSDT",
+    "BELUSDT",
+    "DOTUSDT",
+    "GMTUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "FLMUSDT",
+    "LINKUSDT",
+    "MANAUSDT",
+    "UNFIUSDT",
+    "ZILUSDT"
+   ]
+  },
+  {
+   "t": "2022-06-20",
+   "ret": 0.019211,
+   "longs": [
+    "AXSUSDT",
+    "DOTUSDT",
+    "RSRUSDT",
+    "TRXUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "GALAUSDT",
+    "LTCUSDT",
+    "MANAUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2022-06-27",
+   "ret": -0.016812,
+   "longs": [
+    "AXSUSDT",
+    "DOTUSDT",
+    "RSRUSDT",
+    "STORJUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "FLMUSDT",
+    "GALAUSDT",
+    "LINKUSDT",
+    "LTCUSDT"
+   ]
+  },
+  {
+   "t": "2022-07-04",
+   "ret": -0.04302,
+   "longs": [
+    "AXSUSDT",
+    "DOTUSDT",
+    "RSRUSDT",
+    "TRXUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "FLMUSDT",
+    "GALAUSDT",
+    "LTCUSDT",
+    "UNFIUSDT"
+   ]
+  },
+  {
+   "t": "2022-07-11",
+   "ret": 0.014102,
+   "longs": [
+    "AXSUSDT",
+    "GMTUSDT",
+    "SNXUSDT",
+    "STORJUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "GALAUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "PEOPLEUSDT"
+   ]
+  },
+  {
+   "t": "2022-07-18",
+   "ret": 0.005636,
+   "longs": [
+    "AXSUSDT",
+    "DOTUSDT",
+    "STORJUSDT",
+    "TRXUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "GALAUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "SOLUSDT",
+    "UNFIUSDT"
+   ]
+  },
+  {
+   "t": "2022-07-25",
+   "ret": -0.009693,
+   "longs": [
+    "AXSUSDT",
+    "CRVUSDT",
+    "DOTUSDT",
+    "MATICUSDT",
+    "OPUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "FTMUSDT",
+    "GALAUSDT",
+    "LTCUSDT",
+    "UNFIUSDT"
+   ]
+  },
+  {
+   "t": "2022-08-01",
+   "ret": -0.050027,
+   "longs": [
+    "AXSUSDT",
+    "BCHUSDT",
+    "DOTUSDT",
+    "GMTUSDT",
+    "NEARUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "LINKUSDT",
+    "OPUSDT",
+    "TRBUSDT",
+    "UNFIUSDT"
+   ]
+  },
+  {
+   "t": "2022-08-08",
+   "ret": -0.050826,
+   "longs": [
+    "AXSUSDT",
+    "CRVUSDT",
+    "DOTUSDT",
+    "DYDXUSDT",
+    "GMTUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "FILUSDT",
+    "FLMUSDT",
+    "UNFIUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2022-08-15",
+   "ret": -0.04478,
+   "longs": [
+    "AXSUSDT",
+    "DOTUSDT",
+    "DYDXUSDT",
+    "NEARUSDT",
+    "SANDUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "MANAUSDT",
+    "SOLUSDT",
+    "TRBUSDT",
+    "UNFIUSDT"
+   ]
+  },
+  {
+   "t": "2022-08-22",
+   "ret": 0.014813,
+   "longs": [
+    "AXSUSDT",
+    "DOTUSDT",
+    "GMTUSDT",
+    "MATICUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "NEARUSDT",
+    "OPUSDT",
+    "TRBUSDT",
+    "UNFIUSDT"
+   ]
+  },
+  {
+   "t": "2022-08-29",
+   "ret": 0.041872,
+   "longs": [
+    "ANKRUSDT",
+    "AXSUSDT",
+    "CRVUSDT",
+    "GMTUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "CHZUSDT",
+    "FILUSDT",
+    "LTCUSDT",
+    "NEARUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2022-09-05",
+   "ret": -0.002831,
+   "longs": [
+    "ANKRUSDT",
+    "AXSUSDT",
+    "ETCUSDT",
+    "FLOWUSDT",
+    "TRBUSDT"
+   ],
+   "shorts": [
+    "BLZUSDT",
+    "EOSUSDT",
+    "FILUSDT",
+    "LTCUSDT",
+    "NEARUSDT"
+   ]
+  },
+  {
+   "t": "2022-09-12",
+   "ret": -0.030121,
+   "longs": [
+    "AXSUSDT",
+    "ETCUSDT",
+    "HNTUSDT",
+    "RVNUSDT",
+    "TRBUSDT"
+   ],
+   "shorts": [
+    "BLZUSDT",
+    "DOGEUSDT",
+    "FILUSDT",
+    "NEARUSDT",
+    "SOLUSDT"
+   ]
+  },
+  {
+   "t": "2022-09-19",
+   "ret": -0.017146,
+   "longs": [
+    "AVAXUSDT",
+    "AXSUSDT",
+    "EOSUSDT",
+    "ETCUSDT",
+    "TRBUSDT"
+   ],
+   "shorts": [
+    "BLZUSDT",
+    "DOGEUSDT",
+    "FILUSDT",
+    "FTMUSDT",
+    "UNFIUSDT"
+   ]
+  },
+  {
+   "t": "2022-09-26",
+   "ret": -0.006837,
+   "longs": [
+    "ATOMUSDT",
+    "AVAXUSDT",
+    "AXSUSDT",
+    "ETCUSDT",
+    "REEFUSDT"
+   ],
+   "shorts": [
+    "CHZUSDT",
+    "HNTUSDT",
+    "LINKUSDT",
+    "TRBUSDT",
+    "UNFIUSDT"
+   ]
+  },
+  {
+   "t": "2022-10-03",
+   "ret": 0.001335,
+   "longs": [
+    "ATOMUSDT",
+    "AXSUSDT",
+    "ETCUSDT",
+    "REEFUSDT",
+    "RSRUSDT"
+   ],
+   "shorts": [
+    "ALGOUSDT",
+    "FILUSDT",
+    "HNTUSDT",
+    "LINKUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2022-10-10",
+   "ret": 0.02891,
+   "longs": [
+    "1000LUNCUSDT",
+    "ATOMUSDT",
+    "DOTUSDT",
+    "GMTUSDT",
+    "REEFUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ALGOUSDT",
+    "DOGEUSDT",
+    "FILUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2022-10-17",
+   "ret": -0.071744,
+   "longs": [
+    "1000LUNCUSDT",
+    "ENSUSDT",
+    "ETCUSDT",
+    "GMTUSDT",
+    "REEFUSDT"
+   ],
+   "shorts": [
+    "ALGOUSDT",
+    "DOGEUSDT",
+    "MATICUSDT",
+    "RVNUSDT",
+    "SUSHIUSDT"
+   ]
+  },
+  {
+   "t": "2022-10-24",
+   "ret": -0.10187,
+   "longs": [
+    "ADAUSDT",
+    "ETCUSDT",
+    "GMTUSDT",
+    "MKRUSDT",
+    "REEFUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "FILUSDT",
+    "HNTUSDT",
+    "LTCUSDT",
+    "NEARUSDT"
+   ]
+  },
+  {
+   "t": "2022-10-31",
+   "ret": 0.090241,
+   "longs": [
+    "AXSUSDT",
+    "DOTUSDT",
+    "GMTUSDT",
+    "KLAYUSDT",
+    "MASKUSDT"
+   ],
+   "shorts": [
+    "LINKUSDT",
+    "LTCUSDT",
+    "LUNA2USDT",
+    "NEARUSDT",
+    "SUSHIUSDT"
+   ]
+  },
+  {
+   "t": "2022-11-07",
+   "ret": 0.010907,
+   "longs": [
+    "AXSUSDT",
+    "BANDUSDT",
+    "BNBUSDT",
+    "GALAUSDT",
+    "MASKUSDT"
+   ],
+   "shorts": [
+    "FILUSDT",
+    "KLAYUSDT",
+    "LINKUSDT",
+    "LUNA2USDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2022-11-14",
+   "ret": -0.075295,
+   "longs": [
+    "AVAXUSDT",
+    "BANDUSDT",
+    "FTTUSDT",
+    "MASKUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "KLAYUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2022-11-21",
+   "ret": -0.017768,
+   "longs": [
+    "AVAXUSDT",
+    "AXSUSDT",
+    "BANDUSDT",
+    "SFPUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "1000LUNCUSDT",
+    "APEUSDT",
+    "KLAYUSDT",
+    "NEARUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2022-11-28",
+   "ret": -0.020378,
+   "longs": [
+    "AVAXUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "DOTUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "APEUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "SUSHIUSDT"
+   ]
+  },
+  {
+   "t": "2022-12-05",
+   "ret": 0.039437,
+   "longs": [
+    "APTUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ADAUSDT",
+    "FILUSDT",
+    "PEOPLEUSDT",
+    "SUSHIUSDT"
+   ]
+  },
+  {
+   "t": "2022-12-12",
+   "ret": 0.048023,
+   "longs": [
+    "AXSUSDT",
+    "BANDUSDT",
+    "BNXUSDT",
+    "RLCUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ADAUSDT",
+    "EOSUSDT",
+    "NEARUSDT",
+    "SUSHIUSDT"
+   ]
+  },
+  {
+   "t": "2022-12-19",
+   "ret": 0.052096,
+   "longs": [
+    "APEUSDT",
+    "AXSUSDT",
+    "BNXUSDT",
+    "OCEANUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "BANDUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2022-12-26",
+   "ret": 0.015737,
+   "longs": [
+    "APEUSDT",
+    "BNXUSDT",
+    "RENUSDT",
+    "RLCUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "FTMUSDT",
+    "LINKUSDT",
+    "NEARUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-01-02",
+   "ret": 0.032537,
+   "longs": [
+    "APEUSDT",
+    "RENUSDT",
+    "RLCUSDT",
+    "SOLUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "EOSUSDT",
+    "FTMUSDT",
+    "LINKUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-01-09",
+   "ret": 0.024965,
+   "longs": [
+    "APEUSDT",
+    "LDOUSDT",
+    "OCEANUSDT",
+    "RLCUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "1000LUNCUSDT",
+    "1000SHIBUSDT",
+    "DOGEUSDT",
+    "EOSUSDT",
+    "FILUSDT"
+   ]
+  },
+  {
+   "t": "2023-01-16",
+   "ret": -0.020701,
+   "longs": [
+    "APEUSDT",
+    "BNBUSDT",
+    "GALAUSDT",
+    "OCEANUSDT",
+    "RLCUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "DOGEUSDT",
+    "FILUSDT",
+    "LDOUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-01-23",
+   "ret": 0.029183,
+   "longs": [
+    "APEUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "GALAUSDT",
+    "OCEANUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "AVAXUSDT",
+    "DOGEUSDT",
+    "MASKUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-01-30",
+   "ret": -0.042066,
+   "longs": [
+    "APEUSDT",
+    "APTUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "DOTUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "GALAUSDT",
+    "GMTUSDT",
+    "MATICUSDT",
+    "OCEANUSDT"
+   ]
+  },
+  {
+   "t": "2023-02-06",
+   "ret": 0.036809,
+   "longs": [
+    "APEUSDT",
+    "APTUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "DOTUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "FILUSDT",
+    "FTMUSDT",
+    "MASKUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-02-13",
+   "ret": -0.064177,
+   "longs": [
+    "APEUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "DYDXUSDT",
+    "FILUSDT",
+    "FTMUSDT",
+    "MATICUSDT"
+   ]
+  },
+  {
+   "t": "2023-02-20",
+   "ret": 0.007276,
+   "longs": [
+    "APEUSDT",
+    "APTUSDT",
+    "AXSUSDT",
+    "BNBUSDT",
+    "SANDUSDT"
+   ],
+   "shorts": [
+    "DYDXUSDT",
+    "EOSUSDT",
+    "FILUSDT",
+    "FTMUSDT",
+    "MASKUSDT"
+   ]
+  },
+  {
+   "t": "2023-02-27",
+   "ret": -0.010663,
+   "longs": [
+    "AXSUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "MANAUSDT",
+    "OPUSDT"
+   ],
+   "shorts": [
+    "ETCUSDT",
+    "FETUSDT",
+    "FILUSDT",
+    "HOOKUSDT",
+    "SANDUSDT"
+   ]
+  },
+  {
+   "t": "2023-03-06",
+   "ret": 0.043095,
+   "longs": [
+    "APTUSDT",
+    "BNBUSDT",
+    "GMTUSDT",
+    "MATICUSDT",
+    "OPUSDT"
+   ],
+   "shorts": [
+    "ANKRUSDT",
+    "DYDXUSDT",
+    "EOSUSDT",
+    "FILUSDT",
+    "GRTUSDT"
+   ]
+  },
+  {
+   "t": "2023-03-13",
+   "ret": 0.044442,
+   "longs": [
+    "FETUSDT",
+    "GMTUSDT",
+    "MASKUSDT",
+    "OPUSDT",
+    "STGUSDT"
+   ],
+   "shorts": [
+    "ANKRUSDT",
+    "DOGEUSDT",
+    "FTMUSDT",
+    "GRTUSDT",
+    "MAGICUSDT"
+   ]
+  },
+  {
+   "t": "2023-03-20",
+   "ret": -0.001738,
+   "longs": [
+    "BNBUSDT",
+    "GMTUSDT",
+    "LDOUSDT",
+    "MASKUSDT",
+    "OPUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "AGIXUSDT",
+    "DOGEUSDT",
+    "ETCUSDT",
+    "MAGICUSDT"
+   ]
+  },
+  {
+   "t": "2023-03-27",
+   "ret": -0.037562,
+   "longs": [
+    "BNBUSDT",
+    "MASKUSDT",
+    "MATICUSDT",
+    "OPUSDT",
+    "STXUSDT"
+   ],
+   "shorts": [
+    "DOGEUSDT",
+    "LTCUSDT",
+    "MKRUSDT",
+    "SANDUSDT",
+    "SNXUSDT"
+   ]
+  },
+  {
+   "t": "2023-04-03",
+   "ret": -0.001236,
+   "longs": [
+    "BNBUSDT",
+    "CFXUSDT",
+    "MASKUSDT",
+    "OPUSDT",
+    "SXPUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "AVAXUSDT",
+    "EOSUSDT",
+    "ETCUSDT",
+    "GMTUSDT"
+   ]
+  },
+  {
+   "t": "2023-04-10",
+   "ret": -0.021033,
+   "longs": [
+    "BNBUSDT",
+    "MASKUSDT",
+    "OPUSDT",
+    "SXPUSDT",
+    "XRPUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "AGIXUSDT",
+    "DYDXUSDT",
+    "LQTYUSDT",
+    "MAGICUSDT"
+   ]
+  },
+  {
+   "t": "2023-04-17",
+   "ret": 0.003692,
+   "longs": [
+    "APEUSDT",
+    "ICXUSDT",
+    "INJUSDT",
+    "SXPUSDT",
+    "XRPUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "AGIXUSDT",
+    "FILUSDT",
+    "GMTUSDT",
+    "LDOUSDT"
+   ]
+  },
+  {
+   "t": "2023-04-24",
+   "ret": 0.016975,
+   "longs": [
+    "APEUSDT",
+    "BNBUSDT",
+    "ICXUSDT",
+    "INJUSDT",
+    "SXPUSDT"
+   ],
+   "shorts": [
+    "1000SHIBUSDT",
+    "ARBUSDT",
+    "CTSIUSDT",
+    "LDOUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-05-01",
+   "ret": 0.005802,
+   "longs": [
+    "BNBUSDT",
+    "ICXUSDT",
+    "INJUSDT",
+    "MATICUSDT",
+    "SXPUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "DYDXUSDT",
+    "FTMUSDT",
+    "LDOUSDT",
+    "LINAUSDT"
+   ]
+  },
+  {
+   "t": "2023-05-08",
+   "ret": -0.021478,
+   "longs": [
+    "BNBUSDT",
+    "CTSIUSDT",
+    "INJUSDT",
+    "STXUSDT",
+    "SXPUSDT"
+   ],
+   "shorts": [
+    "CFXUSDT",
+    "DYDXUSDT",
+    "FTMUSDT",
+    "GALAUSDT",
+    "MASKUSDT"
+   ]
+  },
+  {
+   "t": "2023-05-15",
+   "ret": 0.012013,
+   "longs": [
+    "BNBUSDT",
+    "INJUSDT",
+    "RLCUSDT",
+    "STXUSDT",
+    "SXPUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "CTSIUSDT",
+    "ETCUSDT",
+    "FILUSDT",
+    "LINKUSDT"
+   ]
+  },
+  {
+   "t": "2023-05-22",
+   "ret": -0.065148,
+   "longs": [
+    "COCOSUSDT",
+    "CTSIUSDT",
+    "INJUSDT",
+    "MASKUSDT",
+    "RNDRUSDT"
+   ],
+   "shorts": [
+    "ALPHAUSDT",
+    "DOGEUSDT",
+    "DYDXUSDT",
+    "ETCUSDT",
+    "FILUSDT"
+   ]
+  },
+  {
+   "t": "2023-05-29",
+   "ret": 0.005816,
+   "longs": [
+    "ARPAUSDT",
+    "INJUSDT",
+    "KAVAUSDT",
+    "LINAUSDT",
+    "RNDRUSDT"
+   ],
+   "shorts": [
+    "CTSIUSDT",
+    "FILUSDT",
+    "GALAUSDT",
+    "IDUSDT",
+    "LINKUSDT"
+   ]
+  },
+  {
+   "t": "2023-06-05",
+   "ret": 0.004835,
+   "longs": [
+    "BNBUSDT",
+    "INJUSDT",
+    "KAVAUSDT",
+    "LINAUSDT",
+    "RNDRUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "LDOUSDT",
+    "SOLUSDT",
+    "STXUSDT",
+    "SUIUSDT"
+   ]
+  },
+  {
+   "t": "2023-06-12",
+   "ret": 0.023736,
+   "longs": [
+    "INJUSDT",
+    "KAVAUSDT",
+    "MTLUSDT",
+    "RNDRUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "CFXUSDT",
+    "LDOUSDT",
+    "LTCUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-06-19",
+   "ret": -0.00655,
+   "longs": [
+    "ALPHAUSDT",
+    "INJUSDT",
+    "KAVAUSDT",
+    "LINAUSDT",
+    "RNDRUSDT"
+   ],
+   "shorts": [
+    "CFXUSDT",
+    "EDUUSDT",
+    "FTMUSDT",
+    "OPUSDT",
+    "SANDUSDT"
+   ]
+  },
+  {
+   "t": "2023-06-26",
+   "ret": -0.068562,
+   "longs": [
+    "LINAUSDT",
+    "MTLUSDT",
+    "RNDRUSDT",
+    "TOMOUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "CFXUSDT",
+    "DOGEUSDT",
+    "LTCUSDT",
+    "OPUSDT",
+    "SANDUSDT"
+   ]
+  },
+  {
+   "t": "2023-07-03",
+   "ret": -0.00132,
+   "longs": [
+    "BCHUSDT",
+    "COMPUSDT",
+    "INJUSDT",
+    "LINAUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "MTLUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-07-10",
+   "ret": -0.013061,
+   "longs": [
+    "BCHUSDT",
+    "COMPUSDT",
+    "INJUSDT",
+    "STORJUSDT",
+    "WAVESUSDT"
+   ],
+   "shorts": [
+    "EOSUSDT",
+    "LTCUSDT",
+    "MATICUSDT",
+    "OPUSDT",
+    "STXUSDT"
+   ]
+  },
+  {
+   "t": "2023-07-17",
+   "ret": -0.010905,
+   "longs": [
+    "1000XECUSDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "COMPUSDT",
+    "STORJUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "1000SHIBUSDT",
+    "EOSUSDT",
+    "LINAUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-07-24",
+   "ret": -0.021323,
+   "longs": [
+    "1INCHUSDT",
+    "COMPUSDT",
+    "INJUSDT",
+    "STMXUSDT",
+    "XLMUSDT"
+   ],
+   "shorts": [
+    "EOSUSDT",
+    "FILUSDT",
+    "OPUSDT",
+    "TOMOUSDT",
+    "WAVESUSDT"
+   ]
+  },
+  {
+   "t": "2023-07-31",
+   "ret": 0.004982,
+   "longs": [
+    "APEUSDT",
+    "COMPUSDT",
+    "INJUSDT",
+    "OGNUSDT",
+    "STMXUSDT"
+   ],
+   "shorts": [
+    "1INCHUSDT",
+    "ADAUSDT",
+    "EOSUSDT",
+    "STORJUSDT",
+    "WAVESUSDT"
+   ]
+  },
+  {
+   "t": "2023-08-07",
+   "ret": -0.004734,
+   "longs": [
+    "APEUSDT",
+    "COMPUSDT",
+    "CRVUSDT",
+    "KNCUSDT",
+    "STMXUSDT"
+   ],
+   "shorts": [
+    "1INCHUSDT",
+    "CFXUSDT",
+    "MASKUSDT",
+    "MKRUSDT",
+    "WAVESUSDT"
+   ]
+  },
+  {
+   "t": "2023-08-14",
+   "ret": 0.01321,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "KNCUSDT",
+    "LPTUSDT",
+    "STMXUSDT"
+   ],
+   "shorts": [
+    "1INCHUSDT",
+    "EOSUSDT",
+    "LINKUSDT",
+    "MASKUSDT",
+    "MKRUSDT"
+   ]
+  },
+  {
+   "t": "2023-08-21",
+   "ret": 0.11078,
+   "longs": [
+    "1000SHIBUSDT",
+    "BCHUSDT",
+    "BLZUSDT",
+    "LPTUSDT",
+    "RUNEUSDT"
+   ],
+   "shorts": [
+    "C98USDT",
+    "LINKUSDT",
+    "MKRUSDT",
+    "OGNUSDT",
+    "TOMOUSDT"
+   ]
+  },
+  {
+   "t": "2023-08-28",
+   "ret": 0.033074,
+   "longs": [
+    "BLZUSDT",
+    "LPTUSDT",
+    "RUNEUSDT",
+    "STMXUSDT",
+    "TOMOUSDT"
+   ],
+   "shorts": [
+    "C98USDT",
+    "CFXUSDT",
+    "LINKUSDT",
+    "MKRUSDT",
+    "OPUSDT"
+   ]
+  },
+  {
+   "t": "2023-09-04",
+   "ret": 0.012688,
+   "longs": [
+    "API3USDT",
+    "BLZUSDT",
+    "LPTUSDT",
+    "RUNEUSDT",
+    "UNFIUSDT"
+   ],
+   "shorts": [
+    "BAKEUSDT",
+    "C98USDT",
+    "CFXUSDT",
+    "DOGEUSDT",
+    "MKRUSDT"
+   ]
+  },
+  {
+   "t": "2023-09-11",
+   "ret": 0.05945,
+   "longs": [
+    "BLZUSDT",
+    "LPTUSDT",
+    "PERPUSDT",
+    "TRBUSDT",
+    "UNFIUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "BAKEUSDT",
+    "CFXUSDT",
+    "OPUSDT",
+    "TOMOUSDT"
+   ]
+  },
+  {
+   "t": "2023-09-18",
+   "ret": 0.059705,
+   "longs": [
+    "BCHUSDT",
+    "BLZUSDT",
+    "PERPUSDT",
+    "TRBUSDT",
+    "UNFIUSDT"
+   ],
+   "shorts": [
+    "ARBUSDT",
+    "CFXUSDT",
+    "MKRUSDT",
+    "NMRUSDT",
+    "TOMOUSDT"
+   ]
+  },
+  {
+   "t": "2023-09-25",
+   "ret": 0.028839,
+   "longs": [
+    "BLZUSDT",
+    "FLMUSDT",
+    "STMXUSDT",
+    "TRBUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "APEUSDT",
+    "CFXUSDT",
+    "CYBERUSDT",
+    "NMRUSDT",
+    "TOMOUSDT"
+   ]
+  },
+  {
+   "t": "2023-10-02",
+   "ret": 0.03952,
+   "longs": [
+    "BCHUSDT",
+    "BLZUSDT",
+    "OGNUSDT",
+    "TRBUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "CYBERUSDT",
+    "FLMUSDT",
+    "LEVERUSDT",
+    "PERPUSDT"
+   ]
+  },
+  {
+   "t": "2023-10-09",
+   "ret": 0.040109,
+   "longs": [
+    "OGNUSDT",
+    "RUNEUSDT",
+    "SOLUSDT",
+    "TRBUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "CYBERUSDT",
+    "FLMUSDT",
+    "OPUSDT",
+    "PERPUSDT",
+    "STORJUSDT"
+   ]
+  },
+  {
+   "t": "2023-10-16",
+   "ret": 0.069142,
+   "longs": [
+    "BCHUSDT",
+    "BNTUSDT",
+    "SOLUSDT",
+    "STORJUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "AMBUSDT",
+    "CRVUSDT",
+    "HIFIUSDT",
+    "LEVERUSDT",
+    "LQTYUSDT"
+   ]
+  },
+  {
+   "t": "2023-10-23",
+   "ret": 0.028414,
+   "longs": [
+    "APTUSDT",
+    "BCHUSDT",
+    "SOLUSDT",
+    "TRBUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "AMBUSDT",
+    "BLZUSDT",
+    "BNTUSDT",
+    "LEVERUSDT",
+    "LQTYUSDT"
+   ]
+  },
+  {
+   "t": "2023-10-30",
+   "ret": -0.013028,
+   "longs": [
+    "1000FLOKIUSDT",
+    "APTUSDT",
+    "BCHUSDT",
+    "MINAUSDT",
+    "TRBUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "BNBUSDT",
+    "MKRUSDT",
+    "STORJUSDT",
+    "SUIUSDT"
+   ]
+  },
+  {
+   "t": "2023-11-06",
+   "ret": 0.008204,
+   "longs": [
+    "APTUSDT",
+    "BCHUSDT",
+    "INJUSDT",
+    "SOLUSDT",
+    "TRBUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "ARKUSDT",
+    "CFXUSDT",
+    "LQTYUSDT",
+    "SUIUSDT"
+   ]
+  },
+  {
+   "t": "2023-11-13",
+   "ret": -0.033504,
+   "longs": [
+    "APTUSDT",
+    "BCHUSDT",
+    "BLURUSDT",
+    "DOTUSDT",
+    "TRBUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "ARKUSDT",
+    "BIGTIMEUSDT",
+    "LOOMUSDT",
+    "STORJUSDT"
+   ]
+  },
+  {
+   "t": "2023-11-20",
+   "ret": 0.042293,
+   "longs": [
+    "BCHUSDT",
+    "DOTUSDT",
+    "LINKUSDT",
+    "SUSHIUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "ARKUSDT",
+    "LOOMUSDT",
+    "STORJUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2023-11-27",
+   "ret": -0.015558,
+   "longs": [
+    "ARKUSDT",
+    "BCHUSDT",
+    "BLURUSDT",
+    "INJUSDT",
+    "ZRXUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "ETCUSDT",
+    "GASUSDT",
+    "TRBUSDT",
+    "WLDUSDT"
+   ]
+  },
+  {
+   "t": "2023-12-04",
+   "ret": 0.004053,
+   "longs": [
+    "1000LUNCUSDT",
+    "ARKUSDT",
+    "BIGTIMEUSDT",
+    "DOTUSDT",
+    "GMTUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "BNBUSDT",
+    "ETCUSDT",
+    "GASUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2023-12-11",
+   "ret": -0.036128,
+   "longs": [
+    "ADAUSDT",
+    "BLURUSDT",
+    "DOTUSDT",
+    "LTCUSDT",
+    "RUNEUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "BIGTIMEUSDT",
+    "GASUSDT",
+    "ORDIUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2023-12-18",
+   "ret": -0.018588,
+   "longs": [
+    "ATOMUSDT",
+    "BNBUSDT",
+    "DOGEUSDT",
+    "DOTUSDT",
+    "LINKUSDT"
+   ],
+   "shorts": [
+    "1000LUNCUSDT",
+    "BIGTIMEUSDT",
+    "GALAUSDT",
+    "ORDIUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2023-12-25",
+   "ret": -0.11847,
+   "longs": [
+    "ADAUSDT",
+    "BAKEUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "SOLUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "1000PEPEUSDT",
+    "BIGTIMEUSDT",
+    "ORDIUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-01-01",
+   "ret": 0.007476,
+   "longs": [
+    "BAKEUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "ICPUSDT",
+    "TRBUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "1000LUNCUSDT",
+    "BIGTIMEUSDT",
+    "MEMEUSDT",
+    "ORDIUSDT"
+   ]
+  },
+  {
+   "t": "2024-01-08",
+   "ret": -0.045918,
+   "longs": [
+    "ADAUSDT",
+    "BAKEUSDT",
+    "BNBUSDT",
+    "LINKUSDT",
+    "TRBUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "ARBUSDT",
+    "FILUSDT",
+    "ORDIUSDT",
+    "SEIUSDT"
+   ]
+  },
+  {
+   "t": "2024-01-15",
+   "ret": -0.002458,
+   "longs": [
+    "1000BONKUSDT",
+    "BNBUSDT",
+    "ICPUSDT",
+    "STXUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "1000SATSUSDT",
+    "BAKEUSDT",
+    "ORDIUSDT",
+    "PEOPLEUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-01-22",
+   "ret": 0.031314,
+   "longs": [
+    "BAKEUSDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "ICPUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "ENSUSDT",
+    "ORDIUSDT",
+    "SEIUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-01-29",
+   "ret": -0.030882,
+   "longs": [
+    "BLURUSDT",
+    "BNBUSDT",
+    "SEIUSDT",
+    "TIAUSDT",
+    "UMAUSDT"
+   ],
+   "shorts": [
+    "OPUSDT",
+    "ORDIUSDT",
+    "POWRUSDT",
+    "SUIUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-02-05",
+   "ret": -0.004692,
+   "longs": [
+    "API3USDT",
+    "BLURUSDT",
+    "BNBUSDT",
+    "SEIUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "1000SATSUSDT",
+    "APTUSDT",
+    "MASKUSDT",
+    "OPUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-02-12",
+   "ret": 0.033928,
+   "longs": [
+    "API3USDT",
+    "BNBUSDT",
+    "SEIUSDT",
+    "SUIUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "1000SATSUSDT",
+    "ORDIUSDT",
+    "PYTHUSDT",
+    "TRBUSDT",
+    "UMAUSDT"
+   ]
+  },
+  {
+   "t": "2024-02-19",
+   "ret": 0.026585,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "CKBUSDT",
+    "LPTUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "1000SATSUSDT",
+    "MANTAUSDT",
+    "TRBUSDT",
+    "WIFUSDT",
+    "XAIUSDT"
+   ]
+  },
+  {
+   "t": "2024-02-26",
+   "ret": 0.044841,
+   "longs": [
+    "BNBUSDT",
+    "IDUSDT",
+    "JASMYUSDT",
+    "LINKUSDT",
+    "SEIUSDT"
+   ],
+   "shorts": [
+    "1000SATSUSDT",
+    "LPTUSDT",
+    "MANTAUSDT",
+    "ORDIUSDT",
+    "XAIUSDT"
+   ]
+  },
+  {
+   "t": "2024-03-04",
+   "ret": -0.025384,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "COTIUSDT",
+    "DOGEUSDT",
+    "UNIUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "MANTAUSDT",
+    "ORDIUSDT",
+    "TIAUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-03-11",
+   "ret": -0.018882,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "LTCUSDT",
+    "UNIUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "1000FLOKIUSDT",
+    "1000PEPEUSDT",
+    "FETUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-03-18",
+   "ret": 0.035387,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "MATICUSDT",
+    "UNIUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "1000PEPEUSDT",
+    "FETUSDT",
+    "ORDIUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-03-25",
+   "ret": -0.026886,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "NEARUSDT",
+    "UNIUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "ARBUSDT",
+    "OPUSDT",
+    "ORDIUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-04-01",
+   "ret": 0.034552,
+   "longs": [
+    "BNBUSDT",
+    "DOTUSDT",
+    "LINKUSDT",
+    "MATICUSDT",
+    "SUIUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "FETUSDT",
+    "JUPUSDT",
+    "POLYXUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-04-08",
+   "ret": 0.036226,
+   "longs": [
+    "ADAUSDT",
+    "BNBUSDT",
+    "LINKUSDT",
+    "NEARUSDT",
+    "SUIUSDT"
+   ],
+   "shorts": [
+    "ARBUSDT",
+    "JUPUSDT",
+    "ORDIUSDT",
+    "WIFUSDT",
+    "WLDUSDT"
+   ]
+  },
+  {
+   "t": "2024-04-15",
+   "ret": -0.00264,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "DOTUSDT",
+    "LTCUSDT",
+    "MATICUSDT"
+   ],
+   "shorts": [
+    "BOMEUSDT",
+    "ONDOUSDT",
+    "ORDIUSDT",
+    "WIFUSDT",
+    "WLDUSDT"
+   ]
+  },
+  {
+   "t": "2024-04-22",
+   "ret": 0.042477,
+   "longs": [
+    "AEVOUSDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "ETHFIUSDT",
+    "NEOUSDT"
+   ],
+   "shorts": [
+    "FTMUSDT",
+    "JTOUSDT",
+    "ONDOUSDT",
+    "WIFUSDT",
+    "WLDUSDT"
+   ]
+  },
+  {
+   "t": "2024-04-29",
+   "ret": -0.052055,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "ETHFIUSDT",
+    "HBARUSDT",
+    "ONGUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "JTOUSDT",
+    "NEARUSDT",
+    "ONDOUSDT",
+    "ORDIUSDT"
+   ]
+  },
+  {
+   "t": "2024-05-06",
+   "ret": -0.021361,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "ETHFIUSDT",
+    "NEOUSDT",
+    "ONGUSDT"
+   ],
+   "shorts": [
+    "BOMEUSDT",
+    "FILUSDT",
+    "ONDOUSDT",
+    "WIFUSDT",
+    "WLDUSDT"
+   ]
+  },
+  {
+   "t": "2024-05-13",
+   "ret": -0.025673,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "ENAUSDT",
+    "ETHFIUSDT",
+    "ONGUSDT"
+   ],
+   "shorts": [
+    "NEARUSDT",
+    "ONDOUSDT",
+    "ORDIUSDT",
+    "WIFUSDT",
+    "WLDUSDT"
+   ]
+  },
+  {
+   "t": "2024-05-20",
+   "ret": 0.111972,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "ENAUSDT",
+    "ETHFIUSDT",
+    "FRONTUSDT"
+   ],
+   "shorts": [
+    "FILUSDT",
+    "HBARUSDT",
+    "JTOUSDT",
+    "ORDIUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-05-27",
+   "ret": -0.039344,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "ENAUSDT",
+    "ETHFIUSDT",
+    "GLMUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "ORDIUSDT",
+    "TRBUSDT",
+    "WIFUSDT",
+    "WUSDT"
+   ]
+  },
+  {
+   "t": "2024-06-03",
+   "ret": 0.036539,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "ENAUSDT",
+    "ETHFIUSDT",
+    "NEARUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "1000PEPEUSDT",
+    "ONDOUSDT",
+    "WIFUSDT",
+    "WLDUSDT"
+   ]
+  },
+  {
+   "t": "2024-06-10",
+   "ret": -0.031145,
+   "longs": [
+    "BNBUSDT",
+    "ENAUSDT",
+    "ETHFIUSDT",
+    "HIGHUSDT",
+    "JASMYUSDT"
+   ],
+   "shorts": [
+    "AEVOUSDT",
+    "BOMEUSDT",
+    "ONDOUSDT",
+    "TRBUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-06-17",
+   "ret": 0.002571,
+   "longs": [
+    "BNBUSDT",
+    "ENAUSDT",
+    "ETHFIUSDT",
+    "GALAUSDT",
+    "ONDOUSDT"
+   ],
+   "shorts": [
+    "BBUSDT",
+    "BOMEUSDT",
+    "TRBUSDT",
+    "UNIUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2024-06-24",
+   "ret": 0.010143,
+   "longs": [
+    "1000SHIBUSDT",
+    "BNBUSDT",
+    "ENAUSDT",
+    "JASMYUSDT",
+    "ONDOUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "CRVUSDT",
+    "ETHFIUSDT",
+    "HIGHUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-07-01",
+   "ret": 0.007456,
+   "longs": [
+    "BNBUSDT",
+    "ENAUSDT",
+    "FETUSDT",
+    "INJUSDT",
+    "ONDOUSDT"
+   ],
+   "shorts": [
+    "1000RATSUSDT",
+    "BBUSDT",
+    "FILUSDT",
+    "HIGHUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-07-08",
+   "ret": -0.004837,
+   "longs": [
+    "1000SHIBUSDT",
+    "FETUSDT",
+    "NOTUSDT",
+    "ONDOUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "1000RATSUSDT",
+    "BAKEUSDT",
+    "CRVUSDT",
+    "LDOUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-07-15",
+   "ret": 0.022462,
+   "longs": [
+    "1000PEPEUSDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "ONDOUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "1000RATSUSDT",
+    "CRVUSDT",
+    "FETUSDT",
+    "IOUSDT",
+    "NOTUSDT"
+   ]
+  },
+  {
+   "t": "2024-07-22",
+   "ret": 0.005536,
+   "longs": [
+    "BCHUSDT",
+    "BNBUSDT",
+    "ETHFIUSDT",
+    "TIAUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "1000RATSUSDT",
+    "BNXUSDT",
+    "LISTAUSDT",
+    "TURBOUSDT"
+   ]
+  },
+  {
+   "t": "2024-07-29",
+   "ret": 0.025328,
+   "longs": [
+    "BCHUSDT",
+    "BNXUSDT",
+    "ENAUSDT",
+    "TIAUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "1000RATSUSDT",
+    "DOGEUSDT",
+    "MEWUSDT",
+    "NOTUSDT",
+    "TURBOUSDT"
+   ]
+  },
+  {
+   "t": "2024-08-05",
+   "ret": 0.033496,
+   "longs": [
+    "AVAXUSDT",
+    "BCHUSDT",
+    "ENAUSDT",
+    "TIAUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "BOMEUSDT",
+    "MEWUSDT",
+    "SOLUSDT",
+    "STMXUSDT",
+    "TURBOUSDT"
+   ]
+  },
+  {
+   "t": "2024-08-12",
+   "ret": -0.039778,
+   "longs": [
+    "BCHUSDT",
+    "ENAUSDT",
+    "STMXUSDT",
+    "TIAUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "1000RATSUSDT",
+    "BOMEUSDT",
+    "MEWUSDT",
+    "TURBOUSDT",
+    "ZROUSDT"
+   ]
+  },
+  {
+   "t": "2024-08-19",
+   "ret": -0.006779,
+   "longs": [
+    "1000BONKUSDT",
+    "ENAUSDT",
+    "TIAUSDT",
+    "TONUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "1000SATSUSDT",
+    "FILUSDT",
+    "MEWUSDT",
+    "NOTUSDT",
+    "STMXUSDT"
+   ]
+  },
+  {
+   "t": "2024-08-26",
+   "ret": 0.057362,
+   "longs": [
+    "AAVEUSDT",
+    "AVAXUSDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "1000SATSUSDT",
+    "BOMEUSDT",
+    "IOUSDT",
+    "MEWUSDT",
+    "ZROUSDT"
+   ]
+  },
+  {
+   "t": "2024-09-02",
+   "ret": -0.023829,
+   "longs": [
+    "1000FLOKIUSDT",
+    "BCHUSDT",
+    "TIAUSDT",
+    "TRXUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "MATICUSDT",
+    "MEWUSDT",
+    "TONUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-09-09",
+   "ret": 0.001597,
+   "longs": [
+    "AAVEUSDT",
+    "AVAXUSDT",
+    "FETUSDT",
+    "TIAUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "1000SATSUSDT",
+    "CRVUSDT",
+    "IOUSDT",
+    "NOTUSDT",
+    "REEFUSDT"
+   ]
+  },
+  {
+   "t": "2024-09-16",
+   "ret": 0.061742,
+   "longs": [
+    "AAVEUSDT",
+    "REEFUSDT",
+    "TIAUSDT",
+    "TONUSDT",
+    "TRXUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "CRVUSDT",
+    "LINKUSDT",
+    "NEARUSDT",
+    "TRBUSDT"
+   ]
+  },
+  {
+   "t": "2024-09-23",
+   "ret": -0.030412,
+   "longs": [
+    "BNBUSDT",
+    "CKBUSDT",
+    "REEFUSDT",
+    "SAGAUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "BIGTIMEUSDT",
+    "NOTUSDT",
+    "POPCATUSDT",
+    "SUNUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-09-30",
+   "ret": -0.006821,
+   "longs": [
+    "CKBUSDT",
+    "ENAUSDT",
+    "REEFUSDT",
+    "TIAUSDT",
+    "TONUSDT"
+   ],
+   "shorts": [
+    "1000SATSUSDT",
+    "BIGTIMEUSDT",
+    "NOTUSDT",
+    "POPCATUSDT",
+    "SUNUSDT"
+   ]
+  },
+  {
+   "t": "2024-10-07",
+   "ret": -0.039788,
+   "longs": [
+    "AVAXUSDT",
+    "REEFUSDT",
+    "SEIUSDT",
+    "SUIUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "DOGSUSDT",
+    "NEIROETHUSDT",
+    "POPCATUSDT",
+    "TAOUSDT"
+   ]
+  },
+  {
+   "t": "2024-10-14",
+   "ret": -0.025567,
+   "longs": [
+    "BNBUSDT",
+    "ENAUSDT",
+    "REEFUSDT",
+    "SEIUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "CKBUSDT",
+    "NEIROETHUSDT",
+    "POPCATUSDT",
+    "TAOUSDT",
+    "TURBOUSDT"
+   ]
+  },
+  {
+   "t": "2024-10-21",
+   "ret": -0.066869,
+   "longs": [
+    "BNBUSDT",
+    "ENAUSDT",
+    "REEFUSDT",
+    "SUIUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "APTUSDT",
+    "NEIROETHUSDT",
+    "NEIROUSDT",
+    "POPCATUSDT",
+    "TAOUSDT"
+   ]
+  },
+  {
+   "t": "2024-10-28",
+   "ret": 0.056442,
+   "longs": [
+    "1000SHIBUSDT",
+    "AVAXUSDT",
+    "BNBUSDT",
+    "ENAUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "MEWUSDT",
+    "NEIROETHUSDT",
+    "NEIROUSDT",
+    "POPCATUSDT",
+    "REEFUSDT"
+   ]
+  },
+  {
+   "t": "2024-11-04",
+   "ret": -0.002772,
+   "longs": [
+    "BNBUSDT",
+    "DIAUSDT",
+    "ENAUSDT",
+    "SUIUSDT",
+    "TIAUSDT"
+   ],
+   "shorts": [
+    "EIGENUSDT",
+    "NEIROETHUSDT",
+    "NEIROUSDT",
+    "POPCATUSDT",
+    "REEFUSDT"
+   ]
+  },
+  {
+   "t": "2024-11-11",
+   "ret": 0.010791,
+   "longs": [
+    "1000SHIBUSDT",
+    "AVAXUSDT",
+    "ENAUSDT",
+    "PEOPLEUSDT",
+    "SUIUSDT"
+   ],
+   "shorts": [
+    "BIGTIMEUSDT",
+    "MEWUSDT",
+    "NEIROETHUSDT",
+    "POPCATUSDT",
+    "REEFUSDT"
+   ]
+  },
+  {
+   "t": "2024-11-18",
+   "ret": 0.150416,
+   "longs": [
+    "AVAXUSDT",
+    "BNBUSDT",
+    "ENAUSDT",
+    "MASKUSDT",
+    "NEARUSDT"
+   ],
+   "shorts": [
+    "BIGTIMEUSDT",
+    "MEWUSDT",
+    "NEIROETHUSDT",
+    "POPCATUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-11-25",
+   "ret": 0.075369,
+   "longs": [
+    "BNBUSDT",
+    "DOTUSDT",
+    "HBARUSDT",
+    "NEARUSDT",
+    "XLMUSDT"
+   ],
+   "shorts": [
+    "GOATUSDT",
+    "MOODENGUSDT",
+    "NEIROETHUSDT",
+    "ORDIUSDT",
+    "POPCATUSDT"
+   ]
+  },
+  {
+   "t": "2024-12-02",
+   "ret": -0.029989,
+   "longs": [
+    "DOTUSDT",
+    "ENAUSDT",
+    "ENSUSDT",
+    "SOLUSDT",
+    "XLMUSDT"
+   ],
+   "shorts": [
+    "GOATUSDT",
+    "MOODENGUSDT",
+    "POPCATUSDT",
+    "TIAUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2024-12-09",
+   "ret": 0.06756,
+   "longs": [
+    "BNBUSDT",
+    "DOTUSDT",
+    "ENSUSDT",
+    "SUIUSDT",
+    "XRPUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "GOATUSDT",
+    "MOODENGUSDT",
+    "NEIROUSDT",
+    "TIAUSDT"
+   ]
+  },
+  {
+   "t": "2024-12-16",
+   "ret": 0.069789,
+   "longs": [
+    "BNBUSDT",
+    "ENAUSDT",
+    "SUIUSDT",
+    "WLDUSDT",
+    "XRPUSDT"
+   ],
+   "shorts": [
+    "1MBABYDOGEUSDT",
+    "CRVUSDT",
+    "FILUSDT",
+    "MOODENGUSDT",
+    "PNUTUSDT"
+   ]
+  },
+  {
+   "t": "2024-12-23",
+   "ret": 0.043927,
+   "longs": [
+    "ENAUSDT",
+    "SOLUSDT",
+    "SUIUSDT",
+    "TRXUSDT",
+    "XLMUSDT"
+   ],
+   "shorts": [
+    "1MBABYDOGEUSDT",
+    "ACTUSDT",
+    "LTCUSDT",
+    "NEIROUSDT",
+    "PNUTUSDT"
+   ]
+  },
+  {
+   "t": "2024-12-30",
+   "ret": -0.027332,
+   "longs": [
+    "BNBUSDT",
+    "ENAUSDT",
+    "ONDOUSDT",
+    "SUIUSDT",
+    "UXLINKUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "ACTUSDT",
+    "NEIROUSDT",
+    "PNUTUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2025-01-06",
+   "ret": 0.048201,
+   "longs": [
+    "AGLDUSDT",
+    "BNBUSDT",
+    "ONDOUSDT",
+    "SUIUSDT",
+    "UXLINKUSDT"
+   ],
+   "shorts": [
+    "1MBABYDOGEUSDT",
+    "ACTUSDT",
+    "COWUSDT",
+    "GOATUSDT",
+    "PNUTUSDT"
+   ]
+  },
+  {
+   "t": "2025-01-13",
+   "ret": 0.00881,
+   "longs": [
+    "AGLDUSDT",
+    "ENAUSDT",
+    "MOVEUSDT",
+    "ONDOUSDT",
+    "UXLINKUSDT"
+   ],
+   "shorts": [
+    "COWUSDT",
+    "GOATUSDT",
+    "PNUTUSDT",
+    "VIRTUALUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2025-01-20",
+   "ret": 0.063904,
+   "longs": [
+    "AGLDUSDT",
+    "ENAUSDT",
+    "ONDOUSDT",
+    "USUALUSDT",
+    "UXLINKUSDT"
+   ],
+   "shorts": [
+    "ADAUSDT",
+    "FARTCOINUSDT",
+    "PENGUUSDT",
+    "VIRTUALUSDT",
+    "ZENUSDT"
+   ]
+  },
+  {
+   "t": "2025-01-27",
+   "ret": 0.100808,
+   "longs": [
+    "ENAUSDT",
+    "HIVEUSDT",
+    "ONDOUSDT",
+    "SOLUSDT",
+    "USUALUSDT"
+   ],
+   "shorts": [
+    "AIXBTUSDT",
+    "FARTCOINUSDT",
+    "NEIROUSDT",
+    "PNUTUSDT",
+    "VIRTUALUSDT"
+   ]
+  },
+  {
+   "t": "2025-02-03",
+   "ret": 0.035969,
+   "longs": [
+    "ENAUSDT",
+    "ONDOUSDT",
+    "RUNEUSDT",
+    "USUALUSDT",
+    "XLMUSDT"
+   ],
+   "shorts": [
+    "ACTUSDT",
+    "AI16ZUSDT",
+    "FARTCOINUSDT",
+    "PENGUUSDT",
+    "PNUTUSDT"
+   ]
+  },
+  {
+   "t": "2025-02-10",
+   "ret": 0.001609,
+   "longs": [
+    "ENAUSDT",
+    "ONDOUSDT",
+    "SUIUSDT",
+    "USUALUSDT",
+    "XLMUSDT"
+   ],
+   "shorts": [
+    "AI16ZUSDT",
+    "AIXBTUSDT",
+    "PENGUUSDT",
+    "SWARMSUSDT",
+    "VIRTUALUSDT"
+   ]
+  },
+  {
+   "t": "2025-02-17",
+   "ret": -0.013854,
+   "longs": [
+    "ARCUSDT",
+    "BNBUSDT",
+    "ENAUSDT",
+    "SPELLUSDT",
+    "SUIUSDT"
+   ],
+   "shorts": [
+    "BNXUSDT",
+    "LTCUSDT",
+    "ONDOUSDT",
+    "SWARMSUSDT",
+    "TRUMPUSDT"
+   ]
+  },
+  {
+   "t": "2025-02-24",
+   "ret": -0.032679,
+   "longs": [
+    "ACHUSDT",
+    "ARCUSDT",
+    "ENAUSDT",
+    "JUPUSDT",
+    "OMUSDT"
+   ],
+   "shorts": [
+    "AI16ZUSDT",
+    "BNXUSDT",
+    "FARTCOINUSDT",
+    "ONDOUSDT",
+    "VINEUSDT"
+   ]
+  },
+  {
+   "t": "2025-03-03",
+   "ret": 0.001533,
+   "longs": [
+    "ARCUSDT",
+    "ENAUSDT",
+    "OMUSDT",
+    "RUNEUSDT",
+    "TAOUSDT"
+   ],
+   "shorts": [
+    "AI16ZUSDT",
+    "BNXUSDT",
+    "FARTCOINUSDT",
+    "ONDOUSDT",
+    "VINEUSDT"
+   ]
+  },
+  {
+   "t": "2025-03-10",
+   "ret": -0.010837,
+   "longs": [
+    "BERAUSDT",
+    "ENAUSDT",
+    "JUPUSDT",
+    "OMUSDT",
+    "SUSDT"
+   ],
+   "shorts": [
+    "ALCHUSDT",
+    "ARCUSDT",
+    "BNXUSDT",
+    "FARTCOINUSDT",
+    "LINKUSDT"
+   ]
+  },
+  {
+   "t": "2025-03-17",
+   "ret": -0.101076,
+   "longs": [
+    "ADAUSDT",
+    "BERAUSDT",
+    "IPUSDT",
+    "RAREUSDT",
+    "SUSDT"
+   ],
+   "shorts": [
+    "ALCHUSDT",
+    "ARCUSDT",
+    "BNXUSDT",
+    "FARTCOINUSDT",
+    "TSTUSDT"
+   ]
+  },
+  {
+   "t": "2025-03-24",
+   "ret": -0.048437,
+   "longs": [
+    "AUCTIONUSDT",
+    "BNBUSDT",
+    "IPUSDT",
+    "PNUTUSDT",
+    "RAREUSDT"
+   ],
+   "shorts": [
+    "ALCHUSDT",
+    "ARCUSDT",
+    "FARTCOINUSDT",
+    "TSTUSDT",
+    "WLDUSDT"
+   ]
+  },
+  {
+   "t": "2025-03-31",
+   "ret": -0.033334,
+   "longs": [
+    "AUCTIONUSDT",
+    "BNBUSDT",
+    "IPUSDT",
+    "KAITOUSDT",
+    "LAYERUSDT"
+   ],
+   "shorts": [
+    "ALCHUSDT",
+    "ENAUSDT",
+    "LINKUSDT",
+    "RAREUSDT",
+    "WLDUSDT"
+   ]
+  },
+  {
+   "t": "2025-04-07",
+   "ret": -0.040074,
+   "longs": [
+    "AUCTIONUSDT",
+    "LAYERUSDT",
+    "ORCAUSDT",
+    "PNUTUSDT",
+    "RAREUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "ALCHUSDT",
+    "ARCUSDT",
+    "KAITOUSDT",
+    "LTCUSDT"
+   ]
+  },
+  {
+   "t": "2025-04-14",
+   "ret": -0.014558,
+   "longs": [
+    "API3USDT",
+    "AUCTIONUSDT",
+    "BERAUSDT",
+    "LAYERUSDT",
+    "ORCAUSDT"
+   ],
+   "shorts": [
+    "ALCHUSDT",
+    "ENAUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "PNUTUSDT"
+   ]
+  },
+  {
+   "t": "2025-04-21",
+   "ret": -0.031776,
+   "longs": [
+    "API3USDT",
+    "AUCTIONUSDT",
+    "OMUSDT",
+    "ORCAUSDT",
+    "VOXELUSDT"
+   ],
+   "shorts": [
+    "ALCHUSDT",
+    "FILUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "TUTUSDT"
+   ]
+  },
+  {
+   "t": "2025-04-28",
+   "ret": 0.022939,
+   "longs": [
+    "ALPACAUSDT",
+    "LAYERUSDT",
+    "MAGICUSDT",
+    "TAOUSDT",
+    "VOXELUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "FARTCOINUSDT",
+    "LINKUSDT",
+    "PNUTUSDT",
+    "WIFUSDT"
+   ]
+  },
+  {
+   "t": "2025-05-05",
+   "ret": -0.096841,
+   "longs": [
+    "BCHUSDT",
+    "LAYERUSDT",
+    "TRUMPUSDT",
+    "VIRTUALUSDT",
+    "VOXELUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "CRVUSDT",
+    "EOSUSDT",
+    "FARTCOINUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2025-05-12",
+   "ret": -0.03393,
+   "longs": [
+    "KAITOUSDT",
+    "LAYERUSDT",
+    "TRUMPUSDT",
+    "TURBOUSDT",
+    "VOXELUSDT"
+   ],
+   "shorts": [
+    "FARTCOINUSDT",
+    "OMUSDT",
+    "PNUTUSDT",
+    "WIFUSDT",
+    "ZEREBROUSDT"
+   ]
+  },
+  {
+   "t": "2025-05-19",
+   "ret": 0.008751,
+   "longs": [
+    "KAITOUSDT",
+    "LAYERUSDT",
+    "PENGUUSDT",
+    "TRUMPUSDT",
+    "VIRTUALUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "FARTCOINUSDT",
+    "MOODENGUSDT",
+    "TAOUSDT",
+    "ZEREBROUSDT"
+   ]
+  },
+  {
+   "t": "2025-05-26",
+   "ret": 0.03767,
+   "longs": [
+    "ETHFIUSDT",
+    "KAITOUSDT",
+    "LAYERUSDT",
+    "NEIROUSDT",
+    "VIRTUALUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "FARTCOINUSDT",
+    "INITUSDT",
+    "ONDOUSDT",
+    "TAOUSDT"
+   ]
+  },
+  {
+   "t": "2025-06-02",
+   "ret": -0.032114,
+   "longs": [
+    "ETHFIUSDT",
+    "KAITOUSDT",
+    "LAYERUSDT",
+    "LPTUSDT",
+    "WCTUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "FARTCOINUSDT",
+    "MOODENGUSDT",
+    "ONDOUSDT",
+    "VIRTUALUSDT"
+   ]
+  },
+  {
+   "t": "2025-06-09",
+   "ret": -0.063888,
+   "longs": [
+    "KAITOUSDT",
+    "LPTUSDT",
+    "MASKUSDT",
+    "TRUMPUSDT",
+    "WCTUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "FARTCOINUSDT",
+    "LTCUSDT",
+    "PNUTUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2025-06-16",
+   "ret": -0.037595,
+   "longs": [
+    "ANIMEUSDT",
+    "LPTUSDT",
+    "MASKUSDT",
+    "NXPCUSDT",
+    "RVNUSDT"
+   ],
+   "shorts": [
+    "AAVEUSDT",
+    "DOGEUSDT",
+    "FARTCOINUSDT",
+    "LTCUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2025-06-23",
+   "ret": -0.018819,
+   "longs": [
+    "ANIMEUSDT",
+    "FUNUSDT",
+    "LPTUSDT",
+    "NXPCUSDT",
+    "RVNUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "ADAUSDT",
+    "FARTCOINUSDT",
+    "MOODENGUSDT",
+    "SUIUSDT"
+   ]
+  },
+  {
+   "t": "2025-06-30",
+   "ret": 0.02346,
+   "longs": [
+    "FUNUSDT",
+    "LPTUSDT",
+    "RVNUSDT",
+    "SEIUSDT",
+    "WCTUSDT"
+   ],
+   "shorts": [
+    "ENAUSDT",
+    "HYPEUSDT",
+    "MOODENGUSDT",
+    "TRBUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2025-07-07",
+   "ret": 0.005267,
+   "longs": [
+    "FUNUSDT",
+    "MOODENGUSDT",
+    "PENGUUSDT",
+    "SEIUSDT",
+    "SPXUSDT"
+   ],
+   "shorts": [
+    "BANANAS31USDT",
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "UNIUSDT",
+    "VIRTUALUSDT"
+   ]
+  },
+  {
+   "t": "2025-07-14",
+   "ret": -0.071492,
+   "longs": [
+    "FUNUSDT",
+    "HYPERUSDT",
+    "MAGICUSDT",
+    "MOODENGUSDT",
+    "PENGUUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "ADAUSDT",
+    "BANANAS31USDT",
+    "FARTCOINUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2025-07-21",
+   "ret": 0.036328,
+   "longs": [
+    "BANANAS31USDT",
+    "BCHUSDT",
+    "BNBUSDT",
+    "CRVUSDT",
+    "HYPERUSDT"
+   ],
+   "shorts": [
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "MYXUSDT",
+    "TRUMPUSDT",
+    "XRPUSDT"
+   ]
+  },
+  {
+   "t": "2025-07-28",
+   "ret": 0.05865,
+   "longs": [
+    "ENAUSDT",
+    "HYPERUSDT",
+    "SAHARAUSDT",
+    "SEIUSDT",
+    "SPKUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "1000PEPEUSDT",
+    "FARTCOINUSDT",
+    "HUSDT",
+    "HYPEUSDT"
+   ]
+  },
+  {
+   "t": "2025-08-04",
+   "ret": 0.028506,
+   "longs": [
+    "BANANAS31USDT",
+    "ENAUSDT",
+    "HYPERUSDT",
+    "SPKUSDT",
+    "TRUMPUSDT"
+   ],
+   "shorts": [
+    "BCHUSDT",
+    "CRVUSDT",
+    "FARTCOINUSDT",
+    "UNIUSDT",
+    "VINEUSDT"
+   ]
+  },
+  {
+   "t": "2025-08-11",
+   "ret": -0.031258,
+   "longs": [
+    "ENAUSDT",
+    "HYPERUSDT",
+    "MYXUSDT",
+    "PENGUUSDT",
+    "SPKUSDT"
+   ],
+   "shorts": [
+    "CRVUSDT",
+    "FARTCOINUSDT",
+    "PUMPUSDT",
+    "UNIUSDT",
+    "VINEUSDT"
+   ]
+  },
+  {
+   "t": "2025-08-18",
+   "ret": -0.041058,
+   "longs": [
+    "MYXUSDT",
+    "PENGUUSDT",
+    "SPKUSDT",
+    "WIFUSDT",
+    "XLMUSDT"
+   ],
+   "shorts": [
+    "BCHUSDT",
+    "FARTCOINUSDT",
+    "PUMPUSDT",
+    "UNIUSDT",
+    "VINEUSDT"
+   ]
+  },
+  {
+   "t": "2025-08-25",
+   "ret": -0.029111,
+   "longs": [
+    "BIOUSDT",
+    "MYXUSDT",
+    "SOONUSDT",
+    "SPKUSDT",
+    "TRUMPUSDT"
+   ],
+   "shorts": [
+    "1000BONKUSDT",
+    "BCHUSDT",
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "PUMPUSDT"
+   ]
+  },
+  {
+   "t": "2025-09-01",
+   "ret": -0.069437,
+   "longs": [
+    "BIOUSDT",
+    "MAGICUSDT",
+    "NMRUSDT",
+    "SOONUSDT",
+    "TRUMPUSDT"
+   ],
+   "shorts": [
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "MYXUSDT",
+    "PUMPUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2025-09-08",
+   "ret": -0.15141,
+   "longs": [
+    "BIOUSDT",
+    "BNBUSDT",
+    "MUSDT",
+    "NMRUSDT",
+    "PROVEUSDT"
+   ],
+   "shorts": [
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "MYXUSDT",
+    "PUMPUSDT",
+    "SOONUSDT"
+   ]
+  },
+  {
+   "t": "2025-09-15",
+   "ret": 0.049545,
+   "longs": [
+    "BIOUSDT",
+    "MUSDT",
+    "MYXUSDT",
+    "NMRUSDT",
+    "PYTHUSDT"
+   ],
+   "shorts": [
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "PUMPUSDT",
+    "TAUSDT",
+    "TRUMPUSDT"
+   ]
+  },
+  {
+   "t": "2025-09-22",
+   "ret": 0.068258,
+   "longs": [
+    "BIOUSDT",
+    "ENAUSDT",
+    "MUSDT",
+    "MYXUSDT",
+    "NMRUSDT"
+   ],
+   "shorts": [
+    "FARTCOINUSDT",
+    "HIFIUSDT",
+    "HYPEUSDT",
+    "PUMPUSDT",
+    "WLFIUSDT"
+   ]
+  },
+  {
+   "t": "2025-09-29",
+   "ret": 0.079644,
+   "longs": [
+    "ENAUSDT",
+    "IPUSDT",
+    "MUSDT",
+    "SOLUSDT",
+    "TRUMPUSDT"
+   ],
+   "shorts": [
+    "HEMIUSDT",
+    "HIFIUSDT",
+    "HYPEUSDT",
+    "MYXUSDT",
+    "TAUSDT"
+   ]
+  },
+  {
+   "t": "2025-10-06",
+   "ret": 0.028915,
+   "longs": [
+    "AVAXUSDT",
+    "ENAUSDT",
+    "MYXUSDT",
+    "SOLUSDT",
+    "SOMIUSDT"
+   ],
+   "shorts": [
+    "ALPINEUSDT",
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "WLFIUSDT",
+    "XPLUSDT"
+   ]
+  },
+  {
+   "t": "2025-10-13",
+   "ret": -0.009118,
+   "longs": [
+    "1000BONKUSDT",
+    "AVNTUSDT",
+    "PENGUUSDT",
+    "SOLUSDT",
+    "SOMIUSDT"
+   ],
+   "shorts": [
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "MYXUSDT",
+    "PUMPUSDT",
+    "XPLUSDT"
+   ]
+  },
+  {
+   "t": "2025-10-20",
+   "ret": -0.036679,
+   "longs": [
+    "0GUSDT",
+    "AVNTUSDT",
+    "DOTUSDT",
+    "ENAUSDT",
+    "PENGUUSDT"
+   ],
+   "shorts": [
+    "AIAUSDT",
+    "ASTERUSDT",
+    "FARTCOINUSDT",
+    "MYXUSDT",
+    "PUMPUSDT"
+   ]
+  },
+  {
+   "t": "2025-10-27",
+   "ret": -0.040413,
+   "longs": [
+    "AIAUSDT",
+    "AVNTUSDT",
+    "COAIUSDT",
+    "ENAUSDT",
+    "ZECUSDT"
+   ],
+   "shorts": [
+    "ALPINEUSDT",
+    "ASTERUSDT",
+    "DOGEUSDT",
+    "FARTCOINUSDT",
+    "HYPEUSDT"
+   ]
+  },
+  {
+   "t": "2025-11-03",
+   "ret": -0.112992,
+   "longs": [
+    "COAIUSDT",
+    "ENAUSDT",
+    "PENGUUSDT",
+    "TRUMPUSDT",
+    "ZECUSDT"
+   ],
+   "shorts": [
+    "AIAUSDT",
+    "ASTERUSDT",
+    "BLESSUSDT",
+    "EVAAUSDT",
+    "FARTCOINUSDT"
+   ]
+  },
+  {
+   "t": "2025-11-10",
+   "ret": 0.002423,
+   "longs": [
+    "AIAUSDT",
+    "DASHUSDT",
+    "FILUSDT",
+    "ZECUSDT",
+    "ZENUSDT"
+   ],
+   "shorts": [
+    "4USDT",
+    "COAIUSDT",
+    "HUSDT",
+    "HYPEUSDT",
+    "JELLYJELLYUSDT"
+   ]
+  },
+  {
+   "t": "2025-11-17",
+   "ret": 0.012266,
+   "longs": [
+    "AIAUSDT",
+    "DASHUSDT",
+    "ENAUSDT",
+    "ZECUSDT",
+    "ZENUSDT"
+   ],
+   "shorts": [
+    "COAIUSDT",
+    "EVAAUSDT",
+    "HYPEUSDT",
+    "JELLYJELLYUSDT",
+    "XPLUSDT"
+   ]
+  },
+  {
+   "t": "2025-11-24",
+   "ret": -0.07071,
+   "longs": [
+    "DASHUSDT",
+    "STRKUSDT",
+    "TNSRUSDT",
+    "ZECUSDT",
+    "ZENUSDT"
+   ],
+   "shorts": [
+    "AIAUSDT",
+    "GIGGLEUSDT",
+    "HYPEUSDT",
+    "JELLYJELLYUSDT",
+    "PUMPUSDT"
+   ]
+  },
+  {
+   "t": "2025-12-01",
+   "ret": -0.10063,
+   "longs": [
+    "DASHUSDT",
+    "STRKUSDT",
+    "TNSRUSDT",
+    "TRUMPUSDT",
+    "ZECUSDT"
+   ],
+   "shorts": [
+    "AIAUSDT",
+    "GIGGLEUSDT",
+    "JELLYJELLYUSDT",
+    "PIPPINUSDT",
+    "XPLUSDT"
+   ]
+  },
+  {
+   "t": "2025-12-08",
+   "ret": 0.084368,
+   "longs": [
+    "AIAUSDT",
+    "DASHUSDT",
+    "ENAUSDT",
+    "PIPPINUSDT",
+    "TNSRUSDT"
+   ],
+   "shorts": [
+    "HYPEUSDT",
+    "ICPUSDT",
+    "MONUSDT",
+    "PUMPUSDT",
+    "XPLUSDT"
+   ]
+  },
+  {
+   "t": "2025-12-15",
+   "ret": 0.072051,
+   "longs": [
+    "1000LUNCUSDT",
+    "BEATUSDT",
+    "LUNA2USDT",
+    "PIEVERSEUSDT",
+    "TNSRUSDT"
+   ],
+   "shorts": [
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "PIPPINUSDT",
+    "SUIUSDT",
+    "TRADOORUSDT"
+   ]
+  },
+  {
+   "t": "2025-12-22",
+   "ret": -0.098922,
+   "longs": [
+    "BEATUSDT",
+    "FOLKSUSDT",
+    "LIGHTUSDT",
+    "PIEVERSEUSDT",
+    "PIPPINUSDT"
+   ],
+   "shorts": [
+    "FARTCOINUSDT",
+    "HYPEUSDT",
+    "PUMPUSDT",
+    "TRADOORUSDT",
+    "ZECUSDT"
+   ]
+  },
+  {
+   "t": "2025-12-29",
+   "ret": -0.174571,
+   "longs": [
+    "1000LUNCUSDT",
+    "BEATUSDT",
+    "JELLYJELLYUSDT",
+    "LUNA2USDT",
+    "PIPPINUSDT"
+   ],
+   "shorts": [
+    "FHEUSDT",
+    "FOLKSUSDT",
+    "LIGHTUSDT",
+    "MONUSDT",
+    "TRADOORUSDT"
+   ]
+  },
+  {
+   "t": "2026-01-05",
+   "ret": 0.014718,
+   "longs": [
+    "BEATUSDT",
+    "LIGHTUSDT",
+    "LUNA2USDT",
+    "PIPPINUSDT",
+    "RIVERUSDT"
+   ],
+   "shorts": [
+    "ASTERUSDT",
+    "ENAUSDT",
+    "FARTCOINUSDT",
+    "FHEUSDT",
+    "FOLKSUSDT"
+   ]
+  },
+  {
+   "t": "2026-01-12",
+   "ret": 0.103154,
+   "longs": [
+    "BCHUSDT",
+    "NIGHTUSDT",
+    "PIPPINUSDT",
+    "RIVERUSDT",
+    "ZBTUSDT"
+   ],
+   "shorts": [
+    "BEATUSDT",
+    "FARTCOINUSDT",
+    "FOLKSUSDT",
+    "HUSDT",
+    "LIGHTUSDT"
+   ]
+  },
+  {
+   "t": "2026-01-19",
+   "ret": 0.306251,
+   "longs": [
+    "DASHUSDT",
+    "IPUSDT",
+    "PIPPINUSDT",
+    "RIVERUSDT",
+    "ZBTUSDT"
+   ],
+   "shorts": [
+    "BEATUSDT",
+    "LIGHTUSDT",
+    "RAVEUSDT",
+    "XMRUSDT",
+    "币安人生USDT"
+   ]
+  },
+  {
+   "t": "2026-01-26",
+   "ret": -0.077622,
+   "longs": [
+    "AXSUSDT",
+    "DASHUSDT",
+    "DUSKUSDT",
+    "PIPPINUSDT",
+    "RIVERUSDT"
+   ],
+   "shorts": [
+    "BEATUSDT",
+    "LIGHTUSDT",
+    "LITUSDT",
+    "XMRUSDT",
+    "币安人生USDT"
+   ]
+  },
+  {
+   "t": "2026-02-02",
+   "ret": 0.035049,
+   "longs": [
+    "AXSUSDT",
+    "BULLAUSDT",
+    "ENSOUSDT",
+    "RIVERUSDT",
+    "SENTUSDT"
+   ],
+   "shorts": [
+    "ASTERUSDT",
+    "ENAUSDT",
+    "FARTCOINUSDT",
+    "XMRUSDT",
+    "币安人生USDT"
+   ]
+  },
+  {
+   "t": "2026-02-09",
+   "ret": -0.125309,
+   "longs": [
+    "BERAUSDT",
+    "DUSKUSDT",
+    "ENSOUSDT",
+    "IPUSDT",
+    "SENTUSDT"
+   ],
+   "shorts": [
+    "BULLAUSDT",
+    "PIPPINUSDT",
+    "RIVERUSDT",
+    "XMRUSDT",
+    "ZECUSDT"
+   ]
+  },
+  {
+   "t": "2026-02-16",
+   "ret": -0.00903,
+   "longs": [
+    "AXSUSDT",
+    "BERAUSDT",
+    "DUSKUSDT",
+    "RIVERUSDT",
+    "SENTUSDT"
+   ],
+   "shorts": [
+    "BULLAUSDT",
+    "ENAUSDT",
+    "LINKUSDT",
+    "PUMPUSDT",
+    "XMRUSDT"
+   ]
+  },
+  {
+   "t": "2026-02-23",
+   "ret": -0.023974,
+   "longs": [
+    "AXSUSDT",
+    "BERAUSDT",
+    "ENSOUSDT",
+    "RIVERUSDT",
+    "SENTUSDT"
+   ],
+   "shorts": [
+    "BULLAUSDT",
+    "HYPEUSDT",
+    "PIPPINUSDT",
+    "PUMPUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2026-03-02",
+   "ret": -0.130758,
+   "longs": [
+    "BERAUSDT",
+    "BULLAUSDT",
+    "ENSOUSDT",
+    "POWERUSDT",
+    "SPACEUSDT"
+   ],
+   "shorts": [
+    "ARCUSDT",
+    "HYPEUSDT",
+    "PIPPINUSDT",
+    "RIVERUSDT",
+    "SIRENUSDT"
+   ]
+  },
+  {
+   "t": "2026-03-09",
+   "ret": -0.039756,
+   "longs": [
+    "ENSOUSDT",
+    "KITEUSDT",
+    "POWERUSDT",
+    "RIVERUSDT",
+    "VVVUSDT"
+   ],
+   "shorts": [
+    "ARCUSDT",
+    "ASTERUSDT",
+    "HYPEUSDT",
+    "SIRENUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2026-03-16",
+   "ret": 0.015105,
+   "longs": [
+    "ENSOUSDT",
+    "KITEUSDT",
+    "PIPPINUSDT",
+    "PIXELUSDT",
+    "SAHARAUSDT"
+   ],
+   "shorts": [
+    "ASTERUSDT",
+    "LINKUSDT",
+    "POWERUSDT",
+    "SPACEUSDT",
+    "WLFIUSDT"
+   ]
+  },
+  {
+   "t": "2026-03-23",
+   "ret": -0.000388,
+   "longs": [
+    "DEGOUSDT",
+    "KITEUSDT",
+    "PIPPINUSDT",
+    "SAHARAUSDT",
+    "SIRENUSDT"
+   ],
+   "shorts": [
+    "HYPEUSDT",
+    "LYNUSDT",
+    "NEARUSDT",
+    "OPNUSDT",
+    "POWERUSDT"
+   ]
+  },
+  {
+   "t": "2026-03-30",
+   "ret": -0.109451,
+   "longs": [
+    "BARDUSDT",
+    "PIXELUSDT",
+    "RIVERUSDT",
+    "SAHARAUSDT",
+    "SIRENUSDT"
+   ],
+   "shorts": [
+    "HYPEUSDT",
+    "LYNUSDT",
+    "NEARUSDT",
+    "PIPPINUSDT",
+    "POWERUSDT"
+   ]
+  },
+  {
+   "t": "2026-04-06",
+   "ret": 0.056429,
+   "longs": [
+    "NOMUSDT",
+    "ONTUSDT",
+    "PIXELUSDT",
+    "SIRENUSDT",
+    "STOUSDT"
+   ],
+   "shorts": [
+    "HYPEUSDT",
+    "LYNUSDT",
+    "NEARUSDT",
+    "RIVERUSDT",
+    "XPLUSDT"
+   ]
+  },
+  {
+   "t": "2026-04-13",
+   "ret": -0.003394,
+   "longs": [
+    "ARIAUSDT",
+    "ENJUSDT",
+    "NOMUSDT",
+    "ONTUSDT",
+    "SIRENUSDT"
+   ],
+   "shorts": [
+    "ENAUSDT",
+    "FARTCOINUSDT",
+    "LYNUSDT",
+    "PIPPINUSDT",
+    "RIVERUSDT"
+   ]
+  },
+  {
+   "t": "2026-04-20",
+   "ret": -0.01279,
+   "longs": [
+    "ARIAUSDT",
+    "ENJUSDT",
+    "NOMUSDT",
+    "RAVEUSDT",
+    "SIRENUSDT"
+   ],
+   "shorts": [
+    "EDGEUSDT",
+    "FILUSDT",
+    "PIPPINUSDT",
+    "RIVERUSDT",
+    "ZECUSDT"
+   ]
+  },
+  {
+   "t": "2026-04-27",
+   "ret": 0.028869,
+   "longs": [
+    "ENJUSDT",
+    "NOMUSDT",
+    "ONTUSDT",
+    "PIEVERSEUSDT",
+    "TRUMPUSDT"
+   ],
+   "shorts": [
+    "ARIAUSDT",
+    "EDGEUSDT",
+    "PIPPINUSDT",
+    "RAVEUSDT",
+    "RIVERUSDT"
+   ]
+  },
+  {
+   "t": "2026-05-04",
+   "ret": -0.079327,
+   "longs": [
+    "APEUSDT",
+    "BIOUSDT",
+    "ENJUSDT",
+    "ORCAUSDT",
+    "SIRENUSDT"
+   ],
+   "shorts": [
+    "ARIAUSDT",
+    "BSBUSDT",
+    "LABUSDT",
+    "RAVEUSDT",
+    "SKYAIUSDT"
+   ]
+  },
+  {
+   "t": "2026-05-11",
+   "ret": -0.024106,
+   "longs": [
+    "APEUSDT",
+    "BIOUSDT",
+    "ENJUSDT",
+    "ORCAUSDT",
+    "SIRENUSDT"
+   ],
+   "shorts": [
+    "LABUSDT",
+    "LINKUSDT",
+    "RAVEUSDT",
+    "SKYAIUSDT",
+    "币安人生USDT"
+   ]
+  },
+  {
+   "t": "2026-05-18",
+   "ret": 0.017643,
+   "longs": [
+    "APEUSDT",
+    "BIOUSDT",
+    "CHIPUSDT",
+    "ORCAUSDT",
+    "TRUMPUSDT"
+   ],
+   "shorts": [
+    "BUSDT",
+    "PIEVERSEUSDT",
+    "RAVEUSDT",
+    "SKYAIUSDT",
+    "币安人生USDT"
+   ]
+  },
+  {
+   "t": "2026-05-25",
+   "ret": -0.095774,
+   "longs": [
+    "BCHUSDT",
+    "BIOUSDT",
+    "CHIPUSDT",
+    "EDENUSDT",
+    "ORCAUSDT"
+   ],
+   "shorts": [
+    "BSBUSDT",
+    "BUSDT",
+    "LABUSDT",
+    "SKYAIUSDT",
+    "UBUSDT"
+   ]
+  },
+  {
+   "t": "2026-06-01",
+   "ret": 0.014093,
+   "longs": [
+    "BCHUSDT",
+    "EDENUSDT",
+    "INJUSDT",
+    "LABUSDT",
+    "TONUSDT"
+   ],
+   "shorts": [
+    "BSBUSDT",
+    "BUSDT",
+    "PLAYUSDT",
+    "SKYAIUSDT",
+    "UBUSDT"
+   ]
+  },
+  {
+   "t": "2026-06-08",
+   "ret": -0.006797,
+   "longs": [
+    "BCHUSDT",
+    "EDENUSDT",
+    "FILUSDT",
+    "LABUSDT",
+    "ZECUSDT"
+   ],
+   "shorts": [
+    "BEATUSDT",
+    "BILLUSDT",
+    "BSBUSDT",
+    "HUSDT",
+    "PLAYUSDT"
+   ]
+  },
+  {
+   "t": "2026-06-15",
+   "ret": -0.149728,
+   "longs": [
+    "ESPORTSUSDT",
+    "HUSDT",
+    "PLAYUSDT",
+    "TONUSDT",
+    "ZECUSDT"
+   ],
+   "shorts": [
+    "BEATUSDT",
+    "BILLUSDT",
+    "BSBUSDT",
+    "LABUSDT",
+    "VELVETUSDT"
+   ]
+  },
+  {
+   "t": "2026-06-22",
+   "ret": -0.141723,
+   "longs": [
+    "BCHUSDT",
+    "HOMEUSDT",
+    "HUSDT",
+    "TRUMPUSDT",
+    "ZECUSDT"
+   ],
+   "shorts": [
+    "ALLOUSDT",
+    "ASTERUSDT",
+    "BSBUSDT",
+    "ESPORTSUSDT",
+    "VELVETUSDT"
+   ]
+  },
+  {
+   "t": "2026-06-29",
+   "ret": 0.127777,
+   "longs": [
+    "HOMEUSDT",
+    "HUSDT",
+    "LABUSDT",
+    "SYNUSDT",
+    "TRUMPUSDT"
+   ],
+   "shorts": [
+    "ASTERUSDT",
+    "BEATUSDT",
+    "ESPORTSUSDT",
+    "NEARUSDT",
+    "VELVETUSDT"
+   ]
+  },
+  {
+   "t": "2026-07-06",
+   "ret": -0.000803,
+   "longs": [
+    "1000PEPEUSDT",
+    "ENAUSDT",
+    "LABUSDT",
+    "SLXUSDT",
+    "TRUMPUSDT"
+   ],
+   "shorts": [
+    "BTWUSDT",
+    "ESPORTSUSDT",
+    "HUSDT",
+    "SIRENUSDT",
+    "VELVETUSDT"
+   ]
+  },
+  {
+   "t": "2026-07-13",
+   "ret": -0.133843,
+   "longs": [
+    "ADAUSDT",
+    "LABUSDT",
+    "SLXUSDT",
+    "TLMUSDT",
+    "VANRYUSDT"
+   ],
+   "shorts": [
+    "BEATUSDT",
+    "BTWUSDT",
+    "ESPORTSUSDT",
+    "EVAAUSDT",
+    "HUSDT"
+   ]
+  },
+  {
+   "t": "2026-07-20",
+   "ret": -0.12828,
+   "longs": [
+    "ESPORTSUSDT",
+    "REUSDT",
+    "SLXUSDT",
+    "TLMUSDT",
+    "VANRYUSDT"
+   ],
+   "shorts": [
+    "AKEUSDT",
+    "BANKUSDT",
+    "BTWUSDT",
+    "EVAAUSDT",
+    "LABUSDT"
+   ]
+  },
+  {
+   "t": "2026-07-27",
+   "ret": 0.146754,
+   "longs": [
+    "AKEUSDT",
+    "DEXEUSDT",
+    "REUSDT",
+    "TLMUSDT",
+    "VANRYUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "BANKUSDT",
+    "ESPORTSUSDT",
+    "EVAAUSDT",
+    "LABUSDT"
+   ]
+  },
+  {
+   "t": "2026-08-03",
+   "ret": -0.039471,
+   "longs": [
+    "BANKUSDT",
+    "COTIUSDT",
+    "DEXEUSDT",
+    "TLMUSDT",
+    "VANRYUSDT"
+   ],
+   "shorts": [
+    "AKEUSDT",
+    "EVAAUSDT",
+    "LABUSDT",
+    "PUMPUSDT",
+    "UNIUSDT"
+   ]
+  },
+  {
+   "t": "2026-08-10",
+   "ret": -0.068883,
+   "longs": [
+    "BANKUSDT",
+    "COTIUSDT",
+    "DEXEUSDT",
+    "KAITOUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "AKEUSDT",
+    "BLESSUSDT",
+    "ESPORTSUSDT",
+    "LABUSDT",
+    "ONUSDT"
+   ]
+  },
+  {
+   "t": "2026-08-17",
+   "ret": 0.066284,
+   "longs": [
+    "ACEUSDT",
+    "BICOUSDT",
+    "COTIUSDT",
+    "HOMEUSDT",
+    "KAITOUSDT"
+   ],
+   "shorts": [
+    "APRUSDT",
+    "CYSUSDT",
+    "ESPORTSUSDT",
+    "ONUSDT",
+    "TUTUSDT"
+   ]
+  },
+  {
+   "t": "2026-08-24",
+   "ret": -0.015591,
+   "longs": [
+    "ACEUSDT",
+    "BICOUSDT",
+    "COTIUSDT",
+    "DEXEUSDT",
+    "HEIUSDT"
+   ],
+   "shorts": [
+    "AKEUSDT",
+    "BEATUSDT",
+    "BLESSUSDT",
+    "BTWUSDT",
+    "CYSUSDT"
+   ]
+  },
+  {
+   "t": "2026-08-31",
+   "ret": 0.165786,
+   "longs": [
+    "ACEUSDT",
+    "BICOUSDT",
+    "ONGUSDT",
+    "TUTUSDT",
+    "WLDUSDT"
+   ],
+   "shorts": [
+    "BEATUSDT",
+    "BLESSUSDT",
+    "BTRUSDT",
+    "BTWUSDT",
+    "CYSUSDT"
+   ]
+  },
+  {
+   "t": "2026-09-07",
+   "ret": -0.07265,
+   "longs": [
+    "ACEUSDT",
+    "AKEUSDT",
+    "CYSUSDT",
+    "ONGUSDT",
+    "TUTUSDT"
+   ],
+   "shorts": [
+    "ARBUSDT",
+    "BEATUSDT",
+    "BTWUSDT",
+    "PROMUSDT",
+    "USELESSUSDT"
+   ]
+  },
+  {
+   "t": "2026-09-14",
+   "ret": 0.238391,
+   "longs": [
+    "ACEUSDT",
+    "AKEUSDT",
+    "HEMIUSDT",
+    "LSKUSDT",
+    "ONGUSDT"
+   ],
+   "shorts": [
+    "BTRUSDT",
+    "BTWUSDT",
+    "DASHUSDT",
+    "USELESSUSDT",
+    "龙虾USDT"
+   ]
+  },
+  {
+   "t": "2026-09-21",
+   "ret": 0.038008,
+   "longs": [
+    "AKEUSDT",
+    "LSKUSDT",
+    "ONGUSDT",
+    "TRUMPUSDT",
+    "ZECUSDT"
+   ],
+   "shorts": [
+    "BRUSDT",
+    "BTRUSDT",
+    "HYPEUSDT",
+    "USELESSUSDT",
+    "龙虾USDT"
+   ]
+  },
+  {
+   "t": "2026-09-28",
+   "ret": 0.111673,
+   "longs": [
+    "AKEUSDT",
+    "ARBUSDT",
+    "LSKUSDT",
+    "ONEUSDT",
+    "TRUMPUSDT"
+   ],
+   "shorts": [
+    "1000PEPEUSDT",
+    "BRUSDT",
+    "TAOUSDT",
+    "USELESSUSDT",
+    "龙虾USDT"
+   ]
+  }
+ ]
+}

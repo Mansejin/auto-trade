@@ -140,6 +140,7 @@
 | kimchi-rich 매수 스킵 오버레이 | 김프·프리미엄 | Upbit 라우팅 | 미검증 (AE14 페이퍼 스펙만) | — | `strategies/kimchi-rich-preposition-skip-v1.notes.md`, `reports/improve/20260729-ae14-paper-log-spec.md` |
 | oi-flush-rebound (ΔOI 하위 5%+하락일 → 2일 롱) | OI·청산 | BTC/ETH/SOL 1d 2021-12~2026-09 | **KILL** (업비트 현물 KILL, 무기한은 레드팀 VETO: 시드 20개 중앙 92.9·날짜 묶음 85.6~89.6백분위, 거래소 두 번 시도, 2026 PF 0.34) | n=106(OOS 55, 연 16.9회); 업비트 OOS x2 +0.31% PF 1.30 무작위 79백분위; 무기한 +0.77% PF 1.75 무작위 95.3; 가격만 대비 OI 우위 통과; OOS 뒤 절반 PF 0.65/1.01, SOL 의존 | `docs/research/results/oi-flush-rebound.md` |
 | upbit-caution-perp-short (업비트 유의종목 최초 지정 → 다음 UTC 시가 Binance 무기한 1배 14일 숏, 펀딩 포함) | 한국어 공지 이벤트 | Binance USDT-M 무기한 1d, 공지 2022-05~2026-09 | **KILL** (T-036 카드 → T-037 데이터 → 리서치, 사전 기준 8개 중 5개 실패) | n=32(train 4 / OOS 28, 2026에 21); OOS x2(왕복 0.8%)+펀딩 평균 −2.95%, 중앙 −0.11%, PF 0.72, 승률 50%; 날짜 묶음 달력 이동 17.3백분위(99 필요), 독립 무작위 28.3; BTC 숏 대비 −0.75%p, 알트 바스켓 숏 대비 −1.36%p; 펀딩 평균 −4.2%/건; 2026 PF 0.45 vs 2026 이전 OOS 7건 PF 8.2; −40% 초과 손실 2건(TAIKO 청산, DRIFT −75%) | `docs/research/results/upbit-caution-perp-short.md` |
+| xs-funding-crowding-weekly (알트 30개 중 직전 7일 펀딩 상위 5 숏·하위 5 롱, 주간, 시장 중립) | 펀딩 × 크로스섹션 | Binance USDT-M 무기한 전체(상폐 포함) 1d, 2020-08-10~2026-09-28 | **KILL** (T-028 카드 → T-038 데이터 → T-039 리서치, 사전 기준 7개 중 3개 실패) | 321주(train 151 / OOS 170); OOS x2+펀딩 주 +0.005%, PF 1.002, 승률 48.2%, Sharpe 0.00 vs BTC B&H 0.94; 무작위(날짜 묶음) 81.7백분위(95·99 실패); 역모멘텀 −1.72%/주보다는 우위; train PF 1.65 → OOS 앞 절반 2.13 → 뒤 절반 0.67, 2025 PF 0.53; OOS 롱 다리 가격 −2.85%/주 vs 펀딩 +2.59%(캐리를 가격이 되가져감); 상위 3주 합 +71% vs OOS 합 +0.78%; 1배 숏 청산 OOS 24건(2025~ 23) | `docs/research/results/xs-funding-crowding-weekly.md` |
 
 ---
 
@@ -157,7 +158,7 @@
 | 캘린더 이벤트 | 2 | 0 | 1 (R3, holdout n=18) | |
 | 레버리지·차입 | ~6 | 0 | 1 (Lev3Px = 같은 엣지 확대) | 레버리지는 엣지가 아님 |
 | 리밸런스·배분 | ~6 | 0 (운영 LIVE, 엣지 아님) | 0 | Policy C에 수익·MDD 모두 열세 |
-| 펀딩 | 3 | 0 | 1 (AE12 H1) | 출처(HTX vs OKX/Bitget)에 따라 결과 반대 |
+| 펀딩 | 4 | 0 | 1 (AE12 H1) | 출처(HTX vs OKX/Bitget)에 따라 결과 반대. 알트 크로스섹션 펀딩 롱숏(T-039) KILL: 캐리를 가격이 되가져감 |
 | 호가창 | 1 | 0 | 0 | 데이터 미수집 |
 | 김프·프리미엄 | 3 | 0 | 1 (AE13 H_rich) | n=21 |
 
