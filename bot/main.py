@@ -10,6 +10,7 @@ from typing import Any
 from bot.broker import PaperBroker
 from bot.config import Settings, load_settings
 from bot.display import format_status_block, fmt_money, fmt_qty
+from bot.forward_log import record_forward
 from bot.indicators import OHLCV
 from bot.logging_setup import setup_logging, trade_logger, write_latest_status, write_status_json
 from bot.portfolio import Position, Trade, utc_now
@@ -184,6 +185,7 @@ def run_once(settings: Settings, trades: logging.Logger, notify: TelegramNotifie
             in_position=portfolio.in_position,
             entry_price=entry,
         )
+        record_forward(settings.log_dir, settings.strategy_path.stem, strategy, ohlcv, bar_key, mode)
 
         krw: float | None
         base_qty: float | None
