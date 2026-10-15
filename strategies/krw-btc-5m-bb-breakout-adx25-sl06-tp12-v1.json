@@ -1,0 +1,90 @@
+{
+  "name": "KRW-BTC 5m BB Breakout ADX25 SL06 TP12 v1",
+  "market": "KRW-BTC",
+  "exchange": "kr",
+  "timeframe": "5m",
+  "stop_loss": 0.6,
+  "take_profit": 1.2,
+  "indicators": [
+    {
+      "type": "bollinger_bands",
+      "ref": "bb",
+      "params": {
+        "period": 20,
+        "multiplier": 2.0
+      }
+    },
+    {
+      "type": "adx",
+      "ref": "adx14",
+      "params": {
+        "period": 14
+      }
+    }
+  ],
+  "buy": {
+    "operator": "AND",
+    "conditions": [
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "cross_above",
+        "right": {
+          "type": "indicator",
+          "ref": "bb.bb_upper"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx"
+        },
+        "op": "gt",
+        "right": {
+          "type": "literal",
+          "value": 25
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        }
+      }
+    ]
+  },
+  "sell": {
+    "operator": "OR",
+    "conditions": [
+      {
+        "left": {
+          "type": "field",
+          "field": "close"
+        },
+        "op": "cross_below",
+        "right": {
+          "type": "indicator",
+          "ref": "bb.bb_middle"
+        }
+      },
+      {
+        "left": {
+          "type": "indicator",
+          "ref": "adx14.adx_mdi"
+        },
+        "op": "gt",
+        "right": {
+          "type": "indicator",
+          "ref": "adx14.adx_pdi"
+        }
+      }
+    ]
+  }
+}
