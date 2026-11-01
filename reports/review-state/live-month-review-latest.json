@@ -1,34 +1,36 @@
 {
   "ok": true,
-  "month": "2026-07",
-  "generated_at": "2026-07-29T09:24:06Z",
-  "policy": null,
-  "regime_current": {
-    "regime": null,
-    "selected_file": null,
-    "sideways_dwell": null,
-    "sideways_gate": null
+  "month": "2026-10",
+  "generated_at": "2026-11-01T09:10:00Z",
+  "policy": "monthly_automation_core_active",
+  "active_strategy": "kimchi-rich-preposition-skip-v1",
+  "regime_engine_snapshot": {
+    "date": "2026-07-27",
+    "regime": "bear",
+    "note": "stale file; see regime_select_recalc"
   },
-  "regime_log": {
-    "rows": 0,
-    "actions": {},
-    "regimes": {},
-    "switches": 0,
-    "switches_to_williams": 0,
-    "switches_to_fallback_v5": 0
+  "regime_select_recalc": {
+    "date": "2026-10-31",
+    "regime": "transition",
+    "selected_file": "strategies/regime-bull-trend-4h-v2.json",
+    "live_trading": false
   },
-  "premium_log_rows": 0,
+  "october_toolkit": {
+    "v1_total_return_pct": -6.4418,
+    "v4_total_return_pct": -6.1343,
+    "v5_total_return_pct": -3.3562,
+    "benchmark_pct": -8.1482
+  },
+  "audit": {
+    "v4_vs_v1": "LIVE_OK_WITH_HUMAN",
+    "v5_vs_v1": "REJECT",
+    "active_unchanged": true
+  },
   "suggestion": "keep",
-  "reason": "Insufficient evidence to change Policy C map",
-  "allowed_improvements": [
-    "keep",
-    "demote_sideways_to_v5",
-    "raise_dwell_to_14",
-    "ops_check",
-    "inconclusive"
-  ],
+  "reason": "v5 REJECT on G4; v4 LIVE_OK_WITH_HUMAN but critic keeps ACTIVE; no auto LIVE",
   "forbidden": [
-    "retune Williams WR/ADX thresholds from this month alone",
-    "auto-deploy without human"
+    "auto-deploy without human",
+    "SSH STRATEGY_PATH change from monthly automation",
+    "touch daytrade-bb-rsi-div 10m branch"
   ]
 }
